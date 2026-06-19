@@ -1,0 +1,18 @@
+{
+  "batch": "Batch 1 Production Routing and Security Fix",
+  "date": "2026-06-19",
+  "files_total": 187,
+  "deleted_junk_cache_log_files_count": 32,
+  "required_files_missing": [],
+  "remaining_exact_detected_provider_or_admin_secrets": [],
+  "routing_fixed": true,
+  "admin_rewrite_target": "/public/pages/admin/",
+  "dashboard_rewrite_target": "/public/pages/dashboard/",
+  "asset_aliases_added": [
+    "/css/*",
+    "/js/*",
+    "/images/*",
+    "/assets/*"
+  ],
+  "single_zip_structure_preserved": true
+}
