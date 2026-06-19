@@ -1,0 +1,51 @@
+Options -Indexes
+RewriteEngine On
+
+# Security: block sensitive files from public access
+<FilesMatch "^(\.env|\.env\..*|composer\.(json|lock)|package-lock\.json|yarn\.lock|pnpm-lock\.yaml)$">
+    Require all denied
+</FilesMatch>
+
+# Existing files and folders load normally
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Admin Panel v2 route aliases
+RewriteRule ^admin/?$ /public/pages/admin/index.html [L]
+RewriteRule ^admin/(.+)$ /public/pages/admin/$1 [L]
+
+# User dashboard route aliases
+RewriteRule ^dashboard/?$ /public/pages/dashboard/index.html [L]
+RewriteRule ^dashboard/(.+)$ /public/pages/dashboard/$1 [L]
+
+# Legacy asset aliases used by old pages
+RewriteRule ^css/(.+)$ /public/assets/css/$1 [L]
+RewriteRule ^js/(.+)$ /public/assets/js/$1 [L]
+RewriteRule ^images/(.+)$ /public/assets/images/$1 [L]
+RewriteRule ^assets/(.+)$ /public/assets/$1 [L]
+
+# Public page compatibility aliases
+RewriteRule ^services\.html$ /public/pages/public/services.html [L]
+RewriteRule ^pricing\.html$ /public/pages/public/pricing.html [L]
+RewriteRule ^about\.html$ /public/pages/public/about.html [L]
+RewriteRule ^contact\.html$ /public/pages/public/contact.html [L]
+RewriteRule ^blog\.html$ /public/pages/public/blog.html [L]
+RewriteRule ^faq\.html$ /public/pages/public/faq.html [L]
+RewriteRule ^login\.html$ /public/pages/public/login.html [L]
+RewriteRule ^signup\.html$ /public/pages/public/signup.html [L]
+RewriteRule ^forgot-password\.html$ /public/pages/public/forgot-password.html [L]
+RewriteRule ^terms\.html$ /public/pages/public/terms.html [L]
+RewriteRule ^terms-of-service\.html$ /public/pages/public/terms.html [L]
+RewriteRule ^privacy\.html$ /public/pages/public/privacy.html [L]
+RewriteRule ^privacy-policy\.html$ /public/pages/public/privacy.html [L]
+RewriteRule ^refund-policy\.html$ /public/pages/public/refund-policy.html [L]
+RewriteRule ^sitemap\.html$ /public/pages/public/sitemap.html [L]
+RewriteRule ^blog-single\.html$ /public/pages/public/blog-single.html [L]
+
+# Fallback for extensionless clean URLs when a matching HTML file exists under public pages
+RewriteCond %{DOCUMENT_ROOT}/public/pages/public/$1.html -f
+RewriteRule ^([A-Za-z0-9_-]+)/?$ /public/pages/public/$1.html [L]
+
+# Custom 404 fallback if available
+ErrorDocument 404 /public/pages/public/404.html
