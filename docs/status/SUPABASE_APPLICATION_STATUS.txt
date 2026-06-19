@@ -1,0 +1,15 @@
+Supabase application status
+
+Project ID: alwithvnkqwarvbtgrsb
+Access attempted: yes
+Result: permission denied from connector
+Automatic migration applied: no
+
+Manual action required:
+Run this SQL file from the final ZIP inside Supabase SQL Editor:
+supabase/migrations/20260620_000001_boostbangla_core_schema.sql
+
+Optional seed file:
+supabase/seed/20260620_seed_services.sql
+
+All other prepared project checks remain finished: required files missing 0, unresolved internal references 0, duplicate asset pages 0.
