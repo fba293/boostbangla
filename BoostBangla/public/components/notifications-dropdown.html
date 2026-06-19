@@ -1,0 +1,1726 @@
+<!-- ============================================
+     BoostBangla Premium Unified Bell v3.0
+     Real-time Notifications | Animated Bell | Haptic Feedback
+     Works for Both Admin & User Dashboards
+     ============================================ -->
+
+<div class="unified-bell-container">
+    <button class="bell-trigger" id="unifiedBellTrigger">
+        <div class="bell-icon-wrapper">
+            <i class="fas fa-bell bell-icon"></i>
+            <i class="fas fa-bell bell-ring-icon"></i>
+        </div>
+        <span class="bell-badge" id="unifiedBellBadge">0</span>
+        <span class="bell-dot" id="unifiedBellDot"></span>
+        <div class="bell-ripple"></div>
+    </button>
+
+    <!-- Premium Notification Panel -->
+    <div class="bell-panel" id="unifiedBellPanel">
+        <!-- Panel Header -->
+        <div class="bell-panel-header">
+            <div class="header-title">
+                <i class="fas fa-bell"></i>
+                <h3>Notifications</h3>
+                <span class="notification-count-badge" id="panelCountBadge">0</span>
+            </div>
+            <div class="header-actions">
+                <button class="mark-all-btn" id="unifiedMarkAllBtn">
+                    <i class="fas fa-check-double"></i>
+                    <span>Mark all read</span>
+                </button>
+                <button class="settings-btn" id="notificationSettingsBtn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="bell-filters">
+            <button class="filter-tab active" data-filter="all">
+                <i class="fas fa-inbox"></i>
+                <span>All</span>
+            </button>
+            <button class="filter-tab" data-filter="unread">
+                <i class="fas fa-envelope"></i>
+                <span>Unread</span>
+                <span class="filter-count" id="unreadFilterCount">0</span>
+            </button>
+            <button class="filter-tab" data-filter="order">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Orders</span>
+            </button>
+            <button class="filter-tab" data-filter="payment">
+                <i class="fas fa-wallet"></i>
+                <span>Payments</span>
+            </button>
+            <button class="filter-tab" data-filter="system">
+                <i class="fas fa-microchip"></i>
+                <span>System</span>
+            </button>
+            <button class="filter-tab" data-filter="promotion">
+                <i class="fas fa-gift"></i>
+                <span>Promos</span>
+            </button>
+        </div>
+
+        <!-- Search within Notifications -->
+        <div class="bell-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="bellSearchInput" placeholder="Search notifications..." class="bell-search-input">
+            <button class="clear-search-btn" id="clearBellSearch" style="display: none;">
+                <i class="fas fa-times-circle"></i>
+            </button>
+        </div>
+
+        <!-- Notification List -->
+        <div class="bell-list" id="unifiedBellList">
+            <div class="loading-state">
+                <div class="loading-spinner"></div>
+                <p>Loading notifications...</p>
+            </div>
+        </div>
+
+        <!-- Panel Footer -->
+        <div class="bell-panel-footer">
+            <div class="footer-links">
+                <a href="/public/pages/dashboard/notifications.html" class="view-all-link">
+                    View All Notifications
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <button class="preferences-link" id="openNotificationPrefs">
+                    <i class="fas fa-sliders-h"></i>
+                    Preferences
+                </button>
+            </div>
+            <div class="footer-stats">
+                <span id="notificationStats">0 notifications</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Preferences Modal -->
+    <div class="preferences-modal" id="notificationPrefsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-sliders-h"></i> Notification Preferences</h3>
+                <button class="close-modal" id="closePrefsModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="pref-group">
+                    <div class="pref-item">
+                        <div class="pref-info">
+                            <i class="fas fa-bell"></i>
+                            <div>
+                                <h4>Push Notifications</h4>
+                                <p>Receive browser notifications</p>
+                            </div>
+                        </div>
+                        <label class="toggle-switch premium-toggle">
+                            <input type="checkbox" id="pushNotifPref">
+                            <span class="toggle-slider">
+                                <span class="toggle-knob"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="pref-item">
+                        <div class="pref-info">
+                            <i class="fas fa-volume-up"></i>
+                            <div>
+                                <h4>Sound Effects</h4>
+                                <p>Play sound on new notifications</p>
+                            </div>
+                        </div>
+                        <label class="toggle-switch premium-toggle">
+                            <input type="checkbox" id="soundNotifPref" checked>
+                            <span class="toggle-slider">
+                                <span class="toggle-knob"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="pref-item">
+                        <div class="pref-info">
+                            <i class="fas fa-vibrate"></i>
+                            <div>
+                                <h4>Haptic Feedback</h4>
+                                <p>Vibrate on notifications (mobile)</p>
+                            </div>
+                        </div>
+                        <label class="toggle-switch premium-toggle">
+                            <input type="checkbox" id="hapticNotifPref" checked>
+                            <span class="toggle-slider">
+                                <span class="toggle-knob"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="pref-item">
+                        <div class="pref-info">
+                            <i class="fas fa-desktop"></i>
+                            <div>
+                                <h4>Desktop Badge</h4>
+                                <p>Show badge on taskbar</p>
+                            </div>
+                        </div>
+                        <label class="toggle-switch premium-toggle">
+                            <input type="checkbox" id="desktopBadgePref" checked>
+                            <span class="toggle-slider">
+                                <span class="toggle-knob"></span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="pref-divider"></div>
+                <div class="pref-group">
+                    <h4>Notification Types</h4>
+                    <div class="type-checkboxes">
+                        <label class="type-checkbox">
+                            <input type="checkbox" id="typeOrderPref" checked>
+                            <span>Order Updates</span>
+                        </label>
+                        <label class="type-checkbox">
+                            <input type="checkbox" id="typePaymentPref" checked>
+                            <span>Payment Alerts</span>
+                        </label>
+                        <label class="type-checkbox">
+                            <input type="checkbox" id="typeSystemPref" checked>
+                            <span>System Notifications</span>
+                        </label>
+                        <label class="type-checkbox">
+                            <input type="checkbox" id="typePromoPref" checked>
+                            <span>Promotions & Offers</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" id="resetPrefsBtn">Reset to Default</button>
+                <button class="btn-primary" id="savePrefsBtn">Save Preferences</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container for In-app Notifications -->
+    <div class="toast-container" id="notificationToastContainer"></div>
+</div>
+
+<style>
+/* ============================================
+   PREMIUM UNIFIED BELL - v3.0
+   Real-time | Animated | Haptic Ready
+   ============================================ */
+
+.unified-bell-container {
+    position: relative;
+}
+
+/* ============================================
+   BELL TRIGGER BUTTON
+   ============================================ */
+.bell-trigger {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 107, 0, 0.08);
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bell-trigger:hover {
+    background: rgba(255, 107, 0, 0.15);
+    transform: scale(1.05);
+}
+
+.bell-trigger:active {
+    transform: scale(0.95);
+}
+
+.bell-icon-wrapper {
+    position: relative;
+    width: 22px;
+    height: 22px;
+}
+
+.bell-icon {
+    position: absolute;
+    font-size: 20px;
+    color: #374151;
+    transition: all 0.2s;
+}
+
+body.dark-mode .bell-icon {
+    color: #94a3b8;
+}
+
+.bell-ring-icon {
+    position: absolute;
+    font-size: 20px;
+    color: #FF6B00;
+    opacity: 0;
+    transform: rotate(-15deg);
+    transition: all 0.2s;
+}
+
+/* Bell Ringing Animation */
+.bell-trigger.ringing .bell-icon {
+    opacity: 0;
+    transform: rotate(15deg);
+}
+
+.bell-trigger.ringing .bell-ring-icon {
+    opacity: 1;
+    transform: rotate(0deg);
+    animation: bellRing 0.5s ease-in-out;
+}
+
+@keyframes bellRing {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    75% { transform: rotate(-15deg); }
+}
+
+/* Bell Badge */
+.bell-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s;
+}
+
+.bell-badge.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.bell-dot {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 8px;
+    height: 8px;
+    background: #ef4444;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.2s;
+    animation: pulseDot 1.5s infinite;
+}
+
+.bell-dot.show {
+    opacity: 1;
+}
+
+@keyframes pulseDot {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+}
+
+.bell-ripple {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.bell-trigger:active .bell-ripple {
+    animation: rippleEffect 0.6s ease-out;
+}
+
+@keyframes rippleEffect {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 0 20px rgba(255, 107, 0, 0);
+    }
+}
+
+/* ============================================
+   BELL PANEL
+   ============================================ */
+.bell-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 12px;
+    width: 480px;
+    max-width: calc(100vw - 32px);
+    background: white;
+    border-radius: 28px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(229, 231, 235, 0.5);
+    display: none;
+    z-index: 1000;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+body.dark-mode .bell-panel {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.unified-bell-container.active .bell-panel {
+    display: block;
+    animation: panelSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes panelSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Panel Header */
+.bell-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+body.dark-mode .bell-panel-header {
+    border-bottom-color: #334155;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-title i {
+    font-size: 20px;
+    color: #FF6B00;
+}
+
+.header-title h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.notification-count-badge {
+    background: #f3f4f6;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+}
+
+body.dark-mode .notification-count-badge {
+    background: #334155;
+    color: #e2e8f0;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.mark-all-btn, .settings-btn {
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #6b7280;
+}
+
+.mark-all-btn:hover, .settings-btn:hover {
+    background: #f3f4f6;
+    color: #FF6B00;
+}
+
+body.dark-mode .mark-all-btn:hover,
+body.dark-mode .settings-btn:hover {
+    background: #334155;
+}
+
+/* Filter Tabs */
+.bell-filters {
+    display: flex;
+    gap: 4px;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+
+body.dark-mode .bell-filters {
+    border-bottom-color: #334155;
+}
+
+.filter-tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: none;
+    border: none;
+    border-radius: 40px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #6b7280;
+    white-space: nowrap;
+}
+
+.filter-tab i {
+    font-size: 12px;
+}
+
+.filter-tab:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.filter-tab.active {
+    background: #FF6B00;
+    color: white;
+}
+
+.filter-tab.active i {
+    color: white;
+}
+
+.filter-count {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 2px 6px;
+    border-radius: 20px;
+    font-size: 10px;
+    margin-left: 4px;
+}
+
+.filter-tab.active .filter-count {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .filter-tab:hover {
+    background: #334155;
+    color: #e2e8f0;
+}
+
+/* Search Bar */
+.bell-search {
+    position: relative;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+body.dark-mode .bell-search {
+    border-bottom-color: #334155;
+}
+
+.bell-search i {
+    position: absolute;
+    left: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+.bell-search-input {
+    width: 100%;
+    padding: 10px 16px 10px 40px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 40px;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+body.dark-mode .bell-search-input {
+    background: #0f172a;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+.bell-search-input:focus {
+    outline: none;
+    border-color: #FF6B00;
+    box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+}
+
+.clear-search-btn {
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #9ca3af;
+}
+
+/* Notification List */
+.bell-list {
+    max-height: 460px;
+    overflow-y: auto;
+}
+
+/* Loading State */
+.loading-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #FF6B00;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-state-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 107, 0, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.empty-state-icon i {
+    font-size: 36px;
+    color: #FF6B00;
+}
+
+.empty-state h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* Notification Item */
+.notification-item-unified {
+    display: flex;
+    gap: 14px;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+body.dark-mode .notification-item-unified {
+    border-bottom-color: #334155;
+}
+
+.notification-item-unified:hover {
+    background: #f9fafb;
+}
+
+body.dark-mode .notification-item-unified:hover {
+    background: #2d1a0f;
+}
+
+.notification-item-unified.unread {
+    background: #fff8f0;
+}
+
+body.dark-mode .notification-item-unified.unread {
+    background: #2d1a0f;
+}
+
+.notification-icon-unified {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.notification-icon-unified.order { background: #d1fae5; }
+.notification-icon-unified.payment { background: #dbeafe; }
+.notification-icon-unified.system { background: #e0e7ff; }
+.notification-icon-unified.promotion { background: #fef3c7; }
+
+.notification-content-unified {
+    flex: 1;
+}
+
+.notification-title-unified {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #1f2937;
+}
+
+body.dark-mode .notification-title-unified {
+    color: #e2e8f0;
+}
+
+.notification-message-unified {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+body.dark-mode .notification-message-unified {
+    color: #94a3b8;
+}
+
+.notification-time-unified {
+    font-size: 10px;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.unread-indicator {
+    width: 8px;
+    height: 8px;
+    background: #FF6B00;
+    border-radius: 50%;
+}
+
+/* Panel Footer */
+.bell-panel-footer {
+    padding: 14px 20px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+body.dark-mode .bell-panel-footer {
+    border-top-color: #334155;
+}
+
+.footer-links {
+    display: flex;
+    gap: 16px;
+}
+
+.view-all-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: #FF6B00;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+}
+
+.view-all-link:hover {
+    gap: 10px;
+}
+
+.preferences-link {
+    background: none;
+    border: none;
+    font-size: 13px;
+    color: #6b7280;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.preferences-link:hover {
+    color: #FF6B00;
+}
+
+.footer-stats {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+/* ============================================
+   PREFERENCES MODAL
+   ============================================ */
+.preferences-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.2s ease;
+}
+
+.preferences-modal.active {
+    display: flex;
+}
+
+.modal-content {
+    width: 500px;
+    max-width: calc(100vw - 32px);
+    background: white;
+    border-radius: 32px;
+    overflow: hidden;
+    animation: modalSlideUp 0.3s ease;
+}
+
+body.dark-mode .modal-content {
+    background: #1e293b;
+}
+
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+body.dark-mode .modal-header {
+    border-bottom-color: #334155;
+}
+
+.modal-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.modal-header h3 i {
+    color: #FF6B00;
+}
+
+.close-modal {
+    width: 36px;
+    height: 36px;
+    background: #f3f4f6;
+    border: none;
+    border-radius: 12px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.close-modal:hover {
+    background: #e5e7eb;
+}
+
+.modal-body {
+    padding: 24px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.pref-group {
+    margin-bottom: 24px;
+}
+
+.pref-group h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #374151;
+}
+
+body.dark-mode .pref-group h4 {
+    color: #e2e8f0;
+}
+
+.pref-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+body.dark-mode .pref-item {
+    border-bottom-color: #334155;
+}
+
+.pref-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pref-info i {
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 107, 0, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FF6B00;
+}
+
+.pref-info h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.pref-info p {
+    font-size: 11px;
+    color: #6b7280;
+}
+
+.pref-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 20px 0;
+}
+
+.type-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.type-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.type-checkbox input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #FF6B00;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+body.dark-mode .modal-footer {
+    border-top-color: #334155;
+}
+
+/* ============================================
+   TOAST NOTIFICATIONS
+   ============================================ */
+.toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notification-toast {
+    background: white;
+    border-radius: 16px;
+    padding: 14px 18px;
+    min-width: 300px;
+    max-width: 400px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: toastSlideIn 0.3s ease;
+    border-left: 4px solid #FF6B00;
+}
+
+body.dark-mode .notification-toast {
+    background: #1e293b;
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.toast-icon {
+    font-size: 20px;
+}
+
+.toast-content {
+    flex: 1;
+}
+
+.toast-title {
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+.toast-message {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+body.dark-mode .toast-message {
+    color: #94a3b8;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #9ca3af;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+@media (max-width: 768px) {
+    .bell-panel {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: 24px 24px 0 0;
+        max-height: 85vh;
+    }
+    
+    .bell-panel-header {
+        padding: 16px;
+    }
+    
+    .bell-filters {
+        padding: 10px 12px;
+    }
+    
+    .filter-tab {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .bell-list {
+        max-height: 50vh;
+    }
+    
+    .notification-toast {
+        min-width: auto;
+        max-width: calc(100vw - 32px);
+        margin: 0 16px;
+    }
+    
+    .toast-container {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .bell-filters {
+        gap: 2px;
+    }
+    
+    .filter-tab span:not(.filter-count) {
+        display: none;
+    }
+    
+    .filter-tab i {
+        margin: 0;
+    }
+    
+    .notification-item-unified {
+        padding: 12px 16px;
+    }
+    
+    .notification-icon-unified {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
+</style>
+
+<script>
+// ============================================
+// PREMIUM UNIFIED BELL - COMPLETE FUNCTIONALITY
+// Real-time Notifications | Animated Bell | Haptic Feedback
+// ============================================
+
+(function() {
+    'use strict';
+    
+    // DOM Elements
+    const bellContainer = document.querySelector('.unified-bell-container');
+    const bellTrigger = document.getElementById('unifiedBellTrigger');
+    const bellPanel = document.getElementById('unifiedBellPanel');
+    const bellList = document.getElementById('unifiedBellList');
+    const bellBadge = document.getElementById('unifiedBellBadge');
+    const bellDot = document.getElementById('unifiedBellDot');
+    const markAllBtn = document.getElementById('unifiedMarkAllBtn');
+    const bellSearchInput = document.getElementById('bellSearchInput');
+    const clearSearchBtn = document.getElementById('clearBellSearch');
+    const prefsModal = document.getElementById('notificationPrefsModal');
+    const openPrefsBtn = document.getElementById('openNotificationPrefs');
+    const closePrefsModal = document.getElementById('closePrefsModal');
+    const savePrefsBtn = document.getElementById('savePrefsBtn');
+    const resetPrefsBtn = document.getElementById('resetPrefsBtn');
+    
+    // State
+    let allNotifications = [];
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let unreadCount = 0;
+    let isAdmin = false;
+    let notificationSound = null;
+    let lastNotificationTime = 0;
+    
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    function init() {
+        loadPreferences();
+        setupEventListeners();
+        waitForFirebase();
+        preloadNotificationSound();
+    }
+    
+    function waitForFirebase() {
+        const checkInterval = setInterval(() => {
+            if (typeof firebase !== 'undefined' && firebase.auth && firebase.auth().currentUser) {
+                clearInterval(checkInterval);
+                loadNotifications();
+                setupRealtimeListener();
+            }
+        }, 500);
+    }
+    
+    function setupEventListeners() {
+        // Bell trigger
+        if (bellTrigger) {
+            bellTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                bellContainer.classList.toggle('active');
+                if (bellContainer.classList.contains('active')) {
+                    markCurrentNotificationsAsViewed();
+                }
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!bellContainer.contains(e.target)) {
+                    bellContainer.classList.remove('active');
+                }
+            });
+        }
+        
+        // Mark all read
+        if (markAllBtn) {
+            markAllBtn.addEventListener('click', markAllNotificationsRead);
+        }
+        
+        // Search
+        if (bellSearchInput) {
+            bellSearchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                clearSearchBtn.style.display = searchQuery ? 'block' : 'none';
+                renderNotifications();
+            });
+        }
+        
+        if (clearSearchBtn) {
+            clearSearchBtn.addEventListener('click', () => {
+                bellSearchInput.value = '';
+                searchQuery = '';
+                clearSearchBtn.style.display = 'none';
+                renderNotifications();
+            });
+        }
+        
+        // Filter tabs
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentFilter = tab.dataset.filter;
+                renderNotifications();
+            });
+        });
+        
+        // Preferences modal
+        if (openPrefsBtn) {
+            openPrefsBtn.addEventListener('click', () => {
+                prefsModal.classList.add('active');
+            });
+        }
+        
+        if (closePrefsModal) {
+            closePrefsModal.addEventListener('click', () => {
+                prefsModal.classList.remove('active');
+            });
+        }
+        
+        if (savePrefsBtn) {
+            savePrefsBtn.addEventListener('click', savePreferences);
+        }
+        
+        if (resetPrefsBtn) {
+            resetPrefsBtn.addEventListener('click', resetPreferences);
+        }
+        
+        // Close modal on backdrop click
+        if (prefsModal) {
+            prefsModal.addEventListener('click', (e) => {
+                if (e.target === prefsModal) {
+                    prefsModal.classList.remove('active');
+                }
+            });
+        }
+    }
+    
+    // ============================================
+    // NOTIFICATION LOADING
+    // ============================================
+    async function loadNotifications() {
+        const user = firebase.auth().currentUser;
+        if (!user) return;
+        
+        try {
+            const db = firebase.firestore();
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            isAdmin = userDoc.data()?.isAdmin === true;
+            
+            const collectionName = isAdmin ? 'adminNotifications' : 'notifications';
+            let query = db.collection(collectionName).orderBy('createdAt', 'desc').limit(50);
+            
+            if (!isAdmin) {
+                query = query.where('userId', '==', user.uid);
+            }
+            
+            const snapshot = await query.get();
+            allNotifications = [];
+            snapshot.forEach(doc => {
+                allNotifications.push({ id: doc.id, ...doc.data() });
+            });
+            
+            updateCounts();
+            renderNotifications();
+            
+        } catch (error) {
+            console.error('Error loading notifications:', error);
+            showEmptyState('error');
+        }
+    }
+    
+    function setupRealtimeListener() {
+        const user = firebase.auth().currentUser;
+        if (!user) return;
+        
+        const db = firebase.firestore();
+        db.collection('users').doc(user.uid).get().then(userDoc => {
+            isAdmin = userDoc.data()?.isAdmin === true;
+            const collectionName = isAdmin ? 'adminNotifications' : 'notifications';
+            
+            let query = db.collection(collectionName).orderBy('createdAt', 'desc').limit(50);
+            if (!isAdmin) {
+                query = query.where('userId', '==', user.uid);
+            }
+            
+            query.onSnapshot((snapshot) => {
+                let hasNew = false;
+                snapshot.docChanges().forEach(change => {
+                    if (change.type === 'added') {
+                        const newNotif = { id: change.doc.id, ...change.doc.data() };
+                        allNotifications.unshift(newNotif);
+                        hasNew = true;
+                        
+                        // Show toast for new notification
+                        if (!newNotif.read && Date.now() - lastNotificationTime > 2000) {
+                            showInAppToast(newNotif);
+                            playNotificationSound();
+                            triggerHapticFeedback();
+                            lastNotificationTime = Date.now();
+                        }
+                    }
+                });
+                
+                if (hasNew) {
+                    updateCounts();
+                    renderNotifications();
+                    animateBellRing();
+                }
+            });
+        });
+    }
+    
+    // ============================================
+    // RENDER NOTIFICATIONS
+    // ============================================
+    function renderNotifications() {
+        if (!bellList) return;
+        
+        let filtered = [...allNotifications];
+        
+        // Apply filter
+        if (currentFilter === 'unread') {
+            filtered = filtered.filter(n => !n.read);
+        } else if (currentFilter !== 'all') {
+            filtered = filtered.filter(n => n.type === currentFilter);
+        }
+        
+        // Apply search
+        if (searchQuery) {
+            filtered = filtered.filter(n => 
+                n.title?.toLowerCase().includes(searchQuery) ||
+                n.message?.toLowerCase().includes(searchQuery)
+            );
+        }
+        
+        if (filtered.length === 0) {
+            bellList.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-bell-slash"></i>
+                    </div>
+                    <h4>No notifications</h4>
+                    <p>${searchQuery ? 'No results match your search' : 'You\'re all caught up!'}</p>
+                </div>
+            `;
+            return;
+        }
+        
+        bellList.innerHTML = filtered.map(notif => `
+            <div class="notification-item-unified ${!notif.read ? 'unread' : ''}" 
+                 onclick="markSingleNotificationRead('${notif.id}', '${notif.actionLink || '#'}')">
+                <div class="notification-icon-unified ${notif.type}">
+                    ${getNotificationIcon(notif.type)}
+                </div>
+                <div class="notification-content-unified">
+                    <div class="notification-title-unified">${escapeHtml(notif.title)}</div>
+                    <div class="notification-message-unified">${escapeHtml(notif.message)}</div>
+                    <div class="notification-time-unified">
+                        <span>${getRelativeTime(notif.createdAt)}</span>
+                        ${!notif.read ? '<span class="unread-indicator"></span>' : ''}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        
+        // Update stats in footer
+        const statsSpan = document.querySelector('#notificationStats');
+        if (statsSpan) {
+            statsSpan.textContent = `${filtered.length} notification${filtered.length !== 1 ? 's' : ''}`;
+        }
+    }
+    
+    function getNotificationIcon(type) {
+        const icons = {
+            order: '📦',
+            payment: '💰',
+            system: '⚙️',
+            promotion: '🎁'
+        };
+        return icons[type] || '🔔';
+    }
+    
+    function getRelativeTime(timestamp) {
+        if (!timestamp) return 'Just now';
+        const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+        const diffMs = Date.now() - date;
+        const diffSecs = Math.floor(diffMs / 1000);
+        const diffMins = Math.floor(diffSecs / 60);
+        const diffHours = Math.floor(diffMins / 60);
+        const diffDays = Math.floor(diffHours / 24);
+        
+        if (diffSecs < 60) return 'Just now';
+        if (diffMins < 60) return `${diffMins} min ago`;
+        if (diffHours < 24) return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+        if (diffDays < 7) return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+        
+        return date.toLocaleDateString();
+    }
+    
+    // ============================================
+    // COUNTS & BADGE
+    // ============================================
+    function updateCounts() {
+        unreadCount = allNotifications.filter(n => !n.read).length;
+        
+        // Update bell badge
+        if (unreadCount > 0) {
+            bellBadge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+            bellBadge.classList.add('show');
+            bellDot.classList.add('show');
+        } else {
+            bellBadge.classList.remove('show');
+            bellDot.classList.remove('show');
+        }
+        
+        // Update panel count badge
+        const panelCountBadge = document.getElementById('panelCountBadge');
+        if (panelCountBadge) {
+            panelCountBadge.textContent = unreadCount;
+        }
+        
+        // Update unread filter count
+        const unreadFilterCount = document.getElementById('unreadFilterCount');
+        if (unreadFilterCount) {
+            unreadFilterCount.textContent = unreadCount;
+        }
+        
+        // Update browser title badge if supported
+        if (unreadCount > 0 && document.title.indexOf(`(${unreadCount})`) === -1) {
+            document.title = `(${unreadCount}) ${document.title.replace(/^\([0-9]+\)\s/, '')}`;
+        } else if (unreadCount === 0) {
+            document.title = document.title.replace(/^\([0-9]+\)\s/, '');
+        }
+    }
+    
+    // ============================================
+    // MARK AS READ FUNCTIONS
+    // ============================================
+    window.markSingleNotificationRead = async function(id, link) {
+        if (typeof firebase === 'undefined') return;
+        
+        const user = firebase.auth().currentUser;
+        if (!user) return;
+        
+        try {
+            const db = firebase.firestore();
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            const isAdminUser = userDoc.data()?.isAdmin === true;
+            const collectionName = isAdminUser ? 'adminNotifications' : 'notifications';
+            
+            await db.collection(collectionName).doc(id).update({ read: true });
+            
+            if (link && link !== '#') {
+                window.location.href = link;
+            }
+        } catch (error) {
+            console.error('Error marking notification as read:', error);
+            if (link && link !== '#') window.location.href = link;
+        }
+    };
+    
+    async function markAllNotificationsRead() {
+        if (typeof firebase === 'undefined') return;
+        
+        const unreadNotifs = allNotifications.filter(n => !n.read);
+        if (unreadNotifs.length === 0) return;
+        
+        const user = firebase.auth().currentUser;
+        if (!user) return;
+        
+        try {
+            const db = firebase.firestore();
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            const isAdminUser = userDoc.data()?.isAdmin === true;
+            const collectionName = isAdminUser ? 'adminNotifications' : 'notifications';
+            
+            const batch = db.batch();
+            unreadNotifs.forEach(notif => {
+                batch.update(db.collection(collectionName).doc(notif.id), { read: true });
+            });
+            await batch.commit();
+            
+            // Show success feedback
+            showBellToast('All notifications marked as read', 'success');
+            
+        } catch (error) {
+            console.error('Error marking all as read:', error);
+            showBellToast('Failed to mark all as read', 'error');
+        }
+    }
+    
+    function markCurrentNotificationsAsViewed() {
+        // Optional: Mark notifications as viewed without marking as read
+        // This is useful for analytics
+    }
+    
+    // ============================================
+    // ANIMATIONS & FEEDBACK
+    // ============================================
+    function animateBellRing() {
+        if (!bellTrigger) return;
+        
+        bellTrigger.classList.add('ringing');
+        setTimeout(() => {
+            bellTrigger.classList.remove('ringing');
+        }, 500);
+    }
+    
+    function triggerHapticFeedback() {
+        const hapticEnabled = localStorage.getItem('hapticFeedback') !== 'false';
+        if (hapticEnabled && window.navigator && window.navigator.vibrate) {
+            window.navigator.vibrate(200);
+        }
+    }
+    
+    function preloadNotificationSound() {
+        if (localStorage.getItem('notificationSound') !== 'true') return;
+
+        notificationSound = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=');
+        notificationSound.volume = 0.3;
+        notificationSound.load();
+    }
+    
+    function playNotificationSound() {
+        const soundEnabled = localStorage.getItem('notificationSound') === 'true';
+        if (soundEnabled && notificationSound) {
+            notificationSound.currentTime = 0;
+            notificationSound.play().catch(() => {});
+        }
+    }
+    
+    // ============================================
+    // IN-APP TOAST NOTIFICATIONS
+    // ============================================
+    function showInAppToast(notification) {
+        const toastContainer = document.getElementById('notificationToastContainer');
+        if (!toastContainer) return;
+        
+        const toast = document.createElement('div');
+        toast.className = 'notification-toast';
+        toast.innerHTML = `
+            <div class="toast-icon">${getNotificationIcon(notification.type)}</div>
+            <div class="toast-content">
+                <div class="toast-title">${escapeHtml(notification.title)}</div>
+                <div class="toast-message">${escapeHtml(notification.message.substring(0, 60))}${notification.message.length > 60 ? '...' : ''}</div>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        toast.addEventListener('click', () => {
+            markSingleNotificationRead(notification.id, notification.actionLink);
+            toast.remove();
+        });
+        
+        toastContainer.appendChild(toast);
+        
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }
+        }, 5000);
+    }
+    
+    function showBellToast(message, type = 'info') {
+        const toastContainer = document.getElementById('notificationToastContainer');
+        if (!toastContainer) return;
+        
+        const toast = document.createElement('div');
+        toast.className = 'notification-toast';
+        toast.style.borderLeftColor = type === 'success' ? '#10b981' : '#ef4444';
+        toast.innerHTML = `
+            <div class="toast-icon">${type === 'success' ? '✅' : '⚠️'}</div>
+            <div class="toast-content">
+                <div class="toast-title">${type === 'success' ? 'Success' : 'Error'}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        toastContainer.appendChild(toast);
+        
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }
+        }, 3000);
+    }
+    
+    function showEmptyState(type) {
+        if (!bellList) return;
+        
+        if (type === 'error') {
+            bellList.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h4>Unable to load notifications</h4>
+                    <p>Please check your connection and try again</p>
+                    <button class="btn-outline" style="margin-top: 16px;" onclick="location.reload()">
+                        <i class="fas fa-sync-alt"></i> Retry
+                    </button>
+                </div>
+            `;
+        }
+    }
+    
+    // ============================================
+    // PREFERENCES
+    // ============================================
+    function loadPreferences() {
+        const pushEnabled = localStorage.getItem('pushNotifications') === 'true';
+        const soundEnabled = localStorage.getItem('notificationSound') !== 'false';
+        const hapticEnabled = localStorage.getItem('hapticFeedback') !== 'false';
+        const desktopBadge = localStorage.getItem('desktopBadge') !== 'false';
+        
+        const pushCheckbox = document.getElementById('pushNotifPref');
+        const soundCheckbox = document.getElementById('soundNotifPref');
+        const hapticCheckbox = document.getElementById('hapticNotifPref');
+        const desktopCheckbox = document.getElementById('desktopBadgePref');
+        
+        if (pushCheckbox) pushCheckbox.checked = pushEnabled;
+        if (soundCheckbox) soundCheckbox.checked = soundEnabled;
+        if (hapticCheckbox) hapticCheckbox.checked = hapticEnabled;
+        if (desktopCheckbox) desktopCheckbox.checked = desktopBadge;
+        
+        // Request push permission if enabled
+        if (pushEnabled && Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+    }
+    
+    function savePreferences() {
+        const pushEnabled = document.getElementById('pushNotifPref')?.checked || false;
+        const soundEnabled = document.getElementById('soundNotifPref')?.checked || false;
+        const hapticEnabled = document.getElementById('hapticNotifPref')?.checked || false;
+        const desktopBadge = document.getElementById('desktopBadgePref')?.checked || false;
+        
+        localStorage.setItem('pushNotifications', pushEnabled);
+        localStorage.setItem('notificationSound', soundEnabled);
+        localStorage.setItem('hapticFeedback', hapticEnabled);
+        localStorage.setItem('desktopBadge', desktopBadge);
+        
+        // Request push permission if newly enabled
+        if (pushEnabled && Notification.permission !== 'granted') {
+            Notification.requestPermission();
+        }
+        
+        // Save notification type preferences
+        const typePrefs = {
+            order: document.getElementById('typeOrderPref')?.checked || false,
+            payment: document.getElementById('typePaymentPref')?.checked || false,
+            system: document.getElementById('typeSystemPref')?.checked || false,
+            promo: document.getElementById('typePromoPref')?.checked || false
+        };
+        localStorage.setItem('notificationTypePrefs', JSON.stringify(typePrefs));
+        
+        prefsModal.classList.remove('active');
+        showBellToast('Preferences saved successfully', 'success');
+    }
+    
+    function resetPreferences() {
+        // Reset to defaults
+        const pushCheckbox = document.getElementById('pushNotifPref');
+        const soundCheckbox = document.getElementById('soundNotifPref');
+        const hapticCheckbox = document.getElementById('hapticNotifPref');
+        const desktopCheckbox = document.getElementById('desktopBadgePref');
+        
+        if (pushCheckbox) pushCheckbox.checked = false;
+        if (soundCheckbox) soundCheckbox.checked = true;
+        if (hapticCheckbox) hapticCheckbox.checked = true;
+        if (desktopCheckbox) desktopCheckbox.checked = true;
+        
+        // Reset type prefs
+        const orderPref = document.getElementById('typeOrderPref');
+        const paymentPref = document.getElementById('typePaymentPref');
+        const systemPref = document.getElementById('typeSystemPref');
+        const promoPref = document.getElementById('typePromoPref');
+        
+        if (orderPref) orderPref.checked = true;
+        if (paymentPref) paymentPref.checked = true;
+        if (systemPref) systemPref.checked = true;
+        if (promoPref) promoPref.checked = true;
+        
+        showBellToast('Preferences reset to default', 'success');
+    }
+    
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    // ============================================
+    // EXPOSE GLOBALLY
+    // ============================================
+    window.markSingleNotificationRead = window.markSingleNotificationRead;
+    window.showBellToast = showBellToast;
+    
+    // Initialize
+    init();
+})();
+</script>

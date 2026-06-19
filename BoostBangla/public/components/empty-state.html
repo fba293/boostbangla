@@ -1,0 +1,1100 @@
+<!-- ============================================
+     BoostBangla Premium Empty States v3.0
+     Glass Morphism | Flutter-Smooth | BIG & BOLD
+     9+ Beautiful Empty States with Animations
+     ============================================ -->
+
+<div class="premium-empty-states">
+    
+    <!-- 1. NO ORDERS - With Action Button -->
+    <div class="empty-state-card" id="emptyOrders">
+        <div class="empty-state-illustration">
+            <div class="illustration-circle pulse-glow">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="25" y="35" width="70" height="55" rx="8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M35 35L45 20H75L85 35" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <circle cx="45" cy="65" r="4" fill="currentColor"/>
+                    <circle cx="75" cy="65" r="4" fill="currentColor"/>
+                    <path d="M50 80C55 85 65 85 70 80" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="floating-dots">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+        </div>
+        <h3 class="empty-title animate-slide-up">No Orders Yet</h3>
+        <p class="empty-message animate-slide-up delay-100">You haven't placed any orders yet. Browse our premium services and get started with your first order!</p>
+        <div class="empty-actions animate-slide-up delay-200">
+            <a href="/public/pages/dashboard/services.html" class="btn-primary btn-lg">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Browse Services</span>
+            </a>
+            <a href="/public/pages/dashboard/new-order.html" class="btn-outline">
+                <i class="fas fa-plus-circle"></i>
+                <span>Quick Order</span>
+            </a>
+        </div>
+        <div class="empty-tips">
+            <div class="tip-item">
+                <i class="fas fa-rocket"></i>
+                <span>Instant delivery</span>
+            </div>
+            <div class="tip-item">
+                <i class="fas fa-shield-alt"></i>
+                <span>100% secure</span>
+            </div>
+            <div class="tip-item">
+                <i class="fas fa-headset"></i>
+                <span>24/7 support</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. NO NOTIFICATIONS - Peaceful State -->
+    <div class="empty-state-card" id="emptyNotifications">
+        <div class="empty-state-illustration">
+            <div class="illustration-circle quiet-zone">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60 20C45 20 35 30 35 45V55C35 65 30 75 25 80L22 83C20 85 22 88 25 88H95C98 88 100 85 98 83L95 80C90 75 85 65 85 55V45C85 30 75 20 60 20Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <circle cx="60" cy="95" r="5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M70 30C75 32 80 38 80 45" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <circle cx="60" cy="55" r="3" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="z-zzz">Zzz</div>
+        </div>
+        <h3 class="empty-title animate-slide-up">All Caught Up! 🎉</h3>
+        <p class="empty-message animate-slide-up delay-100">You have no new notifications. Everything is quiet and peaceful. We'll notify you when something important happens.</p>
+        <div class="empty-actions animate-slide-up delay-200">
+            <button class="btn-outline" onclick="location.reload()">
+                <i class="fas fa-sync-alt"></i>
+                <span>Refresh</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 3. NO SEARCH RESULTS - With Clear Action -->
+    <div class="empty-state-card" id="emptySearch">
+        <div class="empty-state-illustration">
+            <div class="illustration-circle search-empty">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M68 68L88 88" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M45 40H55" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M40 55H60" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+        </div>
+        <h3 class="empty-title animate-slide-up">No Results Found</h3>
+        <p class="empty-message animate-slide-up delay-100">We couldn't find anything matching <span class="search-keyword" id="searchKeyword">"your search"</span>. Try different keywords or browse our categories.</p>
+        <div class="empty-actions animate-slide-up delay-200">
+            <button class="btn-primary" onclick="clearSearch()">
+                <i class="fas fa-undo-alt"></i>
+                <span>Clear Search</span>
+            </button>
+            <a href="/public/pages/dashboard/services.html" class="btn-outline">
+                <i class="fas fa-th-large"></i>
+                <span>Browse All</span>
+            </a>
+        </div>
+        <div class="search-suggestions">
+            <span class="suggestion-label">Popular searches:</span>
+            <div class="suggestion-chips">
+                <span class="chip" onclick="searchQuery('Facebook followers')">Facebook followers</span>
+                <span class="chip" onclick="searchQuery('Instagram likes')">Instagram likes</span>
+                <span class="chip" onclick="searchQuery('YouTube views')">YouTube views</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. NO FAVORITES - Heartbreaking but Hopeful -->
+    <div class="empty-state-card" id="emptyFavorites">
+        <div class="empty-state-illustration">
+            <div class="illustration-circle heart-beat">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60 35C48 23 30 23 20 35C10 47 10 65 20 77L60 95L100 77C110 65 110 47 100 35C90 23 72 23 60 35Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M60 45V65" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M50 55H70" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+        </div>
+        <h3 class="empty-title animate-slide-up">No Favorites Yet 💔</h3>
+        <p class="empty-message animate-slide-up delay-100">You haven't added any services to your favorites. Click the <i class="fas fa-star" style="color: #FF6B00;"></i> star icon on any service to save it here.</p>
+        <div class="empty-actions animate-slide-up delay-200">
+            <a href="/public/pages/dashboard/services.html" class="btn-primary btn-lg">
+                <i class="fas fa-heart"></i>
+                <span>Discover Services</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- 5. NO TRANSACTIONS - Financial State -->
+    <div class="empty-state-card" id="emptyTransactions">
+        <div class="empty-state-illustration">
+            <div class="illustration-circle wallet-empty">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="35" width="70" height="50" rx="8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M90 55H100C102 55 104 57 104 60V70C104 73 102 75 100 75H90" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <circle cx="65" cy="60" r="4" fill="currentColor"/>
+                    <path d="M35 45H55" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="floating-coins">
+                <span class="coin">💰</span>
+                <span class="coin">💎</span>
+            </div>
+        </div>
+        <h3 class="empty-title animate-slide-up">No Transactions Yet</h3>
+        <p class="empty-message animate-slide-up delay-100">Your transaction history will appear here once you make a deposit or place an order. Start your journey with BoostBangla today!</p>
+        <div class="empty-actions animate-slide-up delay-200">
+            <a href="/public/pages/dashboard/add-funds.html" class="btn-primary btn-lg">
+                <i class="fas fa-plus-circle"></i>
+                <span>Add Funds</span>
+            </a>
+            <a href="/public/pages/dashboard/services.html" class="btn-outline">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Place Order</span>
+            </a>
+        </div>
+        <div class="promo-banner">
+            <i class="fas fa-gift"></i>
+            <span>First deposit bonus: Get 10% extra on your first add!</span>
+        </div>
+    </div>
+
+    <!-- 6. NO SUPPORT TICKETS - Helpful State -->
+    <div class="empty-state-card" id="emptyTickets">
+        <div class="empty-state-illustration">
+            <div class="illustration-circle support-happy">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="25" y="30" width="70" height="55" rx="8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M45 50L55 60L75 40" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="60" cy="75" r="8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M60 55V65" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+        </div>
+        <h3 class="empty-title animate-slide-up">No Support Tickets</h3>
+        <p class="empty-message animate-slide-up delay-100">Everything is running smoothly! No open support tickets. Need help? Our support team is available 24/7 to assist you.</p>
+        <div class="empty-actions animate-slide-up delay-200">
+            <a href="/public/pages/dashboard/new-ticket.html" class="btn-primary">
+                <i class="fas fa-plus-circle"></i>
+                <span>Create Ticket</span>
+            </a>
+            <a href="/public/pages/dashboard/faq.html" class="btn-outline">
+                <i class="fas fa-question-circle"></i>
+                <span>View FAQ</span>
+            </a>
+        </div>
+        <div class="support-stats">
+            <div class="stat">
+                <span class="stat-value">24/7</span>
+                <span class="stat-label">Support</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">&lt;2min</span>
+                <span class="stat-label">Response Time</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">98%</span>
+                <span class="stat-label">Resolution Rate</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. NETWORK ERROR - Offline State -->
+    <div class="empty-state-card error-state" id="emptyNetwork">
+        <div class="empty-state-illustration">
+            <div class="illustration-circle network-error">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M35 50C35 35 45 25 60 25C75 25 85 35 85 50" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M45 65C45 55 52 48 60 48C68 48 75 55 75 65" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <circle cx="60" cy="80" r="5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <line x1="60" y1="85" x2="60" y2="90" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+        </div>
+        <h3 class="empty-title animate-slide-up">Connection Lost 📡</h3>
+        <p class="empty-message animate-slide-up delay-100">Unable to connect to the server. Please check your internet connection and try again. We'll wait for you!</p>
+        <div class="empty-actions animate-slide-up delay-200">
+            <button class="btn-primary" onclick="location.reload()">
+                <i class="fas fa-sync-alt fa-spin"></i>
+                <span>Retry Connection</span>
+            </button>
+            <button class="btn-outline" onclick="checkNetwork()">
+                <i class="fas fa-wifi"></i>
+                <span>Check Network</span>
+            </button>
+        </div>
+        <div class="offline-tips">
+            <p class="tip"><i class="fas fa-info-circle"></i> Try switching between WiFi and mobile data</p>
+        </div>
+    </div>
+
+    <!-- 8. MAINTENANCE MODE - Professional -->
+    <div class="empty-state-card maintenance-state" id="emptyMaintenance">
+        <div class="empty-state-illustration">
+            <div class="illustration-circle maintenance">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="60" cy="60" r="35" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M60 35V60L75 75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M85 70L95 80" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M35 50L25 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="progress-ring">
+                <svg width="80" height="80">
+                    <circle cx="40" cy="40" r="35" fill="none" stroke="rgba(255,107,0,0.2)" stroke-width="3"/>
+                    <circle cx="40" cy="40" r="35" fill="none" stroke="#FF6B00" stroke-width="3" stroke-dasharray="220" stroke-dashoffset="66" stroke-linecap="round">
+                        <animate attributeName="stroke-dashoffset" from="220" to="0" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+            </div>
+        </div>
+        <h3 class="empty-title animate-slide-up">Under Maintenance 🔧</h3>
+        <p class="empty-message animate-slide-up delay-100">We're currently performing scheduled maintenance to serve you better. Estimated completion in <span id="maintenanceTimer">00:00</span></p>
+        <div class="empty-actions animate-slide-up delay-200">
+            <button class="btn-primary" onclick="location.reload()">
+                <i class="fas fa-sync-alt"></i>
+                <span>Check Status</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 9. ONBOARDING - Welcome State -->
+    <div class="empty-state-card onboarding-state" id="emptyOnboarding">
+        <div class="empty-state-illustration">
+            <div class="illustration-circle welcome-glow">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60 20L65 35H80L68 45L73 60L60 50L47 60L52 45L40 35H55L60 20Z" fill="currentColor"/>
+                    <circle cx="45" cy="70" r="8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <circle cx="75" cy="70" r="8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M50 85C55 90 65 90 70 85" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="confetti">
+                <span>🎉</span><span>🎊</span><span>✨</span>
+            </div>
+        </div>
+        <h3 class="empty-title animate-slide-up">Welcome to BoostBangla! 🎉</h3>
+        <p class="empty-message animate-slide-up delay-100">You're all set! Your account is ready to go. Let's get started with your first order and experience the best SMM panel in Bangladesh.</p>
+        <div class="empty-actions animate-slide-up delay-200">
+            <a href="/public/pages/dashboard/add-funds.html" class="btn-primary btn-lg pulse-animation">
+                <i class="fas fa-plus-circle"></i>
+                <span>Add Funds First</span>
+            </a>
+            <a href="/public/pages/dashboard/new-order.html" class="btn-outline">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Place Order</span>
+            </a>
+        </div>
+        <div class="video-tutorial">
+            <button class="play-tutorial" onclick="showTutorial()">
+                <i class="fas fa-play-circle"></i>
+                <span>Watch quick tutorial (2 min)</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Global Styles -->
+<style>
+/* ============================================
+   PREMIUM EMPTY STATES - v3.0
+   Glass Morphism | BIG & BOLD | Smooth Animations
+   ============================================ */
+
+.premium-empty-states {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Empty State Card */
+.empty-state-card {
+    background: white;
+    border-radius: 32px;
+    padding: 48px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(229, 231, 235, 0.5);
+}
+
+body.dark-mode .empty-state-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.empty-state-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: rgba(255, 107, 0, 0.3);
+}
+
+/* Error/Maintenance specific */
+.empty-state-card.error-state,
+.empty-state-card.maintenance-state {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+}
+
+body.dark-mode .empty-state-card.error-state,
+body.dark-mode .empty-state-card.maintenance-state {
+    background: linear-gradient(135deg, #1a0a0a 0%, #1e293b 100%);
+}
+
+.empty-state-card.onboarding-state {
+    background: linear-gradient(135deg, #FFF7ED 0%, #FFFFFF 100%);
+}
+
+body.dark-mode .empty-state-card.onboarding-state {
+    background: linear-gradient(135deg, #2d1a0f 0%, #1e293b 100%);
+}
+
+/* Illustrations */
+.empty-state-illustration {
+    position: relative;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+.illustration-circle {
+    width: 140px;
+    height: 140px;
+    background: rgba(255, 107, 0, 0.08);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s;
+}
+
+.illustration-circle svg {
+    width: 80px;
+    height: 80px;
+    color: #FF6B00;
+}
+
+body.dark-mode .illustration-circle {
+    background: rgba(255, 107, 0, 0.12);
+}
+
+/* Pulse Glow Animation */
+.pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.4); }
+    50% { box-shadow: 0 0 0 20px rgba(255, 107, 0, 0); }
+}
+
+.quiet-zone {
+    animation: float 3s ease-in-out infinite;
+}
+
+.heart-beat {
+    animation: heartBeat 1.2s ease-in-out infinite;
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.wallet-empty {
+    animation: shakeLight 2s ease-in-out infinite;
+}
+
+@keyframes shakeLight {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(2deg); }
+    75% { transform: rotate(-2deg); }
+}
+
+.support-happy {
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.network-error {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.maintenance {
+    animation: spin 3s linear infinite;
+}
+
+.welcome-glow {
+    animation: welcomeGlow 2s ease-in-out infinite;
+}
+
+@keyframes welcomeGlow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.6); transform: scale(1); }
+    50% { box-shadow: 0 0 0 25px rgba(255, 107, 0, 0); transform: scale(1.05); }
+}
+
+/* Floating elements */
+.floating-dots {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 6px;
+}
+
+.floating-dots .dot {
+    width: 6px;
+    height: 6px;
+    background: #FF6B00;
+    border-radius: 50%;
+    animation: floatDot 1.5s ease-in-out infinite;
+}
+
+.floating-dots .dot:nth-child(2) { animation-delay: 0.3s; }
+.floating-dots .dot:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes floatDot {
+    0%, 100% { transform: translateY(0); opacity: 0.3; }
+    50% { transform: translateY(-8px); opacity: 1; }
+}
+
+.z-zzz {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 24px;
+    opacity: 0.5;
+    animation: zzz 2s ease-in-out infinite;
+}
+
+@keyframes zzz {
+    0%, 100% { transform: translateY(0); opacity: 0.3; }
+    50% { transform: translateY(-10px); opacity: 0.8; }
+}
+
+.floating-coins {
+    position: absolute;
+    bottom: -10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+.coin {
+    font-size: 24px;
+    animation: coinSpin 1s ease-in-out infinite;
+}
+
+.coin:nth-child(2) { animation-delay: 0.3s; }
+
+@keyframes coinSpin {
+    0%, 100% { transform: rotateY(0deg); }
+    50% { transform: rotateY(180deg); }
+}
+
+.progress-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.confetti {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-size: 24px;
+}
+
+.confetti span {
+    animation: confettiFall 2s ease-in-out infinite;
+}
+
+.confetti span:nth-child(2) { animation-delay: 0.3s; }
+.confetti span:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes confettiFall {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(10px) rotate(15deg); }
+}
+
+/* Typography */
+.empty-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #1f2937, #374151);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.dark-mode .empty-title {
+    background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.empty-message {
+    font-size: 16px;
+    color: #6b7280;
+    max-width: 450px;
+    margin: 0 auto 28px;
+    line-height: 1.6;
+}
+
+body.dark-mode .empty-message {
+    color: #94a3b8;
+}
+
+.search-keyword {
+    display: inline-block;
+    background: rgba(255, 107, 0, 0.15);
+    color: #FF6B00;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+/* Buttons */
+.empty-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #FF6B00, #CC5500);
+    color: white;
+    border: none;
+    border-radius: 60px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-primary:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px -8px rgba(255, 107, 0, 0.5);
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+.btn-primary.btn-lg {
+    padding: 16px 36px;
+    font-size: 16px;
+}
+
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: transparent;
+    border: 2px solid #e5e7eb;
+    border-radius: 60px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+body.dark-mode .btn-outline {
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+.btn-outline:hover {
+    border-color: #FF6B00;
+    color: #FF6B00;
+    transform: translateY(-2px);
+}
+
+.pulse-animation {
+    animation: btnPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes btnPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.4); }
+    50% { box-shadow: 0 0 0 12px rgba(255, 107, 0, 0); }
+}
+
+/* Tips Section */
+.empty-tips {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+body.dark-mode .empty-tips {
+    border-top-color: #334155;
+}
+
+.tip-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.tip-item i {
+    color: #10b981;
+    font-size: 16px;
+}
+
+body.dark-mode .tip-item {
+    color: #94a3b8;
+}
+
+/* Search Suggestions */
+.search-suggestions {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.suggestion-label {
+    font-size: 12px;
+    color: #9ca3af;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.suggestion-chips {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.chip {
+    padding: 6px 16px;
+    background: #f3f4f6;
+    border-radius: 30px;
+    font-size: 13px;
+    color: #4b5563;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+body.dark-mode .chip {
+    background: #334155;
+    color: #cbd5e1;
+}
+
+.chip:hover {
+    background: #FF6B00;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Promo Banner */
+.promo-banner {
+    background: linear-gradient(135deg, #FF6B10, #FF8C42);
+    border-radius: 16px;
+    padding: 14px 20px;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.promo-banner i {
+    font-size: 20px;
+}
+
+/* Support Stats */
+.support-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+body.dark-mode .support-stats {
+    border-top-color: #334155;
+}
+
+.support-stats .stat {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 20px;
+    font-weight: 800;
+    color: #FF6B00;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* Offline Tips */
+.offline-tips {
+    margin-top: 24px;
+    padding: 16px;
+    background: #fef3c7;
+    border-radius: 16px;
+}
+
+body.dark-mode .offline-tips {
+    background: #451a03;
+}
+
+.offline-tips .tip {
+    font-size: 13px;
+    color: #d97706;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Video Tutorial */
+.video-tutorial {
+    margin-top: 24px;
+}
+
+.play-tutorial {
+    background: transparent;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #FF6B00;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.play-tutorial i {
+    font-size: 24px;
+}
+
+.play-tutorial:hover {
+    gap: 14px;
+}
+
+/* Animation Classes */
+.animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .empty-state-card {
+        padding: 32px 24px;
+        border-radius: 24px;
+    }
+    
+    .illustration-circle {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .illustration-circle svg {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .empty-title {
+        font-size: 24px;
+    }
+    
+    .empty-message {
+        font-size: 14px;
+    }
+    
+    .empty-actions {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .btn-primary, .btn-outline {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .empty-tips {
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+    }
+    
+    .support-stats {
+        gap: 20px;
+    }
+    
+    .promo-banner {
+        font-size: 12px;
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        text-align: center;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .empty-state-card {
+        padding: 24px 16px;
+    }
+    
+    .illustration-circle {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .empty-title {
+        font-size: 20px;
+    }
+    
+    .suggestion-chips {
+        gap: 8px;
+    }
+    
+    .chip {
+        font-size: 11px;
+        padding: 5px 12px;
+    }
+}
+</style>
+
+<script>
+// ============================================
+// PREMIUM EMPTY STATES - FULL FUNCTIONALITY
+// ============================================
+
+// Helper function to show empty state
+function showEmptyState(type, containerId, options = {}) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    const emptyStateMap = {
+        'orders': 'emptyOrders',
+        'notifications': 'emptyNotifications',
+        'search': 'emptySearch',
+        'favorites': 'emptyFavorites',
+        'transactions': 'emptyTransactions',
+        'tickets': 'emptyTickets',
+        'network': 'emptyNetwork',
+        'maintenance': 'emptyMaintenance',
+        'onboarding': 'emptyOnboarding'
+    };
+    
+    const emptyStateId = emptyStateMap[type];
+    if (!emptyStateId) return;
+    
+    const emptyStateElement = document.getElementById(emptyStateId);
+    if (!emptyStateElement) return;
+    
+    // Clone and clear container
+    container.innerHTML = '';
+    const clone = emptyStateElement.cloneNode(true);
+    clone.style.display = 'block';
+    
+    // Update search keyword if provided
+    if (type === 'search' && options.keyword) {
+        const keywordSpan = clone.querySelector('#searchKeyword');
+        if (keywordSpan) keywordSpan.textContent = `"${options.keyword}"`;
+    }
+    
+    // Update maintenance timer if provided
+    if (type === 'maintenance' && options.duration) {
+        startMaintenanceTimer(options.duration);
+    }
+    
+    container.appendChild(clone);
+    
+    // Add entrance animation
+    clone.style.animation = 'fadeIn 0.5s ease-out';
+    
+    return clone;
+}
+
+// Maintenance timer function
+function startMaintenanceTimer(minutes = 15) {
+    let timeLeft = minutes * 60;
+    const timerElement = document.getElementById('maintenanceTimer');
+    if (!timerElement) return;
+    
+    const interval = setInterval(() => {
+        const mins = Math.floor(timeLeft / 60);
+        const secs = timeLeft % 60;
+        timerElement.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        
+        if (timeLeft <= 0) {
+            clearInterval(interval);
+            timerElement.textContent = "00:00";
+            timerElement.innerHTML = '<span class="text-green-500">Ready! Refresh page</span>';
+        }
+        timeLeft--;
+    }, 1000);
+}
+
+// Search functions
+function clearSearch() {
+    const searchInput = document.querySelector('input[type="search"], .search-input');
+    if (searchInput) {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+    }
+    location.reload();
+}
+
+function searchQuery(query) {
+    const searchInput = document.querySelector('input[type="search"], .search-input');
+    if (searchInput) {
+        searchInput.value = query;
+        searchInput.dispatchEvent(new Event('input'));
+        // Trigger search
+        const form = searchInput.closest('form');
+        if (form) form.submit();
+    }
+}
+
+// Network check function
+function checkNetwork() {
+    if (navigator.onLine) {
+        showEmptyStateToast('✅ Network is online! Refreshing...', 'success');
+        setTimeout(() => location.reload(), 1500);
+    } else {
+        showEmptyStateToast('❌ Still offline. Please check your connection.', 'error');
+    }
+}
+
+// Tutorial function
+function showTutorial() {
+    // You can integrate a video modal here
+    alert('🎥 Tutorial video coming soon! Check our YouTube channel.');
+}
+
+// Toast helper for empty states
+function showEmptyStateToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `empty-toast toast-${type}`;
+    toast.innerHTML = `
+        <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+        <span>${message}</span>
+    `;
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+        color: white;
+        padding: 12px 20px;
+        border-radius: 60px;
+        font-size: 14px;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+        animation: slideInRight 0.3s ease;
+    `;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Add animation keyframes
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideInRight {
+        from { opacity: 0; transform: translateX(100%); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+`;
+document.head.appendChild(style);
+
+console.log('✅ Premium Empty States loaded');
+</script>

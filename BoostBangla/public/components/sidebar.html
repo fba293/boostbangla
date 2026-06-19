@@ -1,0 +1,480 @@
+<div class="premium-sidebar" id="premiumSidebar">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <div class="sidebar-content">
+        <div class="sidebar-header animate-slide-down">
+            <div class="logo-wrapper">
+                <div class="logo-icon-glow"><i class="fas fa-chart-line"></i></div>
+                <div class="logo-text-wrapper">
+                    <a href="/public/pages/dashboard/index.html" class="logo-link">Boost<span class="logo-highlight">Bangla</span></a>
+                    <span class="logo-badge">v3.0</span>
+                </div>
+            </div>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn"><i class="fas fa-times"></i></button>
+        </div>
+
+        <div class="user-card glass-card" id="sidebarUserCard">
+            <div class="user-avatar-wrapper">
+                <div class="user-avatar-ring">
+                    <div class="user-avatar" id="sidebarUserAvatar">
+                        <img id="sidebarUserAvatarImg" src="/public/assets/images/avatars/default-avatar.svg" alt="Avatar">
+                        <span class="avatar-initials" id="sidebarAvatarInitials">U</span>
+                    </div>
+                    <div class="avatar-status online"></div>
+                </div>
+                <div class="avatar-upload-badge" id="sidebarAvatarUpload"><i class="fas fa-camera"></i></div>
+            </div>
+            <div class="user-info">
+                <h4 class="user-name" id="sidebarUserName">User</h4>
+                <p class="user-email" id="sidebarUserEmail">user@example.com</p>
+                <div class="user-balance-card">
+                    <span class="balance-label">Balance</span>
+                    <div class="balance-value-wrapper">
+                        <span class="balance-currency">৳</span>
+                        <span class="balance-value animated-counter" id="sidebarUserBalance">0</span>
+                    </div>
+                    <span class="balance-usd" id="sidebarBalanceUSD">≈ $0 USD</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title"><span class="title-dot"></span><span>Main</span></div>
+                <a href="/public/pages/dashboard/index.html" class="nav-item" data-page="dashboard"><div class="nav-icon-wrapper"><i class="fas fa-tachometer-alt"></i></div><span class="nav-text">Dashboard</span><div class="nav-indicator"></div></a>
+                <a href="/public/pages/dashboard/new-order.html" class="nav-item" data-page="new-order"><div class="nav-icon-wrapper"><i class="fas fa-shopping-cart"></i></div><span class="nav-text">New Order</span><span class="nav-badge hot">Hot</span></a>
+                <a href="/public/pages/dashboard/orders.html" class="nav-item" data-page="orders"><div class="nav-icon-wrapper"><i class="fas fa-history"></i></div><span class="nav-text">Order History</span></a>
+                <a href="/public/pages/dashboard/services.html" class="nav-item" data-page="services"><div class="nav-icon-wrapper"><i class="fas fa-layer-group"></i></div><span class="nav-text">Services</span></a>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title"><span class="title-dot"></span><span>Finance</span></div>
+                <a href="/public/pages/dashboard/add-funds.html" class="nav-item highlight" data-page="add-funds"><div class="nav-icon-wrapper"><i class="fas fa-plus-circle"></i></div><span class="nav-text">Add Funds</span><i class="fas fa-arrow-right nav-arrow"></i></a>
+                <a href="/public/pages/dashboard/withdrawals.html" class="nav-item" data-page="withdrawals"><div class="nav-icon-wrapper"><i class="fas fa-arrow-up"></i></div><span class="nav-text">Withdrawals</span></a>
+                <a href="/public/pages/dashboard/transactions.html" class="nav-item" data-page="transactions"><div class="nav-icon-wrapper"><i class="fas fa-receipt"></i></div><span class="nav-text">Transactions</span></a>
+                <a href="/public/pages/dashboard/refunds.html" class="nav-item" data-page="refunds"><div class="nav-icon-wrapper"><i class="fas fa-hand-holding-usd"></i></div><span class="nav-text">Refunds</span></a>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title"><span class="title-dot"></span><span>Tools</span></div>
+                <a href="/public/pages/dashboard/mass-order.html" class="nav-item" data-page="mass-order"><div class="nav-icon-wrapper"><i class="fas fa-layer-group"></i></div><span class="nav-text">Mass Order</span></a>
+                <a href="/public/pages/dashboard/affiliates.html" class="nav-item" data-page="affiliates"><div class="nav-icon-wrapper"><i class="fas fa-link"></i></div><span class="nav-text">Affiliates</span><span class="nav-badge new">New</span></a>
+                <a href="/public/pages/dashboard/child-panel.html" class="nav-item" data-page="child-panel"><div class="nav-icon-wrapper"><i class="fas fa-child"></i></div><span class="nav-text">Child Panel</span></a>
+                <a href="/public/pages/dashboard/giveaway.html" class="nav-item" data-page="giveaway"><div class="nav-icon-wrapper"><i class="fas fa-gift"></i></div><span class="nav-text">Giveaway</span></a>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title"><span class="title-dot"></span><span>Support</span></div>
+                <a href="/public/pages/dashboard/tickets.html" class="nav-item" data-page="tickets"><div class="nav-icon-wrapper"><i class="fas fa-ticket-alt"></i></div><span class="nav-text">Support Tickets</span></a>
+                <a href="/public/pages/dashboard/notifications.html" class="nav-item" data-page="notifications"><div class="nav-icon-wrapper"><i class="fas fa-bell"></i></div><span class="nav-text">Notifications</span><span class="notification-dot" id="sidebarNotifDot"></span></a>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title"><span class="title-dot"></span><span>Settings</span></div>
+                <a href="/public/pages/dashboard/account.html" class="nav-item" data-page="account"><div class="nav-icon-wrapper"><i class="fas fa-user-cog"></i></div><span class="nav-text">Account</span></a>
+                <a href="/public/pages/dashboard/api-docs.html" class="nav-item" data-page="api-docs"><div class="nav-icon-wrapper"><i class="fas fa-code"></i></div><span class="nav-text">API Docs</span></a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="footer-action dark-mode-action">
+                <div class="action-icon"><i class="fas fa-moon"></i></div>
+                <span class="action-text">Dark Mode</span>
+                <label class="toggle-switch premium-toggle">
+                    <input type="checkbox" id="sidebarDarkModeToggle">
+                    <span class="toggle-slider"><span class="toggle-knob"></span></span>
+                </label>
+            </div>
+            <button class="footer-action logout-action" id="sidebarLogoutBtn">
+                <div class="action-icon"><i class="fas fa-sign-out-alt"></i></div>
+                <span class="action-text">Logout</span>
+                <i class="fas fa-chevron-right action-arrow"></i>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<style>
+:root {
+    --sidebar-width: 280px;
+    --sidebar-collapsed-width: 88px;
+    --sidebar-bg: linear-gradient(180deg, #02101A 0%, #031a2a 50%, #042234 100%);
+    --sidebar-border: rgba(255, 255, 255, 0.08);
+    --nav-hover-bg: rgba(255, 107, 0, 0.12);
+    --nav-active-bg: rgba(255, 107, 0, 0.18);
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: var(--sidebar-width); z-index: 1000; pointer-events: none; }
+.premium-sidebar.open { pointer-events: auto; }
+.sidebar-content { position: relative; z-index: 2; width: 100%; height: 100%; background: var(--sidebar-bg); display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; box-shadow: 4px 0 30px rgba(0,0,0,0.3); transition: width 0.4s var(--transition-smooth), transform 0.3s var(--transition-smooth); will-change: transform; -webkit-overflow-scrolling: touch; pointer-events: auto; }
+.sidebar-header { padding: 24px 20px; border-bottom: 1px solid var(--sidebar-border); display: flex; align-items: center; justify-content: space-between; }
+.logo-wrapper { display: flex; align-items: center; gap: 12px; }
+.logo-icon-glow { width: 44px; height: 44px; background: linear-gradient(135deg, #FF6B00, #CC5500); border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(255,107,0,0.3); animation: float 3s ease-in-out infinite; }
+.logo-icon-glow i { font-size: 24px; color: white; }
+.logo-link { font-size: 22px; font-weight: 800; text-decoration: none; background: linear-gradient(135deg, #FF6B00, #FF8C42); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.logo-highlight { -webkit-text-fill-color: #FF6B00; }
+.logo-badge { font-size: 9px; font-weight: 600; color: #FF6B00; background: rgba(255,107,0,0.15); padding: 2px 6px; border-radius: 20px; display: inline-block; width: fit-content; }
+.sidebar-close-btn { display: none; width: 36px; height: 36px; background: rgba(255,255,255,0.08); border: 1px solid var(--sidebar-border); border-radius: 12px; color: #94a3b8; cursor: pointer; transition: all 0.2s; }
+.user-card { margin: 20px; padding: 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; transition: all 0.3s; }
+.user-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,107,0,0.3); transform: translateY(-2px); }
+.user-avatar-wrapper { position: relative; display: inline-block; margin-bottom: 16px; }
+.user-avatar-ring { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, #FF6B00, #CC5500); padding: 3px; }
+.user-avatar { width: 100%; height: 100%; border-radius: 50%; background: #1e293b; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-initials { font-size: 28px; font-weight: 700; color: white; }
+.avatar-status { position: absolute; bottom: 4px; right: 4px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #02101A; }
+.avatar-status.online { background: #10b981; animation: pulse 2s infinite; }
+.avatar-upload-badge { position: absolute; bottom: -4px; right: -8px; width: 28px; height: 28px; background: #FF6B00; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transform: scale(0); transition: all 0.2s; border: 2px solid #02101A; }
+.user-avatar-wrapper:hover .avatar-upload-badge { opacity: 1; transform: scale(1); }
+.user-info { text-align: left; }
+.user-name { font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; }
+.user-email { font-size: 11px; color: #94a3b8; margin-bottom: 12px; }
+.user-balance-card { background: rgba(0,0,0,0.3); border-radius: 16px; padding: 10px 12px; margin-top: 8px; }
+.balance-label { font-size: 10px; color: #94a3b8; text-transform: uppercase; }
+.balance-value-wrapper { display: flex; align-items: baseline; gap: 2px; margin-top: 4px; }
+.balance-currency { font-size: 14px; font-weight: 600; color: #FF6B00; }
+.balance-value { font-size: 22px; font-weight: 800; color: white; line-height: 1; }
+.balance-usd { font-size: 10px; color: #64748b; margin-top: 4px; display: block; }
+.sidebar-nav { flex: 1; padding: 8px 16px; display: flex; flex-direction: column; gap: 20px; }
+.nav-section { display: flex; flex-direction: column; gap: 4px; }
+.nav-section-title { display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #64748b; }
+.title-dot { width: 4px; height: 4px; background: #FF6B00; border-radius: 50%; }
+.nav-item { display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: 16px; text-decoration: none; color: #94a3b8; transition: all 0.3s var(--transition-smooth); position: relative; overflow: hidden; }
+.nav-item::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 0; height: 70%; background: #FF6B00; border-radius: 0 8px 8px 0; transition: width 0.3s; }
+.nav-item:hover::before, .nav-item.active::before { width: 3px; }
+.nav-icon-wrapper { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+.nav-item:hover .nav-icon-wrapper { transform: scale(1.1); }
+.nav-text { flex: 1; font-size: 14px; font-weight: 500; }
+.nav-item:hover { background: var(--nav-hover-bg); color: #FF6B00; transform: translateX(4px); }
+.nav-item.active { background: var(--nav-active-bg); color: #FF6B00; }
+.nav-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+.nav-badge.hot { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+.nav-badge.new { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+.nav-arrow { font-size: 12px; opacity: 0; transform: translateX(-5px); transition: all 0.2s; }
+.nav-item:hover .nav-arrow { opacity: 1; transform: translateX(0); }
+.notification-dot { width: 8px; height: 8px; background: #ef4444; border-radius: 50%; display: none; animation: pulse 1.5s infinite; }
+.sidebar-footer { padding: 20px 16px; border-top: 1px solid var(--sidebar-border); display: flex; flex-direction: column; gap: 8px; }
+.footer-action { display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: 16px; cursor: pointer; transition: all 0.2s; background: transparent; border: none; width: 100%; text-align: left; }
+.footer-action:hover { background: rgba(255,255,255,0.05); }
+.action-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+.action-text { flex: 1; font-size: 14px; font-weight: 500; color: #cbd5e1; }
+.action-arrow { font-size: 12px; color: #64748b; opacity: 0; transform: translateX(-5px); transition: all 0.2s; }
+.footer-action:hover .action-arrow { opacity: 1; transform: translateX(0); }
+.logout-action:hover .action-icon i { color: #ef4444; }
+.logout-action:hover .action-text { color: #ef4444; }
+.premium-toggle { position: relative; display: inline-block; width: 48px; height: 24px; }
+.premium-toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #334155; border-radius: 24px; transition: 0.3s; }
+.toggle-knob { position: absolute; height: 20px; width: 20px; left: 2px; bottom: 2px; background: white; border-radius: 50%; transition: 0.3s; }
+input:checked + .toggle-slider { background: linear-gradient(135deg, #FF6B00, #CC5500); }
+input:checked + .toggle-slider .toggle-knob { transform: translateX(24px); }
+.sidebar-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55); z-index: 1; display: none; opacity: 0; transition: opacity 0.3s; touch-action: none; pointer-events: none; }
+
+/* Collapsed State */
+body.sidebar-collapsed .premium-sidebar { width: var(--sidebar-collapsed-width); }
+body.sidebar-collapsed .sidebar-content { width: var(--sidebar-collapsed-width); }
+body.sidebar-collapsed .logo-text-wrapper, body.sidebar-collapsed .user-info, body.sidebar-collapsed .nav-text, body.sidebar-collapsed .nav-badge, body.sidebar-collapsed .nav-arrow, body.sidebar-collapsed .action-text, body.sidebar-collapsed .action-arrow, body.sidebar-collapsed .balance-label, body.sidebar-collapsed .balance-usd, body.sidebar-collapsed .nav-section-title span:last-child { display: none; }
+body.sidebar-collapsed .logo-wrapper { justify-content: center; }
+body.sidebar-collapsed .nav-item, body.sidebar-collapsed .footer-action { justify-content: center; padding: 12px; }
+body.sidebar-collapsed .nav-icon-wrapper { margin: 0; }
+body.sidebar-collapsed .user-card { padding: 16px; display: flex; justify-content: center; }
+body.sidebar-collapsed .user-avatar-wrapper { margin-bottom: 0; }
+body.sidebar-collapsed .toggle-switch { display: none; }
+body.sidebar-collapsed .main-content { margin-left: var(--sidebar-collapsed-width); }
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .premium-sidebar { top: 72px; transform: translateX(-100%); transition: transform 0.3s var(--transition-smooth); height: calc(100dvh - 72px); z-index: 1200; }
+    .premium-sidebar.open { transform: translateX(0); }
+    .sidebar-content { z-index: 2; height: 100%; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; overscroll-behavior: contain; touch-action: pan-y; }
+    .sidebar-header { position: sticky; top: 0; z-index: 3; background: rgba(2, 16, 26, 1); backdrop-filter: none !important; }
+    .sidebar-close-btn { display: flex !important; align-items: center; justify-content: center; position: relative; z-index: 4; flex-shrink: 0; min-width: 40px; min-height: 40px; color: #fff; background: rgba(255,255,255,0.08); }
+    .sidebar-backdrop { top: 72px; }
+    .sidebar-backdrop.active { display: block; opacity: 1; pointer-events: auto; }
+    .user-card { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+    .main-content { margin-left: 0 !important; padding-left: 12px !important; padding-right: 12px !important; width: 100% !important; }
+    .main-content .glass-card,
+    .main-content .ticket-card,
+    .main-content .transaction-card,
+    .main-content .notification-card,
+    .main-content .withdrawal-card,
+    .main-content .info-card,
+    .main-content .service-card,
+    .main-content .payment-card,
+    .main-content .stats-card,
+    .main-content .tier-card,
+    .main-content .panel-card,
+    .main-content .prize-card,
+    .main-content .winner-card {
+        border-radius: 18px;
+    }
+    .main-content .orders-table-container,
+    .main-content .referrals-table,
+    .main-content .endpoint-table {
+        -webkit-overflow-scrolling: touch;
+        overflow-x: auto;
+    }
+    body.sidebar-collapsed .premium-sidebar { width: var(--sidebar-width); transform: translateX(-100%); }
+    body.sidebar-collapsed .premium-sidebar.open { transform: translateX(0); }
+    body.sidebar-collapsed .logo-text-wrapper, body.sidebar-collapsed .user-info, body.sidebar-collapsed .nav-text { display: flex; }
+    body.sidebar-collapsed .toggle-switch { display: inline-block; }
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+    .premium-sidebar { transform: translateX(0); pointer-events: auto; }
+    .main-content { margin-left: var(--sidebar-width); transition: margin-left 0.4s var(--transition-smooth); }
+    .sidebar-close-btn { display: none; }
+}
+
+/* Animations */
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.9); } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+.animate-slide-down { animation: slideDown 0.4s ease-out forwards; }
+.nav-item { animation: slideDown 0.3s ease-out forwards; opacity: 0; }
+.nav-item:nth-child(1) { animation-delay: 0.05s; }
+.nav-item:nth-child(2) { animation-delay: 0.1s; }
+.nav-item:nth-child(3) { animation-delay: 0.15s; }
+.nav-item:nth-child(4) { animation-delay: 0.2s; }
+.nav-item:nth-child(5) { animation-delay: 0.25s; }
+</style>
+
+<script>
+(function() {
+    const sidebar = document.getElementById('premiumSidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    const closeBtn = document.getElementById('sidebarCloseBtn');
+    const darkToggle = document.getElementById('sidebarDarkModeToggle');
+    const logoutBtn = document.getElementById('sidebarLogoutBtn');
+    const avatarUploadBtn = document.getElementById('sidebarAvatarUpload');
+    
+    // Mobile open/close
+    function openSidebar() { sidebar.classList.add('open'); if(backdrop) backdrop.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeSidebar() { sidebar.classList.remove('open'); if(backdrop) backdrop.classList.remove('active'); document.body.style.overflow = ''; }
+    function toggleSidebar() { if (sidebar.classList.contains('open')) closeSidebar(); else openSidebar(); }
+    
+    if(closeBtn) closeBtn.onclick = closeSidebar;
+    if(backdrop) backdrop.onclick = closeSidebar;
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
+    });
+    
+    document.querySelectorAll('.nav-item').forEach(link => {
+        link.onclick = () => { if(window.innerWidth <= 768) closeSidebar(); };
+    });
+    
+    // Dark mode
+    if(darkToggle){
+        darkToggle.checked = localStorage.getItem('darkMode') === 'true';
+        if(darkToggle.checked) document.body.classList.add('dark-mode');
+        darkToggle.onchange = () => {
+            document.body.classList.toggle('dark-mode', darkToggle.checked);
+            localStorage.setItem('darkMode', darkToggle.checked);
+        };
+    }
+    
+    // Logout
+    if(logoutBtn && typeof firebase !== 'undefined'){
+        logoutBtn.onclick = () => firebase.auth().signOut().then(() => window.location.href = '/public/pages/public/login.html');
+    }
+    
+    // Active link
+    function setActiveLink(){
+        const path = window.location.pathname;
+        const currentPage = path.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-item').forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href) {
+                link.classList.remove('active');
+                return;
+            }
+            const targetPage = href.split('/').pop();
+            const isDashboardRoot = path.includes('/public/pages/dashboard/') && currentPage === 'index.html';
+            const isExactMatch = currentPage === targetPage;
+            if (isDashboardRoot && targetPage === 'index.html') link.classList.add('active');
+            else if (isExactMatch) link.classList.add('active');
+            else link.classList.remove('active');
+        });
+    }
+    setActiveLink();
+    
+    function setFallbackUser() {
+        const sidebarUserName = document.getElementById('sidebarUserName');
+        const sidebarUserEmail = document.getElementById('sidebarUserEmail');
+        const storedName = localStorage.getItem('username') || localStorage.getItem('displayName') || localStorage.getItem('userName');
+        const storedEmail = localStorage.getItem('email') || localStorage.getItem('userEmail');
+        if (sidebarUserName) sidebarUserName.innerText = storedName || (storedEmail ? storedEmail.split('@')[0] : 'User');
+        if (sidebarUserEmail && storedEmail) sidebarUserEmail.innerText = storedEmail;
+    }
+
+    function bindUserData() {
+        if (typeof firebase === 'undefined' || !firebase.auth || !firebase.firestore) {
+            setFallbackUser();
+            return false;
+        }
+        firebase.auth().onAuthStateChanged(async (user) => {
+            if(user){
+                try{
+                    const db = firebase.firestore();
+                    const sidebarAvatarImg = document.getElementById('sidebarUserAvatarImg');
+                    const sidebarAvatarInitials = document.getElementById('sidebarAvatarInitials');
+                    const sidebarBalanceUSD = document.getElementById('sidebarBalanceUSD');
+                    const sidebarUserName = document.getElementById('sidebarUserName');
+                    const sidebarUserEmail = document.getElementById('sidebarUserEmail');
+                    if (sidebarUserName) sidebarUserName.innerText = user.displayName || user.email?.split('@')[0] || 'User';
+                    if (sidebarUserEmail) sidebarUserEmail.innerText = user.email || 'user@example.com';
+
+                    async function ensureStorageSdk(){
+                        if (firebase.storage) return true;
+                        await new Promise((resolve, reject) => {
+                            const s = document.createElement('script');
+                            s.src = 'https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js';
+                            s.onload = resolve;
+                            s.onerror = reject;
+                            document.head.appendChild(s);
+                        });
+                        return !!firebase.storage;
+                    }
+
+                    function compressImage(file) {
+                        return new Promise((resolve, reject) => {
+                            const reader = new FileReader();
+                            reader.readAsDataURL(file);
+                            reader.onload = (e) => {
+                                const img = new Image();
+                                img.src = e.target.result;
+                                img.onload = () => {
+                                    const canvas = document.createElement('canvas');
+                                    let width = img.width;
+                                    let height = img.height;
+                                    const maxSize = 300;
+                                    if(width > height && width > maxSize) {
+                                        height = (height * maxSize) / width;
+                                        width = maxSize;
+                                    } else if(height > maxSize) {
+                                        width = (width * maxSize) / height;
+                                        height = maxSize;
+                                    }
+                                    canvas.width = width;
+                                    canvas.height = height;
+                                    const ctx = canvas.getContext('2d');
+                                    ctx.drawImage(img, 0, 0, width, height);
+                                    canvas.toBlob(resolve, 'image/jpeg', 0.8);
+                                };
+                                img.onerror = reject;
+                            };
+                            reader.onerror = reject;
+                        });
+                    }
+
+                    if (avatarUploadBtn) {
+                        avatarUploadBtn.onclick = async () => {
+                            if (window.BOOSTBANGLA_AVATAR_MANAGER) {
+                                window.BOOSTBANGLA_AVATAR_MANAGER.init();
+                                document.querySelector('input[type="file"][accept*="image"]')?.click();
+                                return;
+                            }
+                            const input = document.createElement('input');
+                            input.type = 'file';
+                            input.accept = 'image/jpeg,image/png,image/webp';
+                            input.onchange = async (e) => {
+                                const file = e.target.files && e.target.files[0];
+                                if (!file) return;
+                                if (!file.type.startsWith('image/')) return alert('Please select an image file');
+                                if (file.size > 2 * 1024 * 1024) return alert('Image must be less than 2MB');
+                                try {
+                                    await ensureStorageSdk();
+                                    if (!firebase.storage) throw new Error('Storage unavailable');
+                                    const compressed = await compressImage(file);
+                                    const storageRef = firebase.storage().ref();
+                                    const fileName = `avatars/${user.uid}/avatar_${Date.now()}.jpg`;
+                                    await storageRef.child(fileName).put(compressed);
+                                    const downloadURL = await storageRef.child(fileName).getDownloadURL();
+                                    await db.collection('users').doc(user.uid).update({
+                                        avatarURL: downloadURL,
+                                        avatarUpdatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                                    });
+                                } catch (err) {
+                                    console.error('Avatar upload error:', err);
+                                    alert('Failed to upload image');
+                                }
+                            };
+                            input.click();
+                        };
+                    }
+
+                    // Load balance from PHP API instead of Firebase
+                    let sidebarBalanceManagerBound = false;
+                    async function loadSidebarBalance() {
+                        if (window.BALANCE_MANAGER) {
+                            if (!sidebarBalanceManagerBound) {
+                                sidebarBalanceManagerBound = true;
+                                window.BALANCE_MANAGER.onChange((balance) => {
+                                    const valueEl = document.getElementById('sidebarUserBalance');
+                                    if (valueEl) valueEl.innerText = Number(balance || 0).toLocaleString();
+                                    if (sidebarBalanceUSD) sidebarBalanceUSD.innerText = `≈ $${(Number(balance || 0) / (window.CURRENT_USD_BDT_RATE || 120)).toFixed(2)} USD`;
+                                });
+                            }
+                            await window.BALANCE_MANAGER.refresh();
+                            return;
+                        }
+
+                        try {
+                            const response = await fetch(
+                                `/public/php/api-proxy.php?action=get_balance&user_id=${encodeURIComponent(user.uid)}`
+                            );
+                            
+                            if (!response.ok) throw new Error('Failed to fetch balance');
+                            
+                            const result = await response.json();
+                            let balance = Number(result.balance || 0);
+
+                            if (!result.wallet_exists && balance === 0) {
+                                const userDoc = await db.collection('users').doc(user.uid).get();
+                                balance = Number(userDoc.data()?.balance || 0);
+                            }
+                            
+                            document.getElementById('sidebarUserBalance').innerText = balance.toLocaleString();
+                            if (sidebarBalanceUSD) sidebarBalanceUSD.innerText = `≈ $${(balance / (window.CURRENT_USD_BDT_RATE || 120)).toFixed(2)} USD`;
+                        } catch (error) {
+                            console.error('Error loading sidebar balance:', error);
+                        }
+                    }
+                    
+                    // Load balance immediately and refresh every 5 seconds
+                    loadSidebarBalance();
+                    setInterval(loadSidebarBalance, 5000);
+
+                    // Load user data from Firebase (name, avatar)
+                    db.collection('users').doc(user.uid).onSnapshot((doc) => {
+                        if (!doc.exists) return;
+                        const name = doc.data()?.username || user.email?.split('@')[0] || 'User';
+                        const avatarURL = doc.data()?.avatarURL;
+                        document.getElementById('sidebarUserName').innerText = name;
+                        document.getElementById('sidebarUserEmail').innerText = user.email;
+                        document.getElementById('sidebarAvatarInitials').innerText = name.charAt(0).toUpperCase();
+                        if (avatarURL && sidebarAvatarImg) {
+                            sidebarAvatarImg.src = avatarURL;
+                            sidebarAvatarImg.style.display = 'block';
+                            if (sidebarAvatarInitials) sidebarAvatarInitials.style.display = 'none';
+                        } else if (sidebarAvatarInitials) {
+                            sidebarAvatarInitials.style.display = 'inline';
+                        }
+                    });
+                } catch(e){
+                    console.error('Sidebar user bind error:', e);
+                    setFallbackUser();
+                }
+            } else {
+                setFallbackUser();
+            }
+        });
+        return true;
+    }
+
+    if (!bindUserData()) {
+        const retry = setInterval(() => {
+            if (bindUserData()) clearInterval(retry);
+        }, 500);
+        setTimeout(() => clearInterval(retry), 10000);
+    }
+})();
+</script>

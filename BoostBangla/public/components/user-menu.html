@@ -1,0 +1,1369 @@
+<!-- ============================================
+     BoostBangla Premium User Menu v3.0
+     Glass Morphism | Flutter-Smooth | Avatar Upload
+     Complete User Profile & Settings Dropdown
+     ============================================ -->
+
+<div class="premium-user-menu" id="premiumUserMenu">
+    
+    <!-- User Profile Header with Glass Effect -->
+    <div class="user-menu-header glass-card">
+        <div class="user-avatar-section">
+            <div class="avatar-wrapper" id="userMenuAvatarWrapper">
+                <div class="avatar-ring pulse-ring">
+                    <div class="avatar-image" id="userMenuAvatar">
+                        <img id="userMenuAvatarImg" src="/public/assets/images/avatars/default-avatar.svg" alt="Profile">
+                        <div class="avatar-initials" id="userMenuAvatarInitials">U</div>
+                    </div>
+                </div>
+                <button class="avatar-edit-btn" id="userMenuAvatarEditBtn">
+                    <i class="fas fa-camera"></i>
+                </button>
+                <input type="file" id="userMenuAvatarInput" accept="image/jpeg,image/png,image/webp" hidden>
+            </div>
+            <div class="user-info">
+                <h3 class="user-fullname" id="userMenuFullname">John Doe</h3>
+                <p class="user-email" id="userMenuEmail">john.doe@example.com</p>
+                <div class="user-badge">
+                    <span class="badge-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </span>
+                    <span class="badge-text" id="userMenuRole">Verified Member</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Grid - BIG NUMBERS -->
+    <div class="user-stats-grid">
+        <div class="stat-card-mini">
+            <div class="stat-icon">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="stat-content">
+                <span class="stat-value" id="userMenuTotalOrders">0</span>
+                <span class="stat-label">Total Orders</span>
+            </div>
+        </div>
+        <div class="stat-card-mini">
+            <div class="stat-icon">
+                <i class="fas fa-wallet"></i>
+            </div>
+            <div class="stat-content">
+                <span class="stat-value" id="userMenuTotalSpent">৳0</span>
+                <span class="stat-label">Total Spent</span>
+            </div>
+        </div>
+        <div class="stat-card-mini">
+            <div class="stat-icon">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="stat-content">
+                <span class="stat-value" id="userMenuMemberSince">2024</span>
+                <span class="stat-label">Member Since</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-divider"></div>
+
+    <!-- Account Section -->
+    <div class="menu-section">
+        <div class="section-header">
+            <i class="fas fa-user-circle"></i>
+            <span>Account</span>
+        </div>
+        <div class="menu-items">
+            <a href="/public/pages/dashboard/index.html" class="menu-item ripple-effect">
+                <div class="item-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="item-content">
+                    <span class="item-title">Dashboard</span>
+                    <span class="item-desc">View your analytics</span>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+            <a href="/public/pages/dashboard/profile.html" class="menu-item ripple-effect">
+                <div class="item-icon"><i class="fas fa-user-edit"></i></div>
+                <div class="item-content">
+                    <span class="item-title">My Profile</span>
+                    <span class="item-desc">Edit personal info</span>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+            <a href="/public/pages/dashboard/orders.html" class="menu-item ripple-effect">
+                <div class="item-icon"><i class="fas fa-shopping-cart"></i></div>
+                <div class="item-content">
+                    <span class="item-title">My Orders</span>
+                    <span class="item-desc">Track your orders</span>
+                    <span class="item-badge" id="orderCountBadge" style="display: none;">New</span>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+            <a href="/public/pages/dashboard/transactions.html" class="menu-item ripple-effect">
+                <div class="item-icon"><i class="fas fa-exchange-alt"></i></div>
+                <div class="item-content">
+                    <span class="item-title">Transactions</span>
+                    <span class="item-desc">Payment history</span>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+            <a href="/public/pages/dashboard/add-funds.html" class="menu-item highlight ripple-effect">
+                <div class="item-icon"><i class="fas fa-plus-circle"></i></div>
+                <div class="item-content">
+                    <span class="item-title">Add Funds</span>
+                    <span class="item-desc">Deposit money</span>
+                </div>
+                <span class="item-badge primary">Quick</span>
+                <i class="fas fa-arrow-right item-arrow"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="menu-divider"></div>
+
+    <!-- Support Section -->
+    <div class="menu-section">
+        <div class="section-header">
+            <i class="fas fa-headset"></i>
+            <span>Support & Help</span>
+        </div>
+        <div class="menu-items">
+            <a href="/public/pages/dashboard/tickets.html" class="menu-item ripple-effect">
+                <div class="item-icon"><i class="fas fa-ticket-alt"></i></div>
+                <div class="item-content">
+                    <span class="item-title">Support Tickets</span>
+                    <span class="item-desc">Get help from our team</span>
+                </div>
+                <span class="item-badge warning" id="ticketCountBadge" style="display: none;">0</span>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+            <a href="/public/pages/dashboard/faq.html" class="menu-item ripple-effect">
+                <div class="item-icon"><i class="fas fa-question-circle"></i></div>
+                <div class="item-content">
+                    <span class="item-title">FAQ</span>
+                    <span class="item-desc">Frequently asked questions</span>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+            <a href="/public/pages/dashboard/api-docs.html" class="menu-item ripple-effect">
+                <div class="item-icon"><i class="fas fa-code"></i></div>
+                <div class="item-content">
+                    <span class="item-title">API Documentation</span>
+                    <span class="item-desc">Developer resources</span>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="menu-divider"></div>
+
+    <!-- Preferences Section -->
+    <div class="menu-section">
+        <div class="section-header">
+            <i class="fas fa-sliders-h"></i>
+            <span>Preferences</span>
+        </div>
+        <div class="menu-items">
+            <!-- Dark Mode Toggle -->
+            <div class="menu-item interactive ripple-effect" id="userMenuDarkMode">
+                <div class="item-icon"><i class="fas fa-moon"></i></div>
+                <div class="item-content">
+                    <span class="item-title">Dark Mode</span>
+                    <span class="item-desc">Switch theme appearance</span>
+                </div>
+                <label class="toggle-switch premium-toggle">
+                    <input type="checkbox" id="userMenuDarkToggle">
+                    <span class="toggle-slider">
+                        <span class="toggle-knob"></span>
+                    </span>
+                </label>
+            </div>
+
+            <!-- Notification Sound -->
+            <div class="menu-item interactive ripple-effect" id="userMenuSoundToggle">
+                <div class="item-icon"><i class="fas fa-volume-up"></i></div>
+                <div class="item-content">
+                    <span class="item-title">Notification Sound</span>
+                    <span class="item-desc">Play sound on notifications</span>
+                </div>
+                <label class="toggle-switch premium-toggle">
+                    <input type="checkbox" id="userMenuSoundCheckbox" checked>
+                    <span class="toggle-slider">
+                        <span class="toggle-knob"></span>
+                    </span>
+                </label>
+            </div>
+
+            <!-- Desktop Notifications -->
+            <div class="menu-item interactive ripple-effect" id="userMenuDesktopNotif">
+                <div class="item-icon"><i class="fas fa-bell"></i></div>
+                <div class="item-content">
+                    <span class="item-title">Desktop Notifications</span>
+                    <span class="item-desc">Receive browser alerts</span>
+                </div>
+                <label class="toggle-switch premium-toggle">
+                    <input type="checkbox" id="userMenuDesktopCheckbox">
+                    <span class="toggle-slider">
+                        <span class="toggle-knob"></span>
+                    </span>
+                </label>
+            </div>
+
+            <!-- Language Selector -->
+            <div class="menu-item interactive ripple-effect" id="userMenuLanguage">
+                <div class="item-icon"><i class="fas fa-globe"></i></div>
+                <div class="item-content">
+                    <span class="item-title">Language</span>
+                    <span class="item-desc" id="currentLanguage">English</span>
+                </div>
+                <i class="fas fa-chevron-down item-arrow"></i>
+                <div class="language-dropdown" id="languageDropdown">
+                    <button class="lang-option active" data-lang="en">🇬🇧 English</button>
+                    <button class="lang-option" data-lang="bn">🇧🇩 বাংলা</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-divider"></div>
+
+    <!-- Admin Section (Conditional) -->
+    <div class="menu-section admin-section" id="userMenuAdminSection" style="display: none;">
+        <div class="section-header">
+            <i class="fas fa-crown"></i>
+            <span>Administration</span>
+        </div>
+        <div class="menu-items">
+            <a href="/admin/index.html" class="menu-item admin-link ripple-effect">
+                <div class="item-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="item-content">
+                    <span class="item-title">Admin Dashboard</span>
+                    <span class="item-desc">Platform analytics</span>
+                </div>
+                <span class="item-badge admin">Admin</span>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+            <a href="/admin/users.html" class="menu-item admin-link ripple-effect">
+                <div class="item-icon"><i class="fas fa-users"></i></div>
+                <div class="item-content">
+                    <span class="item-title">Manage Users</span>
+                    <span class="item-desc">User management</span>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+            <a href="/admin/deposits.html" class="menu-item admin-link ripple-effect">
+                <div class="item-icon"><i class="fas fa-money-bill-wave"></i></div>
+                <div class="item-content">
+                    <span class="item-title">Manage Deposits</span>
+                    <span class="item-desc">Payment approvals</span>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+            <a href="/admin/orders.html" class="menu-item admin-link ripple-effect">
+                <div class="item-icon"><i class="fas fa-shopping-cart"></i></div>
+                <div class="item-content">
+                    <span class="item-title">Manage Orders</span>
+                    <span class="item-desc">Order processing</span>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="menu-divider"></div>
+
+    <!-- Footer Links -->
+    <div class="menu-footer">
+        <a href="/public/pages/dashboard/terms.html" class="footer-link">Terms of Service</a>
+        <span class="footer-sep">•</span>
+        <a href="/public/pages/dashboard/privacy.html" class="footer-link">Privacy Policy</a>
+        <span class="footer-sep">•</span>
+        <a href="/public/pages/dashboard/contact.html" class="footer-link">Contact Us</a>
+    </div>
+
+    <!-- Logout Button -->
+    <button class="logout-button ripple-effect" id="userMenuLogoutBtn">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+        <i class="fas fa-arrow-right logout-arrow"></i>
+    </button>
+
+    <!-- Version Info -->
+    <div class="version-info">
+        <span class="version-text">BoostBangla v3.0.0</span>
+        <span class="version-build">Build #2025.001</span>
+    </div>
+</div>
+
+<style>
+/* ============================================
+   PREMIUM USER MENU - v3.0
+   Glass Morphism | BIG Numbers | Smooth Toggles
+   ============================================ */
+
+.premium-user-menu {
+    min-width: 380px;
+    max-width: 420px;
+    background: white;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: menuSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark-mode .premium-user-menu {
+    background: #1e293b;
+}
+
+@keyframes menuSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================
+   HEADER SECTION - Glass Card
+   ============================================ */
+.user-menu-header {
+    padding: 28px 24px;
+    background: linear-gradient(135deg, #02101A 0%, #031a2a 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.user-menu-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 107, 0, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+body.dark-mode .user-menu-header {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+}
+
+.avatar-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.avatar-ring {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF6B00, #CC5500);
+    padding: 3px;
+    animation: ringPulse 2s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(255, 107, 0, 0); }
+}
+
+.avatar-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #1e293b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.avatar-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-initials {
+    font-size: 32px;
+    font-weight: 800;
+    color: white;
+}
+
+.avatar-edit-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 28px;
+    height: 28px;
+    background: #FF6B00;
+    border: 2px solid white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: white;
+    font-size: 12px;
+}
+
+.avatar-edit-btn:hover {
+    transform: scale(1.1);
+    background: #CC5500;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-fullname {
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 4px;
+}
+
+.user-email {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-bottom: 8px;
+}
+
+.user-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.badge-icon i {
+    color: #10b981;
+    font-size: 10px;
+}
+
+/* ============================================
+   STATS GRID - BIG NUMBERS
+   ============================================ */
+.user-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #e5e7eb;
+}
+
+body.dark-mode .user-stats-grid {
+    background: #334155;
+}
+
+.stat-card-mini {
+    background: white;
+    padding: 20px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+}
+
+body.dark-mode .stat-card-mini {
+    background: #1e293b;
+}
+
+.stat-card-mini:hover {
+    background: #f9fafb;
+    transform: translateY(-2px);
+}
+
+body.dark-mode .stat-card-mini:hover {
+    background: #2d1a0f;
+}
+
+.stat-icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 107, 0, 0.1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon i {
+    font-size: 22px;
+    color: #FF6B00;
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-value {
+    display: block;
+    font-size: 22px;
+    font-weight: 800;
+    color: #1f2937;
+    line-height: 1.2;
+}
+
+body.dark-mode .stat-value {
+    color: white;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #6b7280;
+}
+
+body.dark-mode .stat-label {
+    color: #94a3b8;
+}
+
+/* ============================================
+   MENU SECTIONS
+   ============================================ */
+.menu-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 8px 0;
+}
+
+body.dark-mode .menu-divider {
+    background: #334155;
+}
+
+.menu-section {
+    padding: 8px 16px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 8px 8px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #9ca3af;
+}
+
+.section-header i {
+    font-size: 12px;
+    color: #FF6B00;
+}
+
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 12px;
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-item:hover {
+    background: #f3f4f6;
+    transform: translateX(4px);
+}
+
+body.dark-mode .menu-item:hover {
+    background: #334155;
+}
+
+.menu-item.highlight {
+    background: linear-gradient(90deg, rgba(255, 107, 0, 0.08), transparent);
+    border-left: 3px solid #FF6B00;
+}
+
+.menu-item.admin-link {
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.item-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 107, 0, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-icon i {
+    font-size: 16px;
+    color: #FF6B00;
+}
+
+.menu-item.admin-link .item-icon {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.menu-item.admin-link .item-icon i {
+    color: #ef4444;
+}
+
+.item-content {
+    flex: 1;
+}
+
+.item-title {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 2px;
+}
+
+body.dark-mode .item-title {
+    color: #e2e8f0;
+}
+
+.item-desc {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.item-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 30px;
+    margin-right: 8px;
+}
+
+.item-badge.primary {
+    background: #FF6B00;
+    color: white;
+}
+
+.item-badge.warning {
+    background: #f59e0b;
+    color: white;
+}
+
+.item-badge.admin {
+    background: #ef4444;
+    color: white;
+}
+
+.item-arrow {
+    font-size: 12px;
+    color: #cbd5e1;
+    transition: all 0.2s;
+}
+
+.menu-item:hover .item-arrow {
+    transform: translateX(4px);
+    color: #FF6B00;
+}
+
+/* Interactive Menu Items */
+.menu-item.interactive {
+    justify-content: space-between;
+}
+
+.menu-item.interactive .item-content {
+    flex: 1;
+}
+
+/* Premium Toggle Switch */
+.premium-toggle {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.premium-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #cbd5e1;
+    border-radius: 24px;
+    transition: 0.3s;
+}
+
+body.dark-mode .toggle-slider {
+    background: #475569;
+}
+
+.toggle-knob {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .toggle-slider {
+    background: linear-gradient(135deg, #FF6B00, #CC5500);
+}
+
+input:checked + .toggle-slider .toggle-knob {
+    transform: translateX(24px);
+}
+
+/* Language Selector */
+.language-dropdown {
+    position: absolute;
+    right: 12px;
+    top: 100%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    display: none;
+    z-index: 10;
+    min-width: 140px;
+    overflow: hidden;
+}
+
+body.dark-mode .language-dropdown {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.menu-item.interactive.active .language-dropdown {
+    display: block;
+    animation: dropdownFade 0.2s ease;
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.lang-option {
+    width: 100%;
+    padding: 10px 14px;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 13px;
+    color: #374151;
+}
+
+body.dark-mode .lang-option {
+    color: #e2e8f0;
+}
+
+.lang-option:hover {
+    background: #f3f4f6;
+}
+
+body.dark-mode .lang-option:hover {
+    background: #334155;
+}
+
+.lang-option.active {
+    background: rgba(255, 107, 0, 0.1);
+    color: #FF6B00;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.menu-footer {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 20px;
+    flex-wrap: wrap;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+body.dark-mode .menu-footer {
+    border-color: #334155;
+}
+
+.footer-link {
+    font-size: 11px;
+    color: #9ca3af;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-link:hover {
+    color: #FF6B00;
+}
+
+.footer-sep {
+    font-size: 11px;
+    color: #e5e7eb;
+}
+
+/* Logout Button */
+.logout-button {
+    width: calc(100% - 32px);
+    margin: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px;
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    border: none;
+    border-radius: 60px;
+    color: #dc2626;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+body.dark-mode .logout-button {
+    background: linear-gradient(135deg, #7f1d1d, #991b1b);
+    color: #f87171;
+}
+
+.logout-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
+}
+
+.logout-arrow {
+    transition: transform 0.2s;
+}
+
+.logout-button:hover .logout-arrow {
+    transform: translateX(4px);
+}
+
+/* Version Info */
+.version-info {
+    text-align: center;
+    padding: 12px 20px 20px;
+    font-size: 10px;
+    color: #9ca3af;
+}
+
+.version-build {
+    display: block;
+    font-size: 9px;
+    margin-top: 2px;
+    opacity: 0.7;
+}
+
+/* ============================================
+   RIPPLE EFFECT
+   ============================================ */
+.ripple-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple-effect::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 107, 0, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+}
+
+.ripple-effect:active::after {
+    width: 200px;
+    height: 200px;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+@media (max-width: 480px) {
+    .premium-user-menu {
+        min-width: 320px;
+        max-width: 350px;
+        border-radius: 24px;
+    }
+    
+    .user-menu-header {
+        padding: 20px 16px;
+    }
+    
+    .avatar-ring {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .avatar-initials {
+        font-size: 24px;
+    }
+    
+    .user-fullname {
+        font-size: 16px;
+    }
+    
+    .user-stats-grid {
+        gap: 0;
+    }
+    
+    .stat-card-mini {
+        padding: 14px 12px;
+    }
+    
+    .stat-icon {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .stat-icon i {
+        font-size: 16px;
+    }
+    
+    .stat-value {
+        font-size: 16px;
+    }
+    
+    .menu-section {
+        padding: 4px 12px;
+    }
+    
+    .item-icon {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .item-title {
+        font-size: 13px;
+    }
+    
+    .menu-footer {
+        gap: 8px;
+        padding: 12px 16px;
+    }
+    
+    .logout-button {
+        margin: 12px;
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stat-card-mini {
+    animation: fadeInUp 0.3s ease-out forwards;
+    opacity: 0;
+}
+
+.stat-card-mini:nth-child(1) { animation-delay: 0.05s; }
+.stat-card-mini:nth-child(2) { animation-delay: 0.1s; }
+.stat-card-mini:nth-child(3) { animation-delay: 0.15s; }
+</style>
+
+<script>
+// ============================================
+// PREMIUM USER MENU - COMPLETE FUNCTIONALITY
+// Avatar Upload | Dark Mode | Preferences
+// ============================================
+
+(function() {
+    'use strict';
+    
+    // DOM Elements
+    const avatarInput = document.getElementById('userMenuAvatarInput');
+    const avatarEditBtn = document.getElementById('userMenuAvatarEditBtn');
+    const darkToggle = document.getElementById('userMenuDarkToggle');
+    const soundCheckbox = document.getElementById('userMenuSoundCheckbox');
+    const desktopCheckbox = document.getElementById('userMenuDesktopCheckbox');
+    const logoutBtn = document.getElementById('userMenuLogoutBtn');
+    const languageSelector = document.getElementById('userMenuLanguage');
+    const languageDropdown = document.getElementById('languageDropdown');
+    
+    // ============================================
+    // LOAD USER DATA
+    // ============================================
+    async function loadUserMenuData() {
+        if (typeof firebase === 'undefined' || !firebase.auth) {
+            setTimeout(loadUserMenuData, 500);
+            return;
+        }
+        
+        const user = firebase.auth().currentUser;
+        if (!user) return;
+        
+        try {
+            const db = firebase.firestore();
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            const userData = userDoc.data();
+            
+            // Update user info
+            const displayName = userData?.displayName || userData?.username || user.email?.split('@')[0] || 'User';
+            document.getElementById('userMenuFullname').textContent = displayName;
+            document.getElementById('userMenuEmail').textContent = user.email;
+            
+            // Update role
+            const roleText = userData?.isAdmin ? 'Administrator' : 'Verified Member';
+            const roleIcon = userData?.isAdmin ? 'fa-crown' : 'fa-check-circle';
+            const roleBadge = document.getElementById('userMenuRole');
+            if (roleBadge) {
+                roleBadge.innerHTML = `<i class="fas ${roleIcon}"></i> ${roleText}`;
+            }
+            
+            // Show admin section if applicable
+            if (userData?.isAdmin) {
+                const adminSection = document.getElementById('userMenuAdminSection');
+                if (adminSection) adminSection.style.display = 'block';
+            }
+            
+            // Update stats
+            const totalOrders = userData?.totalOrders || 0;
+            const totalSpent = userData?.totalSpent || 0;
+            const memberSince = userData?.createdAt?.toDate ? userData.createdAt.toDate().getFullYear() : '2024';
+            
+            document.getElementById('userMenuTotalOrders').textContent = totalOrders.toLocaleString();
+            document.getElementById('userMenuTotalSpent').innerHTML = `৳${totalSpent.toLocaleString()}`;
+            document.getElementById('userMenuMemberSince').textContent = memberSince;
+            
+            // Update avatar
+            const avatarURL = userData?.avatarURL;
+            const avatarImg = document.getElementById('userMenuAvatarImg');
+            const avatarInitials = document.getElementById('userMenuAvatarInitials');
+            
+            if (avatarURL) {
+                avatarImg.src = avatarURL;
+                avatarImg.style.display = 'block';
+                avatarInitials.style.display = 'none';
+            } else if (avatarInitials) {
+                avatarImg.style.display = 'none';
+                avatarInitials.style.display = 'flex';
+                avatarInitials.textContent = displayName.charAt(0).toUpperCase();
+            }
+            
+            // Load preferences
+            const soundEnabled = localStorage.getItem('notificationSound') !== 'false';
+            const desktopEnabled = localStorage.getItem('desktopNotifications') === 'true';
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            
+            if (soundCheckbox) soundCheckbox.checked = soundEnabled;
+            if (desktopCheckbox) desktopCheckbox.checked = desktopEnabled;
+            if (darkToggle) darkToggle.checked = isDark;
+            
+        } catch (error) {
+            console.error('Error loading user menu data:', error);
+        }
+    }
+    
+    // ============================================
+    // AVATAR UPLOAD
+    // ============================================
+    if (avatarEditBtn && avatarInput) {
+        avatarEditBtn.addEventListener('click', () => {
+            avatarInput.click();
+        });
+        
+        avatarInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (window.BOOSTBANGLA_AVATAR_MANAGER) {
+                await window.BOOSTBANGLA_AVATAR_MANAGER.upload(file);
+                avatarInput.value = '';
+                return;
+            }
+            
+            // Validate
+            if (!file.type.startsWith('image/')) {
+                showUserMenuToast('Please select an image file', 'error');
+                return;
+            }
+            
+            if (file.size > 2 * 1024 * 1024) {
+                showUserMenuToast('Image must be less than 2MB', 'error');
+                return;
+            }
+            
+            const user = firebase.auth().currentUser;
+            if (!user) return;
+            
+            // Show loading
+            avatarEditBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            
+            try {
+                const compressed = await compressUserAvatar(file);
+                const storageRef = firebase.storage().ref();
+                const fileName = `avatars/${user.uid}/avatar_${Date.now()}.jpg`;
+                const uploadTask = await storageRef.child(fileName).put(compressed);
+                const downloadURL = await storageRef.child(fileName).getDownloadURL();
+                
+                await firebase.firestore().collection('users').doc(user.uid).update({
+                    avatarURL: downloadURL,
+                    avatarUpdatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                // Update UI
+                const avatarImg = document.getElementById('userMenuAvatarImg');
+                const avatarInitials = document.getElementById('userMenuAvatarInitials');
+                avatarImg.src = downloadURL;
+                avatarImg.style.display = 'block';
+                avatarInitials.style.display = 'none';
+                
+                showUserMenuToast('Profile picture updated!', 'success');
+                
+            } catch (error) {
+                console.error('Upload error:', error);
+                showUserMenuToast('Failed to upload image', 'error');
+            } finally {
+                avatarEditBtn.innerHTML = '<i class="fas fa-camera"></i>';
+                avatarInput.value = '';
+            }
+        });
+    }
+    
+    function compressUserAvatar(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const maxSize = 300;
+                    
+                    if (width > height && width > maxSize) {
+                        height = (height * maxSize) / width;
+                        width = maxSize;
+                    } else if (height > maxSize) {
+                        width = (width * maxSize) / height;
+                        height = maxSize;
+                    }
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    canvas.toBlob(resolve, 'image/jpeg', 0.8);
+                };
+                img.onerror = reject;
+            };
+            reader.onerror = reject;
+        });
+    }
+    
+    // ============================================
+    // DARK MODE TOGGLE
+    // ============================================
+    if (darkToggle) {
+        darkToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('darkMode', 'true');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('darkMode', 'false');
+            }
+        });
+    }
+    
+    // ============================================
+    // PREFERENCES
+    // ============================================
+    if (soundCheckbox) {
+        soundCheckbox.addEventListener('change', (e) => {
+            localStorage.setItem('notificationSound', e.target.checked);
+        });
+    }
+    
+    if (desktopCheckbox) {
+        desktopCheckbox.addEventListener('change', async (e) => {
+            localStorage.setItem('desktopNotifications', e.target.checked);
+            if (e.target.checked && Notification.permission !== 'granted') {
+                const permission = await Notification.requestPermission();
+                if (permission !== 'granted') {
+                    e.target.checked = false;
+                    localStorage.setItem('desktopNotifications', 'false');
+                    showUserMenuToast('Please allow notifications in browser settings', 'error');
+                }
+            }
+        });
+    }
+    
+    // ============================================
+    // LANGUAGE SELECTOR
+    // ============================================
+    if (languageSelector) {
+        languageSelector.addEventListener('click', (e) => {
+            e.stopPropagation();
+            languageSelector.classList.toggle('active');
+        });
+        
+        document.addEventListener('click', () => {
+            languageSelector.classList.remove('active');
+        });
+        
+        const langOptions = document.querySelectorAll('.lang-option');
+        langOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const lang = option.dataset.lang;
+                localStorage.setItem('language', lang);
+                
+                // Update UI
+                langOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                
+                const currentLang = document.getElementById('currentLanguage');
+                if (currentLang) {
+                    currentLang.textContent = lang === 'bn' ? 'বাংলা' : 'English';
+                }
+                
+                showUserMenuToast(`Language changed to ${lang === 'bn' ? 'Bengali' : 'English'}`, 'success');
+                
+                // Reload page to apply language
+                setTimeout(() => location.reload(), 1000);
+            });
+        });
+        
+        // Load saved language
+        const savedLang = localStorage.getItem('language');
+        if (savedLang) {
+            const activeOption = document.querySelector(`.lang-option[data-lang="${savedLang}"]`);
+            if (activeOption) {
+                langOptions.forEach(opt => opt.classList.remove('active'));
+                activeOption.classList.add('active');
+                const currentLang = document.getElementById('currentLanguage');
+                if (currentLang) {
+                    currentLang.textContent = savedLang === 'bn' ? 'বাংলা' : 'English';
+                }
+            }
+        }
+    }
+    
+    // ============================================
+    // LOGOUT
+    // ============================================
+    if (logoutBtn && typeof firebase !== 'undefined') {
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await firebase.auth().signOut();
+                window.location.href = '/public/pages/public/login.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                showUserMenuToast('Logout failed. Please try again.', 'error');
+            }
+        });
+    }
+    
+    // ============================================
+    // TOAST NOTIFICATION
+    // ============================================
+    function showUserMenuToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `user-menu-toast toast-${type}`;
+        toast.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        `;
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: ${type === 'success' ? '#10b981' : '#ef4444'};
+            color: white;
+            padding: 12px 20px;
+            border-radius: 60px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+            animation: slideInRight 0.3s ease;
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(100%)';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+    
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    const checkFirebase = setInterval(() => {
+        if (typeof firebase !== 'undefined' && firebase.auth && firebase.auth().currentUser) {
+            clearInterval(checkFirebase);
+            loadUserMenuData();
+            
+            firebase.auth().onAuthStateChanged((user) => {
+                if (user) loadUserMenuData();
+            });
+        }
+    }, 500);
+    
+    // Add slide-in animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100%); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    `;
+    document.head.appendChild(style);
+    
+})();
+</script>

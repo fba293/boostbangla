@@ -1,0 +1,879 @@
+<!-- ============================================
+     BoostBangla Premium Header v4.0
+     Unified Premium Glass Header | Smart Active Nav | Mobile Drawer
+     ============================================ -->
+
+<header class="bb-header" id="premiumLandingHeader">
+    <nav class="bb-navbar" id="bbNavbar">
+        <div class="bb-nav-container">
+            <!-- Logo -->
+            <a href="/index.html" class="bb-logo-link" aria-label="BoostBangla Home">
+                <span class="bb-logo-icon">
+                    <i class="fas fa-chart-line"></i>
+                </span>
+                <span class="bb-logo-text">Boost<span>Bangla</span></span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="bb-nav-links desktop-nav" id="bbDesktopNav">
+                <a href="/index.html" class="bb-nav-link" data-page="home"><i class="fas fa-home"></i><span>Home</span></a>
+                <a href="/public/pages/public/services.html" class="bb-nav-link" data-page="services"><i class="fas fa-layer-group"></i><span>Services</span></a>
+                <a href="/public/pages/public/pricing.html" class="bb-nav-link" data-page="pricing"><i class="fas fa-tag"></i><span>Pricing</span></a>
+                <a href="/public/pages/public/about.html" class="bb-nav-link" data-page="about"><i class="fas fa-info-circle"></i><span>About</span></a>
+                <a href="/public/pages/public/blog.html" class="bb-nav-link" data-page="blog"><i class="fas fa-blog"></i><span>Blog</span></a>
+                <a href="/public/pages/public/faq.html" class="bb-nav-link" data-page="faq"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
+                <a href="/public/pages/public/contact.html" class="bb-nav-link" data-page="contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
+            </div>
+
+            <!-- Actions -->
+            <div class="bb-nav-actions">
+                <button class="bb-icon-btn" id="landingDarkModeToggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                    <span class="bb-tooltip">Dark Mode</span>
+                </button>
+
+                <div class="bb-auth-buttons" id="bbAuthButtons">
+                    <a href="/public/pages/public/login.html" class="bb-btn bb-btn-outline">
+                        <i class="fas fa-sign-in-alt"></i><span>Sign In</span>
+                    </a>
+                    <a href="/public/pages/public/signup.html" class="bb-btn bb-btn-primary">
+                        <i class="fas fa-user-plus"></i><span>Sign Up</span>
+                    </a>
+                </div>
+
+                <button class="bb-mobile-btn" id="landingMobileMenuBtn" aria-label="Open menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <aside class="bb-drawer" id="landingMobileDrawer" aria-hidden="true">
+        <div class="bb-drawer-top">
+            <div class="bb-drawer-logo">
+                <span class="bb-logo-icon"><i class="fas fa-chart-line"></i></span>
+                <span>Boost<span>Bangla</span></span>
+            </div>
+            <button class="bb-drawer-close" id="closeMobileDrawer" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="bb-drawer-user" id="drawerUserInfo" style="display:none;">
+            <div class="bb-drawer-avatar">
+                <img id="drawerAvatarImg" src="/images/avatars/default-avatar.svg" alt="Avatar">
+                <span id="drawerInitials">U</span>
+            </div>
+            <div>
+                <div class="bb-drawer-name" id="drawerUserName">Guest User</div>
+                <div class="bb-drawer-email" id="drawerUserEmail">Not signed in</div>
+            </div>
+        </div>
+
+        <div class="bb-drawer-links">
+            <a href="/index.html" class="bb-drawer-link"><i class="fas fa-home"></i><span>Home</span></a>
+            <a href="/public/pages/public/services.html" class="bb-drawer-link"><i class="fas fa-layer-group"></i><span>Services</span></a>
+            <a href="/public/pages/public/pricing.html" class="bb-drawer-link"><i class="fas fa-tag"></i><span>Pricing</span></a>
+            <a href="/public/pages/public/about.html" class="bb-drawer-link"><i class="fas fa-info-circle"></i><span>About</span></a>
+            <a href="/public/pages/public/blog.html" class="bb-drawer-link"><i class="fas fa-blog"></i><span>Blog</span></a>
+            <a href="/public/pages/public/faq.html" class="bb-drawer-link"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
+            <a href="/public/pages/public/contact.html" class="bb-drawer-link"><i class="fas fa-envelope"></i><span>Contact</span></a>
+        </div>
+
+        <div class="bb-drawer-divider"></div>
+
+        <div class="bb-drawer-auth" id="drawerAuthButtons">
+            <a href="/public/pages/public/login.html" class="bb-drawer-btn bb-drawer-signin"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+            <a href="/public/pages/public/signup.html" class="bb-drawer-btn bb-drawer-signup"><i class="fas fa-user-plus"></i> Sign Up</a>
+        </div>
+
+        <div class="bb-drawer-actions" id="drawerUserActions" style="display:none;">
+            <a href="/public/pages/dashboard/index.html" class="bb-drawer-btn bb-drawer-dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <button class="bb-drawer-btn bb-drawer-logout" id="drawerLogoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+
+        <div class="bb-drawer-footer">
+            <div class="bb-drawer-social">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+            </div>
+            <p>© 2025 BoostBangla</p>
+        </div>
+    </aside>
+
+    <div class="bb-drawer-overlay" id="landingDrawerOverlay"></div>
+
+    <div class="bb-progress-wrap">
+        <div class="bb-progress-bar" id="landingReadingProgress"></div>
+    </div>
+</header>
+
+<style>
+:root {
+    --bb-primary: #FF6B00;
+    --bb-primary-dark: #CC4D02;
+    --bb-ink: #02101A;
+    --bb-muted: #64748b;
+    --bb-surface: rgba(255,255,255,.82);
+    --bb-border: rgba(148,163,184,.24);
+}
+
+.bb-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    isolation: isolate;
+}
+
+.bb-navbar {
+    margin: 12px auto 0;
+    width: min(1400px, calc(100% - 24px));
+    background: rgba(255,255,255,.80);
+    border: 1px solid rgba(226,232,240,.82);
+    border-radius: 24px;
+    box-shadow: 0 18px 55px rgba(15,23,42,.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: transform .3s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease, border-radius .3s ease;
+}
+
+.bb-navbar.scrolled {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 75px rgba(15,23,42,.12);
+    background: rgba(255,255,255,.92);
+}
+
+.bb-nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+    padding: 12px 18px;
+}
+
+.bb-logo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.bb-logo-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #FF7A1A, #CC4D02);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 14px 38px rgba(255,107,0,.28);
+    position: relative;
+    animation: bbFloat 3.4s ease-in-out infinite;
+}
+
+.bb-logo-icon::after {
+    content: "";
+    position: absolute;
+    inset: -7px;
+    border-radius: 20px;
+    background: rgba(255,107,0,.10);
+    z-index: -1;
+}
+
+.bb-logo-text {
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -.04em;
+    color: #0f172a;
+}
+
+.bb-logo-text span,
+.bb-drawer-logo span span {
+    color: var(--bb-primary);
+}
+
+.bb-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+    flex: 1;
+}
+
+.bb-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 11px 15px;
+    border-radius: 999px;
+    position: relative;
+    transition: color .22s ease, background .22s ease, transform .22s ease, box-shadow .22s ease;
+}
+
+.bb-nav-link:hover {
+    color: var(--bb-primary);
+    background: rgba(255,107,0,.09);
+    transform: translateY(-2px);
+}
+
+.bb-nav-link.active {
+    color: #fff;
+    background: linear-gradient(135deg, #FF7A1A, #CC4D02);
+    box-shadow: 0 14px 34px rgba(255,107,0,.26);
+}
+
+.bb-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.bb-icon-btn,
+.bb-mobile-btn {
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(226,232,240,.9);
+    border-radius: 16px;
+    background: rgba(255,255,255,.70);
+    color: #475569;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .22s ease, background .22s ease, color .22s ease, border-color .22s ease, box-shadow .22s ease;
+    position: relative;
+}
+
+.bb-icon-btn:hover,
+.bb-mobile-btn:hover {
+    transform: translateY(-2px);
+    color: var(--bb-primary);
+    border-color: rgba(255,107,0,.38);
+    box-shadow: 0 14px 32px rgba(15,23,42,.08);
+}
+
+.bb-tooltip {
+    position: absolute;
+    bottom: -34px;
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #0f172a;
+    color: #fff;
+    border-radius: 9px;
+    padding: 5px 9px;
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0;
+    visibility: hidden;
+    transition: .2s ease;
+    white-space: nowrap;
+}
+
+.bb-icon-btn:hover .bb-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.bb-auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.bb-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 900;
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, color .22s ease;
+}
+
+.bb-btn-outline {
+    color: #334155;
+    border: 1px solid rgba(226,232,240,.95);
+    background: rgba(255,255,255,.64);
+}
+
+.bb-btn-outline:hover {
+    color: var(--bb-primary);
+    border-color: rgba(255,107,0,.42);
+    transform: translateY(-2px);
+}
+
+.bb-btn-primary {
+    color: #fff;
+    background: linear-gradient(135deg, #FF7A1A, #CC4D02);
+    box-shadow: 0 16px 38px rgba(255,107,0,.25);
+}
+
+.bb-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 48px rgba(255,107,0,.34);
+}
+
+.bb-mobile-btn {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bb-mobile-btn span {
+    width: 18px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 999px;
+    transition: .22s ease;
+}
+
+/* Drawer */
+.bb-drawer {
+    position: fixed;
+    top: 0;
+    right: -105%;
+    width: 360px;
+    max-width: 88vw;
+    height: 100dvh;
+    z-index: 1002;
+    background:
+        radial-gradient(circle at 20% 0%, rgba(255,107,0,.16), transparent 36%),
+        rgba(255,255,255,.94);
+    border-left: 1px solid rgba(226,232,240,.85);
+    box-shadow: -24px 0 80px rgba(15,23,42,.18);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: right .34s cubic-bezier(.4,0,.2,1);
+}
+
+.bb-drawer.open {
+    right: 0;
+}
+
+.bb-drawer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px;
+    border-bottom: 1px solid rgba(226,232,240,.75);
+}
+
+.bb-drawer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 21px;
+    font-weight: 900;
+    color: #0f172a;
+}
+
+.bb-drawer-close {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(226,232,240,.9);
+    background: rgba(255,255,255,.8);
+    border-radius: 14px;
+    cursor: pointer;
+    color: #475569;
+}
+
+.bb-drawer-user {
+    margin: 16px;
+    padding: 16px;
+    border-radius: 22px;
+    background: rgba(255,107,0,.08);
+    border: 1px solid rgba(255,107,0,.18);
+    align-items: center;
+    gap: 12px;
+}
+
+.bb-drawer-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #FF7A1A, #CC4D02);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-weight: 900;
+}
+
+.bb-drawer-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bb-drawer-name {
+    font-weight: 900;
+    color: #0f172a;
+}
+
+.bb-drawer-email {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.bb-drawer-links {
+    padding: 6px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bb-drawer-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    color: #475569;
+    text-decoration: none;
+    font-weight: 800;
+    transition: transform .22s ease, background .22s ease, color .22s ease;
+}
+
+.bb-drawer-link i {
+    width: 22px;
+}
+
+.bb-drawer-link:hover {
+    transform: translateX(4px);
+    color: var(--bb-primary);
+    background: rgba(255,107,0,.08);
+}
+
+.bb-drawer-link.active {
+    color: #fff;
+    background: linear-gradient(135deg, #FF7A1A, #CC4D02);
+    box-shadow: 0 14px 34px rgba(255,107,0,.22);
+}
+
+.bb-drawer-divider {
+    height: 1px;
+    background: rgba(226,232,240,.85);
+    margin: 14px 18px;
+}
+
+.bb-drawer-auth,
+.bb-drawer-actions {
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.bb-drawer-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border-radius: 999px;
+    padding: 14px;
+    font-weight: 900;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.bb-drawer-signin {
+    border: 1px solid rgba(226,232,240,.95);
+    color: #334155;
+    background: rgba(255,255,255,.72);
+}
+
+.bb-drawer-signup,
+.bb-drawer-dashboard {
+    color: #fff;
+    background: linear-gradient(135deg, #FF7A1A, #CC4D02);
+}
+
+.bb-drawer-logout {
+    color: #dc2626;
+    background: #fee2e2;
+}
+
+.bb-drawer-footer {
+    margin-top: auto;
+    padding: 22px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.bb-drawer-social {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.bb-drawer-social a {
+    width: 38px;
+    height: 38px;
+    border-radius: 14px;
+    background: rgba(15,23,42,.06);
+    color: #64748b;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform .22s ease, color .22s ease, background .22s ease;
+}
+
+.bb-drawer-social a:hover {
+    transform: translateY(-3px);
+    color: #fff;
+    background: var(--bb-primary);
+}
+
+.bb-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+    background: rgba(2, 6, 23, .55);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .28s ease, visibility .28s ease;
+}
+
+.bb-drawer-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.bb-progress-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 3px;
+    overflow: hidden;
+    border-radius: 999px;
+}
+
+.bb-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #FF7A1A, #CC4D02);
+    transition: width .1s ease;
+}
+
+@keyframes bbFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+/* Dark mode */
+body.dark-mode .bb-navbar,
+body.dark-mode .bb-drawer {
+    background: rgba(15,23,42,.86);
+    border-color: rgba(51,65,85,.92);
+}
+
+body.dark-mode .bb-navbar.scrolled {
+    background: rgba(15,23,42,.94);
+}
+
+body.dark-mode .bb-logo-text,
+body.dark-mode .bb-drawer-logo,
+body.dark-mode .bb-drawer-name {
+    color: #f8fafc;
+}
+
+body.dark-mode .bb-nav-link,
+body.dark-mode .bb-drawer-link,
+body.dark-mode .bb-icon-btn,
+body.dark-mode .bb-mobile-btn,
+body.dark-mode .bb-btn-outline,
+body.dark-mode .bb-drawer-signin {
+    color: #cbd5e1;
+}
+
+body.dark-mode .bb-icon-btn,
+body.dark-mode .bb-mobile-btn,
+body.dark-mode .bb-btn-outline,
+body.dark-mode .bb-drawer-close,
+body.dark-mode .bb-drawer-signin,
+body.dark-mode .bb-drawer-social a {
+    background: rgba(15,23,42,.72);
+    border-color: rgba(51,65,85,.92);
+}
+
+body.dark-mode .bb-drawer-top,
+body.dark-mode .bb-drawer-divider {
+    border-color: rgba(51,65,85,.92);
+}
+
+body.dark-mode .bb-drawer-email,
+body.dark-mode .bb-drawer-footer {
+    color: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 1120px) {
+    .bb-nav-link span { display: none; }
+    .bb-nav-link { padding: 11px 13px; }
+}
+
+@media (max-width: 900px) {
+    .bb-nav-links,
+    .bb-auth-buttons {
+        display: none;
+    }
+
+    .bb-mobile-btn {
+        display: inline-flex;
+    }
+
+    .bb-navbar {
+        margin-top: 8px;
+        width: min(100% - 16px, 1400px);
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 520px) {
+    .bb-nav-container {
+        padding: 10px 12px;
+    }
+
+    .bb-logo-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 14px;
+    }
+
+    .bb-logo-text {
+        font-size: 20px;
+    }
+
+    .bb-icon-btn,
+    .bb-mobile-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+    }
+}
+</style>
+
+<script>
+(function() {
+    'use strict';
+
+    function ready(fn) {
+        if (document.readyState !== 'loading') fn();
+        else document.addEventListener('DOMContentLoaded', fn);
+    }
+
+    ready(function() {
+        const navbar = document.getElementById('bbNavbar') || document.querySelector('.bb-navbar');
+        const mobileMenuBtn = document.getElementById('landingMobileMenuBtn');
+        const mobileDrawer = document.getElementById('landingMobileDrawer');
+        const drawerOverlay = document.getElementById('landingDrawerOverlay');
+        const closeDrawerBtn = document.getElementById('closeMobileDrawer');
+        const darkModeToggle = document.getElementById('landingDarkModeToggle');
+        const progressBar = document.getElementById('landingReadingProgress');
+        const logoutDrawerBtn = document.getElementById('drawerLogoutBtn');
+
+        function updateScrollState() {
+            if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 24);
+
+            if (progressBar) {
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const percent = height > 0 ? (window.scrollY / height) * 100 : 0;
+                progressBar.style.width = percent + '%';
+            }
+        }
+
+        window.addEventListener('scroll', updateScrollState, { passive: true });
+        updateScrollState();
+
+        function openDrawer() {
+            if (!mobileDrawer || !drawerOverlay) return;
+            mobileDrawer.classList.add('open');
+            mobileDrawer.setAttribute('aria-hidden', 'false');
+            drawerOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDrawer() {
+            if (!mobileDrawer || !drawerOverlay) return;
+            mobileDrawer.classList.remove('open');
+            mobileDrawer.setAttribute('aria-hidden', 'true');
+            drawerOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openDrawer);
+        if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+        if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+        document.querySelectorAll('.bb-drawer-link').forEach(link => link.addEventListener('click', closeDrawer));
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeDrawer();
+        });
+
+        function updateDarkIcon(isDark) {
+            if (!darkModeToggle) return;
+            const icon = darkModeToggle.querySelector('i');
+            if (!icon) return;
+            icon.classList.toggle('fa-moon', !isDark);
+            icon.classList.toggle('fa-sun', isDark);
+        }
+
+        const initialDark = localStorage.getItem('darkMode') === 'true';
+        document.body.classList.toggle('dark-mode', initialDark);
+        updateDarkIcon(initialDark);
+
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                const isDark = !document.body.classList.contains('dark-mode');
+                document.body.classList.toggle('dark-mode', isDark);
+                localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+                updateDarkIcon(isDark);
+            });
+        }
+
+        function normalizePath(path) {
+            if (!path) return '';
+            if (path === '/') return '/index.html';
+            return path.split('?')[0].split('#')[0];
+        }
+
+        function setActiveNavLink() {
+            const current = normalizePath(window.location.pathname);
+            document.querySelectorAll('.bb-nav-link, .bb-drawer-link').forEach(link => {
+                const href = normalizePath(link.getAttribute('href'));
+                const hrefName = href.split('/').pop();
+                const currentName = current.split('/').pop();
+
+                const isActive =
+                    current === href ||
+                    (href === '/index.html' && (current === '/' || current === '/index.html')) ||
+                    (hrefName && currentName && hrefName === currentName);
+
+                link.classList.toggle('active', !!isActive);
+            });
+        }
+        setActiveNavLink();
+
+        function updateLoggedOut() {
+            const authButtons = document.getElementById('bbAuthButtons');
+            const drawerAuthButtons = document.getElementById('drawerAuthButtons');
+            const drawerUserActions = document.getElementById('drawerUserActions');
+            const drawerUserInfo = document.getElementById('drawerUserInfo');
+
+            if (authButtons) {
+                authButtons.innerHTML = `
+                    <a href="/public/pages/public/login.html" class="bb-btn bb-btn-outline">
+                        <i class="fas fa-sign-in-alt"></i><span>Sign In</span>
+                    </a>
+                    <a href="/public/pages/public/signup.html" class="bb-btn bb-btn-primary">
+                        <i class="fas fa-user-plus"></i><span>Sign Up</span>
+                    </a>
+                `;
+            }
+
+            if (drawerAuthButtons) drawerAuthButtons.style.display = 'flex';
+            if (drawerUserActions) drawerUserActions.style.display = 'none';
+            if (drawerUserInfo) drawerUserInfo.style.display = 'none';
+        }
+
+        function updateLoggedIn(user, userData = {}) {
+            const authButtons = document.getElementById('bbAuthButtons');
+            const drawerAuthButtons = document.getElementById('drawerAuthButtons');
+            const drawerUserActions = document.getElementById('drawerUserActions');
+            const drawerUserInfo = document.getElementById('drawerUserInfo');
+
+            if (authButtons) {
+                authButtons.innerHTML = `
+                    <a href="/public/pages/dashboard/index.html" class="bb-btn bb-btn-primary">
+                        <i class="fas fa-tachometer-alt"></i><span>Dashboard</span>
+                    </a>
+                `;
+            }
+
+            if (drawerAuthButtons) drawerAuthButtons.style.display = 'none';
+            if (drawerUserActions) drawerUserActions.style.display = 'flex';
+            if (drawerUserInfo) drawerUserInfo.style.display = 'flex';
+
+            const displayName = userData.displayName || userData.username || (user.email ? user.email.split('@')[0] : 'User');
+            const avatarURL = userData.avatarURL || userData.photoURL || user.photoURL;
+
+            const userNameEl = document.getElementById('drawerUserName');
+            const userEmailEl = document.getElementById('drawerUserEmail');
+            const avatarImg = document.getElementById('drawerAvatarImg');
+            const initialsSpan = document.getElementById('drawerInitials');
+
+            if (userNameEl) userNameEl.textContent = displayName;
+            if (userEmailEl) userEmailEl.textContent = user.email || 'Signed in';
+
+            if (avatarURL && avatarImg) {
+                avatarImg.src = avatarURL;
+                avatarImg.style.display = 'block';
+                if (initialsSpan) initialsSpan.style.display = 'none';
+            } else {
+                if (avatarImg) avatarImg.style.display = 'none';
+                if (initialsSpan) {
+                    initialsSpan.style.display = 'flex';
+                    initialsSpan.textContent = displayName.charAt(0).toUpperCase();
+                }
+            }
+        }
+
+        if (typeof firebase !== 'undefined' && firebase.auth) {
+            firebase.auth().onAuthStateChanged(async (user) => {
+                if (!user) {
+                    updateLoggedOut();
+                    return;
+                }
+
+                let userData = {};
+                try {
+                    if (firebase.firestore) {
+                        const doc = await firebase.firestore().collection('users').doc(user.uid).get();
+                        userData = doc.exists ? (doc.data() || {}) : {};
+                    }
+                } catch (error) {
+                    console.warn('Header user data load failed:', error);
+                }
+
+                updateLoggedIn(user, userData);
+            });
+
+            if (logoutDrawerBtn) {
+                logoutDrawerBtn.addEventListener('click', async () => {
+                    try {
+                        await firebase.auth().signOut();
+                        window.location.href = '/index.html';
+                    } catch (error) {
+                        console.error('Logout failed:', error);
+                    }
+                });
+            }
+        } else {
+            updateLoggedOut();
+        }
+    });
+})();
+</script>
