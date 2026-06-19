@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Manage Users | BoostBangla Admin</title>
+    <meta name="description" content="Admin panel to manage BoostBangla users - view, edit, suspend, and delete user accounts.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] },
+                    screens: {
+                        'xs': '475px',
+                        'sm': '640px',
+                        'md': '768px',
+                        'lg': '1024px',
+                        'xl': '1280px',
+                        '2xl': '1536px',
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC5500;
+            --primary-light: #FF8C42;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark-bg: #02101A;
+            --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            --card-shadow-hover: 0 25px 30px -12px rgba(255, 107, 0, 0.15);
+        }
+        
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+        
+        /* Admin Layout */
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Admin Sidebar - Desktop */
+        .admin-sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #02101A 0%, #031a2a 100%);
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s ease;
+            z-index: 100;
+        }
+        
+        /* Admin Sidebar - Mobile */
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+                z-index: 1001;
+            }
+            
+            .admin-sidebar.open {
+                transform: translateX(0);
+            }
+        }
+        
+        .admin-sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .admin-sidebar-header .logo {
+            font-size: 22px;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .admin-sidebar-header .logo span {
+            color: #FF6B00;
+        }
+        
+        .admin-sidebar-nav {
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        
+        .admin-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            color: #9CA3AF;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.2s;
+            position: relative;
+            font-size: 14px;
+        }
+        
+        .admin-nav-item i {
+            width: 20px;
+            font-size: 16px;
+        }
+        
+        .admin-nav-item:hover {
+            background: rgba(255, 107, 0, 0.15);
+            color: #FF6B00;
+            transform: translateX(4px);
+        }
+        
+        .admin-nav-item.active {
+            background: rgba(255, 107, 0, 0.2);
+            color: #FF6B00;
+        }
+        
+        .admin-nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 20px;
+            background: #FF6B00;
+            border-radius: 0 3px 3px 0;
+        }
+        
+        .admin-nav-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 12px 0;
+        }
+        
+        /* Admin Main Content */
+        .admin-main {
+            flex: 1;
+            margin-left: 280px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            min-height: 100vh;
+            transition: margin-left 0.3s ease;
+            width: calc(100% - 280px);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-main {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+        
+        body.dark-mode .admin-main {
+            background: linear-gradient(135deg, #02101A 0%, #031a2a 100%);
+        }
+        
+        /* Admin Header - Sticky */
+        .admin-header {
+            background: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        @media (max-width: 640px) {
+            .admin-header {
+                padding: 12px 16px;
+            }
+            
+            .admin-header h1 {
+                font-size: 20px;
+            }
+        }
+        
+        body.dark-mode .admin-header {
+            background: #1e293b;
+            border-bottom-color: #334155;
+        }
+        
+        .admin-header h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        .admin-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .admin-dark-mode-toggle {
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .admin-dark-mode-toggle:hover {
+            background: #f3f4f6;
+            color: #FF6B00;
+        }
+        
+        body.dark-mode .admin-dark-mode-toggle:hover {
+            background: #334155;
+        }
+        
+        .admin-user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 4px 12px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        
+        .admin-user-info:hover {
+            background: #f3f4f6;
+        }
+        
+        body.dark-mode .admin-user-info:hover {
+            background: #334155;
+        }
+        
+        .admin-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 14px;
+        }
+        
+        /* Stats Cards - Responsive Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            padding: 20px;
+        }
+        
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 16px;
+            }
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            transition: all 0.3s;
+            border: 1px solid #e5e7eb;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        @media (max-width: 640px) {
+            .stat-card {
+                padding: 14px;
+            }
+        }
+        
+        body.dark-mode .stat-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: #FF6B00;
+            box-shadow: 0 10px 25px -5px rgba(255, 107, 0, 0.15);
+        }
+        
+        /* Table Container - Responsive */
+        .admin-table-container {
+            background: white;
+            border-radius: 16px;
+            margin: 0 20px 20px 20px;
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        @media (max-width: 640px) {
+            .admin-table-container {
+                margin: 0 12px 16px 12px;
+                border-radius: 12px;
+            }
+        }
+        
+        body.dark-mode .admin-table-container {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        @media (max-width: 900px) {
+            .admin-table {
+                min-width: 700px;
+            }
+        }
+        
+        .admin-table th {
+            padding: 14px 12px;
+            text-align: left;
+            background: #f8fafc;
+            font-weight: 600;
+            font-size: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        @media (max-width: 640px) {
+            .admin-table th {
+                padding: 10px 8px;
+                font-size: 11px;
+            }
+        }
+        
+        body.dark-mode .admin-table th {
+            background: #0f172a;
+            border-bottom-color: #334155;
+            color: #94a3b8;
+        }
+        
+        .admin-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+            font-size: 13px;
+        }
+        
+        @media (max-width: 640px) {
+            .admin-table td {
+                padding: 10px 8px;
+                font-size: 12px;
+            }
+        }
+        
+        body.dark-mode .admin-table td {
+            border-bottom-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .admin-table tr:hover {
+            background: #fef9f5;
+        }
+        
+        body.dark-mode .admin-table tr:hover {
+            background: #2d1a0f;
+        }
+        
+        /* User Row */
+        .user-row {
+            transition: all 0.2s ease;
+        }
+        
+        /* Status Badges */
+        .status-active {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            background: #d1fae5;
+            color: #059669;
+        }
+        
+        .status-suspended {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        body.dark-mode .status-active { background: #064e3b; color: #34d399; }
+        body.dark-mode .status-suspended { background: #7f1d1d; color: #f87171; }
+        
+        /* Role Badges */
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        
+        .role-admin {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        
+        body.dark-mode .role-badge { background: #1e3a5f; color: #60a5fa; }
+        body.dark-mode .role-admin { background: #451a03; color: #fbbf24; }
+        
+        /* Search and Filters Section */
+        .search-filters-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .search-filters-section {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0 16px;
+            }
+        }
+        
+        /* Search Input */
+        .search-wrapper {
+            position: relative;
+            width: 320px;
+        }
+        
+        @media (max-width: 768px) {
+            .search-wrapper {
+                width: 100%;
+            }
+        }
+        
+        .search-input {
+            padding: 10px 16px 10px 40px;
+            border: 1px solid #e5e7eb;
+            border-radius: 40px;
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.2s;
+            background: white;
+        }
+        
+        body.dark-mode .search-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 14px;
+        }
+        
+        /* Filter Buttons */
+        .filters-wrapper {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .filters-wrapper {
+                justify-content: center;
+            }
+        }
+        
+        .filter-btn {
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            border: 1px solid #e5e7eb;
+            color: #6b7280;
+            white-space: nowrap;
+        }
+        
+        @media (max-width: 480px) {
+            .filter-btn {
+                padding: 5px 12px;
+                font-size: 11px;
+            }
+        }
+        
+        body.dark-mode .filter-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        
+        .filter-btn:hover {
+            border-color: #FF6B00;
+            color: #FF6B00;
+            transform: translateY(-2px);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 2px 8px rgba(255, 107, 0, 0.3);
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 640px) {
+            .action-buttons {
+                gap: 4px;
+            }
+        }
+        
+        .action-edit {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .action-edit:hover {
+            background: #2563eb;
+            transform: scale(1.02);
+        }
+        
+        .action-toggle {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .action-toggle:hover {
+            background: #d97706;
+            transform: scale(1.02);
+        }
+        
+        .action-delete {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .action-delete:hover {
+            background: #dc2626;
+            transform: scale(1.02);
+        }
+        
+        @media (max-width: 640px) {
+            .action-edit, .action-toggle, .action-delete {
+                padding: 4px 8px;
+                font-size: 10px;
+            }
+            
+            .action-edit i, .action-toggle i, .action-delete i {
+                font-size: 10px;
+            }
+        }
+        
+        /* Modal - Mobile Responsive */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+            padding: 16px;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            max-width: 500px;
+            width: 100%;
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        @media (max-width: 640px) {
+            .modal-content {
+                padding: 20px;
+                border-radius: 20px;
+            }
+        }
+        
+        body.dark-mode .modal-content {
+            background: #1e293b;
+        }
+        
+        /* Form Inputs - Mobile Friendly */
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.2s;
+            background: white;
+        }
+        
+        @media (max-width: 640px) {
+            .form-input {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+        }
+        
+        body.dark-mode .form-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+        }
+        
+        select.form-input {
+            cursor: pointer;
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 640px) {
+            .btn-primary {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #e5e7eb;
+            padding: 11px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 640px) {
+            .btn-secondary {
+                padding: 9px 16px;
+                font-size: 13px;
+            }
+        }
+        
+        body.dark-mode .btn-secondary {
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .btn-secondary:hover {
+            border-color: #FF6B00;
+            color: #FF6B00;
+        }
+        
+        /* Pagination - Mobile Responsive */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 24px 20px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 640px) {
+            .pagination-container {
+                gap: 6px;
+                margin: 20px 12px;
+            }
+        }
+        
+        .pagination-btn {
+            padding: 6px 12px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            min-width: 36px;
+            text-align: center;
+        }
+        
+        @media (max-width: 640px) {
+            .pagination-btn {
+                padding: 5px 10px;
+                font-size: 12px;
+                min-width: 32px;
+            }
+        }
+        
+        body.dark-mode .pagination-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        
+        .pagination-btn:hover:not(:disabled) {
+            border-color: #FF6B00;
+            color: #FF6B00;
+            transform: translateY(-2px);
+        }
+        
+        .pagination-btn.active {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Mobile Menu Button */
+        .admin-mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-mobile-menu-btn {
+                display: flex;
+            }
+        }
+        
+        .admin-mobile-menu-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Spinner */
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #e5e7eb;
+            border-top-color: #FF6B00;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Toast - Mobile Responsive */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            left: auto;
+            z-index: 9999;
+            padding: 12px 20px;
+            border-radius: 50px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideUp 0.3s ease;
+            font-weight: 500;
+            font-size: 13px;
+            max-width: calc(100% - 40px);
+        }
+        
+        @media (max-width: 640px) {
+            .toast {
+                bottom: 16px;
+                right: 16px;
+                left: 16px;
+                max-width: calc(100% - 32px);
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+        }
+        
+        body.dark-mode .toast {
+            background: #1e293b;
+            color: white;
+        }
+        
+        .toast.success { border-left: 3px solid #10b981; }
+        .toast.error { border-left: 3px solid #ef4444; }
+        .toast.warning { border-left: 3px solid #f59e0b; }
+        .toast.info { border-left: 3px solid #3b82f6; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #FF6B00;
+            border-radius: 10px;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* User Avatar in Table */
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-avatar-small {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        
+        @media (max-width: 640px) {
+            .user-avatar-small {
+                width: 28px;
+                height: 28px;
+                font-size: 11px;
+            }
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-name {
+            font-weight: 500;
+            font-size: 13px;
+        }
+        
+        .user-email {
+            font-size: 11px;
+            color: #6b7280;
+        }
+        
+        body.dark-mode .user-email {
+            color: #94a3b8;
+        }
+        
+        /* Balance Amount */
+        .balance-amount {
+            font-weight: 600;
+            color: #FF6B00;
+            white-space: nowrap;
+        }
+        
+        /* No Data Message */
+        .no-data {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+        }
+        
+        .no-data i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        
+        /* Modal Button Group */
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 640px) {
+            .modal-buttons {
+                gap: 8px;
+            }
+        }
+        
+        .modal-buttons button {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="admin-sidebar-header">
+                <a href="/admin/index.html" class="logo">Boost<span>Bangla</span></a>
+                <p class="text-xs text-gray-400 mt-2">Admin Panel</p>
+            </div>
+            <nav class="admin-sidebar-nav">
+                <a href="/admin/index.html" class="admin-nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/admin/users.html" class="admin-nav-item active">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <a href="/admin/deposits.html" class="admin-nav-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Deposits</span>
+                </a>
+                <a href="/admin/orders.html" class="admin-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="/admin/tickets.html" class="admin-nav-item">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Tickets</span>
+                </a>
+                <a href="/admin/refunds.html" class="admin-nav-item">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Refunds</span>
+                </a>
+                <a href="/admin/withdrawals.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Withdrawals</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/admin/services.html" class="admin-nav-item">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Services</span>
+                </a>
+                <a href="/admin/settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/dashboard/index.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Site</span>
+                </a>
+                <button id="adminLogoutBtn" class="admin-nav-item w-full text-left text-red-400">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+        
+        <!-- Admin Main Content -->
+        <main class="admin-main">
+            <!-- Admin Header -->
+            <div class="admin-header">
+                <div>
+                    <h1>Manage Users</h1>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">View and manage all registered users</p>
+                </div>
+                <div class="admin-header-actions">
+                    <button id="refreshUsersBtn" class="admin-dark-mode-toggle" title="Refresh">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button id="adminDarkModeToggle" class="admin-dark-mode-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="admin-user-info">
+                        <div class="admin-avatar" id="adminAvatar">A</div>
+                        <span class="hidden sm:inline" id="adminName">Admin</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card" style="animation-delay: 0.05s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs text-gray-500">Total Users</div>
+                            <div class="text-2xl font-bold" id="totalUsers">0</div>
+                        </div>
+                        <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                            <i class="fas fa-users text-blue-500 text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card" style="animation-delay: 0.1s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs text-gray-500">Active Users</div>
+                            <div class="text-2xl font-bold text-green-600" id="activeUsers">0</div>
+                        </div>
+                        <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                            <i class="fas fa-check-circle text-green-500 text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card" style="animation-delay: 0.15s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs text-gray-500">Suspended</div>
+                            <div class="text-2xl font-bold text-red-600" id="suspendedUsers">0</div>
+                        </div>
+                        <div class="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+                            <i class="fas fa-ban text-red-500 text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card" style="animation-delay: 0.2s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs text-gray-500">Admins</div>
+                            <div class="text-2xl font-bold text-orange-600" id="adminUsers">0</div>
+                        </div>
+                        <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
+                            <i class="fas fa-shield-alt text-orange-500 text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Search and Filters -->
+            <div class="search-filters-section">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchUsers" placeholder="Search by username or email..." class="search-input">
+                </div>
+                <div class="filters-wrapper">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="active">Active</button>
+                    <button class="filter-btn" data-filter="suspended">Suspended</button>
+                    <button class="filter-btn" data-filter="admin">Admins</button>
+                </div>
+            </div>
+            
+            <!-- Users Table -->
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Balance</th>
+                            <th>Orders</th>
+                            <th>Joined</th>
+                            <th>Status</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr>
+                            <td colspan="8" class="text-center py-12">
+                                <div class="spinner mx-auto mb-3"></div>
+                                <p class="text-gray-500">Loading users...</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div id="pagination" class="pagination-container"></div>
+        </main>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    <button id="adminMobileMenuBtn" class="admin-mobile-menu-btn">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+    
+    <!-- Edit User Modal -->
+    <div id="editUserModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Edit User</h3>
+                <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+            </div>
+            <form id="editUserForm">
+                <input type="hidden" id="editUserId">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Username</label>
+                    <input type="text" id="editUsername" class="form-input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="editEmail" class="form-input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Balance (BDT)</label>
+                    <input type="number" id="editBalance" class="form-input" step="0.01">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Status</label>
+                    <select id="editStatus" class="form-input">
+                        <option value="active">Active</option>
+                        <option value="suspended">Suspended</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Role</label>
+                    <select id="editRole" class="form-input">
+                        <option value="false">User</option>
+                        <option value="true">Admin</option>
+                    </select>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeEditModal()" class="btn-secondary flex-1">Cancel</button>
+                    <button type="submit" class="btn-primary flex-1">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        let allUsers = [];
+        let currentFilter = 'all';
+        let currentSearch = '';
+        let currentPage = 1;
+        const ITEMS_PER_PAGE = 15;
+        
+        // ============================================
+        // TOAST NOTIFICATION
+        // ============================================
+        function showToast(message, type = 'success') {
+            const container = document.body;
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+                <i class="fas fa-times ml-2 cursor-pointer opacity-70 hover:opacity-100" onclick="this.parentElement.remove()"></i>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4000);
+        }
+        
+        // ============================================
+        // CHECK ADMIN AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (!userDoc.exists || !userDoc.data().isAdmin) {
+                window.location.href = '/dashboard/index.html';
+                return;
+            }
+            
+            // Set admin name
+            const adminName = userDoc.data().displayName || user.email.split('@')[0];
+            document.getElementById('adminName').innerText = adminName;
+            document.getElementById('adminAvatar').innerText = adminName.charAt(0).toUpperCase();
+            
+            await loadUsers();
+        });
+        
+        // ============================================
+        // LOAD USERS
+        // ============================================
+        async function loadUsers() {
+            const tbody = document.getElementById('usersTableBody');
+            tbody.innerHTML = '<tr><td colspan="8" class="text-center py-12"><div class="spinner mx-auto"></div><p class="text-gray-500 mt-2">Loading users...</p></td></tr>';
+            
+            try {
+                const usersSnapshot = await db.collection('users').orderBy('createdAt', 'desc').get();
+                
+                allUsers = [];
+                let activeCount = 0;
+                let suspendedCount = 0;
+                let adminCount = 0;
+                
+                for (const doc of usersSnapshot.docs) {
+                    const userData = doc.data();
+                    const userId = doc.id;
+                    
+                    // Get order count
+                    const ordersSnapshot = await db.collection('orders').where('userId', '==', userId).get();
+                    const orderCount = ordersSnapshot.size;
+                    
+                    const user = {
+                        id: userId,
+                        username: userData.displayName || userData.email?.split('@')[0] || 'User',
+                        email: userData.email || 'N/A',
+                        balance: userData.balance || 0,
+                        orderCount: orderCount,
+                        createdAt: userData.createdAt,
+                        isActive: userData.isActive !== false,
+                        isAdmin: userData.isAdmin || false
+                    };
+                    
+                    allUsers.push(user);
+                    
+                    if (user.isActive) activeCount++;
+                    else suspendedCount++;
+                    if (user.isAdmin) adminCount++;
+                }
+                
+                document.getElementById('totalUsers').innerText = allUsers.length;
+                document.getElementById('activeUsers').innerText = activeCount;
+                document.getElementById('suspendedUsers').innerText = suspendedCount;
+                document.getElementById('adminUsers').innerText = adminCount;
+                
+                displayUsers();
+                
+            } catch (error) {
+                console.error('Error loading users:', error);
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center py-12 text-red-500">❌ Failed to load users</td></tr>';
+            }
+        }
+        
+        // ============================================
+        // DISPLAY USERS
+        // ============================================
+        function displayUsers() {
+            let filtered = [...allUsers];
+            
+            if (currentFilter === 'active') {
+                filtered = filtered.filter(u => u.isActive);
+            } else if (currentFilter === 'suspended') {
+                filtered = filtered.filter(u => !u.isActive);
+            } else if (currentFilter === 'admin') {
+                filtered = filtered.filter(u => u.isAdmin);
+            }
+            
+            if (currentSearch) {
+                const search = currentSearch.toLowerCase();
+                filtered = filtered.filter(u => 
+                    u.username.toLowerCase().includes(search) || 
+                    u.email.toLowerCase().includes(search)
+                );
+            }
+            
+            const start = (currentPage - 1) * ITEMS_PER_PAGE;
+            const pageUsers = filtered.slice(start, start + ITEMS_PER_PAGE);
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            
+            const tbody = document.getElementById('usersTableBody');
+            
+            if (pageUsers.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-12">
+                            <div class="no-data">
+                                <i class="fas fa-users-slash"></i>
+                                <p>No users found</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+            
+            tbody.innerHTML = pageUsers.map(user => `
+                <tr class="user-row">
+                    <td>
+                        <div class="user-cell">
+                            <div class="user-avatar-small">${user.username.charAt(0).toUpperCase()}</div>
+                            <div class="user-info">
+                                <span class="user-name">${escapeHtml(user.username)}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="user-email">${escapeHtml(user.email)}</td>
+                    <td class="balance-amount">৳${user.balance.toLocaleString()}</td>
+                    <td>${user.orderCount}</td>
+                    <td class="text-gray-500 text-xs">${formatDate(user.createdAt)}</td>
+                    <td>
+                        <span class="${user.isActive ? 'status-active' : 'status-suspended'}">
+                            <i class="fas ${user.isActive ? 'fa-circle' : 'fa-ban'} text-xs"></i>
+                            ${user.isActive ? 'Active' : 'Suspended'}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="role-badge ${user.isAdmin ? 'role-admin' : ''}">
+                            <i class="fas ${user.isAdmin ? 'fa-shield-alt' : 'fa-user'} text-xs"></i>
+                            ${user.isAdmin ? 'Admin' : 'User'}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button onclick="editUser('${user.id}')" class="action-edit" title="Edit">
+                                <i class="fas fa-edit"></i> <span class="hidden xs:inline">Edit</span>
+                            </button>
+                            <button onclick="toggleUserStatus('${user.id}', ${!user.isActive})" class="action-toggle" title="${user.isActive ? 'Suspend' : 'Activate'}">
+                                <i class="fas ${user.isActive ? 'fa-ban' : 'fa-check-circle'}"></i>
+                                <span class="hidden xs:inline">${user.isActive ? 'Suspend' : 'Activate'}</span>
+                            </button>
+                            ${!user.isAdmin ? `
+                                <button onclick="deleteUser('${user.id}')" class="action-delete" title="Delete">
+                                    <i class="fas fa-trash-alt"></i> <span class="hidden xs:inline">Delete</span>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+            
+            updatePagination(totalPages);
+        }
+        
+        function updatePagination(totalPages) {
+            const paginationDiv = document.getElementById('pagination');
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+            
+            let html = `
+                <button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-left"></i> Prev
+                </button>
+            `;
+            
+            const startPage = Math.max(1, currentPage - 2);
+            const endPage = Math.min(totalPages, currentPage + 2);
+            
+            if (startPage > 1) {
+                html += `<button class="pagination-btn" onclick="goToPage(1)">1</button>`;
+                if (startPage > 2) html += `<span class="px-1">...</span>`;
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button class="pagination-btn ${currentPage === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) html += `<span class="px-1">...</span>`;
+                html += `<button class="pagination-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+            }
+            
+            html += `
+                <button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            `;
+            
+            paginationDiv.innerHTML = html;
+        }
+        
+        window.goToPage = function(page) {
+            let filtered = [...allUsers];
+            if (currentFilter === 'active') filtered = filtered.filter(u => u.isActive);
+            else if (currentFilter === 'suspended') filtered = filtered.filter(u => !u.isActive);
+            else if (currentFilter === 'admin') filtered = filtered.filter(u => u.isAdmin);
+            if (currentSearch) filtered = filtered.filter(u => u.username.toLowerCase().includes(currentSearch.toLowerCase()) || u.email.toLowerCase().includes(currentSearch.toLowerCase()));
+            
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            displayUsers();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        
+        // ============================================
+        // FILTER AND SEARCH HANDLERS
+        // ============================================
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                currentPage = 1;
+                displayUsers();
+            });
+        });
+        
+        let searchTimeout;
+        document.getElementById('searchUsers').addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentSearch = e.target.value;
+                currentPage = 1;
+                displayUsers();
+            }, 300);
+        });
+        
+        // ============================================
+        // EDIT USER
+        // ============================================
+        window.editUser = async (userId) => {
+            const user = allUsers.find(u => u.id === userId);
+            if (!user) return;
+            
+            document.getElementById('editUserId').value = user.id;
+            document.getElementById('editUsername').value = user.username;
+            document.getElementById('editEmail').value = user.email;
+            document.getElementById('editBalance').value = user.balance;
+            document.getElementById('editStatus').value = user.isActive ? 'active' : 'suspended';
+            document.getElementById('editRole').value = user.isAdmin ? 'true' : 'false';
+            
+            document.getElementById('editUserModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        window.closeEditModal = () => {
+            document.getElementById('editUserModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        
+        document.getElementById('editUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const userId = document.getElementById('editUserId').value;
+            const username = document.getElementById('editUsername').value.trim();
+            const email = document.getElementById('editEmail').value.trim();
+            const balance = parseFloat(document.getElementById('editBalance').value) || 0;
+            const status = document.getElementById('editStatus').value;
+            const isAdmin = document.getElementById('editRole').value === 'true';
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="spinner"></div> Saving...';
+            
+            try {
+                await db.collection('users').doc(userId).update({
+                    displayName: username,
+                    email: email,
+                    balance: balance,
+                    isActive: status === 'active',
+                    isAdmin: isAdmin,
+                    updatedAt: new Date()
+                });
+                
+                showToast('User updated successfully!', 'success');
+                closeEditModal();
+                await loadUsers();
+                
+            } catch (error) {
+                console.error('Error updating user:', error);
+                showToast('Failed to update user', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+        
+        // ============================================
+        // TOGGLE USER STATUS
+        // ============================================
+        window.toggleUserStatus = async (userId, activate) => {
+            const action = activate ? 'activate' : 'suspend';
+            const confirmed = confirm(`Are you sure you want to ${action} this user?`);
+            if (!confirmed) return;
+            
+            try {
+                await db.collection('users').doc(userId).update({
+                    isActive: activate,
+                    updatedAt: new Date()
+                });
+                
+                showToast(`User ${action}d successfully!`, 'success');
+                await loadUsers();
+                
+            } catch (error) {
+                console.error('Error toggling user status:', error);
+                showToast(`Failed to ${action} user`, 'error');
+            }
+        };
+        
+        // ============================================
+        // DELETE USER
+        // ============================================
+        window.deleteUser = async (userId) => {
+            const confirmed = confirm('⚠️ WARNING: This will permanently delete the user and all their data. This action cannot be undone. Are you sure?');
+            if (!confirmed) return;
+            
+            try {
+                // Delete user document
+                await db.collection('users').doc(userId).delete();
+                
+                // Delete related data in batches
+                const orders = await db.collection('orders').where('userId', '==', userId).get();
+                const batch = db.batch();
+                orders.forEach(doc => batch.delete(doc.ref));
+                await batch.commit();
+                
+                const deposits = await db.collection('deposits').where('userId', '==', userId).get();
+                deposits.forEach(doc => batch.delete(doc.ref));
+                await batch.commit();
+                
+                const tickets = await db.collection('tickets').where('userId', '==', userId).get();
+                tickets.forEach(doc => batch.delete(doc.ref));
+                await batch.commit();
+                
+                showToast('User deleted successfully!', 'success');
+                await loadUsers();
+                
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                showToast('Failed to delete user', 'error');
+            }
+        };
+        
+        // ============================================
+        // REFRESH BUTTON
+        // ============================================
+        document.getElementById('refreshUsersBtn')?.addEventListener('click', async () => {
+            const btn = document.getElementById('refreshUsersBtn');
+            btn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i>';
+            await loadUsers();
+            btn.innerHTML = '<i class="fas fa-sync-alt"></i>';
+            showToast('Users refreshed!', 'success');
+        });
+        
+        // ============================================
+        // HELPER FUNCTIONS
+        // ============================================
+        function formatDate(timestamp) {
+            if (!timestamp) return 'N/A';
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            return date.toLocaleDateString('en-BD');
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // ============================================
+        // DARK MODE AND MOBILE TOGGLE
+        // ============================================
+        const adminDarkToggle = document.getElementById('adminDarkModeToggle');
+        if (adminDarkToggle) {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) document.body.classList.add('dark-mode');
+            adminDarkToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+                const icon = adminDarkToggle.querySelector('i');
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+            
+            const icon = adminDarkToggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+        
+        const adminMobileBtn = document.getElementById('adminMobileMenuBtn');
+        const adminSidebar = document.getElementById('adminSidebar');
+        if (adminMobileBtn && adminSidebar) {
+            adminMobileBtn.addEventListener('click', () => {
+                adminSidebar.classList.toggle('open');
+            });
+            
+            document.querySelectorAll('.admin-nav-item').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        adminSidebar.classList.remove('open');
+                    }
+                });
+            });
+        }
+        
+        document.getElementById('adminLogoutBtn')?.addEventListener('click', async () => {
+            await auth.signOut();
+            window.location.href = '/login.html';
+        });
+        
+        // Close modal on outside click
+        const editModal = document.getElementById('editUserModal');
+        if (editModal) {
+            editModal.addEventListener('click', (e) => {
+                if (e.target === editModal) closeEditModal();
+            });
+        }
+        
+        console.log('✅ Admin Users page loaded');
+    </script>
+    
+    <!-- Universal Notifications Helper -->
+    <script src="/js/core/notifications-helper.js"></script>
+</body>
+</html>

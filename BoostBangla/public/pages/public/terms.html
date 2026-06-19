@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#FF6B00">
+    <title>Terms of Service | BoostBangla - Legal Agreement</title>
+    <meta name="description" content="Read BoostBangla's Terms of Service. Learn about account usage, service delivery, refunds, and legal obligations for using our SMM panel.">
+    <meta name="keywords" content="terms of service, SMM panel terms, BoostBangla legal, refund policy, acceptable use">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B00',
+                        primaryDark: '#CC5500',
+                        darkBg: '#02101A',
+                        softOrange: '#FFF3EA'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        premium: '0 24px 80px rgba(2, 16, 26, 0.12)',
+                        glow: '0 18px 60px rgba(255, 107, 0, 0.28)'
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC4D02;
+            --surface: rgba(255,255,255,0.82);
+            --border: rgba(148, 163, 184, 0.22);
+        }
+
+        * { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
+            color: #0f172a;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.14), transparent 32%),
+                radial-gradient(circle at 90% 8%, rgba(204, 77, 2, 0.12), transparent 30%),
+                linear-gradient(180deg, #fff7ed 0%, #f8fafc 34%, #ffffff 100%);
+            overflow-x: hidden;
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #FF7A1A 0%, #FF6B00 45%, #CC4D02 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, #FF6B00, #CC4D02);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .premium-shell {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .premium-shell::before,
+        .premium-shell::after {
+            content: "";
+            position: absolute;
+            width: 390px;
+            height: 390px;
+            border-radius: 999px;
+            filter: blur(74px);
+            opacity: 0.25;
+            z-index: -1;
+        }
+
+        .premium-shell::before {
+            top: 0;
+            left: -150px;
+            background: #FF6B00;
+        }
+
+        .premium-shell::after {
+            top: 90px;
+            right: -150px;
+            background: #FDBA74;
+        }
+
+        .glass-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
+        }
+
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .pill {
+            background: rgba(255, 107, 0, 0.10);
+            border: 1px solid rgba(255, 107, 0, 0.22);
+            color: #CC4D02;
+            border-radius: 999px;
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toc-panel {
+            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+        }
+
+        .toc-panel:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 107, 0, 0.35);
+        }
+
+        .toc-item {
+            transition: color .2s ease, padding-left .2s ease, background .2s ease, border-color .2s ease;
+            border-left: 3px solid transparent;
+            border-radius: 10px;
+            padding: 8px 10px;
+        }
+
+        .toc-item:hover {
+            color: #FF6B00;
+            padding-left: 16px;
+            background: rgba(255, 107, 0, 0.055);
+            border-left-color: rgba(255, 107, 0, 0.45);
+        }
+
+        .toc-item.text-primary {
+            background: rgba(255, 107, 0, 0.09);
+            border-left-color: #FF6B00;
+            padding-left: 16px;
+        }
+
+        .legal-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(226, 232, 240, 0.92);
+        }
+
+        .legal-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% -12%, rgba(255, 107, 0, 0.10), transparent 35%);
+            opacity: .95;
+            pointer-events: none;
+        }
+
+        .legal-section {
+            position: relative;
+            scroll-margin-top: 100px;
+            padding: 26px;
+            border-radius: 24px;
+            border: 1px solid transparent;
+            transition: background .25s ease, border-color .25s ease, transform .25s ease;
+        }
+
+        .legal-section:hover {
+            background: rgba(255, 107, 0, 0.035);
+            border-color: rgba(255, 107, 0, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .legal-section h2 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-num {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #FF7A1A, #CC4D02);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            box-shadow: 0 14px 32px rgba(255, 107, 0, .22);
+            flex-shrink: 0;
+        }
+
+        .notice-card,
+        .agreement-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notice-card::before,
+        .agreement-card::before {
+            content: "";
+            position: absolute;
+            width: 310px;
+            height: 310px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.16);
+            top: -145px;
+            left: -120px;
+        }
+
+        .notice-card::after,
+        .agreement-card::after {
+            content: "";
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.12);
+            bottom: -125px;
+            right: -90px;
+        }
+
+        .policy-chip {
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+
+        .policy-chip:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 107, 0, 0.35);
+            box-shadow: 0 18px 48px rgba(15, 23, 42, .08);
+        }
+
+        .shine-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 70%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.38), transparent);
+            transform: skewX(-18deg);
+            transition: left .65s ease;
+        }
+
+        .shine-btn:hover::after { left: 130%; }
+
+        body.dark-mode {
+            color: #f8fafc;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.17), transparent 34%),
+                radial-gradient(circle at 90% 8%, rgba(59, 130, 246, 0.12), transparent 30%),
+                linear-gradient(180deg, #020617 0%, #0f172a 55%, #111827 100%);
+        }
+
+        body.dark-mode .glass-card,
+        body.dark-mode .legal-card,
+        body.dark-mode .toc-panel,
+        body.dark-mode .policy-chip {
+            background: rgba(15, 23, 42, 0.76) !important;
+            border-color: rgba(51, 65, 85, 0.92) !important;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .legal-section:hover {
+            background: rgba(255, 107, 0, 0.06);
+            border-color: rgba(255, 107, 0, 0.18);
+        }
+
+        body.dark-mode .text-gray-600,
+        body.dark-mode .text-gray-500,
+        body.dark-mode .text-gray-400,
+        body.dark-mode .text-gray-700,
+        body.dark-mode .text-gray-800 {
+            color: #cbd5e1 !important;
+        }
+
+        body.dark-mode .bg-white,
+        body.dark-mode .bg-gray-50,
+        body.dark-mode .bg-gray-100,
+        body.dark-mode .bg-orange-50 {
+            background: rgba(15, 23, 42, 0.82) !important;
+        }
+
+        body.dark-mode .border-gray-200 {
+            border-color: rgba(51, 65, 85, 0.92) !important;
+        }
+
+        body.dark-mode .hero-grid {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+        }
+
+        @media print {
+            #header-placeholder,
+            footer,
+            .toc-panel button,
+            .hero-grid {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            .legal-card,
+            .glass-card {
+                box-shadow: none !important;
+                border: none !important;
+                background: white !important;
+            }
+            .legal-section {
+                break-inside: avoid;
+                padding: 16px 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header will be loaded dynamically -->
+    <div id="header-placeholder"></div>
+
+    <script>
+        fetch('/public/components/header.html')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+
+                const darkModeToggle = document.getElementById('landingDarkModeToggle');
+                if (darkModeToggle) {
+                    const isDark = localStorage.getItem('darkMode') === 'true';
+                    if (isDark) document.body.classList.add('dark-mode');
+                    const icon = darkModeToggle.querySelector('i');
+                    if (icon && isDark) {
+                        icon.classList.remove('fa-moon');
+                        icon.classList.add('fa-sun');
+                    }
+                    darkModeToggle.addEventListener('click', () => {
+                        const active = document.body.classList.toggle('dark-mode');
+                        localStorage.setItem('darkMode', active ? 'true' : 'false');
+                        const icon = darkModeToggle.querySelector('i');
+                        if (icon) {
+                            icon.classList.toggle('fa-moon', !active);
+                            icon.classList.toggle('fa-sun', active);
+                        }
+                    });
+                }
+
+                const mobileMenuBtn = document.getElementById('landingMobileMenuBtn');
+                const mobileDrawer = document.getElementById('landingMobileDrawer');
+                const drawerOverlay = document.getElementById('landingDrawerOverlay');
+                const closeDrawerBtn = document.getElementById('closeMobileDrawer');
+
+                const closeDrawer = () => {
+                    if (mobileDrawer) mobileDrawer.classList.remove('open');
+                    if (drawerOverlay) drawerOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                };
+
+                if (mobileMenuBtn && mobileDrawer) {
+                    mobileMenuBtn.addEventListener('click', () => {
+                        mobileDrawer.classList.add('open');
+                        if (drawerOverlay) drawerOverlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+                if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+                if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+            })
+            .catch(error => {
+                console.error('Error loading header:', error);
+                document.getElementById('header-placeholder').innerHTML = `
+                    <div style="background:#FF6B00; color:white; text-align:center; padding:10px;">
+                        ⚠️ Header failed to load. Please refresh the page.
+                    </div>
+                `;
+            });
+    </script>
+
+    <main class="min-h-screen premium-shell">
+        <!-- Hero Section -->
+        <section class="hero-grid relative overflow-hidden pt-16 pb-12 md:pt-24 md:pb-20">
+            <div class="container mx-auto px-4">
+                <div class="max-w-5xl mx-auto text-center">
+                    <div class="inline-flex items-center gap-2 glass-card rounded-full px-4 py-2 shadow-sm mb-5">
+                        <i class="fas fa-gavel text-primary"></i>
+                        <span class="text-sm font-extrabold">Legal Agreement</span>
+                    </div>
+
+                    <h1 class="text-4xl md:text-7xl font-black leading-tight tracking-tight mb-5">
+                        Terms of <span class="text-gradient">Service</span>
+                    </h1>
+
+                    <p class="text-gray-600 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed mb-8">
+                        Please read these terms carefully before using BoostBangla. They explain account rules, service delivery, refunds, prohibited activities, and legal obligations.
+                    </p>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">2025</div>
+                            <p class="text-xs text-gray-500 mt-1">Last Updated</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">11</div>
+                            <p class="text-xs text-gray-500 mt-1">Sections</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">13+</div>
+                            <p class="text-xs text-gray-500 mt-1">Age Requirement</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">Safe</div>
+                            <p class="text-xs text-gray-500 mt-1">No Password Needed</p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-500 text-sm mt-6 font-semibold">Last updated: January 1, 2025 | Version 2.0</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="container mx-auto px-4 py-12 md:py-16">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Table of Contents -->
+                <aside class="lg:w-1/4">
+                    <div class="toc-panel sticky top-24 glass-card rounded-[2rem] p-6">
+                        <h3 class="font-black text-xl mb-4 flex items-center gap-2">
+                            <i class="fas fa-list-ul text-primary"></i> Contents
+                        </h3>
+                        <ul class="space-y-1 text-sm">
+                            <li><a href="#section1" class="toc-item block text-gray-600 hover:text-primary">1. Acceptance of Terms</a></li>
+                            <li><a href="#section2" class="toc-item block text-gray-600 hover:text-primary">2. Account Registration</a></li>
+                            <li><a href="#section3" class="toc-item block text-gray-600 hover:text-primary">3. Service Description</a></li>
+                            <li><a href="#section4" class="toc-item block text-gray-600 hover:text-primary">4. Payments & Refunds</a></li>
+                            <li><a href="#section5" class="toc-item block text-gray-600 hover:text-primary">5. Delivery Policy</a></li>
+                            <li><a href="#section6" class="toc-item block text-gray-600 hover:text-primary">6. Prohibited Activities</a></li>
+                            <li><a href="#section7" class="toc-item block text-gray-600 hover:text-primary">7. Account Suspension</a></li>
+                            <li><a href="#section8" class="toc-item block text-gray-600 hover:text-primary">8. Limitation of Liability</a></li>
+                            <li><a href="#section9" class="toc-item block text-gray-600 hover:text-primary">9. Privacy Policy</a></li>
+                            <li><a href="#section10" class="toc-item block text-gray-600 hover:text-primary">10. Changes to Terms</a></li>
+                            <li><a href="#section11" class="toc-item block text-gray-600 hover:text-primary">11. Contact Information</a></li>
+                        </ul>
+
+                        <div class="mt-6 pt-5 border-t border-gray-200">
+                            <button onclick="window.print()" class="shine-btn w-full bg-gradient-primary text-white py-3 rounded-2xl text-sm font-extrabold flex items-center justify-center gap-2 hover:shadow-glow transition">
+                                <i class="fas fa-download"></i> Download / Print PDF
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <section class="lg:w-3/4">
+                    <div class="legal-card bg-white rounded-[2rem] shadow-premium p-5 md:p-9">
+                        <div class="relative z-10">
+                            <!-- Section 1 -->
+                            <div id="section1" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">1</span> Acceptance of Terms</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">By accessing or using BoostBangla's website and services ("BoostBangla", "we", "us", "our"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of these terms, you may not access our services.</p>
+                                <p class="text-gray-600 leading-relaxed">These Terms apply to all users, visitors, and others who access or use our SMM panel services.</p>
+                            </div>
+
+                            <!-- Section 2 -->
+                            <div id="section2" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">2</span> Account Registration</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">To use our services, you must create an account. You agree to:</p>
+                                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4 leading-relaxed">
+                                    <li>Provide accurate, current, and complete information</li>
+                                    <li>Maintain the security of your password and account</li>
+                                    <li>Accept responsibility for all activities under your account</li>
+                                    <li>Notify us immediately of any unauthorized use</li>
+                                    <li>Be at least 13 years of age to create an account</li>
+                                </ul>
+                            </div>
+
+                            <!-- Section 3 -->
+                            <div id="section3" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">3</span> Service Description</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">BoostBangla provides social media marketing services including but not limited to:</p>
+                                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4 leading-relaxed">
+                                    <li>Social media followers, likes, views, and comments</li>
+                                    <li>YouTube subscribers and watch time</li>
+                                    <li>Facebook page likes and post engagement</li>
+                                    <li>Instagram followers and engagement</li>
+                                    <li>TikTok followers and views</li>
+                                </ul>
+                                <div class="notice-card bg-gradient-primary rounded-2xl p-5 mt-5 text-white shadow-glow">
+                                    <div class="relative z-10">
+                                        <p class="text-white/90 leading-relaxed"><i class="fas fa-triangle-exclamation mr-2"></i><strong>Important Notice:</strong> All our services are delivered through automated systems using BOTs. We do not guarantee organic results. By using our services, you acknowledge that engagement metrics may fluctuate.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 4 -->
+                            <div id="section4" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">4</span> Payments & Refunds</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed"><strong>Payment Methods:</strong> We accept bKash, Nagad, Rocket, Upay, PayPal, and major credit/debit cards.</p>
+                                <p class="text-gray-600 mb-3 leading-relaxed"><strong>Refund Policy:</strong></p>
+                                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4 leading-relaxed">
+                                    <li>No refunds on completed orders - This is an automated server, we cannot cancel orders after placement</li>
+                                    <li>Refunds only available for undelivered orders (after 7 days)</li>
+                                    <li>Wrong links provided by customer = no refund, order considered complete</li>
+                                    <li>If you delete your post/video after ordering = no refund</li>
+                                    <li>Partial refunds accepted once = no further refills/refunds</li>
+                                </ul>
+                            </div>
+
+                            <!-- Section 5 -->
+                            <div id="section5" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">5</span> Delivery Policy</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">We do not guarantee specific delivery times. Delivery estimates are provided as guidance only:</p>
+                                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4 leading-relaxed">
+                                    <li>Most orders start within 30-60 seconds</li>
+                                    <li>Small orders (under 1000) typically complete in 1-2 hours</li>
+                                    <li>Large orders may take 6-24 hours for natural delivery</li>
+                                    <li>Refill requests require 3-7 days processing</li>
+                                    <li>Order cancellations require 3-10 days processing</li>
+                                </ul>
+                            </div>
+
+                            <!-- Section 6 -->
+                            <div id="section6" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">6</span> Prohibited Activities</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">You agree NOT to use our services for:</p>
+                                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4 leading-relaxed">
+                                    <li>Unethical, political, or fraudulent promotions</li>
+                                    <li>Illegal activities or content</li>
+                                    <li>Harassment, hate speech, or violence</li>
+                                    <li>Adult content or pornography</li>
+                                    <li>Cryptocurrency scams or misleading schemes</li>
+                                    <li>Violating any platform's terms of service</li>
+                                </ul>
+                                <p class="text-gray-600 mt-4 font-bold leading-relaxed">Violation will result in immediate account suspension without refund.</p>
+                            </div>
+
+                            <!-- Section 7 -->
+                            <div id="section7" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">7</span> Account Suspension</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">We reserve the right to suspend or terminate your account for:</p>
+                                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4 leading-relaxed">
+                                    <li>Violation of these Terms of Service</li>
+                                    <li>Chargebacks or payment disputes</li>
+                                    <li>Abusive behavior toward support staff</li>
+                                    <li>Attempting to exploit or hack our system</li>
+                                    <li>Inactivity for more than 12 months</li>
+                                </ul>
+                                <p class="text-gray-600 mt-4 leading-relaxed">Upon termination, your balance will be forfeited and not refunded.</p>
+                            </div>
+
+                            <!-- Section 8 -->
+                            <div id="section8" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">8</span> Limitation of Liability</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">To the maximum extent permitted by law, BoostBangla shall not be liable for:</p>
+                                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4 leading-relaxed">
+                                    <li>Any indirect, incidental, or consequential damages</li>
+                                    <li>Loss of profits, data, or business opportunities</li>
+                                    <li>Social media account restrictions or bans</li>
+                                    <li>Service delivery delays or fluctuations</li>
+                                    <li>Third-party platform changes affecting service quality</li>
+                                </ul>
+                                <p class="text-gray-600 mt-4 leading-relaxed">Our total liability shall not exceed the amount you paid for the specific service in question.</p>
+                            </div>
+
+                            <!-- Section 9 -->
+                            <div id="section9" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">9</span> Privacy Policy</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">Your privacy is important to us. We collect and process personal information as described in our <a href="/public/pages/public/privacy.html" class="text-primary font-bold hover:underline">Privacy Policy</a>. By using our services, you consent to such collection and use.</p>
+                                <p class="text-gray-600 leading-relaxed">We never share your password or ask for account credentials. We only need public links to your posts or profiles.</p>
+                            </div>
+
+                            <!-- Section 10 -->
+                            <div id="section10" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">10</span> Changes to Terms</h2>
+                                <p class="text-gray-600 leading-relaxed">We reserve the right to modify these Terms at any time. Changes become effective immediately upon posting. Your continued use of our services after changes constitutes acceptance of the modified Terms. We will notify users of significant changes via email or dashboard notification.</p>
+                            </div>
+
+                            <!-- Section 11 -->
+                            <div id="section11" class="legal-section">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">11</span> Contact Information</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">If you have any questions about these Terms, please contact us:</p>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-center gap-3"><i class="fas fa-envelope text-primary w-6"></i> Email: legal@boostbangla.com.bd</li>
+                                    <li class="flex items-center gap-3"><i class="fab fa-whatsapp text-primary w-6"></i> WhatsApp: +880 1XXX XXX XXX</li>
+                                    <li class="flex items-center gap-3"><i class="fab fa-telegram text-primary w-6"></i> Telegram: @boostbangla</li>
+                                    <li class="flex items-center gap-3"><i class="fas fa-map-marker-alt text-primary w-6"></i> Address: Dhaka, Bangladesh</li>
+                                </ul>
+                            </div>
+
+                            <!-- Last Updated & Agreement -->
+                            <div class="mt-10 pt-8 border-t border-gray-200">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+                                    <div class="policy-chip bg-gray-50 rounded-2xl p-5 text-center">
+                                        <i class="fas fa-user-check text-primary text-3xl mb-3"></i>
+                                        <p class="font-black">Account Rules</p>
+                                        <p class="text-xs text-gray-500 mt-1">Clear usage obligations</p>
+                                    </div>
+                                    <div class="policy-chip bg-gray-50 rounded-2xl p-5 text-center">
+                                        <i class="fas fa-truck-fast text-primary text-3xl mb-3"></i>
+                                        <p class="font-black">Delivery Terms</p>
+                                        <p class="text-xs text-gray-500 mt-1">Automated service delivery</p>
+                                    </div>
+                                    <div class="policy-chip bg-gray-50 rounded-2xl p-5 text-center">
+                                        <i class="fas fa-shield-halved text-primary text-3xl mb-3"></i>
+                                        <p class="font-black">Safety Policy</p>
+                                        <p class="text-xs text-gray-500 mt-1">No account password needed</p>
+                                    </div>
+                                </div>
+
+                                <div class="agreement-card bg-gradient-primary rounded-[2rem] p-8 text-center text-white shadow-glow">
+                                    <div class="relative z-10">
+                                        <div class="w-20 h-20 bg-white/20 border border-white/30 rounded-3xl flex items-center justify-center mx-auto mb-5">
+                                            <i class="fas fa-check-circle text-white text-3xl"></i>
+                                        </div>
+                                        <h3 class="text-2xl md:text-4xl font-black mb-3">Agreement Confirmation</h3>
+                                        <p class="text-white/90 leading-relaxed">By using BoostBangla, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</p>
+                                        <p class="text-sm text-white/75 mt-4">Last updated: January 1, 2025 | Version 2.0</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Premium Footer -->
+    <footer class="bg-[#02101A] text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <span class="text-2xl font-bold tracking-tight">Boost<span class="text-primary">Bangla</span></span>
+                    <p class="text-gray-400 text-sm mt-3 leading-relaxed">Bangladesh's #1 SMM Panel. Get real followers, likes, and views with bKash & Nagad payment.</p>
+                    <div class="flex gap-1 mt-3">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                        <span class="text-gray-400 text-xs ml-2">4.9/5 Trusted</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/index.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Home</a></li>
+                        <li><a href="/public/pages/public/services.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Services</a></li>
+                        <li><a href="/public/pages/public/pricing.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Pricing</a></li>
+                        <li><a href="/public/pages/public/about.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/public/pages/public/terms.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Terms of Service</a></li>
+                        <li><a href="/public/pages/public/privacy.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Privacy Policy</a></li>
+                        <li><a href="/public/pages/public/refund-policy.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Refund Policy</a></li>
+                        <li><a href="/public/pages/public/contact.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Get In Touch</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-whatsapp text-green-500 text-xl w-6"></i> +880 1XXX XXX XXX</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-telegram text-blue-400 text-xl w-6"></i> @boostbangla</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fas fa-envelope text-primary text-xl w-6"></i> support@boostbangla.com.bd</li>
+                    </ul>
+                    <div class="flex gap-3 mt-6">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-instagram text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-youtube text-gray-400"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
+                © 2025 BoostBangla. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // SMOOTH SCROLL FOR TOC LINKS
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const target = document.querySelector(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // HIGHLIGHT ACTIVE SECTION ON SCROLL
+        const sections = document.querySelectorAll('.legal-section');
+        const navLinks = document.querySelectorAll('.toc-item');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 170) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-primary', 'font-semibold');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-primary', 'font-semibold');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

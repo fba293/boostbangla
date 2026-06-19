@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#FF6B00">
+    <title>Privacy Policy | BoostBangla - Your Data Protection</title>
+    <meta name="description" content="Read BoostBangla's Privacy Policy. Learn how we collect, use, and protect your personal information when using our SMM panel services.">
+    <meta name="keywords" content="privacy policy, data protection, SMM panel privacy, BoostBangla privacy, GDPR compliance">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B00',
+                        primaryDark: '#CC5500',
+                        darkBg: '#02101A',
+                        softOrange: '#FFF3EA'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        premium: '0 24px 80px rgba(2, 16, 26, 0.12)',
+                        glow: '0 18px 60px rgba(255, 107, 0, 0.28)'
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC4D02;
+            --ink: #02101A;
+            --muted: #64748b;
+            --surface: rgba(255,255,255,0.82);
+            --border: rgba(148, 163, 184, 0.22);
+        }
+
+        * { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
+            color: #0f172a;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.14), transparent 32%),
+                radial-gradient(circle at 90% 8%, rgba(204, 77, 2, 0.12), transparent 30%),
+                linear-gradient(180deg, #fff7ed 0%, #f8fafc 34%, #ffffff 100%);
+            overflow-x: hidden;
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #FF7A1A 0%, #FF6B00 45%, #CC4D02 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, #FF6B00, #CC4D02);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .premium-shell {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .premium-shell::before,
+        .premium-shell::after {
+            content: "";
+            position: absolute;
+            width: 390px;
+            height: 390px;
+            border-radius: 999px;
+            filter: blur(74px);
+            opacity: 0.25;
+            z-index: -1;
+        }
+
+        .premium-shell::before {
+            top: 0;
+            left: -150px;
+            background: #FF6B00;
+        }
+
+        .premium-shell::after {
+            top: 90px;
+            right: -150px;
+            background: #FDBA74;
+        }
+
+        .glass-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
+        }
+
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .pill {
+            background: rgba(255, 107, 0, 0.10);
+            border: 1px solid rgba(255, 107, 0, 0.22);
+            color: #CC4D02;
+            border-radius: 999px;
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toc-panel {
+            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+        }
+
+        .toc-panel:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 107, 0, 0.35);
+        }
+
+        .toc-item {
+            transition: color .2s ease, padding-left .2s ease, background .2s ease, border-color .2s ease;
+            border-left: 3px solid transparent;
+            border-radius: 10px;
+            padding: 8px 10px;
+        }
+
+        .toc-item:hover {
+            color: #FF6B00;
+            padding-left: 16px;
+            background: rgba(255, 107, 0, 0.055);
+            border-left-color: rgba(255, 107, 0, 0.45);
+        }
+
+        .toc-item.text-primary {
+            background: rgba(255, 107, 0, 0.09);
+            border-left-color: #FF6B00;
+            padding-left: 16px;
+        }
+
+        .legal-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(226, 232, 240, 0.92);
+        }
+
+        .legal-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% -12%, rgba(255, 107, 0, 0.10), transparent 35%);
+            opacity: .95;
+            pointer-events: none;
+        }
+
+        .legal-section {
+            position: relative;
+            scroll-margin-top: 100px;
+            padding: 26px;
+            border-radius: 24px;
+            border: 1px solid transparent;
+            transition: background .25s ease, border-color .25s ease, transform .25s ease;
+        }
+
+        .legal-section:hover {
+            background: rgba(255, 107, 0, 0.035);
+            border-color: rgba(255, 107, 0, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .legal-section h2 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-num {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #FF7A1A, #CC4D02);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            box-shadow: 0 14px 32px rgba(255, 107, 0, .22);
+            flex-shrink: 0;
+        }
+
+        .data-card {
+            position: relative;
+            overflow: hidden;
+            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+
+        .data-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% -30%, rgba(255, 107, 0, .14), transparent 44%);
+            opacity: 0;
+            transition: opacity .3s ease;
+            pointer-events: none;
+        }
+
+        .data-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.10);
+            border-color: rgba(255, 107, 0, 0.4);
+        }
+
+        .data-card:hover::before { opacity: 1; }
+
+        .compliance-card {
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+
+        .compliance-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 107, 0, 0.35);
+            box-shadow: 0 18px 48px rgba(15, 23, 42, .08);
+        }
+
+        .shine-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 70%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.38), transparent);
+            transform: skewX(-18deg);
+            transition: left .65s ease;
+        }
+
+        .shine-btn:hover::after { left: 130%; }
+
+        body.dark-mode {
+            color: #f8fafc;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.17), transparent 34%),
+                radial-gradient(circle at 90% 8%, rgba(59, 130, 246, 0.12), transparent 30%),
+                linear-gradient(180deg, #020617 0%, #0f172a 55%, #111827 100%);
+        }
+
+        body.dark-mode .glass-card,
+        body.dark-mode .legal-card,
+        body.dark-mode .toc-panel,
+        body.dark-mode .data-card,
+        body.dark-mode .compliance-card {
+            background: rgba(15, 23, 42, 0.76) !important;
+            border-color: rgba(51, 65, 85, 0.92) !important;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .legal-section:hover {
+            background: rgba(255, 107, 0, 0.06);
+            border-color: rgba(255, 107, 0, 0.18);
+        }
+
+        body.dark-mode .text-gray-600,
+        body.dark-mode .text-gray-500,
+        body.dark-mode .text-gray-400,
+        body.dark-mode .text-gray-700,
+        body.dark-mode .text-gray-800 {
+            color: #cbd5e1 !important;
+        }
+
+        body.dark-mode .bg-white,
+        body.dark-mode .bg-gray-50,
+        body.dark-mode .bg-gray-100 {
+            background: rgba(15, 23, 42, 0.82) !important;
+        }
+
+        body.dark-mode .border-gray-200 {
+            border-color: rgba(51, 65, 85, 0.92) !important;
+        }
+
+        body.dark-mode .hero-grid {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+        }
+
+        @media print {
+            #header-placeholder,
+            footer,
+            .toc-panel button,
+            .hero-grid {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            .legal-card,
+            .glass-card {
+                box-shadow: none !important;
+                border: none !important;
+                background: white !important;
+            }
+            .legal-section {
+                break-inside: avoid;
+                padding: 16px 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header will be loaded dynamically -->
+    <div id="header-placeholder"></div>
+
+    <script>
+        fetch('/public/components/header.html')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+
+                const darkModeToggle = document.getElementById('landingDarkModeToggle');
+                if (darkModeToggle) {
+                    const isDark = localStorage.getItem('darkMode') === 'true';
+                    if (isDark) document.body.classList.add('dark-mode');
+                    const icon = darkModeToggle.querySelector('i');
+                    if (icon && isDark) {
+                        icon.classList.remove('fa-moon');
+                        icon.classList.add('fa-sun');
+                    }
+                    darkModeToggle.addEventListener('click', () => {
+                        const active = document.body.classList.toggle('dark-mode');
+                        localStorage.setItem('darkMode', active ? 'true' : 'false');
+                        const icon = darkModeToggle.querySelector('i');
+                        if (icon) {
+                            icon.classList.toggle('fa-moon', !active);
+                            icon.classList.toggle('fa-sun', active);
+                        }
+                    });
+                }
+
+                const mobileMenuBtn = document.getElementById('landingMobileMenuBtn');
+                const mobileDrawer = document.getElementById('landingMobileDrawer');
+                const drawerOverlay = document.getElementById('landingDrawerOverlay');
+                const closeDrawerBtn = document.getElementById('closeMobileDrawer');
+
+                const closeDrawer = () => {
+                    if (mobileDrawer) mobileDrawer.classList.remove('open');
+                    if (drawerOverlay) drawerOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                };
+
+                if (mobileMenuBtn && mobileDrawer) {
+                    mobileMenuBtn.addEventListener('click', () => {
+                        mobileDrawer.classList.add('open');
+                        if (drawerOverlay) drawerOverlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+                if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+                if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+            })
+            .catch(error => {
+                console.error('Error loading header:', error);
+                document.getElementById('header-placeholder').innerHTML = `
+                    <div style="background:#FF6B00; color:white; text-align:center; padding:10px;">
+                        ⚠️ Header failed to load. Please refresh the page.
+                    </div>
+                `;
+            });
+    </script>
+
+    <main class="min-h-screen premium-shell">
+        <!-- Hero Section -->
+        <section class="hero-grid relative overflow-hidden pt-16 pb-12 md:pt-24 md:pb-20">
+            <div class="container mx-auto px-4">
+                <div class="max-w-5xl mx-auto text-center">
+                    <div class="inline-flex items-center gap-2 glass-card rounded-full px-4 py-2 shadow-sm mb-5">
+                        <i class="fas fa-shield-alt text-primary"></i>
+                        <span class="text-sm font-extrabold">Your Privacy Matters</span>
+                    </div>
+
+                    <h1 class="text-4xl md:text-7xl font-black leading-tight tracking-tight mb-5">
+                        Privacy <span class="text-gradient">Policy</span>
+                    </h1>
+
+                    <p class="text-gray-600 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed mb-8">
+                        Learn how BoostBangla collects, uses, protects, and manages your data when you use our SMM panel services.
+                    </p>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">2025</div>
+                            <p class="text-xs text-gray-500 mt-1">Last Updated</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">SSL</div>
+                            <p class="text-xs text-gray-500 mt-1">Encrypted</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">GDPR</div>
+                            <p class="text-xs text-gray-500 mt-1">Aware</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">11</div>
+                            <p class="text-xs text-gray-500 mt-1">Sections</p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-500 text-sm mt-6 font-semibold">Last updated: January 1, 2025 | Version 2.0</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="container mx-auto px-4 py-12 md:py-16">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Table of Contents -->
+                <aside class="lg:w-1/4">
+                    <div class="toc-panel sticky top-24 glass-card rounded-[2rem] p-6">
+                        <h3 class="font-black text-xl mb-4 flex items-center gap-2">
+                            <i class="fas fa-list-ul text-primary"></i> Contents
+                        </h3>
+                        <ul class="space-y-1 text-sm">
+                            <li><a href="#section1" class="toc-item block text-gray-600 hover:text-primary">1. Information We Collect</a></li>
+                            <li><a href="#section2" class="toc-item block text-gray-600 hover:text-primary">2. How We Use Your Information</a></li>
+                            <li><a href="#section3" class="toc-item block text-gray-600 hover:text-primary">3. Cookies & Tracking</a></li>
+                            <li><a href="#section4" class="toc-item block text-gray-600 hover:text-primary">4. Data Security</a></li>
+                            <li><a href="#section5" class="toc-item block text-gray-600 hover:text-primary">5. Third-Party Services</a></li>
+                            <li><a href="#section6" class="toc-item block text-gray-600 hover:text-primary">6. Your Rights</a></li>
+                            <li><a href="#section7" class="toc-item block text-gray-600 hover:text-primary">7. Data Retention</a></li>
+                            <li><a href="#section8" class="toc-item block text-gray-600 hover:text-primary">8. Children's Privacy</a></li>
+                            <li><a href="#section9" class="toc-item block text-gray-600 hover:text-primary">9. International Transfers</a></li>
+                            <li><a href="#section10" class="toc-item block text-gray-600 hover:text-primary">10. Changes to Policy</a></li>
+                            <li><a href="#section11" class="toc-item block text-gray-600 hover:text-primary">11. Contact Us</a></li>
+                        </ul>
+
+                        <div class="mt-6 pt-5 border-t border-gray-200">
+                            <button onclick="window.print()" class="shine-btn w-full bg-gradient-primary text-white py-3 rounded-2xl text-sm font-extrabold flex items-center justify-center gap-2 hover:shadow-glow transition">
+                                <i class="fas fa-download"></i> Download / Print PDF
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <section class="lg:w-3/4">
+                    <div class="legal-card bg-white rounded-[2rem] shadow-premium p-5 md:p-9">
+                        <div class="relative z-10">
+                            <!-- Introduction -->
+                            <div class="mb-8 p-6 rounded-3xl bg-orange-50 border border-orange-100">
+                                <span class="pill mb-4"><i class="fas fa-user-shield"></i> Privacy Commitment</span>
+                                <p class="text-gray-600 leading-relaxed">At BoostBangla ("we", "us", "our"), we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our SMM panel services. Please read this policy carefully.</p>
+                            </div>
+
+                            <!-- Section 1 -->
+                            <div id="section1" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">1</span> Information We Collect</h2>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div class="data-card bg-gray-50 rounded-2xl p-5">
+                                        <i class="fas fa-user text-primary text-2xl mb-3"></i>
+                                        <h3 class="font-black mb-2">Personal Information</h3>
+                                        <p class="text-sm text-gray-500 leading-relaxed">Name, email address, username, phone number, and profile information you provide during registration.</p>
+                                    </div>
+                                    <div class="data-card bg-gray-50 rounded-2xl p-5">
+                                        <i class="fas fa-credit-card text-primary text-2xl mb-3"></i>
+                                        <h3 class="font-black mb-2">Payment Information</h3>
+                                        <p class="text-sm text-gray-500 leading-relaxed">Payment details processed securely through third-party payment gateways. We do not store full payment credentials.</p>
+                                    </div>
+                                    <div class="data-card bg-gray-50 rounded-2xl p-5">
+                                        <i class="fas fa-chart-line text-primary text-2xl mb-3"></i>
+                                        <h3 class="font-black mb-2">Usage Data</h3>
+                                        <p class="text-sm text-gray-500 leading-relaxed">Order history, service preferences, IP addresses, browser type, device information, and pages visited.</p>
+                                    </div>
+                                    <div class="data-card bg-gray-50 rounded-2xl p-5">
+                                        <i class="fas fa-link text-primary text-2xl mb-3"></i>
+                                        <h3 class="font-black mb-2">Social Media Links</h3>
+                                        <p class="text-sm text-gray-500 leading-relaxed">Public links to posts, profiles, or content you submit for service delivery.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="section2" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">2</span> How We Use Your Information</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">We use the information we collect to:</p>
+                                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4 leading-relaxed">
+                                    <li>Create and manage your account</li>
+                                    <li>Process and deliver your orders</li>
+                                    <li>Communicate with you about your orders and account</li>
+                                    <li>Send you important updates, promotions, and newsletters (with your consent)</li>
+                                    <li>Improve our services and user experience</li>
+                                    <li>Detect and prevent fraud or unauthorized activities</li>
+                                    <li>Comply with legal obligations</li>
+                                </ul>
+                            </div>
+
+                            <div id="section3" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">3</span> Cookies & Tracking Technologies</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">We use cookies and similar tracking technologies to:</p>
+                                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4 leading-relaxed">
+                                    <li>Remember your login session and preferences</li>
+                                    <li>Analyze website traffic and usage patterns</li>
+                                    <li>Personalize your experience</li>
+                                    <li>Improve our website performance</li>
+                                </ul>
+                                <p class="text-gray-600 mt-3 leading-relaxed">You can control cookie settings through your browser preferences. However, disabling cookies may affect certain website features.</p>
+                            </div>
+
+                            <div id="section4" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">4</span> Data Security</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">We implement industry-standard security measures to protect your information:</p>
+                                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4 leading-relaxed">
+                                    <li>SSL/TLS encryption for all data transmission</li>
+                                    <li>Secure Firebase authentication and Firestore database</li>
+                                    <li>Regular security audits and updates</li>
+                                    <li>Restricted access to personal data</li>
+                                    <li>Two-factor authentication option for accounts</li>
+                                </ul>
+                                <p class="text-gray-600 mt-4 font-bold leading-relaxed">No method of transmission over the internet is 100% secure. While we strive to protect your data, we cannot guarantee absolute security.</p>
+                            </div>
+
+                            <div id="section5" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">5</span> Third-Party Services</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">We may share your information with trusted third-party services to:</p>
+                                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4 leading-relaxed">
+                                    <li>Process payments (bKash, Nagad, PayPal, Stripe)</li>
+                                    <li>Deliver SMM services (AmarBoost API)</li>
+                                    <li>Send emails and notifications (Firebase, SMTP)</li>
+                                    <li>Analyze website traffic (Google Analytics)</li>
+                                </ul>
+                                <p class="text-gray-600 mt-3 leading-relaxed">These third parties have their own privacy policies and are contractually obligated to protect your data.</p>
+                            </div>
+
+                            <div id="section6" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">6</span> Your Rights</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">Depending on your location, you may have the following rights:</p>
+                                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4 leading-relaxed">
+                                    <li><strong>Access:</strong> Request a copy of your personal data</li>
+                                    <li><strong>Correction:</strong> Update inaccurate or incomplete information</li>
+                                    <li><strong>Deletion:</strong> Request deletion of your account and data</li>
+                                    <li><strong>Restriction:</strong> Limit how we use your data</li>
+                                    <li><strong>Portability:</strong> Receive your data in a structured format</li>
+                                    <li><strong>Opt-out:</strong> Unsubscribe from marketing communications</li>
+                                </ul>
+                                <p class="text-gray-600 mt-3 leading-relaxed">To exercise these rights, contact us at <a href="mailto:privacy@boostbangla.com.bd" class="text-primary font-bold hover:underline">privacy@boostbangla.com.bd</a></p>
+                            </div>
+
+                            <div id="section7" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">7</span> Data Retention</h2>
+                                <p class="text-gray-600 leading-relaxed">We retain your personal information for as long as your account is active or as needed to provide services. After account deletion, we may retain certain information for legal compliance, fraud prevention, and dispute resolution. Order data may be kept for up to 3 years for tax and accounting purposes.</p>
+                            </div>
+
+                            <div id="section8" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">8</span> Children's Privacy</h2>
+                                <p class="text-gray-600 leading-relaxed">Our services are not directed to children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal information, please contact us immediately.</p>
+                            </div>
+
+                            <div id="section9" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">9</span> International Data Transfers</h2>
+                                <p class="text-gray-600 leading-relaxed">Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place to protect your data in accordance with this Privacy Policy.</p>
+                            </div>
+
+                            <div id="section10" class="legal-section mb-4">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">10</span> Changes to This Privacy Policy</h2>
+                                <p class="text-gray-600 leading-relaxed">We may update this Privacy Policy from time to time. Changes become effective immediately upon posting. We will notify users of material changes via email or dashboard notification. Your continued use of our services after changes constitutes acceptance of the updated policy.</p>
+                            </div>
+
+                            <div id="section11" class="legal-section">
+                                <h2 class="text-xl md:text-2xl font-black mb-5 text-primary"><span class="section-num">11</span> Contact Us</h2>
+                                <p class="text-gray-600 mb-3 leading-relaxed">If you have questions about this Privacy Policy or our data practices, please contact us:</p>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-center gap-3"><i class="fas fa-envelope text-primary w-6"></i> Email: privacy@boostbangla.com.bd</li>
+                                    <li class="flex items-center gap-3"><i class="fas fa-envelope text-primary w-6"></i> General: support@boostbangla.com.bd</li>
+                                    <li class="flex items-center gap-3"><i class="fab fa-whatsapp text-primary w-6"></i> WhatsApp: +880 1XXX XXX XXX</li>
+                                    <li class="flex items-center gap-3"><i class="fab fa-telegram text-primary w-6"></i> Telegram: @boostbangla</li>
+                                </ul>
+                            </div>
+
+                            <!-- Compliance Notice -->
+                            <div class="mt-10 pt-8 border-t border-gray-200">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="compliance-card bg-gray-50 rounded-2xl p-5 text-center">
+                                        <i class="fab fa-european-union text-primary text-3xl mb-3"></i>
+                                        <p class="font-black">GDPR Compliant</p>
+                                        <p class="text-xs text-gray-500 mt-1">For users in the European Union</p>
+                                    </div>
+                                    <div class="compliance-card bg-gray-50 rounded-2xl p-5 text-center">
+                                        <i class="fas fa-balance-scale text-primary text-3xl mb-3"></i>
+                                        <p class="font-black">CCPA Compliant</p>
+                                        <p class="text-xs text-gray-500 mt-1">For California residents</p>
+                                    </div>
+                                </div>
+                                <div class="bg-gradient-primary rounded-3xl p-7 text-center mt-5 text-white shadow-glow">
+                                    <i class="fas fa-check-circle text-white text-4xl mb-4"></i>
+                                    <p class="text-white/90 leading-relaxed">By using BoostBangla, you consent to the collection and use of your information as described in this Privacy Policy.</p>
+                                    <p class="text-sm text-white/75 mt-3">Last updated: January 1, 2025 | Version 2.0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Premium Footer -->
+    <footer class="bg-[#02101A] text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <span class="text-2xl font-bold tracking-tight">Boost<span class="text-primary">Bangla</span></span>
+                    <p class="text-gray-400 text-sm mt-3 leading-relaxed">Bangladesh's #1 SMM Panel. Get real followers, likes, and views with bKash & Nagad payment.</p>
+                    <div class="flex gap-1 mt-3">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                        <span class="text-gray-400 text-xs ml-2">4.9/5 Trusted</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/index.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Home</a></li>
+                        <li><a href="/public/pages/public/services.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Services</a></li>
+                        <li><a href="/public/pages/public/pricing.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Pricing</a></li>
+                        <li><a href="/public/pages/public/about.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/public/pages/public/terms-of-service.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Terms of Service</a></li>
+                        <li><a href="/public/pages/public/privacy.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Privacy Policy</a></li>
+                        <li><a href="/public/pages/public/refund-policy.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Refund Policy</a></li>
+                        <li><a href="/public/pages/public/contact.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Get In Touch</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-whatsapp text-green-500 text-xl w-6"></i> +880 1XXX XXX XXX</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-telegram text-blue-400 text-xl w-6"></i> @boostbangla</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fas fa-envelope text-primary text-xl w-6"></i> support@boostbangla.com.bd</li>
+                    </ul>
+                    <div class="flex gap-3 mt-6">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-instagram text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-youtube text-gray-400"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
+                © 2025 BoostBangla. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // SMOOTH SCROLL FOR TOC LINKS
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const target = document.querySelector(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // HIGHLIGHT ACTIVE SECTION ON SCROLL
+        const sections = document.querySelectorAll('.legal-section');
+        const navLinks = document.querySelectorAll('.toc-item');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 170) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-primary', 'font-semibold');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-primary', 'font-semibold');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

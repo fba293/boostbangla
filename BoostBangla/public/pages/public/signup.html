@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#FF6B00">
+    <title>Sign Up | BoostBangla - Create Free Account</title>
+    <meta name="description" content="Create a free BoostBangla account and start growing your social media. Get instant access to 4000+ SMM services. Pay with bKash & Nagad.">
+    <meta name="keywords" content="sign up, create account, SMM panel registration, BoostBangla account">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B00',
+                        primaryDark: '#CC5500',
+                        darkBg: '#02101A',
+                        softOrange: '#FFF3EA'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        premium: '0 24px 80px rgba(2, 16, 26, 0.12)',
+                        glow: '0 18px 60px rgba(255, 107, 0, 0.28)'
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC4D02;
+            --ink: #02101A;
+            --muted: #64748b;
+            --surface: rgba(255,255,255,0.84);
+            --border: rgba(148, 163, 184, 0.22);
+        }
+
+        * { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
+            color: #0f172a;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.16), transparent 32%),
+                radial-gradient(circle at 90% 8%, rgba(204, 77, 2, 0.13), transparent 30%),
+                linear-gradient(180deg, #fff7ed 0%, #f8fafc 42%, #ffffff 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #FF7A1A 0%, #FF6B00 45%, #CC4D02 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, #FF6B00, #CC4D02);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .premium-shell {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .premium-shell::before,
+        .premium-shell::after {
+            content: "";
+            position: fixed;
+            width: 430px;
+            height: 430px;
+            border-radius: 999px;
+            filter: blur(78px);
+            opacity: 0.26;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .premium-shell::before {
+            top: 2%;
+            left: -170px;
+            background: #FF6B00;
+        }
+
+        .premium-shell::after {
+            bottom: 4%;
+            right: -170px;
+            background: #FDBA74;
+        }
+
+        .glass-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
+        }
+
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .animated-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 0%, rgba(255, 107, 0, .12), transparent 34%),
+                linear-gradient(135deg, #fff8f0 0%, #fff0e0 100%);
+        }
+
+        .floating-icon {
+            position: absolute;
+            opacity: 0.11;
+            font-size: 60px;
+            animation: floatIcon 16s infinite ease-in-out;
+            color: #FF6B00;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-34px) rotate(10deg) scale(1.04); }
+        }
+
+        .floating-icon:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 20%; right: 8%; animation-delay: 2s; animation-duration: 18s; }
+        .floating-icon:nth-child(3) { bottom: 15%; left: 10%; animation-delay: 4s; animation-duration: 20s; }
+        .floating-icon:nth-child(4) { bottom: 25%; right: 12%; animation-delay: 1s; animation-duration: 22s; }
+        .floating-icon:nth-child(5) { top: 40%; left: 3%; animation-delay: 3s; animation-duration: 25s; font-size: 80px; }
+        .floating-icon:nth-child(6) { bottom: 40%; right: 5%; animation-delay: 5s; animation-duration: 28s; }
+        .floating-icon:nth-child(7) { top: 70%; left: 20%; animation-delay: 2.5s; animation-duration: 17s; }
+        .floating-icon:nth-child(8) { bottom: 10%; right: 25%; animation-delay: 3.5s; animation-duration: 24s; }
+
+        .signup-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 2rem;
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            box-shadow: 0 34px 100px rgba(15, 23, 42, 0.18);
+        }
+
+        .signup-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 50% -16%, rgba(255, 107, 0, 0.18), transparent 38%),
+                linear-gradient(135deg, rgba(255, 255, 255, .42), transparent 40%);
+            pointer-events: none;
+        }
+
+        .brand-badge {
+            background: rgba(255, 107, 0, 0.10);
+            border: 1px solid rgba(255, 107, 0, 0.22);
+            color: #CC4D02;
+            border-radius: 999px;
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logo-mark {
+            width: 74px;
+            height: 74px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #FF7A1A, #CC4D02);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 18px 60px rgba(255, 107, 0, .28);
+            position: relative;
+        }
+
+        .logo-mark::after {
+            content: "";
+            position: absolute;
+            inset: -12px;
+            border-radius: 32px;
+            background: rgba(255, 107, 0, .12);
+            z-index: -1;
+            animation: pulseRing 2.8s ease-in-out infinite;
+        }
+
+        @keyframes pulseRing {
+            0%, 100% { transform: scale(.88); opacity: .55; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+
+        .premium-field {
+            border-radius: 1rem;
+            border: 1px solid #e2e8f0;
+            background: rgba(255,255,255,.82);
+            transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+
+        .premium-field:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.12);
+            background: white;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,.45);
+            border-top: 2px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .password-strength {
+            font-size: 12px;
+            margin-top: 8px;
+            padding: 7px 10px;
+            border-radius: 12px;
+            font-weight: 800;
+            border: 1px solid transparent;
+        }
+
+        .strength-0 { background: #fee2e2; color: #dc2626; }
+        .strength-1 { background: #fef3c7; color: #d97706; }
+        .strength-2 { background: #fef9c3; color: #ca8a04; }
+        .strength-3 { background: #dcfce7; color: #16a34a; }
+        .strength-4 { background: #d1fae5; color: #059669; }
+
+        .error-border {
+            border-color: #dc2626 !important;
+            background-color: #fef2f2 !important;
+        }
+
+        .success-border {
+            border-color: #10b981 !important;
+            background-color: #f0fdf4 !important;
+        }
+
+        .shine-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 70%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.38), transparent);
+            transform: skewX(-18deg);
+            transition: left .65s ease;
+        }
+
+        .shine-btn:hover::after { left: 130%; }
+
+        .side-panel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 2rem;
+            min-height: 100%;
+        }
+
+        .side-panel::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 10%, rgba(255,255,255,.32), transparent 28%),
+                linear-gradient(135deg, rgba(255,255,255,.16), transparent 48%);
+            pointer-events: none;
+        }
+
+        .trust-tile {
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.18);
+            backdrop-filter: blur(12px);
+        }
+
+        .benefit-row {
+            transition: transform .25s ease, background .25s ease;
+        }
+
+        .benefit-row:hover {
+            transform: translateX(4px);
+            background: rgba(255,255,255,.18);
+        }
+
+        .field-highlight { animation: shake 0.3s ease-in-out; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        body.dark-mode {
+            color: #f8fafc;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.17), transparent 34%),
+                radial-gradient(circle at 90% 8%, rgba(59, 130, 246, 0.12), transparent 30%),
+                linear-gradient(180deg, #020617 0%, #0f172a 55%, #111827 100%);
+        }
+
+        body.dark-mode .animated-bg {
+            background:
+                radial-gradient(circle at 50% 0%, rgba(255, 107, 0, .10), transparent 34%),
+                linear-gradient(135deg, #020617 0%, #0f172a 100%);
+        }
+
+        body.dark-mode .floating-icon { opacity: 0.07; }
+
+        body.dark-mode .signup-card,
+        body.dark-mode .glass-card {
+            background: rgba(15, 23, 42, 0.82) !important;
+            border-color: rgba(51, 65, 85, 0.92) !important;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .premium-field {
+            background: rgba(2, 6, 23, 0.72) !important;
+            border-color: rgba(51, 65, 85, 0.9) !important;
+            color: #e2e8f0 !important;
+        }
+
+        body.dark-mode .premium-field::placeholder {
+            color: #64748b !important;
+        }
+
+        body.dark-mode .text-gray-600,
+        body.dark-mode .text-gray-500,
+        body.dark-mode .text-gray-400 {
+            color: #cbd5e1 !important;
+        }
+
+        body.dark-mode .bg-gray-50,
+        body.dark-mode .bg-white {
+            background: rgba(15, 23, 42, 0.82) !important;
+        }
+
+        body.dark-mode .error-border {
+            background-color: rgba(127, 29, 29, .35) !important;
+        }
+
+        body.dark-mode .success-border {
+            background-color: rgba(6, 78, 59, .35) !important;
+        }
+
+        body.dark-mode .hero-grid {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+        }
+
+        @media (max-width: 1024px) {
+            .side-panel { display: none; }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <div class="animated-bg">
+        <div class="floating-icon"><i class="fab fa-facebook-f"></i></div>
+        <div class="floating-icon"><i class="fab fa-instagram"></i></div>
+        <div class="floating-icon"><i class="fab fa-youtube"></i></div>
+        <div class="floating-icon"><i class="fab fa-tiktok"></i></div>
+        <div class="floating-icon"><i class="fab fa-twitter"></i></div>
+        <div class="floating-icon"><i class="fab fa-linkedin-in"></i></div>
+        <div class="floating-icon"><i class="fab fa-telegram"></i></div>
+        <div class="floating-icon"><i class="fas fa-chart-line"></i></div>
+    </div>
+
+    <!-- Header will be loaded dynamically -->
+    <div id="header-placeholder"></div>
+
+    <script>
+        fetch('/public/components/header.html')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+
+                const darkModeToggle = document.getElementById('landingDarkModeToggle');
+                if (darkModeToggle) {
+                    const isDark = localStorage.getItem('darkMode') === 'true';
+                    if (isDark) document.body.classList.add('dark-mode');
+                    const icon = darkModeToggle.querySelector('i');
+                    if (icon && isDark) {
+                        icon.classList.remove('fa-moon');
+                        icon.classList.add('fa-sun');
+                    }
+                    darkModeToggle.addEventListener('click', () => {
+                        const active = document.body.classList.toggle('dark-mode');
+                        localStorage.setItem('darkMode', active ? 'true' : 'false');
+                        const icon = darkModeToggle.querySelector('i');
+                        if (icon) {
+                            icon.classList.toggle('fa-moon', !active);
+                            icon.classList.toggle('fa-sun', active);
+                        }
+                    });
+                }
+
+                const mobileMenuBtn = document.getElementById('landingMobileMenuBtn');
+                const mobileDrawer = document.getElementById('landingMobileDrawer');
+                const drawerOverlay = document.getElementById('landingDrawerOverlay');
+                const closeDrawerBtn = document.getElementById('closeMobileDrawer');
+
+                const closeDrawer = () => {
+                    if (mobileDrawer) mobileDrawer.classList.remove('open');
+                    if (drawerOverlay) drawerOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                };
+
+                if (mobileMenuBtn && mobileDrawer) {
+                    mobileMenuBtn.addEventListener('click', () => {
+                        mobileDrawer.classList.add('open');
+                        if (drawerOverlay) drawerOverlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+                if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+                if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+            })
+            .catch(error => {
+                console.error('Error loading header:', error);
+                document.getElementById('header-placeholder').innerHTML = `
+                    <div style="background:#FF6B00; color:white; text-align:center; padding:10px;">
+                        ⚠️ Header failed to load. Please refresh the page.
+                    </div>
+                `;
+            });
+    </script>
+
+    <main class="premium-shell min-h-screen py-12 md:py-20 flex items-center">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-[1fr_480px] gap-8 max-w-6xl mx-auto items-stretch">
+                <!-- Left premium panel -->
+                <aside class="side-panel bg-gradient-primary text-white p-10 shadow-glow hero-grid">
+                    <div class="relative z-10 h-full flex flex-col justify-between">
+                        <div>
+                            <span class="inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-2 text-sm font-extrabold mb-6">
+                                <i class="fas fa-gift"></i> Free Account, Instant Access
+                            </span>
+                            <h1 class="text-5xl font-black leading-tight mb-5">
+                                Start Growing<br>Your Socials Today
+                            </h1>
+                            <p class="text-white/85 text-lg leading-relaxed max-w-xl">
+                                Create your BoostBangla account and unlock 4000+ SMM services, local payments, fast delivery, and 24/7 support.
+                            </p>
+                        </div>
+
+                        <div class="space-y-4 mt-12">
+                            <div class="benefit-row trust-tile rounded-2xl p-5 flex gap-4 items-center">
+                                <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
+                                    <i class="fas fa-layer-group text-xl"></i>
+                                </div>
+                                <div>
+                                    <div class="font-black">4000+ SMM Services</div>
+                                    <p class="text-white/75 text-sm">YouTube, Facebook, Instagram, TikTok and more.</p>
+                                </div>
+                            </div>
+                            <div class="benefit-row trust-tile rounded-2xl p-5 flex gap-4 items-center">
+                                <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
+                                    <i class="fas fa-mobile-alt text-xl"></i>
+                                </div>
+                                <div>
+                                    <div class="font-black">bKash & Nagad Ready</div>
+                                    <p class="text-white/75 text-sm">Made for Bangladesh users and resellers.</p>
+                                </div>
+                            </div>
+                            <div class="benefit-row trust-tile rounded-2xl p-5 flex gap-4 items-center">
+                                <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
+                                    <i class="fas fa-headset text-xl"></i>
+                                </div>
+                                <div>
+                                    <div class="font-black">24/7 Support</div>
+                                    <p class="text-white/75 text-sm">Help available whenever you need it.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Signup Card -->
+                <section class="signup-card">
+                    <div class="relative z-10 p-6 md:p-8">
+                        <div class="text-center mb-7">
+                            <div class="logo-mark mx-auto mb-5">
+                                <i class="fas fa-user-plus text-white text-3xl"></i>
+                            </div>
+                            <div class="brand-badge mb-4">
+                                <div class="flex gap-0.5">
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                                </div>
+                                <span>Trusted by 77,770+ users</span>
+                            </div>
+                            <h2 class="text-3xl md:text-4xl font-black text-center">Create Free Account</h2>
+                            <p class="text-center text-gray-500 text-sm mt-2">Join Bangladesh's #1 SMM Panel.</p>
+                        </div>
+
+                        <form id="signupForm">
+                            <div class="mb-4">
+                                <label class="block text-sm font-extrabold mb-2">Username</label>
+                                <input type="text" id="signupUsername" class="premium-field w-full p-4 transition" placeholder="johndoe" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-extrabold mb-2">Email Address</label>
+                                <input type="email" id="signupEmail" class="premium-field w-full p-4 transition" placeholder="you@example.com" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-extrabold mb-2">Password</label>
+                                <input type="password" id="signupPassword" class="premium-field w-full p-4 transition" placeholder="••••••••" required>
+                                <div id="passwordStrength" class="password-strength mt-2 hidden"></div>
+                                <p class="text-xs text-gray-400 mt-2 font-semibold">Minimum 6 characters with letters & numbers</p>
+                            </div>
+
+                            <div class="mb-6">
+                                <label class="block text-sm font-extrabold mb-2">Confirm Password</label>
+                                <input type="password" id="confirmPassword" class="premium-field w-full p-4 transition" placeholder="••••••••" required>
+                                <p id="passwordMatchMsg" class="text-xs mt-2 hidden font-bold"></p>
+                            </div>
+
+                            <div class="mb-6">
+                                <label class="flex items-start gap-3 cursor-pointer">
+                                    <input type="checkbox" id="agreeTerms" class="w-5 h-5 text-primary rounded focus:ring-primary mt-0.5" required>
+                                    <span class="text-sm text-gray-600">
+                                        I agree to the
+                                        <a href="/public/pages/public/terms-of-service.html" class="text-primary font-bold hover:underline">Terms of Service</a>
+                                        and
+                                        <a href="/public/pages/public/privacy-policy.html" class="text-primary font-bold hover:underline">Privacy Policy</a>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <button type="submit" id="signupBtn" class="shine-btn w-full bg-gradient-primary text-white py-4 rounded-2xl font-extrabold transition hover:shadow-glow">
+                                Create Account <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </form>
+
+                        <div class="text-center mt-6">
+                            <p class="text-sm text-gray-500">
+                                Already have an account? 
+                                <a href="/public/pages/public/login.html" class="text-primary font-extrabold hover:underline">Sign In</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 bg-slate-50/80 p-5 border-t border-slate-200/80">
+                        <p class="text-center text-sm text-gray-600 mb-3 font-bold">Free account includes:</p>
+                        <div class="grid grid-cols-3 gap-3 text-center">
+                            <div>
+                                <i class="fas fa-bolt text-primary text-lg"></i>
+                                <p class="text-[11px] text-gray-500 mt-1 font-semibold">Instant Orders</p>
+                            </div>
+                            <div>
+                                <i class="fas fa-shield-alt text-primary text-lg"></i>
+                                <p class="text-[11px] text-gray-500 mt-1 font-semibold">100% Safe</p>
+                            </div>
+                            <div>
+                                <i class="fas fa-headset text-primary text-lg"></i>
+                                <p class="text-[11px] text-gray-500 mt-1 font-semibold">24/7 Support</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Premium Footer -->
+    <footer class="bg-[#02101A] text-white pt-16 pb-8 mt-8 relative z-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <span class="text-2xl font-bold tracking-tight">Boost<span class="text-primary">Bangla</span></span>
+                    <p class="text-gray-400 text-sm mt-3 leading-relaxed">Bangladesh's #1 SMM Panel. Get real followers, likes, and views with bKash & Nagad payment.</p>
+                    <div class="flex gap-1 mt-3">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                        <span class="text-gray-400 text-xs ml-2">4.9/5 Trusted</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/index.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Home</a></li>
+                        <li><a href="/public/pages/public/services.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Services</a></li>
+                        <li><a href="/public/pages/public/about.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> About Us</a></li>
+                        <li><a href="/public/pages/public/contact.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Services</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/public/pages/public/services.html?platform=youtube" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> YouTube SMM</a></li>
+                        <li><a href="/public/pages/public/services.html?platform=facebook" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Facebook SMM</a></li>
+                        <li><a href="/public/pages/public/services.html?platform=instagram" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Instagram SMM</a></li>
+                        <li><a href="/public/pages/public/services.html?platform=tiktok" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> TikTok SMM</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Get In Touch</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-whatsapp text-green-500 text-xl w-6"></i> +880 1XXX XXX XXX</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-telegram text-blue-400 text-xl w-6"></i> @boostbangla</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fas fa-envelope text-primary text-xl w-6"></i> support@boostbangla.com.bd</li>
+                    </ul>
+                    <div class="flex gap-3 mt-6">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-instagram text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-youtube text-gray-400"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
+                © 2025 BoostBangla. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script>
+        // FIREBASE CONFIGURATION
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+        // PASSWORD STRENGTH CHECKER
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+            const levels = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong'];
+            const colors = ['#dc2626', '#d97706', '#ca8a04', '#16a34a', '#059669'];
+            return { text: levels[strength] || 'Very Weak', strength: strength, color: colors[strength] || '#dc2626' };
+        }
+
+        // SIGNUP FUNCTION
+        async function signUp(email, password, username) {
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                await db.collection('users').doc(user.uid).set({
+                    uid: user.uid,
+                    username: username,
+                    email: email.toLowerCase(),
+                    balance: 0,
+                    balanceUSD: 0,
+                    totalOrders: 0,
+                    createdAt: new Date(),
+                    isAdmin: false
+                });
+
+                localStorage.setItem('user', JSON.stringify({
+                    uid: user.uid,
+                    username: username,
+                    email: email,
+                    isAdmin: false
+                }));
+
+                return { success: true };
+            } catch (error) {
+                let errorMessage = error.message;
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = 'This email is already registered. Please sign in instead.';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage = 'Password should be at least 6 characters.';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = 'Please enter a valid email address.';
+                }
+                return { success: false, error: errorMessage };
+            }
+        }
+
+        // FORM VALIDATION
+        const passwordInput = document.getElementById('signupPassword');
+        const confirmInput = document.getElementById('confirmPassword');
+        const passwordStrengthDiv = document.getElementById('passwordStrength');
+        const passwordMatchMsg = document.getElementById('passwordMatchMsg');
+
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            if (password.length > 0) {
+                const strength = checkPasswordStrength(password);
+                passwordStrengthDiv.innerHTML = `<i class="fas fa-shield-alt mr-1"></i> Password Strength: ${strength.text}`;
+                passwordStrengthDiv.style.backgroundColor = strength.color + '20';
+                passwordStrengthDiv.style.borderColor = strength.color + '45';
+                passwordStrengthDiv.style.color = strength.color;
+                passwordStrengthDiv.classList.remove('hidden');
+
+                if (strength.strength >= 3) {
+                    this.classList.add('success-border');
+                    this.classList.remove('error-border');
+                } else {
+                    this.classList.add('error-border');
+                    this.classList.remove('success-border');
+                }
+            } else {
+                passwordStrengthDiv.classList.add('hidden');
+                this.classList.remove('error-border', 'success-border');
+            }
+
+            if (confirmInput.value.length > 0) {
+                checkPasswordMatch();
+            }
+        });
+
+        function checkPasswordMatch() {
+            const password = passwordInput.value;
+            const confirm = confirmInput.value;
+
+            if (confirm.length === 0) {
+                passwordMatchMsg.classList.add('hidden');
+                confirmInput.classList.remove('error-border', 'success-border');
+                return;
+            }
+
+            if (password === confirm) {
+                passwordMatchMsg.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Passwords match';
+                passwordMatchMsg.style.color = '#10b981';
+                passwordMatchMsg.classList.remove('hidden');
+                confirmInput.classList.add('success-border');
+                confirmInput.classList.remove('error-border');
+            } else {
+                passwordMatchMsg.innerHTML = '<i class="fas fa-exclamation-circle mr-1"></i> Passwords do not match';
+                passwordMatchMsg.style.color = '#dc2626';
+                passwordMatchMsg.classList.remove('hidden');
+                confirmInput.classList.add('error-border', 'field-highlight');
+                confirmInput.classList.remove('success-border');
+                setTimeout(() => confirmInput.classList.remove('field-highlight'), 300);
+            }
+        }
+
+        confirmInput.addEventListener('input', checkPasswordMatch);
+
+        // FORM SUBMISSION
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('signupUsername').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = passwordInput.value;
+            const confirm = confirmInput.value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+
+            if (!username) { alert('Please enter a username'); return; }
+            if (!email) { alert('Please enter your email address'); return; }
+            if (password.length < 6) { alert('Password must be at least 6 characters'); return; }
+            if (password !== confirm) { alert('Passwords do not match'); return; }
+            if (!agreeTerms) { alert('Please agree to the Terms of Service'); return; }
+
+            const btn = document.getElementById('signupBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>Creating Account...';
+
+            const result = await signUp(email, password, username);
+
+            if (result.success) {
+                window.location.href = '/dashboard/index.html';
+            } else {
+                alert('Signup Failed: ' + result.error);
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        });
+    </script>
+</body>
+</html>

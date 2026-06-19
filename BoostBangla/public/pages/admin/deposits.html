@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Manage Deposits | BoostBangla Admin</title>
+    <meta name="description" content="Admin panel to manage BoostBangla deposit requests - approve, reject, and track deposits with real-time updates.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                        'slide-down': 'slideDown 0.3s ease-out',
+                        'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC5500;
+            --primary-light: #FF8C42;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark-bg: #02101A;
+            --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            --card-shadow-hover: 0 25px 30px -12px rgba(255, 107, 0, 0.15);
+        }
+        
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Admin Layout */
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Admin Sidebar */
+        .admin-sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #02101A 0%, #031a2a 100%);
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s ease;
+            z-index: 100;
+        }
+        
+        .admin-sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .admin-sidebar-header .logo {
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .admin-sidebar-header .logo span {
+            color: #FF6B00;
+        }
+        
+        .admin-sidebar-nav {
+            padding: 20px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .admin-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #9CA3AF;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .admin-nav-item i {
+            width: 20px;
+            font-size: 16px;
+        }
+        
+        .admin-nav-item:hover {
+            background: rgba(255, 107, 0, 0.15);
+            color: #FF6B00;
+            transform: translateX(4px);
+        }
+        
+        .admin-nav-item.active {
+            background: rgba(255, 107, 0, 0.2);
+            color: #FF6B00;
+        }
+        
+        .admin-nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 20px;
+            background: #FF6B00;
+            border-radius: 0 3px 3px 0;
+        }
+        
+        .admin-nav-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 16px 0;
+        }
+        
+        /* Admin Main Content */
+        .admin-main {
+            flex: 1;
+            margin-left: 280px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            min-height: 100vh;
+            transition: margin-left 0.3s ease;
+        }
+        
+        body.dark-mode .admin-main {
+            background: linear-gradient(135deg, #02101A 0%, #031a2a 100%);
+        }
+        
+        /* Admin Header */
+        .admin-header {
+            background: white;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+        
+        body.dark-mode .admin-header {
+            background: #1e293b;
+            border-bottom-color: #334155;
+        }
+        
+        .admin-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .admin-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .admin-dark-mode-toggle {
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+        
+        .admin-dark-mode-toggle:hover {
+            background: #f3f4f6;
+            color: #FF6B00;
+        }
+        
+        body.dark-mode .admin-dark-mode-toggle:hover {
+            background: #334155;
+        }
+        
+        .admin-user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        
+        .admin-user-info:hover {
+            background: #f3f4f6;
+        }
+        
+        body.dark-mode .admin-user-info:hover {
+            background: #334155;
+        }
+        
+        .admin-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+        }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 24px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            transition: all 0.3s;
+            border: 1px solid #e5e7eb;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        body.dark-mode .stat-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: #FF6B00;
+            box-shadow: 0 10px 25px -5px rgba(255, 107, 0, 0.15);
+        }
+        
+        /* Table Container */
+        .admin-table-container {
+            background: white;
+            border-radius: 20px;
+            margin: 0 24px 24px 24px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+        }
+        
+        body.dark-mode .admin-table-container {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .admin-table th {
+            padding: 16px;
+            text-align: left;
+            background: #f8fafc;
+            font-weight: 600;
+            font-size: 13px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        body.dark-mode .admin-table th {
+            background: #0f172a;
+            border-bottom-color: #334155;
+            color: #94a3b8;
+        }
+        
+        .admin-table td {
+            padding: 16px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+        }
+        
+        body.dark-mode .admin-table td {
+            border-bottom-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .admin-table tr:hover {
+            background: #fef9f5;
+        }
+        
+        body.dark-mode .admin-table tr:hover {
+            background: #2d1a0f;
+        }
+        
+        /* Status Badges */
+        .status-pending {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #fef3c7;
+            color: #d97706;
+        }
+        
+        .status-approved {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #d1fae5;
+            color: #059669;
+        }
+        
+        .status-rejected {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        body.dark-mode .status-pending { background: #451a03; color: #fbbf24; }
+        body.dark-mode .status-approved { background: #064e3b; color: #34d399; }
+        body.dark-mode .status-rejected { background: #7f1d1d; color: #f87171; }
+        
+        /* Filter Buttons */
+        .filter-btn {
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            border: 1px solid #e5e7eb;
+            color: #6b7280;
+        }
+        
+        body.dark-mode .filter-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        
+        .filter-btn:hover {
+            border-color: #FF6B00;
+            color: #FF6B00;
+            transform: translateY(-2px);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 2px 8px rgba(255, 107, 0, 0.3);
+        }
+        
+        /* Search Input */
+        .search-input {
+            padding: 12px 20px 12px 45px;
+            border: 1px solid #e5e7eb;
+            border-radius: 40px;
+            font-size: 14px;
+            width: 320px;
+            transition: all 0.2s;
+            background: white;
+        }
+        
+        body.dark-mode .search-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+        }
+        
+        /* Action Buttons */
+        .action-approve {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .action-approve:hover {
+            background: #059669;
+            transform: scale(1.02);
+        }
+        
+        .action-reject {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .action-reject:hover {
+            background: #dc2626;
+            transform: scale(1.02);
+        }
+        
+        .action-view {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .action-view:hover {
+            background: #2563eb;
+            transform: scale(1.02);
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            padding: 28px;
+            max-width: 500px;
+            width: 90%;
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body.dark-mode .modal-content {
+            background: #1e293b;
+        }
+        
+        /* Form Inputs */
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.2s;
+            background: white;
+        }
+        
+        body.dark-mode .form-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        
+        /* Pagination */
+        .pagination-btn {
+            padding: 8px 14px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        
+        body.dark-mode .pagination-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        
+        .pagination-btn:hover:not(:disabled) {
+            border-color: #FF6B00;
+            color: #FF6B00;
+            transform: translateY(-2px);
+        }
+        
+        .pagination-btn.active {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Mobile Menu Button */
+        .admin-mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 1000;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-mobile-menu-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Spinner */
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #e5e7eb;
+            border-top-color: #FF6B00;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            padding: 14px 24px;
+            border-radius: 60px;
+            background: white;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideUp 0.3s ease;
+            font-weight: 500;
+        }
+        
+        body.dark-mode .toast {
+            background: #1e293b;
+            color: white;
+        }
+        
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        .toast.warning { border-left: 4px solid #f59e0b; }
+        .toast.info { border-left: 4px solid #3b82f6; }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+                z-index: 1001;
+            }
+            
+            .admin-sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .admin-main {
+                margin-left: 0;
+            }
+            
+            .admin-mobile-menu-btn {
+                display: flex;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                padding: 16px;
+                gap: 12px;
+            }
+            
+            .admin-table-container {
+                margin: 0 16px 16px 16px;
+                overflow-x: auto;
+            }
+            
+            .admin-table {
+                min-width: 800px;
+            }
+            
+            .search-section {
+                flex-direction: column;
+                padding: 0 16px;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #FF6B00;
+            border-radius: 10px;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Deposit Row */
+        .deposit-row {
+            transition: all 0.2s ease;
+        }
+        
+        .deposit-row:hover {
+            background: #fef9f5;
+            transform: translateX(2px);
+        }
+        
+        body.dark-mode .deposit-row:hover {
+            background: #2d1a0f;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="admin-sidebar-header">
+                <a href="/admin/index.html" class="logo">Boost<span>Bangla</span></a>
+                <p class="text-xs text-gray-400 mt-2">Admin Panel</p>
+            </div>
+            <nav class="admin-sidebar-nav">
+                <a href="/admin/index.html" class="admin-nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/admin/users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <a href="/admin/deposits.html" class="admin-nav-item active">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Deposits</span>
+                </a>
+                <a href="/admin/orders.html" class="admin-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="/admin/tickets.html" class="admin-nav-item">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Tickets</span>
+                </a>
+                <a href="/admin/refunds.html" class="admin-nav-item">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Refunds</span>
+                </a>
+                <a href="/admin/withdrawals.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Withdrawals</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/admin/services.html" class="admin-nav-item">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Services</span>
+                </a>
+                <a href="/admin/settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/dashboard/index.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Site</span>
+                </a>
+                <button id="adminLogoutBtn" class="admin-nav-item w-full text-left text-red-400">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+        
+        <!-- Admin Main Content -->
+        <main class="admin-main">
+            <!-- Admin Header -->
+            <div class="admin-header">
+                <div>
+                    <h1>Manage Deposits</h1>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Review and process deposit requests</p>
+                </div>
+                <div class="admin-header-actions">
+                    <button id="refreshDepositsBtn" class="admin-dark-mode-toggle" title="Refresh">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button id="adminDarkModeToggle" class="admin-dark-mode-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="admin-user-info">
+                        <div class="admin-avatar" id="adminAvatar">A</div>
+                        <span class="hidden md:inline" id="adminName">Admin</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card" style="animation-delay: 0.05s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-sm text-gray-500">Total Deposits</div>
+                            <div class="text-2xl font-bold" id="totalDeposits">0</div>
+                        </div>
+                        <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                            <i class="fas fa-chart-line text-blue-500"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card" style="animation-delay: 0.1s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-sm text-gray-500">Pending</div>
+                            <div class="text-2xl font-bold text-yellow-600" id="pendingDeposits">0</div>
+                        </div>
+                        <div class="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center">
+                            <i class="fas fa-clock text-yellow-500"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card" style="animation-delay: 0.15s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-sm text-gray-500">Approved</div>
+                            <div class="text-2xl font-bold text-green-600" id="approvedDeposits">0</div>
+                        </div>
+                        <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                            <i class="fas fa-check-circle text-green-500"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card" style="animation-delay: 0.2s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-sm text-gray-500">Total Amount</div>
+                            <div class="text-2xl font-bold text-primary" id="totalAmount">৳0</div>
+                        </div>
+                        <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                            <i class="fas fa-wallet text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Search and Filters -->
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 px-6">
+                <div class="relative w-full md:w-auto">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="searchDeposits" placeholder="Search by User, TXID or Transaction ID..." class="search-input w-full md:w-80 pl-12">
+                </div>
+                <div class="flex gap-2 flex-wrap">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="pending">Pending</button>
+                    <button class="filter-btn" data-filter="approved">Approved</button>
+                    <button class="filter-btn" data-filter="rejected">Rejected</button>
+                </div>
+            </div>
+            
+            <!-- Deposits Table -->
+            <div class="admin-table-container">
+                <div class="overflow-x-auto">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>User</th>
+                                <th>Amount (USD)</th>
+                                <th>Amount (BDT)</th>
+                                <th>Method</th>
+                                <th>Transaction ID</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="depositsTableBody">
+                            <tr>
+                                <td colspan="8" class="text-center py-12">
+                                    <div class="spinner mx-auto mb-3"></div>
+                                    <p class="text-gray-500">Loading deposits...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div id="pagination" class="flex justify-center gap-2 mt-6 mb-8 flex-wrap"></div>
+        </main>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    <button id="adminMobileMenuBtn" class="admin-mobile-menu-btn">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+    
+    <!-- Process Deposit Modal -->
+    <div id="processModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold" id="modalTitle">Process Deposit</h3>
+                <button onclick="closeProcessModal()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+            </div>
+            <div id="processModalContent"></div>
+        </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+    
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        let allDeposits = [];
+        let currentFilter = 'all';
+        let currentSearch = '';
+        let currentPage = 1;
+        const ITEMS_PER_PAGE = 20;
+        let currentDepositId = null;
+        let currentAction = null;
+        
+        // ============================================
+        // TOAST NOTIFICATION
+        // ============================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+                <i class="fas fa-times ml-3 cursor-pointer opacity-70 hover:opacity-100" onclick="this.parentElement.remove()"></i>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4000);
+        }
+        
+        // ============================================
+        // CHECK ADMIN AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (!userDoc.exists || !userDoc.data().isAdmin) {
+                window.location.href = '/dashboard/index.html';
+                return;
+            }
+            
+            // Set admin name
+            const adminName = userDoc.data().displayName || user.email.split('@')[0];
+            document.getElementById('adminName').innerText = adminName;
+            document.getElementById('adminAvatar').innerText = adminName.charAt(0).toUpperCase();
+            
+            await loadDeposits();
+        });
+        
+        // ============================================
+        // LOAD DEPOSITS
+        // ============================================
+        async function loadDeposits() {
+            const tbody = document.getElementById('depositsTableBody');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="8" class="text-center py-12">
+                        <div class="spinner mx-auto mb-3"></div>
+                        <p class="text-gray-500">Loading deposits...</p>
+                    </td>
+                </tr>
+            `;
+            
+            try {
+                const depositsSnapshot = await db.collection('deposits').orderBy('createdAt', 'desc').get();
+                
+                allDeposits = [];
+                let totalAmount = 0;
+                let pendingCount = 0;
+                let approvedCount = 0;
+                
+                for (const doc of depositsSnapshot.docs) {
+                    const deposit = doc.data();
+                    
+                    // Get user info
+                    let username = 'Unknown';
+                    let userEmail = '';
+                    if (deposit.userId) {
+                        const userDoc = await db.collection('users').doc(deposit.userId).get();
+                        if (userDoc.exists) {
+                            username = userDoc.data().displayName || userDoc.data().email?.split('@')[0] || 'Unknown';
+                            userEmail = userDoc.data().email || '';
+                        }
+                    }
+                    
+                    const depositData = {
+                        id: doc.id,
+                        userId: deposit.userId,
+                        username: username,
+                        userEmail: userEmail,
+                        amountUSD: deposit.amountUSD || 0,
+                        amountBDT: deposit.amountBDT || 0,
+                        method: deposit.method || 'N/A',
+                        transactionId: deposit.transactionId || 'N/A',
+                        status: deposit.status || 'pending',
+                        createdAt: deposit.createdAt,
+                        note: deposit.note || '',
+                        bonus: deposit.bonus || 0
+                    };
+                    
+                    allDeposits.push(depositData);
+                    totalAmount += depositData.amountBDT;
+                    if (depositData.status === 'pending') pendingCount++;
+                    if (depositData.status === 'approved') approvedCount++;
+                }
+                
+                document.getElementById('totalDeposits').innerText = allDeposits.length;
+                document.getElementById('pendingDeposits').innerText = pendingCount;
+                document.getElementById('approvedDeposits').innerText = approvedCount;
+                document.getElementById('totalAmount').innerHTML = `৳${totalAmount.toLocaleString()}`;
+                
+                displayDeposits();
+                
+            } catch (error) {
+                console.error('Error loading deposits:', error);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-12 text-red-500">
+                            <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                            <p>Failed to load deposits</p>
+                            <button onclick="loadDeposits()" class="btn-primary mt-4">Try Again</button>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+        
+        // ============================================
+        // DISPLAY DEPOSITS
+        // ============================================
+        function displayDeposits() {
+            let filtered = [...allDeposits];
+            
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(d => d.status === currentFilter);
+            }
+            
+            if (currentSearch) {
+                const search = currentSearch.toLowerCase();
+                filtered = filtered.filter(d => 
+                    d.username.toLowerCase().includes(search) || 
+                    d.userEmail.toLowerCase().includes(search) ||
+                    d.transactionId.toLowerCase().includes(search)
+                );
+            }
+            
+            const start = (currentPage - 1) * ITEMS_PER_PAGE;
+            const pageDeposits = filtered.slice(start, start + ITEMS_PER_PAGE);
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            
+            const tbody = document.getElementById('depositsTableBody');
+            
+            if (pageDeposits.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-12 text-gray-500">
+                            <i class="fas fa-inbox text-4xl mb-3"></i>
+                            <p>No deposits found</p>
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+            
+            tbody.innerHTML = pageDeposits.map(deposit => `
+                <tr class="deposit-row">
+                    <td class="text-gray-500 text-sm">${formatDate(deposit.createdAt)}</td>
+                    <td>
+                        <a href="/admin/user-detail.html?id=${deposit.userId}" class="text-primary hover:underline font-medium">${escapeHtml(deposit.username)}</a>
+                        <div class="text-xs text-gray-400">${escapeHtml(deposit.userEmail)}</div>
+                    </td>
+                    <td>$${deposit.amountUSD.toFixed(2)}</td>
+                    <td class="font-bold text-primary">৳${deposit.amountBDT.toLocaleString()}</td>
+                    <td class="capitalize">${deposit.method}</td>
+                    <td class="font-mono text-xs">${escapeHtml(deposit.transactionId)}</td>
+                    <td>
+                        <span class="status-${deposit.status}">
+                            <i class="fas ${deposit.status === 'pending' ? 'fa-clock' : deposit.status === 'approved' ? 'fa-check-circle' : 'fa-times-circle'} mr-1"></i>
+                            ${deposit.status === 'pending' ? 'Pending' : deposit.status === 'approved' ? 'Approved' : 'Rejected'}
+                        </span>
+                        ${deposit.bonus > 0 ? `<div class="text-xs text-green-500 mt-1">+${deposit.bonus} BDT bonus</div>` : ''}
+                    </td>
+                    <td>
+                        <div class="flex gap-2">
+                            <button onclick="viewDepositDetails('${deposit.id}')" class="action-view text-xs px-3 py-1 rounded">
+                                <i class="fas fa-eye mr-1"></i> View
+                            </button>
+                            ${deposit.status === 'pending' ? `
+                                <button onclick="openProcessModal('${deposit.id}', 'approve')" class="action-approve text-xs px-3 py-1 rounded">
+                                    <i class="fas fa-check mr-1"></i> Approve
+                                </button>
+                                <button onclick="openProcessModal('${deposit.id}', 'reject')" class="action-reject text-xs px-3 py-1 rounded">
+                                    <i class="fas fa-times mr-1"></i> Reject
+                                </button>
+                            ` : ''}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+            
+            updatePagination(totalPages);
+        }
+        
+        // ============================================
+        // UPDATE PAGINATION
+        // ============================================
+        function updatePagination(totalPages) {
+            const paginationDiv = document.getElementById('pagination');
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+            
+            let html = `
+                <button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-left"></i> Prev
+                </button>
+            `;
+            
+            const startPage = Math.max(1, currentPage - 2);
+            const endPage = Math.min(totalPages, currentPage + 2);
+            
+            if (startPage > 1) {
+                html += `<button class="pagination-btn" onclick="goToPage(1)">1</button>`;
+                if (startPage > 2) html += `<span class="px-2">...</span>`;
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button class="pagination-btn ${currentPage === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) html += `<span class="px-2">...</span>`;
+                html += `<button class="pagination-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+            }
+            
+            html += `
+                <button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            `;
+            
+            paginationDiv.innerHTML = html;
+        }
+        
+        window.goToPage = function(page) {
+            let filtered = [...allDeposits];
+            if (currentFilter !== 'all') filtered = filtered.filter(d => d.status === currentFilter);
+            if (currentSearch) filtered = filtered.filter(d => d.username.toLowerCase().includes(currentSearch.toLowerCase()) || d.userEmail.toLowerCase().includes(currentSearch.toLowerCase()) || d.transactionId.toLowerCase().includes(currentSearch.toLowerCase()));
+            
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            displayDeposits();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        
+        // ============================================
+        // VIEW DEPOSIT DETAILS
+        // ============================================
+        window.viewDepositDetails = async (depositId) => {
+            const deposit = allDeposits.find(d => d.id === depositId);
+            if (!deposit) return;
+            
+            const modalContent = document.getElementById('processModalContent');
+            document.getElementById('modalTitle').innerHTML = 'Deposit Details';
+            
+            modalContent.innerHTML = `
+                <div class="space-y-4">
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+                        <div class="flex justify-between items-center pb-3 mb-3 border-b border-gray-200 dark:border-gray-700">
+                            <span class="text-sm text-gray-500">User Information</span>
+                            <span class="status-${deposit.status}">${deposit.status.toUpperCase()}</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">User:</span>
+                                <span class="font-medium">${escapeHtml(deposit.username)}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Email:</span>
+                                <span class="font-medium">${escapeHtml(deposit.userEmail)}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+                        <div class="flex justify-between items-center pb-3 mb-3 border-b border-gray-200 dark:border-gray-700">
+                            <span class="text-sm text-gray-500">Deposit Details</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Amount (USD):</span>
+                                <span class="font-medium">$${deposit.amountUSD.toFixed(2)}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Amount (BDT):</span>
+                                <span class="font-bold text-primary text-lg">৳${deposit.amountBDT.toLocaleString()}</span>
+                            </div>
+                            ${deposit.bonus > 0 ? `
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-gray-500">Bonus:</span>
+                                    <span class="font-medium text-green-500">+৳${deposit.bonus.toLocaleString()}</span>
+                                </div>
+                            ` : ''}
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Method:</span>
+                                <span class="font-medium capitalize">${deposit.method}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Transaction ID:</span>
+                                <span class="font-mono text-sm">${escapeHtml(deposit.transactionId)}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Date:</span>
+                                <span class="text-sm">${formatDate(deposit.createdAt)}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-3">
+                        <button onclick="closeProcessModal()" class="flex-1 btn-outline">Close</button>
+                        ${deposit.status === 'pending' ? `
+                            <button onclick="closeProcessModal(); openProcessModal('${deposit.id}', 'approve')" class="flex-1 action-approve py-2 rounded-lg">
+                                <i class="fas fa-check mr-2"></i> Approve
+                            </button>
+                            <button onclick="closeProcessModal(); openProcessModal('${deposit.id}', 'reject')" class="flex-1 action-reject py-2 rounded-lg">
+                                <i class="fas fa-times mr-2"></i> Reject
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('processModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        // ============================================
+        // PROCESS MODAL
+        // ============================================
+        window.openProcessModal = (depositId, action) => {
+            currentDepositId = depositId;
+            currentAction = action;
+            
+            const deposit = allDeposits.find(d => d.id === depositId);
+            if (!deposit) return;
+            
+            const modalContent = document.getElementById('processModalContent');
+            const actionText = action === 'approve' ? 'Approve' : 'Reject';
+            document.getElementById('modalTitle').innerHTML = `${actionText} Deposit`;
+            
+            modalContent.innerHTML = `
+                <div class="space-y-4">
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">User:</span>
+                            <span class="font-medium">${escapeHtml(deposit.username)}</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Amount:</span>
+                            <span class="font-bold text-primary">৳${deposit.amountBDT.toLocaleString()}</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Method:</span>
+                            <span class="font-medium capitalize">${deposit.method}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Transaction ID:</span>
+                            <span class="font-mono text-sm">${escapeHtml(deposit.transactionId)}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">Note (Optional)</label>
+                        <textarea id="processNote" rows="3" class="form-input" placeholder="Add a note about this ${actionText}..."></textarea>
+                    </div>
+                    
+                    <div class="flex gap-3">
+                        <button onclick="closeProcessModal()" class="flex-1 btn-outline">Cancel</button>
+                        <button onclick="processDeposit()" class="flex-1 ${action === 'approve' ? 'btn-primary' : 'btn-danger'}">Confirm ${actionText}</button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('processModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        window.closeProcessModal = () => {
+            document.getElementById('processModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            currentDepositId = null;
+            currentAction = null;
+        };
+        
+        async function processDeposit() {
+            if (!currentDepositId || !currentAction) return;
+            
+            const note = document.getElementById('processNote')?.value || '';
+            const isApprove = currentAction === 'approve';
+            
+            const modalContent = document.getElementById('processModalContent');
+            modalContent.innerHTML = '<div class="text-center py-8"><div class="spinner mx-auto mb-3"></div><p>Processing...</p></div>';
+            
+            try {
+                const deposit = allDeposits.find(d => d.id === currentDepositId);
+                if (!deposit) throw new Error('Deposit not found');
+                
+                // Update deposit status
+                await db.collection('deposits').doc(currentDepositId).update({
+                    status: currentAction,
+                    processedAt: new Date(),
+                    processedBy: auth.currentUser.uid,
+                    adminNote: note
+                });
+                
+                // If approved, add balance to user
+                if (isApprove) {
+                    const userRef = db.collection('users').doc(deposit.userId);
+                    const userDoc = await userRef.get();
+                    const currentBalance = userDoc.data()?.balance || 0;
+                    const currentBalanceUSD = userDoc.data()?.balanceUSD || 0;
+                    
+                    await userRef.update({
+                        balance: currentBalance + deposit.amountBDT,
+                        balanceUSD: currentBalanceUSD + deposit.amountUSD,
+                        updatedAt: new Date()
+                    });
+                    
+                    // Create notification for user
+                    await db.collection('notifications').add({
+                        userId: deposit.userId,
+                        title: 'Deposit Approved! 🎉',
+                        message: `Your deposit of ৳${deposit.amountBDT.toLocaleString()} has been approved and added to your balance.`,
+                        type: 'payment',
+                        read: false,
+                        createdAt: new Date(),
+                        actionLink: '/dashboard/transactions.html'
+                    });
+                    
+                    showToast(`Deposit approved successfully!`, 'success');
+                } else {
+                    // Create notification for rejected deposit
+                    await db.collection('notifications').add({
+                        userId: deposit.userId,
+                        title: 'Deposit Rejected',
+                        message: `Your deposit of ৳${deposit.amountBDT.toLocaleString()} has been rejected. Reason: ${note || 'Please contact support for details.'}`,
+                        type: 'payment',
+                        read: false,
+                        createdAt: new Date()
+                    });
+                    
+                    showToast(`Deposit rejected`, 'warning');
+                }
+                
+                closeProcessModal();
+                await loadDeposits();
+                
+            } catch (error) {
+                console.error('Error processing deposit:', error);
+                showToast('Failed to process deposit', 'error');
+                closeProcessModal();
+            }
+        }
+        
+        // ============================================
+        // FILTER AND SEARCH HANDLERS
+        // ============================================
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                currentPage = 1;
+                displayDeposits();
+            });
+        });
+        
+        let searchTimeout;
+        document.getElementById('searchDeposits').addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentSearch = e.target.value;
+                currentPage = 1;
+                displayDeposits();
+            }, 300);
+        });
+        
+        document.getElementById('refreshDepositsBtn')?.addEventListener('click', async () => {
+            const btn = document.getElementById('refreshDepositsBtn');
+            btn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i>';
+            await loadDeposits();
+            btn.innerHTML = '<i class="fas fa-sync-alt"></i>';
+            showToast('Deposits refreshed!', 'success');
+        });
+        
+        // ============================================
+        // HELPER FUNCTIONS
+        // ============================================
+        function formatDate(timestamp) {
+            if (!timestamp) return 'N/A';
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            return date.toLocaleString();
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // ============================================
+        // DARK MODE AND MOBILE TOGGLE
+        // ============================================
+        const adminDarkToggle = document.getElementById('adminDarkModeToggle');
+        if (adminDarkToggle) {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) document.body.classList.add('dark-mode');
+            adminDarkToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+                const icon = adminDarkToggle.querySelector('i');
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+            
+            const icon = adminDarkToggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+        
+        const adminMobileBtn = document.getElementById('adminMobileMenuBtn');
+        const adminSidebar = document.getElementById('adminSidebar');
+        if (adminMobileBtn && adminSidebar) {
+            adminMobileBtn.addEventListener('click', () => {
+                adminSidebar.classList.toggle('open');
+            });
+            
+            document.querySelectorAll('.admin-nav-item').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        adminSidebar.classList.remove('open');
+                    }
+                });
+            });
+        }
+        
+        document.getElementById('adminLogoutBtn')?.addEventListener('click', async () => {
+            await auth.signOut();
+            window.location.href = '/login.html';
+        });
+        
+        // Close modal on outside click
+        const processModal = document.getElementById('processModal');
+        if (processModal) {
+            processModal.addEventListener('click', (e) => {
+                if (e.target === processModal) closeProcessModal();
+            });
+        }
+        
+        console.log('✅ Admin Deposits page loaded');
+    </script>
+    
+    <style>
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #e5e7eb;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        body.dark-mode .btn-outline {
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .btn-outline:hover {
+            border-color: #FF6B00;
+            color: #FF6B00;
+        }
+        
+        .capitalize {
+            text-transform: capitalize;
+        }
+    </style>
+    
+    <!-- Universal Notifications Helper -->
+    <script src="/js/core/notifications-helper.js"></script>
+</body>
+</html>

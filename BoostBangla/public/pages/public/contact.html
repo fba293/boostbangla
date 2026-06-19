@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#FF6B00">
+    <title>Contact Us | BoostBangla - 24/7 Support</title>
+    <meta name="description" content="Get in touch with BoostBangla support team. Available 24/7 via WhatsApp, Telegram, Email, or contact form. Fast responses guaranteed.">
+    <meta name="keywords" content="contact BoostBangla, SMM panel support, WhatsApp support, Telegram support, bKash payment help">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B00',
+                        primaryDark: '#CC5500',
+                        darkBg: '#02101A',
+                        softOrange: '#FFF3EA'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        premium: '0 24px 80px rgba(2, 16, 26, 0.12)',
+                        glow: '0 18px 60px rgba(255, 107, 0, 0.28)'
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC4D02;
+            --ink: #02101A;
+            --muted: #64748b;
+            --surface: rgba(255,255,255,0.82);
+            --border: rgba(148, 163, 184, 0.22);
+        }
+
+        * { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
+            color: #0f172a;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.14), transparent 32%),
+                radial-gradient(circle at 90% 8%, rgba(204, 77, 2, 0.12), transparent 30%),
+                linear-gradient(180deg, #fff7ed 0%, #f8fafc 34%, #ffffff 100%);
+            overflow-x: hidden;
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #FF7A1A 0%, #FF6B00 45%, #CC4D02 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, #FF6B00, #CC4D02);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .premium-shell {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .premium-shell::before,
+        .premium-shell::after {
+            content: "";
+            position: absolute;
+            width: 390px;
+            height: 390px;
+            border-radius: 999px;
+            filter: blur(74px);
+            opacity: 0.25;
+            z-index: -1;
+        }
+
+        .premium-shell::before {
+            top: 0;
+            left: -150px;
+            background: #FF6B00;
+        }
+
+        .premium-shell::after {
+            top: 90px;
+            right: -150px;
+            background: #FDBA74;
+        }
+
+        .glass-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
+        }
+
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .pill {
+            background: rgba(255, 107, 0, 0.10);
+            border: 1px solid rgba(255, 107, 0, 0.22);
+            color: #CC4D02;
+            border-radius: 999px;
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .contact-card,
+        .info-card,
+        .form-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(226, 232, 240, 0.92);
+            transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+        }
+
+        .contact-card::before,
+        .info-card::before,
+        .form-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% -20%, rgba(255, 107, 0, 0.13), transparent 38%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s ease;
+        }
+
+        .contact-card:hover,
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 28px 70px rgba(15, 23, 42, 0.13);
+            border-color: rgba(255, 107, 0, 0.42);
+        }
+
+        .contact-card:hover::before,
+        .info-card:hover::before,
+        .form-card:hover::before {
+            opacity: 1;
+        }
+
+        .icon-box {
+            position: relative;
+            z-index: 1;
+        }
+
+        .icon-box::after {
+            content: "";
+            position: absolute;
+            inset: -9px;
+            border-radius: inherit;
+            background: rgba(255, 107, 0, 0.12);
+            z-index: -1;
+            animation: pulseRing 2.8s ease-in-out infinite;
+        }
+
+        @keyframes pulseRing {
+            0%, 100% { transform: scale(.88); opacity: .55; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+
+        .field {
+            transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+
+        .field:focus {
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.12);
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,.5);
+            border-top: 2px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .shine-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 70%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.38), transparent);
+            transform: skewX(-18deg);
+            transition: left .65s ease;
+        }
+
+        .shine-btn:hover::after { left: 130%; }
+
+        .social-link {
+            transition: transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 44px rgba(255, 107, 0, 0.22);
+        }
+
+        body.dark-mode {
+            color: #f8fafc;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.17), transparent 34%),
+                radial-gradient(circle at 90% 8%, rgba(59, 130, 246, 0.12), transparent 30%),
+                linear-gradient(180deg, #020617 0%, #0f172a 55%, #111827 100%);
+        }
+
+        body.dark-mode .glass-card,
+        body.dark-mode .contact-card,
+        body.dark-mode .info-card,
+        body.dark-mode .form-card {
+            background: rgba(15, 23, 42, 0.76) !important;
+            border-color: rgba(51, 65, 85, 0.92) !important;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .text-gray-600,
+        body.dark-mode .text-gray-500,
+        body.dark-mode .text-gray-400 {
+            color: #cbd5e1 !important;
+        }
+
+        body.dark-mode .bg-white,
+        body.dark-mode .bg-gray-100,
+        body.dark-mode .bg-gray-50 {
+            background: rgba(15, 23, 42, 0.82) !important;
+        }
+
+        body.dark-mode input,
+        body.dark-mode textarea,
+        body.dark-mode select {
+            background: rgba(2, 6, 23, 0.72) !important;
+            border-color: rgba(51, 65, 85, 0.9) !important;
+            color: #e2e8f0 !important;
+        }
+
+        body.dark-mode input::placeholder,
+        body.dark-mode textarea::placeholder {
+            color: #64748b !important;
+        }
+
+        body.dark-mode .hero-grid {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header will be loaded dynamically -->
+    <div id="header-placeholder"></div>
+
+    <script>
+        fetch('/public/components/header.html')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+
+                const darkModeToggle = document.getElementById('landingDarkModeToggle');
+                if (darkModeToggle) {
+                    const isDark = localStorage.getItem('darkMode') === 'true';
+                    if (isDark) document.body.classList.add('dark-mode');
+                    const icon = darkModeToggle.querySelector('i');
+                    if (icon && isDark) {
+                        icon.classList.remove('fa-moon');
+                        icon.classList.add('fa-sun');
+                    }
+                    darkModeToggle.addEventListener('click', () => {
+                        const active = document.body.classList.toggle('dark-mode');
+                        localStorage.setItem('darkMode', active ? 'true' : 'false');
+                        const icon = darkModeToggle.querySelector('i');
+                        if (icon) {
+                            icon.classList.toggle('fa-moon', !active);
+                            icon.classList.toggle('fa-sun', active);
+                        }
+                    });
+                }
+
+                const mobileMenuBtn = document.getElementById('landingMobileMenuBtn');
+                const mobileDrawer = document.getElementById('landingMobileDrawer');
+                const drawerOverlay = document.getElementById('landingDrawerOverlay');
+                const closeDrawerBtn = document.getElementById('closeMobileDrawer');
+
+                const closeDrawer = () => {
+                    if (mobileDrawer) mobileDrawer.classList.remove('open');
+                    if (drawerOverlay) drawerOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                };
+
+                if (mobileMenuBtn && mobileDrawer) {
+                    mobileMenuBtn.addEventListener('click', () => {
+                        mobileDrawer.classList.add('open');
+                        if (drawerOverlay) drawerOverlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+                if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+                if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+            })
+            .catch(error => {
+                console.error('Error loading header:', error);
+                document.getElementById('header-placeholder').innerHTML = `
+                    <div style="background:#FF6B00; color:white; text-align:center; padding:10px;">
+                        ⚠️ Header failed to load. Please refresh the page.
+                    </div>
+                `;
+            });
+    </script>
+
+    <main class="min-h-screen premium-shell">
+        <!-- Hero Section -->
+        <section class="hero-grid relative overflow-hidden pt-16 pb-12 md:pt-24 md:pb-20">
+            <div class="container mx-auto px-4">
+                <div class="max-w-5xl mx-auto text-center">
+                    <div class="inline-flex items-center gap-2 glass-card rounded-full px-4 py-2 shadow-sm mb-5">
+                        <i class="fas fa-headset text-primary"></i>
+                        <span class="text-sm font-extrabold">24/7 Customer Support</span>
+                    </div>
+
+                    <h1 class="text-4xl md:text-7xl font-black leading-tight tracking-tight mb-5">
+                        Contact <span class="text-gradient">BoostBangla</span>
+                    </h1>
+
+                    <p class="text-gray-600 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed mb-8">
+                        Have questions about orders, payments, services, or reseller plans? Our support team is ready to help you within minutes.
+                    </p>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">24/7</div>
+                            <p class="text-xs text-gray-500 mt-1">Support</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">&lt;30m</div>
+                            <p class="text-xs text-gray-500 mt-1">Response</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">3</div>
+                            <p class="text-xs text-gray-500 mt-1">Fast Channels</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">365</div>
+                            <p class="text-xs text-gray-500 mt-1">Days Online</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Cards -->
+        <section class="container mx-auto px-4 -mt-4 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="contact-card bg-white rounded-[2rem] p-7 text-center shadow-premium">
+                    <div class="icon-box w-16 h-16 bg-green-100 rounded-3xl flex items-center justify-center mx-auto mb-5">
+                        <i class="fab fa-whatsapp text-green-500 text-3xl"></i>
+                    </div>
+                    <h3 class="font-black text-xl mb-2">WhatsApp Support</h3>
+                    <p class="text-gray-500 text-sm mb-5">Fastest response for urgent help</p>
+                    <a href="https://wa.me/8801XXXXXXXXX" target="_blank" class="shine-btn inline-flex items-center justify-center bg-green-500 text-white px-6 py-3 rounded-2xl text-sm font-extrabold hover:bg-green-600 transition">
+                        <i class="fab fa-whatsapp mr-2"></i> +880 1XXX XXX XXX
+                    </a>
+                </div>
+
+                <div class="contact-card bg-white rounded-[2rem] p-7 text-center shadow-premium">
+                    <div class="icon-box w-16 h-16 bg-blue-100 rounded-3xl flex items-center justify-center mx-auto mb-5">
+                        <i class="fab fa-telegram text-blue-500 text-3xl"></i>
+                    </div>
+                    <h3 class="font-black text-xl mb-2">Telegram Channel</h3>
+                    <p class="text-gray-500 text-sm mb-5">Join for updates and support</p>
+                    <a href="https://t.me/boostbangla" target="_blank" class="shine-btn inline-flex items-center justify-center bg-blue-500 text-white px-6 py-3 rounded-2xl text-sm font-extrabold hover:bg-blue-600 transition">
+                        <i class="fab fa-telegram mr-2"></i> @boostbangla
+                    </a>
+                </div>
+
+                <div class="contact-card bg-white rounded-[2rem] p-7 text-center shadow-premium">
+                    <div class="icon-box w-16 h-16 bg-orange-100 rounded-3xl flex items-center justify-center mx-auto mb-5">
+                        <i class="fas fa-envelope text-primary text-3xl"></i>
+                    </div>
+                    <h3 class="font-black text-xl mb-2">Email Support</h3>
+                    <p class="text-gray-500 text-sm mb-5">Best for detailed queries</p>
+                    <a href="mailto:support@boostbangla.com.bd" class="shine-btn inline-flex items-center justify-center bg-gradient-primary text-white px-6 py-3 rounded-2xl text-sm font-extrabold hover:shadow-glow transition">
+                        <i class="fas fa-envelope mr-2"></i> Email Us
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form & Info -->
+        <section class="container mx-auto px-4 py-16 md:py-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+                <!-- Contact Form -->
+                <div class="form-card bg-white rounded-[2rem] shadow-premium p-6 md:p-8">
+                    <div class="relative z-10">
+                        <span class="pill mb-4"><i class="fas fa-paper-plane"></i> Send Message</span>
+                        <h2 class="text-3xl md:text-4xl font-black mb-2">Tell Us How We Can Help</h2>
+                        <p class="text-gray-500 text-sm mb-7">Fill out the form and we’ll get back to you shortly.</p>
+
+                        <form id="contactForm">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-sm font-extrabold mb-2">Full Name <span class="text-red-500">*</span></label>
+                                    <input type="text" id="contactName" class="field w-full border border-gray-300 rounded-2xl p-4 focus:outline-none transition" placeholder="John Doe" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-extrabold mb-2">Email Address <span class="text-red-500">*</span></label>
+                                    <input type="email" id="contactEmail" class="field w-full border border-gray-300 rounded-2xl p-4 focus:outline-none transition" placeholder="you@example.com" required>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-sm font-extrabold mb-2">Phone Number</label>
+                                    <input type="tel" id="contactPhone" class="field w-full border border-gray-300 rounded-2xl p-4 focus:outline-none transition" placeholder="+880 1XXX XXX XXX">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-extrabold mb-2">Subject <span class="text-red-500">*</span></label>
+                                    <select id="contactSubject" class="field w-full border border-gray-300 rounded-2xl p-4 focus:outline-none transition" required>
+                                        <option value="">Select a subject</option>
+                                        <option value="general">General Inquiry</option>
+                                        <option value="support">Technical Support</option>
+                                        <option value="billing">Billing & Payment</option>
+                                        <option value="partnership">Partnership / Reseller</option>
+                                        <option value="complaint">Complaint</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-extrabold mb-2">Message <span class="text-red-500">*</span></label>
+                                <textarea id="contactMessage" rows="5" class="field w-full border border-gray-300 rounded-2xl p-4 focus:outline-none transition" placeholder="Please describe your issue or question in detail..." required></textarea>
+                            </div>
+
+                            <div class="mb-5">
+                                <label class="flex items-start gap-3 cursor-pointer">
+                                    <input type="checkbox" id="contactAgree" class="w-5 h-5 text-primary rounded mt-0.5" required>
+                                    <span class="text-sm text-gray-600">I agree to the <a href="/public/pages/public/privacy-policy.html" class="text-primary font-bold hover:underline">Privacy Policy</a> and consent to being contacted.</span>
+                                </label>
+                            </div>
+
+                            <button type="submit" id="submitBtn" class="shine-btn w-full bg-gradient-primary text-white py-4 rounded-2xl font-extrabold hover:shadow-glow transition">
+                                Send Message <i class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                        </form>
+
+                        <div id="formSuccess" class="hidden mt-5 p-4 bg-green-100 text-green-700 rounded-2xl text-center font-bold">
+                            <i class="fas fa-check-circle mr-2"></i> Thank you! Your message has been sent. We'll respond within 24 hours.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="space-y-6">
+                    <div class="info-card bg-white rounded-[2rem] shadow-premium p-7">
+                        <div class="relative z-10">
+                            <span class="pill mb-4"><i class="fas fa-clock"></i> Availability</span>
+                            <h2 class="text-2xl font-black mb-5">Support Hours</h2>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center pb-3 border-b border-gray-100 gap-4">
+                                    <span class="text-gray-600">Monday - Friday</span>
+                                    <span class="font-black">24/7 Support</span>
+                                </div>
+                                <div class="flex justify-between items-center pb-3 border-b border-gray-100 gap-4">
+                                    <span class="text-gray-600">Saturday - Sunday</span>
+                                    <span class="font-black">24/7 Support</span>
+                                </div>
+                                <div class="flex justify-between items-center pt-1 gap-4">
+                                    <span class="text-gray-600">Response Time</span>
+                                    <span class="text-primary font-black">Under 30 minutes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card bg-white rounded-[2rem] shadow-premium p-7">
+                        <div class="relative z-10">
+                            <span class="pill mb-4"><i class="fas fa-location-dot"></i> Location</span>
+                            <h2 class="text-2xl font-black mb-5">Our Office</h2>
+                            <div class="space-y-5">
+                                <div class="flex gap-4">
+                                    <div class="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center shrink-0">
+                                        <i class="fas fa-map-marker-alt text-primary text-xl"></i>
+                                    </div>
+                                    <div class="text-gray-600">
+                                        <p class="font-bold text-slate-800">Dhaka, Bangladesh</p>
+                                        <p class="text-sm text-gray-400">Serving customers nationwide</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center shrink-0">
+                                        <i class="fas fa-clock text-primary text-xl"></i>
+                                    </div>
+                                    <div class="text-gray-600">
+                                        <p class="font-bold text-slate-800">Open 24/7, 365 days</p>
+                                        <p class="text-sm text-gray-400">Including public holidays</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center shrink-0">
+                                        <i class="fas fa-globe text-primary text-xl"></i>
+                                    </div>
+                                    <div class="text-gray-600">
+                                        <p class="font-bold text-slate-800">Serving customers worldwide</p>
+                                        <p class="text-sm text-gray-400">Special focus on Bangladesh market</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card bg-white rounded-[2rem] shadow-premium p-7">
+                        <div class="relative z-10">
+                            <span class="pill mb-4"><i class="fas fa-share-nodes"></i> Social</span>
+                            <h2 class="text-2xl font-black mb-2">Follow Us</h2>
+                            <p class="text-gray-500 text-sm mb-5">Stay updated with latest news and offers.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="#" class="social-link w-12 h-12 rounded-2xl bg-gray-100 flex items-center justify-center hover:bg-primary group">
+                                    <i class="fab fa-facebook-f text-gray-600 group-hover:text-white text-xl"></i>
+                                </a>
+                                <a href="#" class="social-link w-12 h-12 rounded-2xl bg-gray-100 flex items-center justify-center hover:bg-primary group">
+                                    <i class="fab fa-instagram text-gray-600 group-hover:text-white text-xl"></i>
+                                </a>
+                                <a href="#" class="social-link w-12 h-12 rounded-2xl bg-gray-100 flex items-center justify-center hover:bg-primary group">
+                                    <i class="fab fa-youtube text-gray-600 group-hover:text-white text-xl"></i>
+                                </a>
+                                <a href="#" class="social-link w-12 h-12 rounded-2xl bg-gray-100 flex items-center justify-center hover:bg-primary group">
+                                    <i class="fab fa-twitter text-gray-600 group-hover:text-white text-xl"></i>
+                                </a>
+                                <a href="#" class="social-link w-12 h-12 rounded-2xl bg-gray-100 flex items-center justify-center hover:bg-primary group">
+                                    <i class="fab fa-linkedin-in text-gray-600 group-hover:text-white text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Pre-footer -->
+        <section class="container mx-auto px-4 pb-20">
+            <div class="relative overflow-hidden rounded-[2rem] bg-gradient-primary py-14 px-6 text-center text-white shadow-glow">
+                <div class="absolute inset-0 opacity-20 hero-grid"></div>
+                <div class="relative z-10 max-w-3xl mx-auto">
+                    <h3 class="text-3xl md:text-4xl font-black mb-3">Still Have Questions?</h3>
+                    <p class="text-white/85 mb-7">Check our FAQ page for quick answers to common questions.</p>
+                    <a href="/public/pages/public/faq.html" class="shine-btn inline-flex items-center bg-white text-primary px-8 py-4 rounded-2xl font-extrabold hover:shadow-lg transition">
+                        Browse FAQ <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Premium Footer -->
+    <footer class="bg-[#02101A] text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <span class="text-2xl font-bold tracking-tight">Boost<span class="text-primary">Bangla</span></span>
+                    <p class="text-gray-400 text-sm mt-3 leading-relaxed">Bangladesh's #1 SMM Panel. Get real followers, likes, and views with bKash & Nagad payment.</p>
+                    <div class="flex gap-1 mt-3">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                        <span class="text-gray-400 text-xs ml-2">4.9/5 Trusted</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/index.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Home</a></li>
+                        <li><a href="/public/pages/public/services.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Services</a></li>
+                        <li><a href="/public/pages/public/pricing.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Pricing</a></li>
+                        <li><a href="/public/pages/public/about.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/public/pages/public/contact.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Contact Us</a></li>
+                        <li><a href="/public/pages/public/faq.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> FAQ</a></li>
+                        <li><a href="/public/pages/public/refund-policy.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Refund Policy</a></li>
+                        <li><a href="/public/pages/public/terms-of-service.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Get In Touch</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-whatsapp text-green-500 text-xl w-6"></i> +880 1XXX XXX XXX</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-telegram text-blue-400 text-xl w-6"></i> @boostbangla</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fas fa-envelope text-primary text-xl w-6"></i> support@boostbangla.com.bd</li>
+                    </ul>
+                    <div class="flex gap-3 mt-6">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-instagram text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-youtube text-gray-400"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
+                © 2025 BoostBangla. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // CONTACT FORM HANDLER
+        const contactForm = document.getElementById('contactForm');
+        const formSuccess = document.getElementById('formSuccess');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const name = document.getElementById('contactName').value;
+                const email = document.getElementById('contactEmail').value;
+                const subject = document.getElementById('contactSubject').value;
+                const message = document.getElementById('contactMessage').value;
+                const agree = document.getElementById('contactAgree').checked;
+
+                if (!name || !email || !subject || !message) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+
+                if (!agree) {
+                    alert('Please agree to the Privacy Policy.');
+                    return;
+                }
+
+                const btn = document.getElementById('submitBtn');
+                const originalText = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner"></span>Sending...';
+
+                setTimeout(() => {
+                    formSuccess.classList.remove('hidden');
+                    contactForm.reset();
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+
+                    setTimeout(() => {
+                        formSuccess.classList.add('hidden');
+                    }, 5000);
+                }, 1500);
+            });
+        }
+    </script>
+</body>
+</html>

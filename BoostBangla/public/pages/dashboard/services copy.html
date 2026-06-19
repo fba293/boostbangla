@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#FF6B00">
+    <title>Services | BoostBangla - Social Media Marketing Services</title>
+    <meta name="description" content="Explore BoostBangla's complete range of SMM services. Buy real followers, likes, views for YouTube, Facebook, Instagram, TikTok at cheapest rates in Bangladesh.">
+    <meta name="keywords" content="SMM services Bangladesh, buy YouTube views, Facebook likes, Instagram followers, TikTok views">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] }
+                }
+            }
+        };
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/public/assets/css/style.css">
+    <link rel="stylesheet" href="/public/assets/css/dark-mode.css">
+    
+    <style>
+        .bg-gradient-primary { background: linear-gradient(90deg, #FF6B00 0%, #CC4D02 100%); }
+        .text-gradient { background: linear-gradient(90deg, #FF6B00, #CC4D02); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        
+        .service-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e5e7eb;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -12px rgba(0,0,0,0.15);
+            border-color: #FF6B00;
+        }
+        .category-btn {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .category-btn.active {
+            background: #FF6B00;
+            color: white;
+            border-color: #FF6B00;
+        }
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #FF6B00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 40px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Dark mode overrides */
+        body.dark-mode .service-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.dark-mode .service-card:hover {
+            border-color: #FF6B00;
+        }
+        body.dark-mode .category-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        body.dark-mode .category-btn.active {
+            background: #FF6B00;
+            color: white;
+        }
+        body.dark-mode .bg-gray-50 {
+            background: #0f172a !important;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        @media (max-width: 640px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="sidebar-placeholder"></div>
+    <div id="header-placeholder"></div>
+    <!-- Sidebar Component Loader -->
+    <script>
+(function loadSidebar(){
+    const placeholder = document.getElementById('sidebar-placeholder');
+    if(!placeholder) return;
+
+    function injectSidebar(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/sidebar.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectSidebar)
+        .catch(() => { console.warn('Sidebar fetch failed - using inline fallback'); });
+})();
+</script>
+    <!-- Universal Header Component Loader -->
+    <script>
+(function loadHeader(){
+    const placeholder = document.getElementById('header-placeholder');
+    if(!placeholder) return;
+
+    function injectHeader(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/universal-header.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectHeader)
+        .catch(() => { console.warn('Header fetch failed - using inline fallback'); });
+})();
+</script>
+
+    <main class="min-h-screen">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-b from-orange-50 to-white py-16">
+            <div class="container mx-auto px-4 text-center">
+                <div class="inline-flex items-center gap-2 bg-white/80 rounded-full px-3 py-1.5 shadow-sm mb-4">
+                    <i class="fas fa-layer-group text-primary"></i>
+                    <span class="text-sm font-medium">Complete SMM Solutions</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Our <span class="text-gradient">Services</span></h1>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">Professional social media marketing services for all major platforms at unbeatable prices</p>
+            </div>
+        </section>
+
+        <!-- Live Rate Banner -->
+        <div class="container mx-auto px-4 mt-8">
+            <div class="bg-gradient-primary rounded-xl p-4 text-white text-center">
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-3">
+                    <i class="fas fa-exchange-alt text-xl"></i>
+                    <span>Live Exchange Rate: <strong id="exchangeRate">122.78</strong> BDT per USD</span>
+                    <span class="hidden sm:inline">|</span>
+                    <span>30% Markup Applied for Best Prices</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="container mx-auto px-4 mt-8">
+            <div class="flex flex-wrap justify-center gap-3 mb-8">
+                <button class="category-btn active px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-700 hover:border-primary transition" data-cat="all">📌 All Services</button>
+                <button class="category-btn px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-700 hover:border-primary transition" data-cat="youtube">🎬 YouTube</button>
+                <button class="category-btn px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-700 hover:border-primary transition" data-cat="facebook">📘 Facebook</button>
+                <button class="category-btn px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-700 hover:border-primary transition" data-cat="instagram">📸 Instagram</button>
+                <button class="category-btn px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-700 hover:border-primary transition" data-cat="tiktok">🎵 TikTok</button>
+                <button class="category-btn px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-700 hover:border-primary transition" data-cat="twitter">🐦 Twitter</button>
+                <button class="category-btn px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-700 hover:border-primary transition" data-cat="telegram">✈️ Telegram</button>
+            </div>
+        </div>
+
+        <!-- Search Box -->
+        <div class="container mx-auto px-4">
+            <div class="max-w-md mx-auto mb-8">
+                <div class="relative">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="searchServices" placeholder="Search services by name..." class="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 focus:outline-none focus:border-primary transition">
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Grid -->
+        <section class="container mx-auto px-4 py-8 pb-20">
+            <div id="servicesGrid" class="services-grid">
+                <div class="text-center py-12 col-span-full">
+                    <div class="loader"></div>
+                    <p class="text-gray-500 mt-3">Loading services from AmarBoost...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="bg-gray-100 py-16">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-2xl font-bold mb-4">Ready to Grow Your Social Media?</h2>
+                <p class="text-gray-600 mb-6">Sign up now and get instant access to all our services</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/public/pages/public/signup.html" class="btn-primary px-8 py-3 rounded-lg">Create Free Account</a>
+                    <a href="/contact.html" class="btn-outline px-8 py-3 rounded-lg">Contact Support</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Premium Footer -->
+    <footer class="bg-[#02101A] text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <span class="text-2xl font-bold tracking-tight">Boost<span class="text-primary">Bangla</span></span>
+                    <p class="text-gray-400 text-sm mt-3 leading-relaxed">Bangladesh's #1 SMM Panel. Get real followers, likes, and views with bKash & Nagad payment.</p>
+                    <div class="flex gap-1 mt-3">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                        <span class="text-gray-400 text-xs ml-2">4.9/5 Trusted</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/index.html" class="text-gray-400 hover:text-primary transition">Home</a></li>
+                        <li><a href="/services.html" class="text-gray-400 hover:text-primary transition">Services</a></li>
+                        <li><a href="/pricing.html" class="text-gray-400 hover:text-primary transition">Pricing</a></li>
+                        <li><a href="/about.html" class="text-gray-400 hover:text-primary transition">About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/contact.html" class="text-gray-400 hover:text-primary transition">Contact Us</a></li>
+                        <li><a href="/faq.html" class="text-gray-400 hover:text-primary transition">FAQ</a></li>
+                        <li><a href="/refund-policy.html" class="text-gray-400 hover:text-primary transition">Refund Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-gray-400 hover:text-primary transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Get In Touch</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-whatsapp text-green-500 text-xl w-6"></i> +880 1XXX XXX XXX</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-telegram text-blue-400 text-xl w-6"></i> @boostbangla</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fas fa-envelope text-primary text-xl w-6"></i> support@boostbangla.com.bd</li>
+                    </ul>
+                    <div class="flex gap-3 mt-6">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-instagram text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-youtube text-gray-400"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
+                © 2025 BoostBangla. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // API PROXY CONFIGURATION
+        // ============================================
+        const API_PROXY = '/public/php/api-proxy.php';
+        const MARKUP_PERCENTAGE = 30;
+        let allServices = [];
+        let currentCategory = 'all';
+        let currentSearch = '';
+        let exchangeRate = 122.78;
+        
+        // ============================================
+        // EXCHANGE RATE FETCH
+        // ============================================
+        async function getExchangeRate() {
+            try {
+                const response = await fetch('https://api.frankfurter.app/latest?from=USD&to=BDT');
+                const data = await response.json();
+                exchangeRate = data.rates.BDT;
+                document.getElementById('exchangeRate').innerText = exchangeRate.toFixed(2);
+                return exchangeRate;
+            } catch (e) {
+                return 122.78;
+            }
+        }
+        
+        // ============================================
+        // FETCH SERVICES FROM API
+        // ============================================
+        async function getServices() {
+            const response = await fetch(API_PROXY + '?action=services');
+            const data = await response.json();
+            if (Array.isArray(data)) return data;
+            if (data && Array.isArray(data.services)) return data.services;
+            return [];
+        }
+        
+        // ============================================
+        // GET SERVICE CATEGORY
+        // ============================================
+        function getServiceCategory(name) {
+            const n = name.toLowerCase();
+            if (n.includes('youtube')) return 'youtube';
+            if (n.includes('facebook')) return 'facebook';
+            if (n.includes('instagram')) return 'instagram';
+            if (n.includes('tiktok')) return 'tiktok';
+            if (n.includes('twitter')) return 'twitter';
+            if (n.includes('telegram')) return 'telegram';
+            return 'other';
+        }
+        
+        // ============================================
+        // CALCULATE PRICE IN BDT
+        // ============================================
+        function calculatePriceBDT(usdRate) {
+            const markedUpUSD = parseFloat(usdRate) * (1 + MARKUP_PERCENTAGE / 100);
+            return Math.round(markedUpUSD * exchangeRate);
+        }
+        
+        // ============================================
+        // FORMAT CURRENCY
+        // ============================================
+        function formatBDT(amount) {
+            return '৳' + amount.toLocaleString();
+        }
+        
+        // ============================================
+        // ESCAPE HTML
+        // ============================================
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // ============================================
+        // DISPLAY SERVICES
+        // ============================================
+        async function displayServices() {
+            const grid = document.getElementById('servicesGrid');
+            
+            let filtered = [...allServices];
+            
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(s => getServiceCategory(s.name) === currentCategory);
+            }
+            
+            if (currentSearch) {
+                filtered = filtered.filter(s => s.name.toLowerCase().includes(currentSearch.toLowerCase()));
+            }
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="text-center py-12 col-span-full text-gray-500">No services found. Try a different category or search term.</div>';
+                return;
+            }
+            
+            let html = '';
+            for (const service of filtered) {
+                const priceBDT = calculatePriceBDT(service.rate);
+                let serviceName = service.name;
+                if (serviceName.length > 55) {
+                    serviceName = serviceName.substring(0, 52) + '...';
+                }
+                
+                html += `
+                    <div class="service-card bg-white rounded-xl p-5 shadow-sm">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                                <i class="fas fa-star text-primary text-sm"></i>
+                            </div>
+                            <span class="text-xs text-gray-400">ID: ${service.service}</span>
+                        </div>
+                        <h3 class="font-semibold text-gray-800 mb-2 line-clamp-2" title="${escapeHtml(service.name)}">${escapeHtml(serviceName)}</h3>
+                        <div class="text-2xl font-bold text-primary mb-2">${formatBDT(priceBDT)}</div>
+                        <div class="text-xs text-gray-400 mb-4">
+                            <i class="fas fa-chart-line mr-1"></i> Min: ${service.min.toLocaleString()} | Max: ${service.max.toLocaleString()}
+                        </div>
+                        <a href="/public/pages/public/signup.html" class="block w-full text-center bg-gradient-primary text-white py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition">
+                            Get Started <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                `;
+            }
+            
+            grid.innerHTML = html;
+        }
+        
+        // ============================================
+        // LOAD SERVICES
+        // ============================================
+        async function loadServices() {
+            const grid = document.getElementById('servicesGrid');
+            grid.innerHTML = '<div class="text-center py-12 col-span-full"><div class="loader"></div><p class="text-gray-500 mt-3">Loading services from AmarBoost...</p></div>';
+            
+            await getExchangeRate();
+            
+            try {
+                console.log('Fetching services from:', API_PROXY + '?action=services');
+                const response = await fetch(API_PROXY + '?action=services');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const payload = await response.json();
+                const services = Array.isArray(payload) ? payload : (Array.isArray(payload?.services) ? payload.services : []);
+                console.log('Services received:', services?.length);
+                
+                if (services && services.length) {
+                    allServices = services;
+                    await displayServices();
+                } else {
+                    const sample = await getServices();
+                    if (sample.length) {
+                        allServices = sample;
+                        await displayServices();
+                    } else {
+                        grid.innerHTML = '<div class="text-center py-12 col-span-full text-red-500">No services available at the moment.</div>';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading services:', error);
+                const fallback = await getServices().catch(() => []);
+                if (fallback.length) {
+                    allServices = fallback;
+                    await displayServices();
+                } else {
+                    grid.innerHTML = `<div class="text-center py-12 col-span-full text-red-500">❌ Failed to load services: ${error.message}<br><br>Check that your API proxy is working at: ${API_PROXY}</div>`;
+                }
+            }
+        }
+
+                // Test API directly
+        async function testAPI() {
+            try {
+                const response = await fetch('/public/php/api-proxy.php?action=services');
+                console.log('API Test - Status:', response.status);
+                const text = await response.text();
+                console.log('API Test - Response preview:', text.substring(0, 200));
+            } catch(e) {
+                console.error('API Test - Failed:', e);
+            }
+        }
+        testAPI();
+        
+        // ============================================
+        // CATEGORY FILTERS
+        // ============================================
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.cat;
+                displayServices();
+            });
+        });
+        
+        // ============================================
+        // SEARCH FILTER
+        // ============================================
+        document.getElementById('searchServices').addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            displayServices();
+        });
+        
+        // ============================================
+        // DARK MODE TOGGLE
+        // ============================================
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) document.body.classList.add('dark-mode');
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        // Mobile menu toggle
+        
+        // Line clamp style
+        const style = document.createElement('style');
+        style.textContent = `.line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }`;
+        document.head.appendChild(style);
+        
+        // Load services on page load
+        loadServices();
+    </script>
+    <script src="/public/assets/js/core/config.js"></script>
+    <script src="/public/assets/js/core/auth.js"></script>
+    <script src="/public/assets/js/core/toast.js"></script>
+    <script src="/public/assets/js/core/utils.js"></script>
+    <script src="/public/assets/js/core/validation.js"></script>
+    <script src="/public/assets/js/core/offline.js"></script>
+    <script src="/public/assets/js/core/shortcuts.js"></script>
+    <script src="/public/assets/js/core/balance-manager.js"></script>
+    <script src="/public/assets/js/core/avatar-manager.js"></script>
+</body>
+</html>

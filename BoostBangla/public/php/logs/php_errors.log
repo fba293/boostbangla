@@ -1,0 +1,64 @@
+[04-Jun-2026 00:33:03 Asia/Dhaka] Database connection error: Access denied for user 'root'@'localhost' (using password: NO)
+[04-Jun-2026 00:33:03 Asia/Dhaka] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php:26
+Stack trace:
+#0 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(26): mysqli->__construct('localhost', 'root', Object(SensitiveParameterValue), 'boostbangla')
+#1 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(21): Database->connect()
+#2 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(47): Database->__construct(Array)
+#3 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/order-handler.php(38): Database::getInstance()
+#4 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/order-handler.php(439): OrderHandler->__construct()
+#5 {main}
+  thrown in /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php on line 26
+[04-Jun-2026 00:33:09 Asia/Dhaka] Database connection error: Access denied for user 'root'@'localhost' (using password: NO)
+[04-Jun-2026 00:33:09 Asia/Dhaka] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php:26
+Stack trace:
+#0 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(26): mysqli->__construct('localhost', 'root', Object(SensitiveParameterValue), 'boostbangla')
+#1 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(21): Database->connect()
+#2 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(47): Database->__construct(Array)
+#3 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/order-handler.php(38): Database::getInstance()
+#4 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/order-handler.php(439): OrderHandler->__construct()
+#5 {main}
+  thrown in /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php on line 26
+[04-Jun-2026 00:33:12 Asia/Dhaka] Database connection error: Access denied for user 'root'@'localhost' (using password: NO)
+[04-Jun-2026 00:33:12 Asia/Dhaka] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php:26
+Stack trace:
+#0 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(26): mysqli->__construct('localhost', 'root', Object(SensitiveParameterValue), 'boostbangla')
+#1 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(21): Database->connect()
+#2 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(47): Database->__construct(Array)
+#3 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/order-handler.php(38): Database::getInstance()
+#4 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/order-handler.php(439): OrderHandler->__construct()
+#5 {main}
+  thrown in /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php on line 26
+[04-Jun-2026 00:33:14 Asia/Dhaka] Database connection error: Access denied for user 'root'@'localhost' (using password: NO)
+[04-Jun-2026 00:33:14 Asia/Dhaka] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php:26
+Stack trace:
+#0 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(26): mysqli->__construct('localhost', 'root', Object(SensitiveParameterValue), 'boostbangla')
+#1 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(21): Database->connect()
+#2 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(47): Database->__construct(Array)
+#3 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/order-handler.php(38): Database::getInstance()
+#4 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/order-handler.php(439): OrderHandler->__construct()
+#5 {main}
+  thrown in /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php on line 26
+[04-Jun-2026 00:33:55 Asia/Dhaka] Database connection error: Access denied for user 'root'@'localhost' (using password: NO)
+[04-Jun-2026 00:33:55 Asia/Dhaka] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php:26
+Stack trace:
+#0 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(26): mysqli->__construct('localhost', 'root', Object(SensitiveParameterValue), 'boostbangla')
+#1 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(21): Database->connect()
+#2 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(47): Database->__construct(Array)
+#3 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/order-handler.php(38): Database::getInstance()
+#4 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/order-handler.php(439): OrderHandler->__construct()
+#5 {main}
+  thrown in /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php on line 26
+[04-Jun-2026 00:33:58 Asia/Dhaka] Database connection error: Access denied for user 'root'@'localhost' (using password: NO)
+[04-Jun-2026 00:33:58 Asia/Dhaka] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php:26
+Stack trace:
+#0 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(26): mysqli->__construct('localhost', 'root', Object(SensitiveParameterValue), 'boostbangla')
+#1 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(21): Database->connect()
+#2 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php(47): Database->__construct(Array)
+#3 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/order-handler.php(38): Database::getInstance()
+#4 /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/order-handler.php(439): OrderHandler->__construct()
+#5 {main}
+  thrown in /home/globale1/decisive-green-hamster.103-174-152-66.cpanel.site/public/php/database.php on line 26
+[04-Jun-2026 00:41:23 Asia/Dhaka] Database connection error: Access denied for user 'root'@'localhost' (using password: NO)
+[04-Jun-2026 00:41:23 Asia/Dhaka] Order handler fatal error: Access denied for user 'root'@'localhost' (using password: NO)
+[07-Jun-2026 00:35:23 Asia/Dhaka] Database connection error: Access denied for user 'root'@'localhost' (using password: NO)
+[07-Jun-2026 00:35:23 Asia/Dhaka] Order handler fatal error: Access denied for user 'root'@'localhost' (using password: NO)

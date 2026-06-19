@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | BoostBangla</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <div id="sidebar-placeholder"></div>
+    <div id="header-placeholder"></div>
+    <main class="main-content min-h-screen p-6">
+        <div class="rounded-2xl bg-white p-8 shadow-sm">
+            <h1 class="text-2xl font-bold">Profile</h1>
+            <p class="mt-2 text-gray-500">Redirecting to account settings...</p>
+        </div>
+    </main>
+    <script src="/public/assets/js/core/config.js"></script>
+    <script src="/public/assets/js/core/auth.js"></script>
+    <script src="/public/assets/js/core/toast.js"></script>
+    <script src="/public/assets/js/core/utils.js"></script>
+    <script src="/public/assets/js/core/validation.js"></script>
+    <script src="/public/assets/js/core/offline.js"></script>
+    <script src="/public/assets/js/core/shortcuts.js"></script>
+    <script src="/public/assets/js/core/balance-manager.js"></script>
+    <script src="/public/assets/js/core/avatar-manager.js"></script>
+    <script>
+    (function loadSidebar(){
+        const placeholder = document.getElementById('sidebar-placeholder');
+        if(!placeholder) return;
+        fetch('/public/components/sidebar.html').then(res => res.ok ? res.text() : Promise.reject()).then(html => {
+            placeholder.innerHTML = html;
+            placeholder.querySelectorAll('script').forEach(oldScript => {
+                const s = document.createElement('script');
+                if (oldScript.src) s.src = oldScript.src;
+                else s.textContent = oldScript.textContent;
+                document.body.appendChild(s);
+                oldScript.remove();
+            });
+        }).catch(() => console.warn('Sidebar fetch failed'));
+    })();
+    (function loadHeader(){
+        const placeholder = document.getElementById('header-placeholder');
+        if(!placeholder) return;
+        fetch('/public/components/universal-header.html').then(res => res.ok ? res.text() : Promise.reject()).then(html => {
+            placeholder.innerHTML = html;
+            placeholder.querySelectorAll('script').forEach(oldScript => {
+                const s = document.createElement('script');
+                if (oldScript.src) s.src = oldScript.src;
+                else s.textContent = oldScript.textContent;
+                document.body.appendChild(s);
+                oldScript.remove();
+            });
+        }).catch(() => console.warn('Header fetch failed'));
+    })();
+    setTimeout(() => {
+        window.location.href = '/public/pages/dashboard/account.html';
+    }, 500);
+    </script>
+</body>
+</html>

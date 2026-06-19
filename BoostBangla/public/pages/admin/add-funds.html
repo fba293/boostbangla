@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Add Funds | BoostBangla</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .bg-gradient-primary { background: linear-gradient(90deg, #FF6B00 0%, #CC4D02 100%); }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen p-6">
+        <div class="max-w-2xl mx-auto">
+            <!-- Header -->
+            <div class="bg-gradient-primary rounded-xl p-6 text-white mb-6">
+                <h1 class="text-2xl font-bold"><i class="fas fa-plus-circle mr-2"></i>Admin - Add Funds</h1>
+                <p class="opacity-90 mt-1">Add balance to any user account</p>
+            </div>
+            
+            <!-- Add Funds Form -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <h2 class="text-xl font-bold mb-4"><i class="fas fa-wallet text-primary mr-2"></i>Add Balance</h2>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">User Email</label>
+                    <input type="email" id="userEmail" class="w-full border rounded-lg p-3 focus:outline-none focus:border-primary" placeholder="user@example.com">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Amount (BDT)</label>
+                    <input type="number" id="amount" class="w-full border rounded-lg p-3 focus:outline-none focus:border-primary" placeholder="5000" min="1">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Note (Optional)</label>
+                    <input type="text" id="note" class="w-full border rounded-lg p-3 focus:outline-none focus:border-primary" placeholder="Admin added funds">
+                </div>
+                
+                <button id="addFundsBtn" class="w-full bg-gradient-primary text-white py-3 rounded-lg font-semibold hover:opacity-90 transition">
+                    <i class="fas fa-plus-circle mr-2"></i> Add Funds
+                </button>
+            </div>
+            
+            <!-- User Search -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-xl font-bold mb-4"><i class="fas fa-search text-primary mr-2"></i>Find User</h2>
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="searchEmail" class="flex-1 border rounded-lg p-3 focus:outline-none focus:border-primary" placeholder="Search by email">
+                    <button id="searchBtn" class="bg-primary text-white px-6 rounded-lg hover:bg-primaryDark transition">Search</button>
+                </div>
+                <div id="userResult" class="hidden">
+                    <div class="border-t pt-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="font-semibold" id="userNameDisplay">-</p>
+                                <p class="text-sm text-gray-500" id="userEmailDisplay">-</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-gray-500">Current Balance</p>
+                                <p class="text-2xl font-bold text-primary" id="userBalance">৳0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Transactions -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mt-6">
+                <h2 class="text-xl font-bold mb-4"><i class="fas fa-history text-primary mr-2"></i>Recent Adjustments</h2>
+                <div id="recentList" class="space-y-2 max-h-96 overflow-y-auto">
+                    <div class="text-center py-8 text-gray-500">No recent adjustments</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script>
+        // Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        let currentUser = null;
+        
+        // Check admin status
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                if (userDoc.data()?.isAdmin !== true) {
+                    alert('Admin access only!');
+                    window.location.href = '/dashboard/index.html';
+                    return;
+                }
+                currentUser = user;
+                loadRecentAdjustments();
+            } else {
+                window.location.href = '/login.html';
+            }
+        });
+        
+        // Add funds function
+        async function addFunds(email, amount, note) {
+            try {
+                // Find user by email
+                const snapshot = await db.collection('users').where('email', '==', email).get();
+                
+                if (snapshot.empty) {
+                    alert('User not found!');
+                    return false;
+                }
+                
+                const userDoc = snapshot.docs[0];
+                const userId = userDoc.id;
+                const userData = userDoc.data();
+                const currentBalance = userData.balance || 0;
+                const newBalance = currentBalance + amount;
+                
+                // Update user balance
+                await db.collection('users').doc(userId).update({
+                    balance: newBalance,
+                    balanceUSD: newBalance / 120,
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                // Log transaction
+                await db.collection('adminTransactions').add({
+                    userId: userId,
+                    userEmail: email,
+                    userName: userData.username || email,
+                    type: 'admin_add',
+                    amount: amount,
+                    previousBalance: currentBalance,
+                    newBalance: newBalance,
+                    note: note || 'Admin added funds',
+                    adminId: currentUser.uid,
+                    adminEmail: currentUser.email,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                return true;
+            } catch (error) {
+                console.error('Error adding funds:', error);
+                alert('Error: ' + error.message);
+                return false;
+            }
+        }
+        
+        // Search user
+        async function searchUser(email) {
+            const snapshot = await db.collection('users').where('email', '==', email).get();
+            const resultDiv = document.getElementById('userResult');
+            
+            if (snapshot.empty) {
+                resultDiv.classList.add('hidden');
+                alert('User not found');
+                return null;
+            }
+            
+            const userDoc = snapshot.docs[0];
+            const userData = userDoc.data();
+            
+            document.getElementById('userNameDisplay').innerText = userData.username || 'No username';
+            document.getElementById('userEmailDisplay').innerText = userData.email;
+            document.getElementById('userBalance').innerHTML = '৳' + (userData.balance || 0).toLocaleString();
+            
+            resultDiv.classList.remove('hidden');
+            return userDoc;
+        }
+        
+        // Load recent adjustments
+        async function loadRecentAdjustments() {
+            const snapshot = await db.collection('adminTransactions')
+                .orderBy('createdAt', 'desc')
+                .limit(20)
+                .get();
+            
+            const listDiv = document.getElementById('recentList');
+            
+            if (snapshot.empty) {
+                listDiv.innerHTML = '<div class="text-center py-8 text-gray-500">No recent adjustments</div>';
+                return;
+            }
+            
+            let html = '';
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const date = data.createdAt?.toDate?.() || new Date();
+                html += `
+                    <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div>
+                            <div class="font-medium">${data.userEmail}</div>
+                            <div class="text-xs text-gray-500">${data.note || 'Admin adjustment'}</div>
+                            <div class="text-xs text-gray-400">${date.toLocaleString()}</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-green-600 font-bold">+৳${data.amount.toLocaleString()}</div>
+                            <div class="text-xs text-gray-500">New: ৳${data.newBalance.toLocaleString()}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            listDiv.innerHTML = html;
+        }
+        
+        // Event listeners
+        document.getElementById('addFundsBtn').addEventListener('click', async () => {
+            const email = document.getElementById('userEmail').value.trim();
+            const amount = parseInt(document.getElementById('amount').value);
+            const note = document.getElementById('note').value;
+            
+            if (!email) {
+                alert('Please enter user email');
+                return;
+            }
+            if (!amount || amount < 1) {
+                alert('Please enter a valid amount');
+                return;
+            }
+            
+            const success = await addFunds(email, amount, note);
+            if (success) {
+                alert(`Successfully added ৳${amount.toLocaleString()} to ${email}`);
+                document.getElementById('amount').value = '';
+                document.getElementById('note').value = '';
+                // Refresh recent list and user search
+                await searchUser(email);
+                loadRecentAdjustments();
+            }
+        });
+        
+        document.getElementById('searchBtn').addEventListener('click', async () => {
+            const email = document.getElementById('searchEmail').value.trim();
+            if (email) {
+                await searchUser(email);
+                document.getElementById('userEmail').value = email;
+            }
+        });
+    </script>
+    <!-- Universal Notifications Helper -->
+<script src="/js/core/notifications-helper.js"></script>
+</body>
+</html>

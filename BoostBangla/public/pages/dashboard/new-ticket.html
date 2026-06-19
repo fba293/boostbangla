@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Ticket | BoostBangla Support</title>
+    <meta name="description" content="Submit a support ticket to BoostBangla. Get help with orders, payments, account issues, or general inquiries.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if(typeof showToast !== 'function') window.showToast = (msg,type)=>{alert(msg)};
+
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] }
+                }
+            }
+        };
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/style.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/dark-mode.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/mobile.css"> -->
+    
+    <style>
+        /* Core Layout Styles - Matching index.html */
+        .bg-gradient-primary { background: linear-gradient(90deg, #FF6B00 0%, #CC4D02 100%); }
+
+        
+        /* New Ticket Specific Styles */
+        .form-card {
+            background: white;
+            border-radius: 24px;
+            padding: 28px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.2s;
+        }
+        .form-card:hover { border-color: #FF6B00; }
+        body.dark-mode .form-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        body.dark-mode .form-label { color: #e2e8f0; }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+        }
+        body.dark-mode .form-input, body.dark-mode .form-select, body.dark-mode .form-textarea {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .priority-option {
+            transition: all 0.2s;
+        }
+        .priority-option:hover {
+            border-color: #FF6B00;
+            background: #fff8f0;
+        }
+        .priority-option.selected {
+            border-color: #FF6B00;
+            background: #fff8f0;
+        }
+        body.dark-mode .priority-option:hover { background: #2d1a0f; }
+        body.dark-mode .priority-option.selected { background: #2d1a0f; }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #FF6B00 0%, #CC4D02 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; transform: scale(1.02); }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #FF6B00;
+            color: #FF6B00;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover { background: #FF6B00; color: white; }
+        
+        .faq-item { border-bottom: 1px solid #f0f0f0; }
+        body.dark-mode .faq-item { border-bottom-color: #334155; }
+        
+        .faq-question {
+            padding: 16px 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.2s;
+        }
+        .faq-question:hover { color: #FF6B00; }
+        
+        .faq-answer {
+            display: none;
+            padding-bottom: 16px;
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .faq-answer.show { display: block; }
+        body.dark-mode .faq-answer { color: #94a3b8; }
+        
+        .attachment-preview {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        body.dark-mode .attachment-preview {
+            background: #0f172a;
+            border-color: #334155;
+        }
+        
+        .remove-attachment {
+            color: #ef4444;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .remove-attachment:hover { color: #dc2626; }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #FF6B00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .bg-white { background-color: white; }
+        body.dark-mode .bg-white { background-color: #1e293b; }
+        .rounded-xl { border-radius: 1rem; }
+        .rounded-2xl { border-radius: 1.5rem; }
+        
+        @media (max-width: 768px) {
+            .form-card { padding: 20px; }
+            .grid-cols-1.lg\:grid-cols-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+    <div id="header-placeholder"></div>
+    <!-- Sidebar Component Loader -->
+    <script>
+(function loadSidebar(){
+    const placeholder = document.getElementById('sidebar-placeholder');
+    if(!placeholder) return;
+
+    function injectSidebar(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/sidebar.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectSidebar)
+        .catch(() => { console.warn('Sidebar fetch failed - using inline fallback'); });
+})();
+</script>
+    <!-- Universal Header Component Loader -->
+    <script>
+(function loadHeader(){
+    const placeholder = document.getElementById('header-placeholder');
+    if(!placeholder) return;
+
+    function injectHeader(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/universal-header.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectHeader)
+        .catch(() => { console.warn('Header fetch failed - using inline fallback'); });
+})();
+</script>
+    
+    <div class="main-content">
+        <div class="p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Main Form -->
+                <div class="lg:col-span-2">
+                    <div class="form-card">
+                        <h2 class="text-2xl font-bold mb-2">Submit a Support Request</h2>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm mb-6">Our support team typically responds within <strong class="text-primary">24 hours</strong></p>
+                        
+                        <form id="ticketForm">
+                            <div class="mb-5">
+                                <label class="form-label"><i class="fas fa-tag text-primary mr-1"></i> Subject <span class="text-red-500">*</span></label>
+                                <input type="text" id="ticketSubject" class="form-input" placeholder="e.g., Order not delivered, Payment issue, Service question" required>
+                            </div>
+                            
+                            <div class="mb-5">
+                                <label class="form-label"><i class="fas fa-flag text-primary mr-1"></i> Priority</label>
+                                <div class="grid grid-cols-3 gap-3">
+                                    <div class="priority-option flex items-center gap-2 p-3 border rounded-xl cursor-pointer" data-priority="low">
+                                        <input type="radio" name="priority" value="low" class="w-4 h-4 text-primary" checked>
+                                        <span><i class="fas fa-circle text-green-500 text-xs mr-1"></i> Low - General question</span>
+                                    </div>
+                                    <div class="priority-option flex items-center gap-2 p-3 border rounded-xl cursor-pointer" data-priority="medium">
+                                        <input type="radio" name="priority" value="medium" class="w-4 h-4 text-primary">
+                                        <span><i class="fas fa-circle text-yellow-500 text-xs mr-1"></i> Medium - Order issue</span>
+                                    </div>
+                                    <div class="priority-option flex items-center gap-2 p-3 border rounded-xl cursor-pointer" data-priority="high">
+                                        <input type="radio" name="priority" value="high" class="w-4 h-4 text-primary">
+                                        <span><i class="fas fa-circle text-red-500 text-xs mr-1"></i> High - Urgent problem</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-5">
+                                <label class="form-label"><i class="fas fa-shopping-cart text-primary mr-1"></i> Related Order (Optional)</label>
+                                <input type="text" id="relatedOrder" class="form-input" placeholder="Enter Order ID if applicable">
+                                <p class="text-xs text-gray-400 mt-1">Providing order ID helps us resolve your issue faster</p>
+                            </div>
+                            
+                            <div class="mb-5">
+                                <label class="form-label"><i class="fas fa-envelope text-primary mr-1"></i> Message <span class="text-red-500">*</span></label>
+                                <textarea id="ticketMessage" rows="6" class="form-textarea" placeholder="Please describe your issue in detail..." required></textarea>
+                                <div class="text-xs text-gray-400 mt-1 flex justify-between">
+                                    <span><i class="fas fa-info-circle mr-1"></i> Be as detailed as possible</span>
+                                    <span id="charCount">0 / 5000 characters</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label class="form-label"><i class="fas fa-paperclip text-primary mr-1"></i> Attachment (Optional)</label>
+                                <input type="file" id="ticketAttachment" class="hidden" accept="image/*,.pdf,.txt">
+                                <button type="button" id="attachFileBtn" class="btn-outline text-sm"><i class="fas fa-upload mr-1"></i> Choose File</button>
+                                <div id="attachmentPreview" class="hidden attachment-preview">
+                                    <i class="fas fa-file text-primary"></i>
+                                    <span id="fileName" class="text-sm truncate"></span>
+                                    <i class="fas fa-times-circle remove-attachment"></i>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-2">Max file size: 5MB. Supported: JPG, PNG, PDF, TXT</p>
+                            </div>
+                            
+                            <div class="flex gap-3">
+                                <button type="button" onclick="window.location.href='/public/pages/dashboard/tickets.html'" class="btn-outline"><i class="fas fa-arrow-left mr-2"></i> Cancel</button>
+                                <button type="submit" class="btn-primary"><i class="fas fa-paper-plane mr-2"></i> Submit Ticket</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Sidebar - Help & FAQs -->
+                <div class="lg:col-span-1">
+                    <div class="form-card mb-6">
+                        <h3 class="font-bold text-lg mb-4"><i class="fas fa-lightbulb text-primary mr-2"></i> Quick Tips</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex gap-2"><i class="fas fa-check-circle text-green-500 mt-0.5"></i> Include order number for faster resolution</li>
+                            <li class="flex gap-2"><i class="fas fa-check-circle text-green-500 mt-0.5"></i> Describe the issue step by step</li>
+                            <li class="flex gap-2"><i class="fas fa-check-circle text-green-500 mt-0.5"></i> Attach screenshots if possible</li>
+                            <li class="flex gap-2"><i class="fas fa-check-circle text-green-500 mt-0.5"></i> Be respectful and patient</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="form-card mb-6 text-center">
+                        <i class="fas fa-clock text-3xl text-primary mb-2"></i>
+                        <h3 class="font-bold text-lg">Response Time</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Typically within <strong class="text-primary">24 hours</strong></p>
+                        <div class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-400">
+                            <i class="fas fa-headset mr-1"></i> Support available 24/7
+                        </div>
+                    </div>
+                    
+                    <div class="form-card">
+                        <h3 class="font-bold text-lg mb-4"><i class="fas fa-question-circle text-primary mr-2"></i> Frequently Asked</h3>
+                        <div id="faqContainer">
+                            <div class="faq-item"><div class="faq-question"><span class="font-medium">How long does support take?</span><i class="fas fa-chevron-down text-gray-400 transition-transform"></i></div><div class="faq-answer">Our support team typically responds within 24 hours.</div></div>
+                            <div class="faq-item"><div class="faq-question"><span class="font-medium">Can I attach files?</span><i class="fas fa-chevron-down text-gray-400 transition-transform"></i></div><div class="faq-answer">Yes, you can attach images, PDFs, or text files up to 5MB.</div></div>
+                            <div class="faq-item"><div class="faq-question"><span class="font-medium">What info should I include?</span><i class="fas fa-chevron-down text-gray-400 transition-transform"></i></div><div class="faq-answer">Include order IDs, screenshots, error messages, and step-by-step description.</div></div>
+                            <div class="faq-item"><div class="faq-question"><span class="font-medium">Can I close a ticket?</span><i class="fas fa-chevron-down text-gray-400 transition-transform"></i></div><div class="faq-answer">Yes, you can close tickets from the ticket detail page once resolved.</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <!-- Core Modules -->
+    <script src="/public/assets/js/core/config.js"></script>
+    <script src="/public/assets/js/core/auth.js"></script>
+    <script src="/public/assets/js/core/utils.js"></script>
+    <script src="/public/assets/js/core/components.js"></script>
+    
+    <!-- New Ticket Module -->
+    <script src="/public/assets/js/modules/new-ticket.js"></script>
+    
+    <!-- Mobile Menu & Dark Mode Toggle -->
+    <script>
+        // Create mobile menu button
+        
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        // Load dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('.fa-chevron-down');
+                answer.classList.toggle('show');
+                icon.style.transform = answer.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+        });
+        
+        // Priority option selection
+        document.querySelectorAll('.priority-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const radio = option.querySelector('input[type="radio"]');
+                radio.checked = true;
+                document.querySelectorAll('.priority-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+            });
+        });
+    </script>
+    <!-- Universal Notifications Helper -->
+<script src="/public/assets/js/core/notifications-helper.js"></script>
+<script>
+// global-darkmode-fix
+const darkToggle = document.getElementById('darkModeToggle');
+if (darkToggle) {
+    darkToggle.onclick = () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    };
+}
+if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+</script>
+<script>
+// Global logout fix - ensures logout works everywhere
+(function fixLogout(){
+    const checkInterval = setInterval(() => {
+        const logoutBtn = document.getElementById('logoutBtn') || document.getElementById('sidebarLogoutBtn');
+        if(logoutBtn && typeof firebase !== 'undefined' && firebase.auth){
+            clearInterval(checkInterval);
+            logoutBtn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                firebase.auth().signOut()
+                    .then(() => { window.location.href = '/public/pages/public/login.html'; })
+                    .catch(err => { console.error('Logout error:', err); alert('Logout failed. Please try again.'); });
+            };
+        }
+    }, 500);
+})();
+</script>
+<button id="darkModeToggle" class="dark-mode-toggle-btn">
+    <i class="fas fa-moon"></i>
+</button>
+<script>
+document.getElementById('darkModeToggle')?.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark);
+    const icon = document.querySelector('#darkModeToggle i');
+    if(icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+});
+if(localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+</script>
+    <script src="/public/assets/js/core/toast.js"></script>
+    <script src="/public/assets/js/core/validation.js"></script>
+    <script src="/public/assets/js/core/offline.js"></script>
+    <script src="/public/assets/js/core/shortcuts.js"></script>
+    <script src="/public/assets/js/core/balance-manager.js"></script>
+    <script src="/public/assets/js/core/avatar-manager.js"></script>
+</body>
+</html>

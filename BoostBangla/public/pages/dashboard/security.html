@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Settings | BoostBangla Dashboard</title>
+    <meta name="description" content="Manage your BoostBangla security settings including two-factor authentication, login history, and active sessions.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if(typeof showToast !== 'function') window.showToast = (msg,type)=>{alert(msg)};
+
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] }
+                }
+            }
+        };
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/style.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/dark-mode.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/mobile.css"> -->
+    
+    <style>
+        /* Core Layout Styles - Matching index.html */
+        .bg-gradient-primary { background: linear-gradient(90deg, #FF6B00 0%, #CC4D02 100%); }
+
+        
+        /* Security Specific Styles */
+        .security-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.2s;
+        }
+        .security-card:hover {
+            border-color: #FF6B00;
+        }
+        body.dark-mode .security-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .security-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .security-title i { color: #FF6B00; font-size: 20px; }
+        body.dark-mode .security-title { border-bottom-color: #334155; }
+        
+        .info-row {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .info-label { width: 140px; font-weight: 500; color: #6b7280; }
+        .info-value { flex: 1; color: #1f2937; font-weight: 500; }
+        body.dark-mode .info-row { border-bottom-color: #334155; }
+        body.dark-mode .info-label { color: #94a3b8; }
+        body.dark-mode .info-value { color: #e2e8f0; }
+        
+        .session-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+        body.dark-mode .session-item {
+            background: #0f172a;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #FF6B00 0%, #CC4D02 100%);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; transform: scale(1.02); }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #FF6B00;
+            color: #FF6B00;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover { background: #FF6B00; color: white; }
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-danger:hover { background: #dc2626; }
+        
+        .badge-enabled {
+            background: #d1fae5;
+            color: #059669;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        .badge-disabled {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        body.dark-mode .badge-enabled { background: #064e3b; color: #34d399; }
+        body.dark-mode .badge-disabled { background: #7f1d1d; color: #f87171; }
+        
+        .device-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        body.dark-mode .device-icon { background: #334155; }
+        
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 500px;
+            width: 90%;
+        }
+        body.dark-mode .modal-content {
+            background: #1e293b;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+        }
+        body.dark-mode .form-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #FF6B00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .bg-white { background-color: white; }
+        body.dark-mode .bg-white { background-color: #1e293b; }
+        .rounded-xl { border-radius: 1rem; }
+        
+        @media (max-width: 768px) {
+            .security-card { padding: 16px; }
+            .info-row { flex-direction: column; gap: 6px; }
+            .info-label { width: 100%; }
+            .session-item { flex-direction: column; gap: 12px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+    <div id="header-placeholder"></div>
+    <!-- Sidebar Component Loader -->
+    <script>
+(function loadSidebar(){
+    const placeholder = document.getElementById('sidebar-placeholder');
+    if(!placeholder) return;
+
+    function injectSidebar(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/sidebar.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectSidebar)
+        .catch(() => { console.warn('Sidebar fetch failed - using inline fallback'); });
+})();
+</script>
+    <!-- Universal Header Component Loader -->
+    <script>
+(function loadHeader(){
+    const placeholder = document.getElementById('header-placeholder');
+    if(!placeholder) return;
+
+    function injectHeader(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/universal-header.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectHeader)
+        .catch(() => { console.warn('Header fetch failed - using inline fallback'); });
+})();
+</script>
+    
+    <div class="main-content">
+        <div class="p-6">
+            <!-- Header -->
+            <div class="bg-gradient-primary rounded-xl p-5 text-white mb-6">
+                <h1 class="text-2xl font-bold mb-2"><i class="fas fa-shield-alt mr-2"></i> Security Settings</h1>
+                <p class="opacity-90">Protect your account with advanced security features</p>
+            </div>
+            
+            <!-- Two-Factor Authentication -->
+            <div class="security-card">
+                <div class="security-title">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Two-Factor Authentication (2FA)</span>
+                </div>
+                <div class="flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                        <p class="text-gray-600 dark:text-gray-400 mb-2">Add an extra layer of security to your account.</p>
+                        <p class="text-sm text-gray-500">When enabled, you'll need to enter a verification code from your authenticator app when signing in.</p>
+                    </div>
+                    <div>
+                        <span id="twofaStatus" class="badge-disabled"><i class="fas fa-times-circle mr-1"></i> Not Enabled</span>
+                        <button id="enable2faBtn" class="btn-primary mt-3 w-full">Enable 2FA</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Login History -->
+            <div class="security-card">
+                <div class="security-title">
+                    <i class="fas fa-history"></i>
+                    <span>Login History</span>
+                </div>
+                <div id="loginHistoryList" class="space-y-3">
+                    <div class="text-center py-8">
+                        <div class="spinner"></div>
+                        <p class="text-gray-500 dark:text-gray-400 mt-2">Loading login history...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Active Sessions -->
+            <div class="security-card">
+                <div class="security-title">
+                    <i class="fas fa-desktop"></i>
+                    <span>Active Sessions</span>
+                </div>
+                <div id="activeSessionsList" class="space-y-3">
+                    <div class="text-center py-8">
+                        <div class="spinner"></div>
+                        <p class="text-gray-500 dark:text-gray-400 mt-2">Loading active sessions...</p>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
+                    <button id="logoutAllDevicesBtn" class="btn-danger w-full md:w-auto">Sign Out All Other Devices</button>
+                </div>
+            </div>
+            
+            <!-- Recent Security Alerts -->
+            <div class="security-card">
+                <div class="security-title">
+                    <i class="fas fa-bell"></i>
+                    <span>Recent Security Alerts</span>
+                </div>
+                <div id="securityAlertsList" class="space-y-3">
+                    <div class="text-center py-8">
+                        <div class="spinner"></div>
+                        <p class="text-gray-500 dark:text-gray-400 mt-2">Loading security alerts...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Enable 2FA Modal -->
+    <div id="twofaModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">🔐 Enable Two-Factor Authentication</h3>
+                <button onclick="closeTwofaModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div id="twofaContent">
+                <div class="text-center py-4">
+                    <div class="spinner"></div>
+                    <p class="text-gray-500 mt-2">Loading setup instructions...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <!-- Core Modules -->
+    <script src="/public/assets/js/core/config.js"></script>
+    <script src="/public/assets/js/core/auth.js"></script>
+    <script src="/public/assets/js/core/utils.js"></script>
+    <script src="/public/assets/js/core/components.js"></script>
+    
+    <!-- Security Module -->
+    <script src="/public/assets/js/modules/security.js"></script>
+    
+    <!-- Mobile Menu & Dark Mode Toggle -->
+    <script>
+        // Create mobile menu button
+        
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        // Load dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        
+        // Modal close function
+        window.closeTwofaModal = function() {
+            document.getElementById('twofaModal').style.display = 'none';
+        };
+        
+        // Close modal on outside click
+        const twofaModal = document.getElementById('twofaModal');
+        if (twofaModal) {
+            twofaModal.addEventListener('click', (e) => {
+                if (e.target === twofaModal) closeTwofaModal();
+            });
+        }
+    </script>
+    <!-- Universal Notifications Helper -->
+<script src="/public/assets/js/core/notifications-helper.js"></script>
+<script>
+// global-darkmode-fix
+const darkToggle = document.getElementById('darkModeToggle');
+if (darkToggle) {
+    darkToggle.onclick = () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    };
+}
+if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+</script>
+<script>
+// Global logout fix - ensures logout works everywhere
+(function fixLogout(){
+    const checkInterval = setInterval(() => {
+        const logoutBtn = document.getElementById('logoutBtn') || document.getElementById('sidebarLogoutBtn');
+        if(logoutBtn && typeof firebase !== 'undefined' && firebase.auth){
+            clearInterval(checkInterval);
+            logoutBtn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                firebase.auth().signOut()
+                    .then(() => { window.location.href = '/public/pages/public/login.html'; })
+                    .catch(err => { console.error('Logout error:', err); alert('Logout failed. Please try again.'); });
+            };
+        }
+    }, 500);
+})();
+</script>
+<button id="darkModeToggle" class="dark-mode-toggle-btn">
+    <i class="fas fa-moon"></i>
+</button>
+<script>
+document.getElementById('darkModeToggle')?.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark);
+    const icon = document.querySelector('#darkModeToggle i');
+    if(icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+});
+if(localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+</script>
+    <script src="/public/assets/js/core/toast.js"></script>
+    <script src="/public/assets/js/core/validation.js"></script>
+    <script src="/public/assets/js/core/offline.js"></script>
+    <script src="/public/assets/js/core/shortcuts.js"></script>
+    <script src="/public/assets/js/core/balance-manager.js"></script>
+    <script src="/public/assets/js/core/avatar-manager.js"></script>
+</body>
+</html>

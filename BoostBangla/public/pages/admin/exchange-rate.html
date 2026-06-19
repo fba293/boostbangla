@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exchange Rate Manager | BoostBangla Admin</title>
+    <meta name="description" content="Manage USD to BDT exchange rate for BoostBangla. Set, update, and monitor currency conversion rates.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] }
+                }
+            }
+        };
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    
+    <style>
+        .rate-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.2s;
+        }
+        .rate-card:hover {
+            border-color: #FF6B00;
+        }
+        body.dark-mode .rate-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .rate-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .rate-title i { color: #FF6B00; font-size: 20px; }
+        body.dark-mode .rate-title { border-bottom-color: #334155; }
+        
+        .current-rate {
+            font-size: 48px;
+            font-weight: 800;
+            color: #FF6B00;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255,107,0,0.1) 0%, rgba(255,107,0,0.05) 100%);
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        body.dark-mode .form-label { color: #e2e8f0; }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.2s;
+            background: white;
+        }
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+        }
+        body.dark-mode .form-input, body.dark-mode .form-textarea, body.dark-mode .form-select {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #FF6B00 0%, #CC4D02 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; transform: scale(1.02); }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #FF6B00;
+            color: #FF6B00;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover { background: #FF6B00; color: white; }
+        .btn-success {
+            background: #10b981;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-success:hover { background: #059669; }
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-warning:hover { background: #d97706; }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #FF6B00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .status-success { background: #d1fae5; color: #059669; }
+        .status-warning { background: #fef3c7; color: #d97706; }
+        .status-info { background: #dbeafe; color: #2563eb; }
+        body.dark-mode .status-success { background: #064e3b; color: #34d399; }
+        body.dark-mode .status-warning { background: #78350f; color: #fbbf24; }
+        body.dark-mode .status-info { background: #1e3a5f; color: #60a5fa; }
+        
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s;
+        }
+        .history-item:hover {
+            background: #fef9f5;
+        }
+        body.dark-mode .history-item { border-bottom-color: #334155; }
+        body.dark-mode .history-item:hover { background: #2d1a0f; }
+        
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; gap: 16px; }
+            .rate-card { padding: 16px; }
+            .action-buttons { flex-direction: column; }
+            .action-buttons .btn { width: 100%; text-align: center; margin-bottom: 8px; }
+            .current-rate { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <a href="/admin/index.html" class="logo">Boost<span>Bangla</span></a>
+                <p class="text-xs text-gray-400 mt-2">Admin Panel</p>
+            </div>
+            <nav class="admin-sidebar-nav">
+                <a href="/admin/index.html" class="admin-nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/admin/users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <a href="/admin/deposits.html" class="admin-nav-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Deposits</span>
+                </a>
+                <a href="/admin/orders.html" class="admin-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="/admin/tickets.html" class="admin-nav-item">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Tickets</span>
+                </a>
+                <a href="/admin/refunds.html" class="admin-nav-item">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Refunds</span>
+                </a>
+                <a href="/admin/withdrawals.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Withdrawals</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/admin/exchange-rate.html" class="admin-nav-item active">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Exchange Rate</span>
+                </a>
+                <a href="/admin/services.html" class="admin-nav-item">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Services</span>
+                </a>
+                <a href="/admin/seo.html" class="admin-nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>SEO Settings</span>
+                </a>
+                <a href="/admin/settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/dashboard/index.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Site</span>
+                </a>
+                <button id="adminLogoutBtn" class="admin-nav-item w-full text-left text-red-400">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+        
+        <!-- Admin Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>Exchange Rate Manager</h1>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage USD to BDT currency conversion rate</p>
+                </div>
+                <div class="admin-header-actions">
+                    <button id="adminDarkModeToggle" class="admin-dark-mode-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="admin-user-info">
+                        <div class="admin-avatar">A</div>
+                        <span class="hidden md:inline">Admin</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Current Rate Display -->
+            <div class="rate-card">
+                <div class="rate-title">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Current Exchange Rate</span>
+                </div>
+                <div class="current-rate">
+                    <span id="currentRateValue">120.00</span> BDT
+                    <div class="text-sm text-gray-500 mt-2">1 USD = <span id="currentRateUsd">120.00</span> BDT</div>
+                </div>
+                <div class="flex justify-center gap-3 mt-4">
+                    <button id="refreshRateBtn" class="btn-outline"><i class="fas fa-sync-alt mr-2"></i> Refresh</button>
+                    <button id="fetchLiveRateBtn" class="btn-success"><i class="fas fa-globe mr-2"></i> Fetch Live Rate</button>
+                </div>
+                <div class="text-center text-xs text-gray-400 mt-3">
+                    Last updated: <span id="lastUpdated">Never</span>
+                </div>
+            </div>
+            
+            <div class="grid-2">
+                <!-- Manual Rate Update -->
+                <div class="rate-card">
+                    <div class="rate-title">
+                        <i class="fas fa-edit"></i>
+                        <span>Manual Rate Update</span>
+                    </div>
+                    <form id="manualRateForm">
+                        <div class="form-group">
+                            <label class="form-label">USD to BDT Rate</label>
+                            <input type="number" id="manualRate" class="form-input" step="0.01" placeholder="Enter exchange rate" required>
+                            <p class="text-xs text-gray-400 mt-1">Example: 120.50 means 1 USD = 120.50 BDT</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Note (Optional)</label>
+                            <textarea id="rateNote" rows="2" class="form-input" placeholder="Reason for rate change..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full"><i class="fas fa-save mr-2"></i> Update Rate</button>
+                    </form>
+                </div>
+                
+                <!-- Auto Update Settings -->
+                <div class="rate-card">
+                    <div class="rate-title">
+                        <i class="fas fa-clock"></i>
+                        <span>Auto Update Settings</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span>Auto-fetch live rate</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="autoUpdateToggle" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/25 rounded-full peer peer-checked:bg-primary"></div>
+                                <span class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition peer-checked:translate-x-5"></span>
+                            </label>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Update interval</span>
+                            <select id="updateInterval" class="form-input w-32">
+                                <option value="3600">Every hour</option>
+                                <option value="7200">Every 2 hours</option>
+                                <option value="21600">Every 6 hours</option>
+                                <option value="43200">Every 12 hours</option>
+                                <option value="86400">Every day</option>
+                            </select>
+                        </div>
+                        <div class="pt-3 border-t border-gray-200 dark:border-gray-700">
+                            <p class="text-sm text-gray-500">Live rate source: <strong>Frankfurter API</strong></p>
+                            <p class="text-xs text-gray-400 mt-1">Rates are automatically updated from European Central Bank data</p>
+                        </div>
+                        <button id="saveAutoSettingsBtn" class="btn-outline w-full"><i class="fas fa-save mr-2"></i> Save Settings</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Rate History -->
+            <div class="rate-card">
+                <div class="rate-title">
+                    <i class="fas fa-history"></i>
+                    <span>Rate Change History</span>
+                </div>
+                <div id="rateHistoryList">
+                    <div class="text-center py-8"><div class="spinner"></div><p class="text-gray-500 mt-2">Loading history...</p></div>
+                </div>
+            </div>
+            
+            <!-- Impact Preview -->
+            <div class="rate-card">
+                <div class="rate-title">
+                    <i class="fas fa-calculator"></i>
+                    <span>Price Impact Preview</span>
+                </div>
+                <div class="grid-2">
+                    <div>
+                        <h4 class="font-semibold mb-2">Sample Service Pricing</h4>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span>Service rate (USD):</span>
+                                <span class="font-mono">$0.50 per 1000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>With 30% markup:</span>
+                                <span class="font-mono">$0.65 per 1000</span>
+                            </div>
+                            <div class="flex justify-between pt-2 border-t">
+                                <span class="font-semibold">Price in BDT:</span>
+                                <span class="font-semibold text-primary" id="samplePriceBDT">৳78.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-2">Sample Order</h4>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span>Order quantity:</span>
+                                <span>1,000 units</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Total price (USD):</span>
+                                <span>$0.65</span>
+                            </div>
+                            <div class="flex justify-between pt-2 border-t">
+                                <span class="font-semibold">Total price (BDT):</span>
+                                <span class="font-semibold text-primary" id="sampleOrderTotal">৳78.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg text-sm text-amber-700 dark:text-amber-400">
+                    <i class="fas fa-info-circle mr-2"></i> Changing exchange rate will affect all service prices and order totals displayed to users.
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    <button id="adminMobileMenuBtn" class="admin-mobile-menu-btn">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        let currentRate = 120;
+        let updateInterval = null;
+        
+        // ============================================
+        // CHECK ADMIN AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (!userDoc.exists || !userDoc.data().isAdmin) {
+                window.location.href = '/dashboard/index.html';
+                return;
+            }
+            
+            loadExchangeRate();
+            loadRateHistory();
+            loadAutoSettings();
+            startAutoUpdateChecker();
+        });
+        
+        // ============================================
+        // LOAD EXCHANGE RATE
+        // ============================================
+        async function loadExchangeRate() {
+            try {
+                const response = await fetch('/public/php/exchange-rate.php');
+                const data = await response.json();
+                if (data.success) {
+                    currentRate = data.usd_to_bdt;
+                    document.getElementById('currentRateValue').innerText = currentRate.toFixed(2);
+                    document.getElementById('currentRateUsd').innerText = currentRate.toFixed(2);
+                    document.getElementById('lastUpdated').innerText = data.last_updated || new Date().toLocaleString();
+                    updatePricePreview();
+                }
+            } catch (error) {
+                console.error('Error loading exchange rate:', error);
+                // Use localStorage fallback
+                const savedRate = localStorage.getItem('exchange_rate');
+                if (savedRate) {
+                    currentRate = parseFloat(savedRate);
+                    document.getElementById('currentRateValue').innerText = currentRate.toFixed(2);
+                    document.getElementById('currentRateUsd').innerText = currentRate.toFixed(2);
+                    updatePricePreview();
+                }
+            }
+        }
+        
+        // ============================================
+        // UPDATE EXCHANGE RATE
+        // ============================================
+        async function updateExchangeRate(rate, note = '') {
+            try {
+                // Update PHP cache file via API
+                const response = await fetch('/public/php/exchange-rate.php?action=update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rate: rate, note: note, adminId: auth.currentUser.uid })
+                });
+                
+                // Also save to localStorage
+                localStorage.setItem('exchange_rate', rate);
+                
+                // Save to Firestore history
+                await db.collection('exchangeRateHistory').add({
+                    rate: rate,
+                    note: note,
+                    adminId: auth.currentUser.uid,
+                    adminEmail: auth.currentUser.email,
+                    createdAt: new Date()
+                });
+                
+                currentRate = rate;
+                document.getElementById('currentRateValue').innerText = rate.toFixed(2);
+                document.getElementById('currentRateUsd').innerText = rate.toFixed(2);
+                document.getElementById('lastUpdated').innerText = new Date().toLocaleString();
+                updatePricePreview();
+                
+                return true;
+            } catch (error) {
+                console.error('Error updating exchange rate:', error);
+                return false;
+            }
+        }
+        
+        // ============================================
+        // FETCH LIVE RATE FROM API
+        // ============================================
+        async function fetchLiveRate() {
+            const btn = document.getElementById('fetchLiveRateBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Fetching...';
+            
+            try {
+                const response = await fetch('https://api.frankfurter.app/latest?from=USD&to=BDT');
+                const data = await response.json();
+                if (data && data.rates && data.rates.BDT) {
+                    const liveRate = data.rates.BDT;
+                    document.getElementById('manualRate').value = liveRate.toFixed(2);
+                    showToast(`Live rate fetched: 1 USD = ${liveRate.toFixed(2)} BDT`, 'success');
+                } else {
+                    showToast('Failed to fetch live rate', 'error');
+                }
+            } catch (error) {
+                console.error('Error fetching live rate:', error);
+                showToast('Network error. Please try again.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+        
+        // ============================================
+        // MANUAL RATE UPDATE
+        // ============================================
+        document.getElementById('manualRateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const rate = parseFloat(document.getElementById('manualRate').value);
+            const note = document.getElementById('rateNote').value;
+            
+            if (isNaN(rate) || rate <= 0) {
+                showToast('Please enter a valid exchange rate', 'error');
+                return;
+            }
+            
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Updating...';
+            
+            const success = await updateExchangeRate(rate, note);
+            
+            if (success) {
+                showToast(`Exchange rate updated to 1 USD = ${rate.toFixed(2)} BDT`, 'success');
+                document.getElementById('manualRate').value = '';
+                document.getElementById('rateNote').value = '';
+                await loadRateHistory();
+            } else {
+                showToast('Failed to update exchange rate', 'error');
+            }
+            
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        });
+        
+        // ============================================
+        // REFRESH RATE
+        // ============================================
+        document.getElementById('refreshRateBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('refreshRateBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Refreshing...';
+            
+            await loadExchangeRate();
+            
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+            showToast('Rate refreshed', 'success');
+        });
+        
+        document.getElementById('fetchLiveRateBtn').addEventListener('click', fetchLiveRate);
+        
+        // ============================================
+        // LOAD RATE HISTORY
+        // ============================================
+        async function loadRateHistory() {
+            const container = document.getElementById('rateHistoryList');
+            
+            try {
+                const historySnapshot = await db.collection('exchangeRateHistory')
+                    .orderBy('createdAt', 'desc')
+                    .limit(20)
+                    .get();
+                
+                if (historySnapshot.empty) {
+                    container.innerHTML = '<div class="text-center py-8 text-gray-500">No rate change history found</div>';
+                    return;
+                }
+                
+                let html = '';
+                historySnapshot.forEach(doc => {
+                    const entry = doc.data();
+                    const date = entry.createdAt?.toDate ? entry.createdAt.toDate().toLocaleString() : 'N/A';
+                    
+                    html += `
+                        <div class="history-item">
+                            <div>
+                                <div class="font-semibold text-primary">1 USD = ${entry.rate.toFixed(2)} BDT</div>
+                                <div class="text-xs text-gray-400">${date}</div>
+                                ${entry.note ? `<div class="text-xs text-gray-500 mt-1">Note: ${escapeHtml(entry.note)}</div>` : ''}
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs text-gray-400">By: ${escapeHtml(entry.adminEmail?.split('@')[0] || 'Admin')}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading rate history:', error);
+                container.innerHTML = '<div class="text-center py-8 text-red-500">Failed to load history</div>';
+            }
+        }
+        
+        // ============================================
+        // AUTO UPDATE SETTINGS
+        // ============================================
+        function loadAutoSettings() {
+            const autoUpdate = localStorage.getItem('auto_update_rate') === 'true';
+            const interval = localStorage.getItem('auto_update_interval') || '3600';
+            
+            document.getElementById('autoUpdateToggle').checked = autoUpdate;
+            document.getElementById('updateInterval').value = interval;
+        }
+        
+        function saveAutoSettings() {
+            const autoUpdate = document.getElementById('autoUpdateToggle').checked;
+            const interval = document.getElementById('updateInterval').value;
+            
+            localStorage.setItem('auto_update_rate', autoUpdate);
+            localStorage.setItem('auto_update_interval', interval);
+            
+            startAutoUpdateChecker();
+            showToast('Auto update settings saved', 'success');
+        }
+        
+        function startAutoUpdateChecker() {
+            if (updateInterval) {
+                clearInterval(updateInterval);
+            }
+            
+            const autoUpdate = localStorage.getItem('auto_update_rate') === 'true';
+            if (!autoUpdate) return;
+            
+            const intervalSeconds = parseInt(localStorage.getItem('auto_update_interval') || '3600');
+            
+            updateInterval = setInterval(async () => {
+                await fetchLiveRateAndUpdate();
+            }, intervalSeconds * 1000);
+        }
+        
+        async function fetchLiveRateAndUpdate() {
+            try {
+                const response = await fetch('https://api.frankfurter.app/latest?from=USD&to=BDT');
+                const data = await response.json();
+                if (data && data.rates && data.rates.BDT) {
+                    const liveRate = data.rates.BDT;
+                    const currentStored = localStorage.getItem('exchange_rate');
+                    if (currentStored && Math.abs(parseFloat(currentStored) - liveRate) > 0.5) {
+                        await updateExchangeRate(liveRate, 'Auto-updated from live API');
+                        await loadRateHistory();
+                        console.log(`Auto-updated rate to ${liveRate} BDT`);
+                    }
+                }
+            } catch (error) {
+                console.error('Auto update failed:', error);
+            }
+        }
+        
+        document.getElementById('saveAutoSettingsBtn').addEventListener('click', saveAutoSettings);
+        
+        // ============================================
+        // PRICE PREVIEW
+        // ============================================
+        function updatePricePreview() {
+            const serviceRateUSD = 0.50;
+            const markup = 1.30;
+            const markedUpUSD = serviceRateUSD * markup;
+            const priceBDT = (markedUpUSD * currentRate).toFixed(2);
+            const orderTotal = (markedUpUSD * currentRate).toFixed(2);
+            
+            document.getElementById('samplePriceBDT').innerHTML = `৳${priceBDT}`;
+            document.getElementById('sampleOrderTotal').innerHTML = `৳${orderTotal}`;
+        }
+        
+        // ============================================
+        // HELPER FUNCTIONS
+        // ============================================
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function showToast(message, type) {
+            alert(message);
+        }
+        
+        // ============================================
+        // DARK MODE AND MOBILE TOGGLE
+        // ============================================
+        const adminDarkToggle = document.getElementById('adminDarkModeToggle');
+        if (adminDarkToggle) {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) document.body.classList.add('dark-mode');
+            adminDarkToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        const adminMobileBtn = document.getElementById('adminMobileMenuBtn');
+        const adminSidebar = document.querySelector('.admin-sidebar');
+        if (adminMobileBtn && adminSidebar) {
+            adminMobileBtn.addEventListener('click', () => {
+                adminSidebar.classList.toggle('open');
+            });
+        }
+        
+        document.getElementById('adminLogoutBtn')?.addEventListener('click', async () => {
+            await auth.signOut();
+            window.location.href = '/login.html';
+        });
+    </script>
+    <!-- Universal Notifications Helper -->
+<script src="/js/core/notifications-helper.js"></script>
+</body>
+</html>

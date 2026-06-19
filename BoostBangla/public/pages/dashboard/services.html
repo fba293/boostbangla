@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#FF6B00">
+  <title>Services | BoostBangla</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+          fontFamily: { inter: ['Inter', 'Noto Sans Bengali', 'sans-serif'] }
+        }
+      }
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body { font-family: Inter, "Noto Sans Bengali", sans-serif; }
+    .glass { background: rgba(255,255,255,.94); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.45); }
+    body.dark-mode { background: #020617; color: #e2e8f0; }
+    body.dark-mode .glass { background: rgba(15,23,42,.94); border-color: rgba(51,65,85,.8); }
+    .focus-ring:focus { outline: none; box-shadow: 0 0 0 3px rgba(255,107,0,.28); border-color: #FF6B00; }
+    .cat-btn.active { background: #FF6B00; color: #fff; border-color: #FF6B00; }
+    .skeleton { background: linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; }
+    body.dark-mode .skeleton { background: linear-gradient(90deg,#1e293b 25%,#334155 50%,#1e293b 75%); background-size: 200% 100%; }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+    @media (max-width: 768px) { .toast { bottom: 80px !important; } }
+  </style>
+</head>
+<body class="bg-gray-50 text-slate-900">
+  <div id="sidebar-placeholder"></div>
+  <div id="header-placeholder"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="/public/assets/js/core/config.js"></script>
+  <script src="/public/assets/js/core/auth.js"></script>
+  <script src="/public/assets/js/core/toast.js"></script>
+  <script src="/public/assets/js/core/utils.js"></script>
+  <script src="/public/assets/js/core/validation.js"></script>
+  <script src="/public/assets/js/core/offline.js"></script>
+  <script src="/public/assets/js/core/shortcuts.js"></script>
+  <script src="/public/assets/js/core/balance-manager.js"></script>
+  <script src="/public/assets/js/core/avatar-manager.js"></script>
+
+  <script>
+  function refreshSharedBalance() {
+      if (window.BALANCE_MANAGER) {
+          window.BALANCE_MANAGER.identifyUser()
+              .then(() => window.BALANCE_MANAGER.refresh())
+              .catch(() => {});
+      }
+  }
+
+  (function loadSidebar(){
+      const placeholder = document.getElementById('sidebar-placeholder');
+      if(!placeholder) return;
+      fetch('/public/components/sidebar.html')
+          .then(res => res.ok ? res.text() : Promise.reject())
+          .then(html => {
+              placeholder.innerHTML = html;
+              placeholder.querySelectorAll('script').forEach(oldScript => {
+                  const s = document.createElement('script');
+                  if (oldScript.src) s.src = oldScript.src;
+                  else s.textContent = oldScript.textContent;
+                  document.body.appendChild(s);
+                  oldScript.remove();
+              });
+              refreshSharedBalance();
+          })
+          .catch(() => console.warn('Sidebar fetch failed'));
+  })();
+  </script>
+  <script>
+  (function loadHeader(){
+      const placeholder = document.getElementById('header-placeholder');
+      if(!placeholder) return;
+      fetch('/public/components/universal-header.html')
+          .then(res => res.ok ? res.text() : Promise.reject())
+          .then(html => {
+              placeholder.innerHTML = html;
+              placeholder.querySelectorAll('script').forEach(oldScript => {
+                  const s = document.createElement('script');
+                  if (oldScript.src) s.src = oldScript.src;
+                  else s.textContent = oldScript.textContent;
+                  document.body.appendChild(s);
+                  oldScript.remove();
+              });
+              refreshSharedBalance();
+          })
+          .catch(() => console.warn('Header fetch failed'));
+  })();
+  </script>
+
+  <main class="main-content min-h-screen px-4 pb-16 md:px-8">
+    <section class="mx-auto max-w-7xl pt-8">
+      <div class="glass rounded-2xl p-5 md:p-6 shadow-sm">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-wide text-primary">Live Catalog</p>
+            <h1 class="mt-1 text-3xl font-bold md:text-4xl">Services</h1>
+            <p id="serviceSource" class="mt-1 text-sm text-gray-500 dark:text-gray-400">Loading AmarBoost services...</p>
+          </div>
+          <div class="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">
+            <div class="relative min-w-0 sm:min-w-80">
+              <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input id="searchServices" class="focus-ring w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm dark:border-slate-700 dark:bg-slate-900" placeholder="Search by name or ID">
+            </div>
+            <button id="refreshServices" class="focus-ring min-h-11 rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold hover:border-primary hover:text-primary dark:border-slate-700">
+              <i class="fas fa-sync-alt mr-2"></i>Refresh
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-5 overflow-x-auto">
+          <div id="categoryFilters" class="flex min-w-max flex-nowrap gap-2 pb-1">
+            <button class="cat-btn active focus-ring min-h-11 rounded-full border px-4 py-2 text-sm font-semibold" data-cat="all">All</button>
+            <button class="cat-btn focus-ring min-h-11 rounded-full border px-4 py-2 text-sm font-semibold" data-cat="youtube">YouTube</button>
+            <button class="cat-btn focus-ring min-h-11 rounded-full border px-4 py-2 text-sm font-semibold" data-cat="facebook">Facebook</button>
+            <button class="cat-btn focus-ring min-h-11 rounded-full border px-4 py-2 text-sm font-semibold" data-cat="instagram">Instagram</button>
+            <button class="cat-btn focus-ring min-h-11 rounded-full border px-4 py-2 text-sm font-semibold" data-cat="tiktok">TikTok</button>
+            <button class="cat-btn focus-ring min-h-11 rounded-full border px-4 py-2 text-sm font-semibold" data-cat="twitter">Twitter</button>
+            <button class="cat-btn focus-ring min-h-11 rounded-full border px-4 py-2 text-sm font-semibold" data-cat="telegram">Telegram</button>
+            <button class="cat-btn focus-ring min-h-11 rounded-full border px-4 py-2 text-sm font-semibold" data-cat="traffic">Traffic</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto mt-6 max-w-7xl">
+      <div class="glass overflow-hidden rounded-2xl shadow-sm">
+        <div id="loadingSkeleton" class="space-y-3 p-5">
+          <div class="skeleton h-12 rounded-xl"></div>
+          <div class="skeleton h-12 rounded-xl"></div>
+          <div class="skeleton h-12 rounded-xl"></div>
+          <div class="skeleton h-12 rounded-xl"></div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table id="servicesTable" class="hidden min-w-[1080px] w-full text-left text-sm">
+            <thead class="bg-gray-100 text-xs uppercase tracking-wide text-gray-500 dark:bg-slate-900 dark:text-slate-400">
+              <tr>
+                <th class="px-4 py-3">ID</th>
+                <th class="px-4 py-3">Service</th>
+                <th class="px-4 py-3">Rate / 1000</th>
+                <th class="px-4 py-3">Min</th>
+                <th class="px-4 py-3">Max</th>
+                <th class="px-4 py-3">Category</th>
+                <th class="px-4 py-3">Refill</th>
+                <th class="px-4 py-3">Cancel</th>
+                <th class="px-4 py-3 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="servicesBody" class="divide-y divide-gray-100 dark:divide-slate-800"></tbody>
+          </table>
+        </div>
+
+        <div class="flex flex-col gap-3 border-t border-gray-100 p-4 dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between">
+          <p id="servicesMeta" class="text-sm text-gray-500">Loading...</p>
+          <div class="flex items-center gap-2">
+            <button id="prevPage" class="focus-ring min-h-11 rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold disabled:opacity-40 dark:border-slate-700">Prev</button>
+            <span id="pageInfo" class="min-w-16 text-center text-sm text-gray-500">1 / 1</span>
+            <button id="nextPage" class="focus-ring min-h-11 rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold disabled:opacity-40 dark:border-slate-700">Next</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="serviceModal" class="fixed inset-0 z-[1100] hidden items-center justify-center bg-black/65 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-slate-900">
+      <div class="flex items-start justify-between gap-4 border-b border-gray-200 p-5 dark:border-slate-800">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wide text-primary">Service Details</p>
+          <h2 id="modalTitle" class="mt-1 text-2xl font-bold"></h2>
+          <p id="modalId" class="mt-1 text-sm text-gray-500"></p>
+        </div>
+        <button id="closeModal" class="focus-ring min-h-11 min-w-11 rounded-full bg-gray-100 text-gray-600 hover:text-primary dark:bg-slate-800 dark:text-slate-300">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="grid gap-3 p-5 sm:grid-cols-2">
+        <div class="rounded-xl bg-gray-50 p-4 dark:bg-slate-800"><p class="text-sm text-gray-500">Rate / 1000</p><p id="modalRate" class="mt-1 font-bold text-primary"></p></div>
+        <div class="rounded-xl bg-gray-50 p-4 dark:bg-slate-800"><p class="text-sm text-gray-500">Limits</p><p id="modalLimits" class="mt-1 font-semibold"></p></div>
+        <div class="rounded-xl bg-gray-50 p-4 dark:bg-slate-800"><p class="text-sm text-gray-500">Category</p><p id="modalCategory" class="mt-1 font-semibold"></p></div>
+        <div class="rounded-xl bg-gray-50 p-4 dark:bg-slate-800"><p class="text-sm text-gray-500">Average Time</p><p id="modalTime" class="mt-1 font-semibold"></p></div>
+      </div>
+      <div class="flex justify-end gap-3 border-t border-gray-200 p-5 dark:border-slate-800">
+        <button id="createOrderBtn" class="focus-ring min-h-11 rounded-xl bg-primary px-5 py-3 font-semibold text-white hover:bg-primaryDark">
+          <i class="fas fa-shopping-cart mr-2"></i>Create Order
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const PAGE_SIZE = 25;
+    let allServices = [];
+    let filteredServices = [];
+    let currentPage = 1;
+    let currentCategory = 'all';
+    let currentSearch = '';
+    let currentService = null;
+    let exchangeRate = 120;
+
+    const els = {
+      body: document.getElementById('servicesBody'),
+      table: document.getElementById('servicesTable'),
+      skeleton: document.getElementById('loadingSkeleton'),
+      meta: document.getElementById('servicesMeta'),
+      pageInfo: document.getElementById('pageInfo'),
+      prev: document.getElementById('prevPage'),
+      next: document.getElementById('nextPage'),
+      source: document.getElementById('serviceSource')
+    };
+
+    function escapeHtml(value) {
+      const div = document.createElement('div');
+      div.textContent = value ?? '';
+      return div.innerHTML;
+    }
+
+    function categoryOf(service) {
+      const source = `${service.category || ''} ${service.name || ''}`.toLowerCase();
+      if (source.includes('youtube')) return 'youtube';
+      if (source.includes('facebook')) return 'facebook';
+      if (source.includes('instagram')) return 'instagram';
+      if (source.includes('tiktok')) return 'tiktok';
+      if (source.includes('twitter') || source.includes('x.com')) return 'twitter';
+      if (source.includes('telegram')) return 'telegram';
+      if (source.includes('traffic') || source.includes('website')) return 'traffic';
+      return 'other';
+    }
+
+    function boolText(value) {
+      return value === true || value === 1 || String(value).toLowerCase() === 'true' ? 'Yes' : 'No';
+    }
+
+    function money(value) {
+      return '৳' + Math.round(Number(value || 0)).toLocaleString('en-BD');
+    }
+
+    function normalize(service) {
+      const rateUsd = Number(service.rate || service.price_per_1000_usd || 0);
+      const rateBdt = Number(service.price_per_1000_bdt || service.price_bdt || (rateUsd * exchangeRate * 1.30 * 1.05));
+      return {
+        id: String(service.service ?? service.id ?? service.service_id ?? ''),
+        name: service.name || service.service_name || 'Service',
+        rateUsd,
+        rateBdt,
+        min: Number(service.min ?? service.min_quantity ?? service.min_order ?? 1),
+        max: Number(service.max ?? service.max_quantity ?? service.max_order ?? 100000),
+        category: service.category || categoryOf(service),
+        avgTime: service.avg_time || service.average_time || service.time || 'Varies',
+        refill: service.refill,
+        cancel: service.cancel
+      };
+    }
+
+    async function loadServices() {
+      els.skeleton.classList.remove('hidden');
+      els.table.classList.add('hidden');
+      els.meta.textContent = 'Loading...';
+
+      try {
+        const response = await fetch('/public/php/api-proxy.php?action=services', { cache: 'no-store' });
+        const data = await response.json();
+        if (!response.ok || data.success === false) throw new Error(data.error || `HTTP ${response.status}`);
+        exchangeRate = Number(data.exchange_rate || exchangeRate || 120);
+        allServices = (data.services || []).map(normalize).filter(service => service.id && service.name);
+        els.source.textContent = `${allServices.length.toLocaleString()} live services loaded from ${data.provider || 'AmarBoost'} at ৳${exchangeRate.toFixed(2)} USD/BDT.`;
+      } catch (error) {
+        console.error('Service load failed:', error);
+        allServices = [];
+        els.source.textContent = 'Unable to load services. Please try refreshing.';
+        if (window.showToast) window.showToast(error.message || 'Unable to load services', 'error');
+      }
+
+      currentPage = 1;
+      render();
+      els.skeleton.classList.add('hidden');
+      els.table.classList.remove('hidden');
+    }
+
+    function render() {
+      filteredServices = allServices.filter(service => {
+        const term = currentSearch.toLowerCase();
+        const matchesSearch = !term || service.name.toLowerCase().includes(term) || service.id.includes(term);
+        const matchesCategory = currentCategory === 'all' || categoryOf(service) === currentCategory;
+        return matchesSearch && matchesCategory;
+      });
+
+      const totalPages = Math.max(1, Math.ceil(filteredServices.length / PAGE_SIZE));
+      currentPage = Math.min(currentPage, totalPages);
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const pageItems = filteredServices.slice(start, start + PAGE_SIZE);
+
+      els.body.innerHTML = pageItems.length ? pageItems.map(service => `
+        <tr class="hover:bg-orange-50/60 dark:hover:bg-slate-800/70">
+          <td class="px-4 py-3 font-mono text-xs text-primary">#${escapeHtml(service.id)}</td>
+          <td class="max-w-md px-4 py-3 font-medium">${escapeHtml(service.name)}</td>
+          <td class="px-4 py-3 font-bold">${money(service.rateBdt)}</td>
+          <td class="px-4 py-3">${service.min.toLocaleString()}</td>
+          <td class="px-4 py-3">${service.max.toLocaleString()}</td>
+          <td class="px-4 py-3">${escapeHtml(service.category)}</td>
+          <td class="px-4 py-3">${boolText(service.refill)}</td>
+          <td class="px-4 py-3">${boolText(service.cancel)}</td>
+          <td class="px-4 py-3 text-right">
+            <button class="view-service focus-ring min-h-11 rounded-lg bg-primary px-4 py-2 font-semibold text-white hover:bg-primaryDark" data-id="${escapeHtml(service.id)}">View</button>
+          </td>
+        </tr>
+      `).join('') : `<tr><td colspan="9" class="px-4 py-12 text-center text-gray-500">No services found.</td></tr>`;
+
+      els.meta.textContent = `${filteredServices.length.toLocaleString()} services found`;
+      els.pageInfo.textContent = `${currentPage} / ${totalPages}`;
+      els.prev.disabled = currentPage <= 1;
+      els.next.disabled = currentPage >= totalPages;
+
+      document.querySelectorAll('.view-service').forEach(button => {
+        button.addEventListener('click', () => openModal(button.dataset.id));
+      });
+    }
+
+    function openModal(id) {
+      currentService = allServices.find(service => service.id === String(id));
+      if (!currentService) return;
+      document.getElementById('modalTitle').textContent = currentService.name;
+      document.getElementById('modalId').textContent = `Service ID: ${currentService.id}`;
+      document.getElementById('modalRate').textContent = `${money(currentService.rateBdt)} / 1000`;
+      document.getElementById('modalLimits').textContent = `${currentService.min.toLocaleString()} - ${currentService.max.toLocaleString()}`;
+      document.getElementById('modalCategory').textContent = currentService.category;
+      document.getElementById('modalTime').textContent = currentService.avgTime;
+      document.getElementById('serviceModal').classList.remove('hidden');
+      document.getElementById('serviceModal').classList.add('flex');
+    }
+
+    document.getElementById('searchServices').addEventListener('input', event => {
+      currentSearch = event.target.value.trim();
+      currentPage = 1;
+      render();
+    });
+    document.getElementById('refreshServices').addEventListener('click', loadServices);
+    document.querySelectorAll('.cat-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.cat-btn').forEach(item => item.classList.remove('active'));
+        button.classList.add('active');
+        currentCategory = button.dataset.cat;
+        currentPage = 1;
+        render();
+      });
+    });
+    els.prev.addEventListener('click', () => { if (currentPage > 1) { currentPage--; render(); } });
+    els.next.addEventListener('click', () => { currentPage++; render(); });
+    document.getElementById('closeModal').addEventListener('click', () => {
+      document.getElementById('serviceModal').classList.add('hidden');
+      document.getElementById('serviceModal').classList.remove('flex');
+    });
+    document.getElementById('serviceModal').addEventListener('click', event => {
+      if (event.target.id === 'serviceModal') document.getElementById('closeModal').click();
+    });
+    document.getElementById('createOrderBtn').addEventListener('click', () => {
+      if (!currentService) return;
+      try {
+        sessionStorage.setItem('boostbangla_preselect_service', JSON.stringify(currentService));
+      } catch (error) {
+        console.warn('Unable to cache selected service for order page:', error);
+      }
+      window.location.href = `/public/pages/dashboard/new-order.html?serviceId=${encodeURIComponent(currentService.id)}`;
+    });
+
+    if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    document.addEventListener('DOMContentLoaded', loadServices);
+  </script>
+</body>
+</html>

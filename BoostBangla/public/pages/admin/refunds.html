@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refund Management | BoostBangla Admin</title>
+    <meta name="description" content="Manage BoostBangla refund requests - approve, reject, and process customer refunds.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] }
+                }
+            }
+        };
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    
+    <style>
+        .refund-row {
+            transition: all 0.2s ease;
+        }
+        .refund-row:hover {
+            background: #fef9f5;
+            transform: translateX(2px);
+        }
+        body.dark-mode .refund-row:hover {
+            background: #2d1a0f;
+        }
+        
+        .status-pending {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .status-approved {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #d1fae5;
+            color: #059669;
+        }
+        .status-rejected {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .status-completed {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        body.dark-mode .status-pending { background: #78350f; color: #fbbf24; }
+        body.dark-mode .status-approved { background: #064e3b; color: #34d399; }
+        body.dark-mode .status-rejected { background: #7f1d1d; color: #f87171; }
+        body.dark-mode .status-completed { background: #1e3a5f; color: #60a5fa; }
+        
+        .filter-btn {
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+            border: 1px solid #e5e7eb;
+            color: #6b7280;
+        }
+        .filter-btn.active {
+            background: #FF6B00;
+            color: white;
+            border-color: #FF6B00;
+        }
+        .filter-btn:hover:not(.active) {
+            border-color: #FF6B00;
+            color: #FF6B00;
+        }
+        body.dark-mode .filter-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        body.dark-mode .filter-btn.active {
+            background: #FF6B00;
+            color: white;
+        }
+        
+        .search-input {
+            padding: 10px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 30px;
+            font-size: 14px;
+            width: 300px;
+            transition: all 0.2s;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+        }
+        body.dark-mode .search-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        body.dark-mode .modal-content {
+            background: #1e293b;
+        }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        body.dark-mode .form-label { color: #e2e8f0; }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.2s;
+            background: white;
+        }
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+        }
+        body.dark-mode .form-input, body.dark-mode .form-textarea, body.dark-mode .form-select {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #FF6B00 0%, #CC4D02 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; transform: scale(1.02); }
+        .btn-success {
+            background: #10b981;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-success:hover { background: #059669; }
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #FF6B00;
+            color: #FF6B00;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover { background: #FF6B00; color: white; }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #FF6B00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .pagination-btn {
+            padding: 6px 12px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .pagination-btn:hover { border-color: #FF6B00; color: #FF6B00; }
+        .pagination-btn.active { background: #FF6B00; color: white; border-color: #FF6B00; }
+        body.dark-mode .pagination-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        body.dark-mode .pagination-btn.active {
+            background: #FF6B00;
+            color: white;
+        }
+        
+        .detail-row {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .detail-label {
+            width: 140px;
+            font-weight: 500;
+            color: #6b7280;
+        }
+        .detail-value {
+            flex: 1;
+            color: #1f2937;
+            word-break: break-all;
+        }
+        body.dark-mode .detail-row { border-bottom-color: #334155; }
+        body.dark-mode .detail-label { color: #94a3b8; }
+        body.dark-mode .detail-value { color: #e2e8f0; }
+        
+        .stats-card {
+            transition: all 0.3s ease;
+        }
+        .stats-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .amount-cell {
+            font-weight: 700;
+            color: #FF6B00;
+        }
+        
+        @media (max-width: 768px) {
+            .search-input { width: 100%; }
+            .filters { flex-wrap: wrap; }
+            .table-responsive { overflow-x: auto; }
+            .admin-table th, .admin-table td { padding: 10px 8px; font-size: 12px; }
+            .action-buttons { flex-direction: column; gap: 8px; }
+            .action-buttons button { width: 100%; }
+            .stats-card { text-align: center; }
+            .detail-row { flex-direction: column; gap: 6px; }
+            .detail-label { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <a href="/admin/index.html" class="logo">Boost<span>Bangla</span></a>
+                <p class="text-xs text-gray-400 mt-2">Admin Panel</p>
+            </div>
+            <nav class="admin-sidebar-nav">
+                <a href="/admin/index.html" class="admin-nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/admin/users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <a href="/admin/deposits.html" class="admin-nav-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Deposits</span>
+                </a>
+                <a href="/admin/orders.html" class="admin-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="/admin/tickets.html" class="admin-nav-item">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Tickets</span>
+                </a>
+                <a href="/admin/refunds.html" class="admin-nav-item active">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Refunds</span>
+                </a>
+                <a href="/admin/withdrawals.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Withdrawals</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/admin/affiliates.html" class="admin-nav-item">
+                    <i class="fas fa-link"></i>
+                    <span>Affiliates</span>
+                </a>
+                <a href="/admin/blog.html" class="admin-nav-item">
+                    <i class="fas fa-blog"></i>
+                    <span>Blog</span>
+                </a>
+                <a href="/admin/child-panels.html" class="admin-nav-item">
+                    <i class="fas fa-child"></i>
+                    <span>Child Panels</span>
+                </a>
+                <a href="/admin/exchange-rate.html" class="admin-nav-item">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Exchange Rate</span>
+                </a>
+                <a href="/admin/services.html" class="admin-nav-item">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Services</span>
+                </a>
+                <a href="/admin/seo.html" class="admin-nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>SEO Settings</span>
+                </a>
+                <a href="/admin/settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/dashboard/index.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Site</span>
+                </a>
+                <button id="adminLogoutBtn" class="admin-nav-item w-full text-left text-red-400">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+        
+        <!-- Admin Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>Refund Management</h1>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Review and process customer refund requests</p>
+                </div>
+                <div class="admin-header-actions">
+                    <button id="adminDarkModeToggle" class="admin-dark-mode-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="admin-user-info">
+                        <div class="admin-avatar">A</div>
+                        <span class="hidden md:inline">Admin</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Summary -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">Total Refunds</div>
+                    <div class="text-2xl font-bold" id="totalRefunds">0</div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">Pending</div>
+                    <div class="text-2xl font-bold text-yellow-600" id="pendingRefunds">0</div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">Approved</div>
+                    <div class="text-2xl font-bold text-green-600" id="approvedRefunds">0</div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">Rejected</div>
+                    <div class="text-2xl font-bold text-red-600" id="rejectedRefunds">0</div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">Total Amount</div>
+                    <div class="text-2xl font-bold text-primary" id="totalAmount">৳0</div>
+                </div>
+            </div>
+            
+            <!-- Search and Filters -->
+            <div class="flex justify-between items-center flex-wrap gap-4 mb-6">
+                <input type="text" id="searchRefunds" placeholder="🔍 Search by Order ID, User, or Transaction ID..." class="search-input">
+                <div class="filters flex gap-2">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="pending">Pending</button>
+                    <button class="filter-btn" data-filter="approved">Approved</button>
+                    <button class="filter-btn" data-filter="rejected">Rejected</button>
+                </div>
+            </div>
+            
+            <!-- Refunds Table -->
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>User</th>
+                            <th>Order ID</th>
+                            <th>Amount</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="refundsTableBody">
+                        <tr><td colspan="7" class="text-center py-12"><div class="spinner mx-auto"></div><p class="text-gray-500 mt-2">Loading refund requests...</p><\/td><\/tr>
+                    </tbody>
+                <\/table>
+            </div>
+            
+            <!-- Pagination -->
+            <div id="pagination" class="flex justify-center gap-2 mt-6 flex-wrap"></div>
+        </main>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    <button id="adminMobileMenuBtn" class="admin-mobile-menu-btn">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+    
+    <!-- Refund Detail Modal -->
+    <div id="refundDetailModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Refund Request Details</h3>
+                <button onclick="closeRefundDetailModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div id="refundDetailContent"></div>
+            <div class="flex gap-3 mt-4" id="refundActionButtons"></div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        let allRefunds = [];
+        let currentFilter = 'all';
+        let currentSearch = '';
+        let currentPage = 1;
+        let currentRefundId = null;
+        const ITEMS_PER_PAGE = 20;
+        
+        // ============================================
+        // CHECK ADMIN AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (!userDoc.exists || !userDoc.data().isAdmin) {
+                window.location.href = '/dashboard/index.html';
+                return;
+            }
+            
+            await loadRefunds();
+        });
+        
+        // ============================================
+        // LOAD REFUNDS
+        // ============================================
+        async function loadRefunds() {
+            const tbody = document.getElementById('refundsTableBody');
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center py-12"><div class="spinner mx-auto"></div><p class="text-gray-500 mt-2">Loading refund requests...</p><\/td><\/tr>';
+            
+            try {
+                const refundsSnapshot = await db.collection('refunds').orderBy('createdAt', 'desc').get();
+                
+                allRefunds = [];
+                let totalAmount = 0;
+                let pendingCount = 0;
+                let approvedCount = 0;
+                let rejectedCount = 0;
+                
+                for (const doc of refundsSnapshot.docs) {
+                    const refund = doc.data();
+                    
+                    // Get user info
+                    let username = 'Unknown';
+                    let userEmail = '';
+                    if (refund.userId) {
+                        const userDoc = await db.collection('users').doc(refund.userId).get();
+                        if (userDoc.exists) {
+                            username = userDoc.data().username || userDoc.data().email?.split('@')[0] || 'Unknown';
+                            userEmail = userDoc.data().email || '';
+                        }
+                    }
+                    
+                    // Get order details
+                    let orderInfo = {};
+                    if (refund.orderId) {
+                        const orderDoc = await db.collection('orders').doc(refund.orderId).get();
+                        if (orderDoc.exists) {
+                            orderInfo = orderDoc.data();
+                        }
+                    }
+                    
+                    const refundData = {
+                        id: doc.id,
+                        userId: refund.userId,
+                        username: username,
+                        userEmail: userEmail,
+                        orderId: refund.orderId,
+                        amount: refund.amount || 0,
+                        reason: refund.reason || 'other',
+                        description: refund.description || '',
+                        status: refund.status || 'pending',
+                        createdAt: refund.createdAt,
+                        orderDetails: orderInfo,
+                        adminNote: refund.adminNote || ''
+                    };
+                    
+                    allRefunds.push(refundData);
+                    totalAmount += refundData.amount;
+                    if (refundData.status === 'pending') pendingCount++;
+                    else if (refundData.status === 'approved') approvedCount++;
+                    else if (refundData.status === 'rejected') rejectedCount++;
+                }
+                
+                document.getElementById('totalRefunds').innerText = allRefunds.length;
+                document.getElementById('pendingRefunds').innerText = pendingCount;
+                document.getElementById('approvedRefunds').innerText = approvedCount;
+                document.getElementById('rejectedRefunds').innerText = rejectedCount;
+                document.getElementById('totalAmount').innerHTML = `৳${totalAmount.toLocaleString()}`;
+                
+                displayRefunds();
+                
+            } catch (error) {
+                console.error('Error loading refunds:', error);
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-12 text-red-500">❌ Failed to load refunds<\/td><\/tr>';
+            }
+        }
+        
+        // ============================================
+        // DISPLAY REFUNDS
+        // ============================================
+        function displayRefunds() {
+            let filtered = [...allRefunds];
+            
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(r => r.status === currentFilter);
+            }
+            
+            if (currentSearch) {
+                const search = currentSearch.toLowerCase();
+                filtered = filtered.filter(r => 
+                    r.orderId?.toLowerCase().includes(search) || 
+                    r.username.toLowerCase().includes(search) ||
+                    r.userEmail.toLowerCase().includes(search)
+                );
+            }
+            
+            const start = (currentPage - 1) * ITEMS_PER_PAGE;
+            const pageRefunds = filtered.slice(start, start + ITEMS_PER_PAGE);
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            
+            const tbody = document.getElementById('refundsTableBody');
+            
+            if (pageRefunds.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-12 text-gray-500">No refund requests found<\/td><\/tr>';
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+            
+            tbody.innerHTML = pageRefunds.map(refund => `
+                <tr class="refund-row">
+                    <td class="text-gray-500 text-sm">${formatDate(refund.createdAt)}</td>
+                    <td>
+                        <div class="font-medium">${escapeHtml(refund.username)}</div>
+                        <div class="text-xs text-gray-400">${escapeHtml(refund.userEmail)}</div>
+                    </td>
+                    <td class="font-mono text-sm">#${refund.orderId?.substring(0, 8) || 'N/A'}</td>
+                    <td class="amount-cell">৳${refund.amount.toLocaleString()}</td>
+                    <td class="max-w-[150px] truncate">${getReasonLabel(refund.reason)}</td>
+                    <td><span class="status-${refund.status}">${getStatusLabel(refund.status)}</span></td>
+                    <td class="action-buttons">
+                        <button onclick="viewRefundDetail('${refund.id}')" class="action-view text-xs px-3 py-2 rounded"><i class="fas fa-eye mr-1"></i>View</button>
+                        ${refund.status === 'pending' ? `
+                            <button onclick="processRefund('${refund.id}', 'approve')" class="action-edit text-xs px-3 py-2 rounded"><i class="fas fa-check mr-1"></i>Approve</button>
+                            <button onclick="processRefund('${refund.id}', 'reject')" class="action-delete text-xs px-3 py-2 rounded"><i class="fas fa-times mr-1"></i>Reject</button>
+                        ` : ''}
+                    </td>
+                </tr>
+            `).join('');
+            
+            updatePagination(totalPages);
+        }
+        
+        function updatePagination(totalPages) {
+            const paginationDiv = document.getElementById('pagination');
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+            
+            let html = `<button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled style="opacity:0.5"' : ''}>◀ Prev</button>`;
+            for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+                html += `<button class="pagination-btn ${currentPage === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            if (totalPages > 5) html += `<span class="px-2">...</span><button class="pagination-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+            html += `<button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled style="opacity:0.5"' : ''}>Next ▶</button>`;
+            paginationDiv.innerHTML = html;
+        }
+        
+        window.goToPage = function(page) {
+            let filtered = [...allRefunds];
+            if (currentFilter !== 'all') filtered = filtered.filter(r => r.status === currentFilter);
+            if (currentSearch) filtered = filtered.filter(r => r.orderId?.toLowerCase().includes(currentSearch.toLowerCase()) || r.username.toLowerCase().includes(currentSearch.toLowerCase()) || r.userEmail.toLowerCase().includes(currentSearch.toLowerCase()));
+            
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            displayRefunds();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        
+        // ============================================
+        // FILTER AND SEARCH HANDLERS
+        // ============================================
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                currentPage = 1;
+                displayRefunds();
+            });
+        });
+        
+        document.getElementById('searchRefunds').addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            currentPage = 1;
+            displayRefunds();
+        });
+        
+        // ============================================
+        // HELPER FUNCTIONS
+        // ============================================
+        function getReasonLabel(reason) {
+            const reasons = {
+                'not_delivered': 'Not Delivered',
+                'wrong_service': 'Wrong Service',
+                'duplicate': 'Duplicate Order',
+                'technical_error': 'Technical Error',
+                'other': 'Other Reason'
+            };
+            return reasons[reason] || reason;
+        }
+        
+        function getStatusLabel(status) {
+            const statuses = {
+                'pending': 'Pending',
+                'approved': 'Approved',
+                'rejected': 'Rejected',
+                'completed': 'Completed'
+            };
+            return statuses[status] || status;
+        }
+        
+        function formatDate(timestamp) {
+            if (!timestamp) return 'N/A';
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            return date.toLocaleString();
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function showToast(message, type) {
+            alert(message);
+        }
+        
+        // ============================================
+        // VIEW REFUND DETAIL
+        // ============================================
+        window.viewRefundDetail = async (refundId) => {
+            currentRefundId = refundId;
+            const refund = allRefunds.find(r => r.id === refundId);
+            if (!refund) return;
+            
+            const order = refund.orderDetails || {};
+            
+            const detailContent = document.getElementById('refundDetailContent');
+            detailContent.innerHTML = `
+                <div class="space-y-4">
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                        <h4 class="font-semibold mb-3">Refund Request Information</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="detail-row">
+                                <div class="detail-label">Request ID:</div>
+                                <div class="detail-value font-mono">${refund.id.substring(0, 12)}...</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Date Requested:</div>
+                                <div class="detail-value">${formatDate(refund.createdAt)}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">User:</div>
+                                <div class="detail-value">${escapeHtml(refund.username)} (${escapeHtml(refund.userEmail)})</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Order ID:</div>
+                                <div class="detail-value font-mono">#${refund.orderId || 'N/A'}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Amount:</div>
+                                <div class="detail-value amount-cell">৳${refund.amount.toLocaleString()}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Reason:</div>
+                                <div class="detail-value">${getReasonLabel(refund.reason)}</div>
+                            </div>
+                            ${refund.description ? `
+                            <div class="detail-row">
+                                <div class="detail-label">Description:</div>
+                                <div class="detail-value">${escapeHtml(refund.description)}</div>
+                            </div>
+                            ` : ''}
+                            ${refund.adminNote ? `
+                            <div class="detail-row">
+                                <div class="detail-label">Admin Note:</div>
+                                <div class="detail-value">${escapeHtml(refund.adminNote)}</div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                        <h4 class="font-semibold mb-3">Order Information</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="detail-row">
+                                <div class="detail-label">Service:</div>
+                                <div class="detail-value">${escapeHtml(order.serviceName || 'N/A')}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Quantity:</div>
+                                <div class="detail-value">${order.quantity?.toLocaleString() || 0}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Order Price:</div>
+                                <div class="detail-value">৳${(order.priceBDT || 0).toLocaleString()}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Order Status:</div>
+                                <div class="detail-value"><span class="status-${order.status}">${order.status || 'N/A'}</span></div>
+                            </div>
+                            ${order.link ? `
+                            <div class="detail-row">
+                                <div class="detail-label">Link:</div>
+                                <div class="detail-value"><a href="${order.link}" target="_blank" class="text-primary hover:underline break-all">${order.link}</a></div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const actionButtons = document.getElementById('refundActionButtons');
+            if (refund.status === 'pending') {
+                actionButtons.innerHTML = `
+                    <button onclick="processRefund('${refund.id}', 'approve')" class="flex-1 btn-success"><i class="fas fa-check mr-2"></i> Approve Refund</button>
+                    <button onclick="processRefund('${refund.id}', 'reject')" class="flex-1 btn-danger"><i class="fas fa-times mr-2"></i> Reject Refund</button>
+                `;
+            } else {
+                actionButtons.innerHTML = `
+                    <button onclick="closeRefundDetailModal()" class="flex-1 btn-outline">Close</button>
+                `;
+            }
+            
+            document.getElementById('refundDetailModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        window.closeRefundDetailModal = () => {
+            document.getElementById('refundDetailModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            currentRefundId = null;
+        };
+        
+        // ============================================
+        // PROCESS REFUND
+        // ============================================
+        window.processRefund = async (refundId, action) => {
+            const refund = allRefunds.find(r => r.id === refundId);
+            if (!refund) return;
+            
+            const isApprove = action === 'approve';
+            const confirmMsg = isApprove 
+                ? `Are you sure you want to APPROVE this refund of ৳${refund.amount.toLocaleString()}? The amount will be credited back to the user's balance.`
+                : `Are you sure you want to REJECT this refund request?`;
+            
+            if (!confirm(confirmMsg)) return;
+            
+            // Show processing in modal if open
+            if (currentRefundId === refundId) {
+                const actionButtons = document.getElementById('refundActionButtons');
+                actionButtons.innerHTML = '<div class="text-center py-4"><div class="spinner mx-auto"></div><p>Processing...</p></div>';
+            }
+            
+            try {
+                if (isApprove) {
+                    // Update refund status
+                    await db.collection('refunds').doc(refundId).update({
+                        status: 'approved',
+                        processedAt: new Date(),
+                        processedBy: auth.currentUser.uid
+                    });
+                    
+                    // Refund amount to user balance
+                    const userRef = db.collection('users').doc(refund.userId);
+                    const userDoc = await userRef.get();
+                    const currentBalance = userDoc.data()?.balance || 0;
+                    
+                    await userRef.update({
+                        balance: currentBalance + refund.amount,
+                        updatedAt: new Date()
+                    });
+                    
+                    // Update order status to cancelled/refunded
+                    if (refund.orderId) {
+                        await db.collection('orders').doc(refund.orderId).update({
+                            status: 'refunded',
+                            refundedAt: new Date(),
+                            refundAmount: refund.amount
+                        });
+                    }
+                    
+                    // Create notification for user
+                    await db.collection('notifications').add({
+                        userId: refund.userId,
+                        title: 'Refund Approved ✅',
+                        message: `Your refund request for ৳${refund.amount.toLocaleString()} has been approved and credited to your balance.`,
+                        type: 'payment',
+                        read: false,
+                        createdAt: new Date(),
+                        actionLink: '/dashboard/refunds.html'
+                    });
+                    
+                    showToast('Refund approved and credited to user!', 'success');
+                    
+                } else {
+                    // Reject refund
+                    await db.collection('refunds').doc(refundId).update({
+                        status: 'rejected',
+                        processedAt: new Date(),
+                        processedBy: auth.currentUser.uid
+                    });
+                    
+                    // Create notification for user
+                    await db.collection('notifications').add({
+                        userId: refund.userId,
+                        title: 'Refund Request Rejected ❌',
+                        message: `Your refund request for ৳${refund.amount.toLocaleString()} has been rejected. Please contact support for more information.`,
+                        type: 'payment',
+                        read: false,
+                        createdAt: new Date(),
+                        actionLink: '/dashboard/refunds.html'
+                    });
+                    
+                    showToast('Refund rejected', 'warning');
+                }
+                
+                // Refresh data
+                await loadRefunds();
+                closeRefundDetailModal();
+                
+            } catch (error) {
+                console.error('Error processing refund:', error);
+                showToast('Failed to process refund', 'error');
+                
+                // Reload view if modal was open
+                if (currentRefundId === refundId) {
+                    await viewRefundDetail(refundId);
+                }
+            }
+        };
+        
+        // ============================================
+        // DARK MODE AND MOBILE TOGGLE
+        // ============================================
+        const adminDarkToggle = document.getElementById('adminDarkModeToggle');
+        if (adminDarkToggle) {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) document.body.classList.add('dark-mode');
+            adminDarkToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        const adminMobileBtn = document.getElementById('adminMobileMenuBtn');
+        const adminSidebar = document.querySelector('.admin-sidebar');
+        if (adminMobileBtn && adminSidebar) {
+            adminMobileBtn.addEventListener('click', () => {
+                adminSidebar.classList.toggle('open');
+            });
+        }
+        
+        document.getElementById('adminLogoutBtn')?.addEventListener('click', async () => {
+            await auth.signOut();
+            window.location.href = '/login.html';
+        });
+        
+        // Close modal on outside click
+        const refundDetailModal = document.getElementById('refundDetailModal');
+        if (refundDetailModal) {
+            refundDetailModal.addEventListener('click', (e) => {
+                if (e.target === refundDetailModal) closeRefundDetailModal();
+            });
+        }
+    </script>
+    <!-- Universal Notifications Helper -->
+<script src="/js/core/notifications-helper.js"></script>
+</body>
+</html>

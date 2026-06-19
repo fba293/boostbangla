@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services Management | BoostBangla Admin</title>
+    <meta name="description" content="Manage BoostBangla services - view, edit, enable/disable, and manage service pricing and categories.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] }
+                }
+            }
+        };
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    
+    <style>
+        .service-row {
+            transition: all 0.2s ease;
+        }
+        .service-row:hover {
+            background: #fef9f5;
+            transform: translateX(2px);
+        }
+        body.dark-mode .service-row:hover {
+            background: #2d1a0f;
+        }
+        
+        .status-active {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #d1fae5;
+            color: #059669;
+        }
+        .status-inactive {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        body.dark-mode .status-active { background: #064e3b; color: #34d399; }
+        body.dark-mode .status-inactive { background: #7f1d1d; color: #f87171; }
+        
+        .filter-btn {
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+            border: 1px solid #e5e7eb;
+            color: #6b7280;
+        }
+        .filter-btn.active {
+            background: #FF6B00;
+            color: white;
+            border-color: #FF6B00;
+        }
+        .filter-btn:hover:not(.active) {
+            border-color: #FF6B00;
+            color: #FF6B00;
+        }
+        body.dark-mode .filter-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        body.dark-mode .filter-btn.active {
+            background: #FF6B00;
+            color: white;
+        }
+        
+        .search-input {
+            padding: 10px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 30px;
+            font-size: 14px;
+            width: 300px;
+            transition: all 0.2s;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+        }
+        body.dark-mode .search-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        body.dark-mode .modal-content {
+            background: #1e293b;
+        }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        body.dark-mode .form-label { color: #e2e8f0; }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.2s;
+            background: white;
+        }
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+        }
+        body.dark-mode .form-input, body.dark-mode .form-textarea, body.dark-mode .form-select {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #FF6B00 0%, #CC4D02 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; transform: scale(1.02); }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #FF6B00;
+            color: #FF6B00;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover { background: #FF6B00; color: white; }
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-success {
+            background: #10b981;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-success:hover { background: #059669; }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #FF6B00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .pagination-btn {
+            padding: 6px 12px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .pagination-btn:hover { border-color: #FF6B00; color: #FF6B00; }
+        .pagination-btn.active { background: #FF6B00; color: white; border-color: #FF6B00; }
+        body.dark-mode .pagination-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        body.dark-mode .pagination-btn.active {
+            background: #FF6B00;
+            color: white;
+        }
+        
+        .detail-row {
+            display: flex;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .detail-label {
+            width: 140px;
+            font-weight: 500;
+            color: #6b7280;
+        }
+        .detail-value {
+            flex: 1;
+            color: #1f2937;
+        }
+        body.dark-mode .detail-row { border-bottom-color: #334155; }
+        body.dark-mode .detail-label { color: #94a3b8; }
+        body.dark-mode .detail-value { color: #e2e8f0; }
+        
+        .stats-card {
+            transition: all 0.3s ease;
+        }
+        .stats-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 500;
+            background: #e0e7ff;
+            color: #4f46e5;
+        }
+        body.dark-mode .category-badge {
+            background: #312e81;
+            color: #818cf8;
+        }
+        
+        @media (max-width: 768px) {
+            .search-input { width: 100%; }
+            .filters { flex-wrap: wrap; }
+            .table-responsive { overflow-x: auto; }
+            .admin-table th, .admin-table td { padding: 10px 8px; font-size: 12px; }
+            .action-buttons { flex-direction: column; gap: 8px; }
+            .action-buttons button { width: 100%; }
+            .stats-card { text-align: center; }
+            .detail-row { flex-direction: column; gap: 5px; }
+            .detail-label { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <a href="/admin/index.html" class="logo">Boost<span>Bangla</span></a>
+                <p class="text-xs text-gray-400 mt-2">Admin Panel</p>
+            </div>
+            <nav class="admin-sidebar-nav">
+                <a href="/admin/index.html" class="admin-nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/admin/users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <a href="/admin/deposits.html" class="admin-nav-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Deposits</span>
+                </a>
+                <a href="/admin/orders.html" class="admin-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="/admin/tickets.html" class="admin-nav-item">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Tickets</span>
+                </a>
+                <a href="/admin/refunds.html" class="admin-nav-item">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Refunds</span>
+                </a>
+                <a href="/admin/withdrawals.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Withdrawals</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/admin/services.html" class="admin-nav-item active">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Services</span>
+                </a>
+                <a href="/admin/affiliates.html" class="admin-nav-item">
+                    <i class="fas fa-link"></i>
+                    <span>Affiliates</span>
+                </a>
+                <a href="/admin/blog.html" class="admin-nav-item">
+                    <i class="fas fa-blog"></i>
+                    <span>Blog</span>
+                </a>
+                <a href="/admin/child-panels.html" class="admin-nav-item">
+                    <i class="fas fa-child"></i>
+                    <span>Child Panels</span>
+                </a>
+                <a href="/admin/exchange-rate.html" class="admin-nav-item">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Exchange Rate</span>
+                </a>
+                <a href="/admin/seo.html" class="admin-nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>SEO Settings</span>
+                </a>
+                <a href="/admin/settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/dashboard/index.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Site</span>
+                </a>
+                <button id="adminLogoutBtn" class="admin-nav-item w-full text-left text-red-400">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+        
+        <!-- Admin Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>Services Management</h1>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">View, edit, and manage all services</p>
+                </div>
+                <div class="admin-header-actions">
+                    <button id="adminDarkModeToggle" class="admin-dark-mode-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="admin-user-info">
+                        <div class="admin-avatar">A</div>
+                        <span class="hidden md:inline">Admin</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Summary -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">Total Services</div>
+                    <div class="text-2xl font-bold" id="totalServices">0</div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">Active</div>
+                    <div class="text-2xl font-bold text-green-600" id="activeServices">0</div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">Categories</div>
+                    <div class="text-2xl font-bold text-primary" id="totalCategories">0</div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">API Source</div>
+                    <div class="text-2xl font-bold text-blue-600" id="apiSource">AmarBoost</div>
+                </div>
+            </div>
+            
+            <!-- Action Bar -->
+            <div class="flex justify-between items-center flex-wrap gap-4 mb-6">
+                <div class="flex gap-3">
+                    <input type="text" id="searchServices" placeholder="🔍 Search by ID, Name, or Category..." class="search-input">
+                    <div class="filters flex gap-2">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="youtube">YouTube</button>
+                        <button class="filter-btn" data-filter="facebook">Facebook</button>
+                        <button class="filter-btn" data-filter="instagram">Instagram</button>
+                        <button class="filter-btn" data-filter="tiktok">TikTok</button>
+                        <button class="filter-btn" data-filter="telegram">Telegram</button>
+                        <button class="filter-btn" data-filter="twitter">Twitter</button>
+                    </div>
+                </div>
+                <button id="refreshServicesBtn" class="btn-outline"><i class="fas fa-sync-alt mr-2"></i> Refresh from API</button>
+            </div>
+            
+            <!-- Services Table -->
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Service Name</th>
+                            <th>Category</th>
+                            <th>Rate (USD)</th>
+                            <th>Price (BDT)</th>
+                            <th>Min/Max</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="servicesTableBody">
+                        <tr><td colspan="8" class="text-center py-12"><div class="spinner mx-auto"></div><p class="text-gray-500 mt-2">Loading services...</p><\/td><\/tr>
+                    </tbody>
+                <\/table>
+            </div>
+            
+            <!-- Pagination -->
+            <div id="pagination" class="flex justify-center gap-2 mt-6 flex-wrap"></div>
+        </main>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    <button id="adminMobileMenuBtn" class="admin-mobile-menu-btn">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+    
+    <!-- Service Detail Modal -->
+    <div id="serviceModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Service Details</h3>
+                <button onclick="closeServiceModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div id="serviceDetailContent"></div>
+            <div class="flex gap-3 mt-4" id="serviceActionButtons"></div>
+        </div>
+    </div>
+    
+    <!-- Edit Service Modal -->
+    <div id="editServiceModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Edit Service</h3>
+                <button onclick="closeEditServiceModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <form id="editServiceForm">
+                <input type="hidden" id="editServiceId">
+                <div class="form-group">
+                    <label class="form-label">Service Name</label>
+                    <input type="text" id="editServiceName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select id="editServiceCategory" class="form-select">
+                        <option value="youtube">YouTube</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="twitter">Twitter</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Markup Percentage (%)</label>
+                    <input type="number" id="editServiceMarkup" class="form-input" step="1" min="0" max="100" value="30">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select id="editServiceStatus" class="form-select">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeEditServiceModal()" class="flex-1 border border-gray-300 py-2 rounded-lg hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="flex-1 btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        let allServices = [];
+        let currentFilter = 'all';
+        let currentSearch = '';
+        let currentPage = 1;
+        let exchangeRate = 120;
+        const MARKUP_PERCENTAGE = 30;
+        const ITEMS_PER_PAGE = 25;
+        
+        // ============================================
+        // CHECK ADMIN AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (!userDoc.exists || !userDoc.data().isAdmin) {
+                window.location.href = '/dashboard/index.html';
+                return;
+            }
+            
+            await loadServices();
+        });
+        
+        // ============================================
+        // LOAD EXCHANGE RATE
+        // ============================================
+        async function loadExchangeRate() {
+            try {
+                const response = await fetch('/public/php/exchange-rate.php');
+                const data = await response.json();
+                if (data.success) {
+                    exchangeRate = data.usd_to_bdt;
+                }
+            } catch (error) {
+                console.error('Error loading exchange rate:', error);
+            }
+        }
+        
+        // ============================================
+        // LOAD SERVICES FROM API
+        // ============================================
+        async function loadServices() {
+            const tbody = document.getElementById('servicesTableBody');
+            tbody.innerHTML = '<tr><td colspan="8" class="text-center py-12"><div class="spinner mx-auto"></div><p class="text-gray-500 mt-2">Loading services...</p><\/td><\/tr>';
+            
+            await loadExchangeRate();
+            
+            try {
+                const response = await fetch('/public/php/api-proxy.php?action=services');
+                const data = await response.json();
+                
+                if (data.success && data.services) {
+                    allServices = data.services;
+                    
+                    // Count categories
+                    const categories = new Set();
+                    let activeCount = 0;
+                    
+                    allServices.forEach(service => {
+                        const category = getServiceCategory(service.name);
+                        categories.add(category);
+                        if (service.status !== 'inactive') activeCount++;
+                    });
+                    
+                    document.getElementById('totalServices').innerText = allServices.length;
+                    document.getElementById('activeServices').innerText = activeCount;
+                    document.getElementById('totalCategories').innerText = categories.size;
+                    
+                    displayServices();
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="8" class="text-center py-12 text-red-500">Failed to load services<\/td><\/tr>';
+                }
+            } catch (error) {
+                console.error('Error loading services:', error);
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center py-12 text-red-500">❌ Failed to load services<\/td><\/tr>';
+            }
+        }
+        
+        // ============================================
+        // GET SERVICE CATEGORY
+        // ============================================
+        function getServiceCategory(name) {
+            const n = name.toLowerCase();
+            if (n.includes('youtube')) return 'youtube';
+            if (n.includes('facebook')) return 'facebook';
+            if (n.includes('instagram')) return 'instagram';
+            if (n.includes('tiktok')) return 'tiktok';
+            if (n.includes('telegram')) return 'telegram';
+            if (n.includes('twitter')) return 'twitter';
+            return 'other';
+        }
+        
+        function getCategoryLabel(category) {
+            const labels = {
+                'youtube': '🎬 YouTube',
+                'facebook': '📘 Facebook',
+                'instagram': '📸 Instagram',
+                'tiktok': '🎵 TikTok',
+                'telegram': '✈️ Telegram',
+                'twitter': '🐦 Twitter',
+                'other': '📌 Other'
+            };
+            return labels[category] || category;
+        }
+        
+        function calculatePriceBDT(usdRate) {
+            const markedUpUSD = parseFloat(usdRate) * (1 + MARKUP_PERCENTAGE / 100);
+            return Math.round(markedUpUSD * exchangeRate);
+        }
+        
+        // ============================================
+        // DISPLAY SERVICES
+        // ============================================
+        function displayServices() {
+            let filtered = [...allServices];
+            
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(s => getServiceCategory(s.name) === currentFilter);
+            }
+            
+            if (currentSearch) {
+                const search = currentSearch.toLowerCase();
+                filtered = filtered.filter(s => 
+                    s.service.toString().includes(search) || 
+                    s.name.toLowerCase().includes(search)
+                );
+            }
+            
+            const start = (currentPage - 1) * ITEMS_PER_PAGE;
+            const pageServices = filtered.slice(start, start + ITEMS_PER_PAGE);
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            
+            const tbody = document.getElementById('servicesTableBody');
+            
+            if (pageServices.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center py-12 text-gray-500">No services found<\/td><\/tr>';
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+            
+            tbody.innerHTML = pageServices.map(service => {
+                const priceBDT = calculatePriceBDT(service.rate);
+                const category = getServiceCategory(service.name);
+                
+                return `
+                    <tr class="service-row">
+                        <td class="font-mono text-primary">#${service.service}</td>
+                        <td class="max-w-[300px]" title="${escapeHtml(service.name)}">${escapeHtml(service.name.length > 50 ? service.name.substring(0, 47) + '...' : service.name)}</td>
+                        <td><span class="category-badge">${getCategoryLabel(category)}</span></td>
+                        <td>$${parseFloat(service.rate).toFixed(4)}</td>
+                        <td class="amount-cell">৳${priceBDT.toLocaleString()}</td>
+                        <td>${service.min.toLocaleString()} - ${service.max.toLocaleString()}</td>
+                        <td><span class="status-active">Active</span></td>
+                        <td class="action-buttons">
+                            <button onclick="viewServiceDetail(${service.service})" class="action-view text-xs px-3 py-2 rounded"><i class="fas fa-eye mr-1"></i>View</button>
+                            <button onclick="editService(${service.service})" class="action-edit text-xs px-3 py-2 rounded"><i class="fas fa-edit mr-1"></i>Edit</button>
+                        </td>
+                     </tr>
+                `;
+            }).join('');
+            
+            updatePagination(totalPages);
+        }
+        
+        function updatePagination(totalPages) {
+            const paginationDiv = document.getElementById('pagination');
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+            
+            let html = `<button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled style="opacity:0.5"' : ''}>◀ Prev</button>`;
+            for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+                html += `<button class="pagination-btn ${currentPage === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            if (totalPages > 5) html += `<span class="px-2">...</span><button class="pagination-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+            html += `<button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled style="opacity:0.5"' : ''}>Next ▶</button>`;
+            paginationDiv.innerHTML = html;
+        }
+        
+        window.goToPage = function(page) {
+            let filtered = [...allServices];
+            if (currentFilter !== 'all') filtered = filtered.filter(s => getServiceCategory(s.name) === currentFilter);
+            if (currentSearch) filtered = filtered.filter(s => s.service.toString().includes(currentSearch) || s.name.toLowerCase().includes(currentSearch.toLowerCase()));
+            
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            displayServices();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        
+        // ============================================
+        // FILTER AND SEARCH HANDLERS
+        // ============================================
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                currentPage = 1;
+                displayServices();
+            });
+        });
+        
+        document.getElementById('searchServices').addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            currentPage = 1;
+            displayServices();
+        });
+        
+        // Refresh button
+        document.getElementById('refreshServicesBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('refreshServicesBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Refreshing...';
+            await loadServices();
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+            showToast('Services refreshed from API!', 'success');
+        });
+        
+        // ============================================
+        // VIEW SERVICE DETAIL
+        // ============================================
+        window.viewServiceDetail = async (serviceId) => {
+            const service = allServices.find(s => s.service == serviceId);
+            if (!service) return;
+            
+            const priceBDT = calculatePriceBDT(service.rate);
+            const markedUpUSD = parseFloat(service.rate) * (1 + MARKUP_PERCENTAGE / 100);
+            const category = getServiceCategory(service.name);
+            
+            const detailContent = document.getElementById('serviceDetailContent');
+            detailContent.innerHTML = `
+                <div class="space-y-4">
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                        <h4 class="font-semibold mb-3">Service Information</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="detail-row">
+                                <div class="detail-label">Service ID:</div>
+                                <div class="detail-value font-mono">#${service.service}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Service Name:</div>
+                                <div class="detail-value">${escapeHtml(service.name)}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Category:</div>
+                                <div class="detail-value">${getCategoryLabel(category)}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Base Rate (USD):</div>
+                                <div class="detail-value">$${parseFloat(service.rate).toFixed(6)} per 1000</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Markup Applied:</div>
+                                <div class="detail-value">${MARKUP_PERCENTAGE}%</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Marked Up Rate:</div>
+                                <div class="detail-value">$${markedUpUSD.toFixed(6)} per 1000</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Price to User (BDT):</div>
+                                <div class="detail-value amount-cell">৳${priceBDT.toLocaleString()} per 1000</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Min Quantity:</div>
+                                <div class="detail-value">${service.min.toLocaleString()}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Max Quantity:</div>
+                                <div class="detail-value">${service.max.toLocaleString()}</div>
+                            </div>
+                            ${service.average_time ? `
+                            <div class="detail-row">
+                                <div class="detail-label">Average Time:</div>
+                                <div class="detail-value">${service.average_time}</div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                        <h4 class="font-semibold mb-3">Price Examples</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="detail-row">
+                                <div class="detail-label">100 units:</div>
+                                <div class="detail-value">৳${Math.round(priceBDT / 10).toLocaleString()}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">500 units:</div>
+                                <div class="detail-value">৳${Math.round(priceBDT / 2).toLocaleString()}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">1000 units:</div>
+                                <div class="detail-value">৳${priceBDT.toLocaleString()}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">5000 units:</div>
+                                <div class="detail-value">৳${(priceBDT * 5).toLocaleString()}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">10000 units:</div>
+                                <div class="detail-value">৳${(priceBDT * 10).toLocaleString()}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const actionButtons = document.getElementById('serviceActionButtons');
+            actionButtons.innerHTML = `
+                <button onclick="editService(${service.service})" class="flex-1 btn-primary"><i class="fas fa-edit mr-2"></i> Edit Service</button>
+                <button onclick="closeServiceModal()" class="flex-1 btn-outline">Close</button>
+            `;
+            
+            document.getElementById('serviceModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        window.closeServiceModal = () => {
+            document.getElementById('serviceModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        
+        // ============================================
+        // EDIT SERVICE
+        // ============================================
+        window.editService = (serviceId) => {
+            const service = allServices.find(s => s.service == serviceId);
+            if (!service) return;
+            
+            document.getElementById('editServiceId').value = service.service;
+            document.getElementById('editServiceName').value = service.name;
+            document.getElementById('editServiceCategory').value = getServiceCategory(service.name);
+            document.getElementById('editServiceMarkup').value = MARKUP_PERCENTAGE;
+            document.getElementById('editServiceStatus').value = 'active';
+            
+            document.getElementById('editServiceModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        window.closeEditServiceModal = () => {
+            document.getElementById('editServiceModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        
+        document.getElementById('editServiceForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const serviceId = document.getElementById('editServiceId').value;
+            const serviceName = document.getElementById('editServiceName').value;
+            const category = document.getElementById('editServiceCategory').value;
+            const markup = parseInt(document.getElementById('editServiceMarkup').value);
+            const status = document.getElementById('editServiceStatus').value;
+            
+            // Save to localStorage for custom settings
+            const customServices = JSON.parse(localStorage.getItem('custom_services') || '{}');
+            customServices[serviceId] = {
+                name: serviceName,
+                category: category,
+                markup: markup,
+                status: status,
+                updatedAt: new Date().toISOString()
+            };
+            localStorage.setItem('custom_services', JSON.stringify(customServices));
+            
+            showToast('Service settings saved! (Note: Custom settings will apply on frontend)', 'success');
+            closeEditServiceModal();
+        });
+        
+        // ============================================
+        // HELPER FUNCTIONS
+        // ============================================
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function showToast(message, type) {
+            alert(message);
+        }
+        
+        // ============================================
+        // DARK MODE AND MOBILE TOGGLE
+        // ============================================
+        const adminDarkToggle = document.getElementById('adminDarkModeToggle');
+        if (adminDarkToggle) {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) document.body.classList.add('dark-mode');
+            adminDarkToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        const adminMobileBtn = document.getElementById('adminMobileMenuBtn');
+        const adminSidebar = document.querySelector('.admin-sidebar');
+        if (adminMobileBtn && adminSidebar) {
+            adminMobileBtn.addEventListener('click', () => {
+                adminSidebar.classList.toggle('open');
+            });
+        }
+        
+        document.getElementById('adminLogoutBtn')?.addEventListener('click', async () => {
+            await auth.signOut();
+            window.location.href = '/login.html';
+        });
+        
+        // Close modals on outside click
+        const serviceModal = document.getElementById('serviceModal');
+        const editServiceModal = document.getElementById('editServiceModal');
+        
+        if (serviceModal) {
+            serviceModal.addEventListener('click', (e) => {
+                if (e.target === serviceModal) closeServiceModal();
+            });
+        }
+        if (editServiceModal) {
+            editServiceModal.addEventListener('click', (e) => {
+                if (e.target === editServiceModal) closeEditServiceModal();
+            });
+        }
+    </script>
+    <!-- Universal Notifications Helper -->
+<script src="/js/core/notifications-helper.js"></script>
+</body>
+</html>

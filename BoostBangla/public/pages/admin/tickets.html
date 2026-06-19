@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Manage Tickets | BoostBangla Admin</title>
+    <meta name="description" content="Admin panel to manage BoostBangla support tickets - view, reply, resolve, and track customer support requests.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] },
+                    screens: {
+                        'xs': '475px',
+                        'sm': '640px',
+                        'md': '768px',
+                        'lg': '1024px',
+                        'xl': '1280px',
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC5500;
+            --primary-light: #FF8C42;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark-bg: #02101A;
+            --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            --card-shadow-hover: 0 25px 30px -12px rgba(255, 107, 0, 0.15);
+        }
+        
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+        
+        /* Admin Layout */
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Admin Sidebar */
+        .admin-sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #02101A 0%, #031a2a 100%);
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s ease;
+            z-index: 100;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+                z-index: 1001;
+            }
+            .admin-sidebar.open {
+                transform: translateX(0);
+            }
+        }
+        
+        .admin-sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .admin-sidebar-header .logo {
+            font-size: 22px;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .admin-sidebar-header .logo span {
+            color: #FF6B00;
+        }
+        
+        .admin-sidebar-nav {
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        
+        .admin-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            color: #9CA3AF;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.2s;
+            position: relative;
+            font-size: 14px;
+        }
+        
+        .admin-nav-item i {
+            width: 20px;
+            font-size: 16px;
+        }
+        
+        .admin-nav-item:hover {
+            background: rgba(255, 107, 0, 0.15);
+            color: #FF6B00;
+            transform: translateX(4px);
+        }
+        
+        .admin-nav-item.active {
+            background: rgba(255, 107, 0, 0.2);
+            color: #FF6B00;
+        }
+        
+        .admin-nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 20px;
+            background: #FF6B00;
+            border-radius: 0 3px 3px 0;
+        }
+        
+        .admin-nav-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 12px 0;
+        }
+        
+        /* Admin Main Content */
+        .admin-main {
+            flex: 1;
+            margin-left: 280px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            min-height: 100vh;
+            transition: margin-left 0.3s ease;
+            width: calc(100% - 280px);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-main {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+        
+        body.dark-mode .admin-main {
+            background: linear-gradient(135deg, #02101A 0%, #031a2a 100%);
+        }
+        
+        /* Admin Header */
+        .admin-header {
+            background: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        @media (max-width: 640px) {
+            .admin-header {
+                padding: 12px 16px;
+            }
+            .admin-header h1 {
+                font-size: 20px;
+            }
+        }
+        
+        body.dark-mode .admin-header {
+            background: #1e293b;
+            border-bottom-color: #334155;
+        }
+        
+        .admin-header h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        .admin-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .admin-dark-mode-toggle {
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .admin-dark-mode-toggle:hover {
+            background: #f3f4f6;
+            color: #FF6B00;
+        }
+        
+        body.dark-mode .admin-dark-mode-toggle:hover {
+            background: #334155;
+        }
+        
+        .admin-user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 4px 12px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        
+        .admin-user-info:hover {
+            background: #f3f4f6;
+        }
+        
+        body.dark-mode .admin-user-info:hover {
+            background: #334155;
+        }
+        
+        .admin-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 14px;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            padding: 20px;
+        }
+        
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 16px;
+            }
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            transition: all 0.3s;
+            border: 1px solid #e5e7eb;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        @media (max-width: 640px) {
+            .stat-card {
+                padding: 12px;
+            }
+        }
+        
+        body.dark-mode .stat-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: #FF6B00;
+            box-shadow: 0 10px 25px -5px rgba(255, 107, 0, 0.15);
+        }
+        
+        /* Search and Filters Section */
+        .search-filters-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .search-filters-section {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0 16px;
+            }
+        }
+        
+        /* Search Input */
+        .search-wrapper {
+            position: relative;
+            width: 320px;
+        }
+        
+        @media (max-width: 768px) {
+            .search-wrapper {
+                width: 100%;
+            }
+        }
+        
+        .search-input {
+            padding: 10px 16px 10px 40px;
+            border: 1px solid #e5e7eb;
+            border-radius: 40px;
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.2s;
+            background: white;
+        }
+        
+        body.dark-mode .search-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 14px;
+        }
+        
+        /* Filter Buttons */
+        .filters-wrapper {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .filters-wrapper {
+                justify-content: center;
+            }
+        }
+        
+        .filter-btn {
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            border: 1px solid #e5e7eb;
+            color: #6b7280;
+            white-space: nowrap;
+        }
+        
+        @media (max-width: 480px) {
+            .filter-btn {
+                padding: 5px 12px;
+                font-size: 11px;
+            }
+        }
+        
+        body.dark-mode .filter-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        
+        .filter-btn:hover {
+            border-color: #FF6B00;
+            color: #FF6B00;
+            transform: translateY(-2px);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 2px 8px rgba(255, 107, 0, 0.3);
+        }
+        
+        /* Table Container */
+        .admin-table-container {
+            background: white;
+            border-radius: 16px;
+            margin: 0 20px 20px 20px;
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        @media (max-width: 640px) {
+            .admin-table-container {
+                margin: 0 12px 16px 12px;
+                border-radius: 12px;
+            }
+        }
+        
+        body.dark-mode .admin-table-container {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+        
+        @media (max-width: 900px) {
+            .admin-table {
+                min-width: 800px;
+            }
+        }
+        
+        .admin-table th {
+            padding: 14px 12px;
+            text-align: left;
+            background: #f8fafc;
+            font-weight: 600;
+            font-size: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        @media (max-width: 640px) {
+            .admin-table th {
+                padding: 10px 8px;
+                font-size: 11px;
+            }
+        }
+        
+        body.dark-mode .admin-table th {
+            background: #0f172a;
+            border-bottom-color: #334155;
+            color: #94a3b8;
+        }
+        
+        .admin-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+            font-size: 13px;
+        }
+        
+        @media (max-width: 640px) {
+            .admin-table td {
+                padding: 10px 8px;
+                font-size: 12px;
+            }
+        }
+        
+        body.dark-mode .admin-table td {
+            border-bottom-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .admin-table tr:hover {
+            background: #fef9f5;
+        }
+        
+        body.dark-mode .admin-table tr:hover {
+            background: #2d1a0f;
+        }
+        
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .status-open { background: #fef3c7; color: #d97706; }
+        .status-in_progress { background: #dbeafe; color: #2563eb; }
+        .status-closed { background: #d1fae5; color: #059669; }
+        
+        body.dark-mode .status-open { background: #451a03; color: #fbbf24; }
+        body.dark-mode .status-in_progress { background: #1e3a5f; color: #60a5fa; }
+        body.dark-mode .status-closed { background: #064e3b; color: #34d399; }
+        
+        /* Priority Badges */
+        .priority-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        
+        .priority-high { background: #fee2e2; color: #dc2626; }
+        .priority-medium { background: #fef3c7; color: #d97706; }
+        .priority-low { background: #dbeafe; color: #2563eb; }
+        
+        body.dark-mode .priority-high { background: #7f1d1d; color: #f87171; }
+        body.dark-mode .priority-medium { background: #451a03; color: #fbbf24; }
+        body.dark-mode .priority-low { background: #1e3a5f; color: #60a5fa; }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 640px) {
+            .action-buttons {
+                gap: 4px;
+            }
+        }
+        
+        .action-view {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .action-view:hover {
+            background: #2563eb;
+            transform: scale(1.02);
+        }
+        
+        .action-status {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .action-status:hover {
+            background: #d97706;
+            transform: scale(1.02);
+        }
+        
+        @media (max-width: 640px) {
+            .action-view, .action-status {
+                padding: 4px 8px;
+                font-size: 10px;
+            }
+            .action-view i, .action-status i {
+                font-size: 10px;
+            }
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+            padding: 16px;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            max-width: 700px;
+            width: 100%;
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        
+        @media (max-width: 640px) {
+            .modal-content {
+                padding: 20px;
+                border-radius: 20px;
+            }
+        }
+        
+        body.dark-mode .modal-content {
+            background: #1e293b;
+        }
+        
+        /* Reply Messages */
+        .reply-message {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+        }
+        
+        body.dark-mode .reply-message {
+            background: #0f172a;
+        }
+        
+        .reply-admin {
+            background: #fff7ed;
+            border-left: 3px solid #FF6B00;
+        }
+        
+        body.dark-mode .reply-admin {
+            background: #2d1a0f;
+        }
+        
+        /* Form Inputs */
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.2s;
+            background: white;
+        }
+        
+        @media (max-width: 640px) {
+            .form-input {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+        }
+        
+        body.dark-mode .form-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+        }
+        
+        textarea.form-input {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        select.form-input {
+            cursor: pointer;
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 640px) {
+            .btn-primary {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #e5e7eb;
+            padding: 11px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 640px) {
+            .btn-secondary {
+                padding: 9px 16px;
+                font-size: 13px;
+            }
+        }
+        
+        body.dark-mode .btn-secondary {
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .btn-secondary:hover {
+            border-color: #FF6B00;
+            color: #FF6B00;
+        }
+        
+        /* Pagination */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 24px 20px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 640px) {
+            .pagination-container {
+                gap: 6px;
+                margin: 20px 12px;
+            }
+        }
+        
+        .pagination-btn {
+            padding: 6px 12px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            min-width: 36px;
+            text-align: center;
+        }
+        
+        @media (max-width: 640px) {
+            .pagination-btn {
+                padding: 5px 10px;
+                font-size: 12px;
+                min-width: 32px;
+            }
+        }
+        
+        body.dark-mode .pagination-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        
+        .pagination-btn:hover:not(:disabled) {
+            border-color: #FF6B00;
+            color: #FF6B00;
+            transform: translateY(-2px);
+        }
+        
+        .pagination-btn.active {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Mobile Menu Button */
+        .admin-mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-mobile-menu-btn {
+                display: flex;
+            }
+        }
+        
+        .admin-mobile-menu-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Spinner */
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #e5e7eb;
+            border-top-color: #FF6B00;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            left: auto;
+            z-index: 9999;
+            padding: 12px 20px;
+            border-radius: 50px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideUp 0.3s ease;
+            font-weight: 500;
+            font-size: 13px;
+            max-width: calc(100% - 40px);
+        }
+        
+        @media (max-width: 640px) {
+            .toast {
+                bottom: 16px;
+                right: 16px;
+                left: 16px;
+                max-width: calc(100% - 32px);
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+        }
+        
+        body.dark-mode .toast {
+            background: #1e293b;
+            color: white;
+        }
+        
+        .toast.success { border-left: 3px solid #10b981; }
+        .toast.error { border-left: 3px solid #ef4444; }
+        .toast.warning { border-left: 3px solid #f59e0b; }
+        .toast.info { border-left: 3px solid #3b82f6; }
+        
+        /* Detail Rows */
+        .detail-row {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        @media (max-width: 640px) {
+            .detail-row {
+                flex-direction: column;
+                gap: 4px;
+                padding: 10px 0;
+            }
+        }
+        
+        body.dark-mode .detail-row {
+            border-bottom-color: #334155;
+        }
+        
+        .detail-label {
+            width: 120px;
+            font-weight: 500;
+            color: #6b7280;
+            font-size: 13px;
+        }
+        
+        @media (max-width: 640px) {
+            .detail-label {
+                width: 100%;
+            }
+        }
+        
+        body.dark-mode .detail-label {
+            color: #94a3b8;
+        }
+        
+        .detail-value {
+            flex: 1;
+            color: #1f2937;
+            word-break: break-word;
+            font-size: 13px;
+        }
+        
+        body.dark-mode .detail-value {
+            color: #e2e8f0;
+        }
+        
+        /* Modal Button Group */
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 640px) {
+            .modal-buttons {
+                gap: 8px;
+            }
+        }
+        
+        .modal-buttons button {
+            flex: 1;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #FF6B00;
+            border-radius: 10px;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* No Data */
+        .no-data {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+        }
+        
+        .no-data i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="admin-sidebar-header">
+                <a href="/admin/index.html" class="logo">Boost<span>Bangla</span></a>
+                <p class="text-xs text-gray-400 mt-2">Admin Panel</p>
+            </div>
+            <nav class="admin-sidebar-nav">
+                <a href="/admin/index.html" class="admin-nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/admin/users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <a href="/admin/deposits.html" class="admin-nav-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Deposits</span>
+                </a>
+                <a href="/admin/orders.html" class="admin-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="/admin/tickets.html" class="admin-nav-item active">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Tickets</span>
+                </a>
+                <a href="/admin/refunds.html" class="admin-nav-item">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Refunds</span>
+                </a>
+                <a href="/admin/withdrawals.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Withdrawals</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/admin/services.html" class="admin-nav-item">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Services</span>
+                </a>
+                <a href="/admin/settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/dashboard/index.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Site</span>
+                </a>
+                <button id="adminLogoutBtn" class="admin-nav-item w-full text-left text-red-400">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+        
+        <!-- Admin Main Content -->
+        <main class="admin-main">
+            <!-- Admin Header -->
+            <div class="admin-header">
+                <div>
+                    <h1>Support Tickets</h1>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Manage customer support requests</p>
+                </div>
+                <div class="admin-header-actions">
+                    <button id="refreshTicketsBtn" class="admin-dark-mode-toggle" title="Refresh">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button id="adminDarkModeToggle" class="admin-dark-mode-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="admin-user-info">
+                        <div class="admin-avatar" id="adminAvatar">A</div>
+                        <span class="hidden sm:inline" id="adminName">Admin</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card" style="animation-delay: 0.05s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs text-gray-500">Total Tickets</div>
+                            <div class="text-2xl font-bold" id="totalTickets">0</div>
+                        </div>
+                        <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                            <i class="fas fa-ticket-alt text-blue-500 text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card" style="animation-delay: 0.1s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs text-gray-500">Open</div>
+                            <div class="text-2xl font-bold text-yellow-600" id="openTickets">0</div>
+                        </div>
+                        <div class="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center">
+                            <i class="fas fa-clock text-yellow-500 text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card" style="animation-delay: 0.15s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs text-gray-500">In Progress</div>
+                            <div class="text-2xl font-bold text-blue-600" id="progressTickets">0</div>
+                        </div>
+                        <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                            <i class="fas fa-spinner fa-spin text-blue-500 text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card" style="animation-delay: 0.2s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs text-gray-500">Closed</div>
+                            <div class="text-2xl font-bold text-green-600" id="closedTickets">0</div>
+                        </div>
+                        <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                            <i class="fas fa-check-circle text-green-500 text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Search and Filters -->
+            <div class="search-filters-section">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchTickets" placeholder="Search by Ticket ID, Subject, or User..." class="search-input">
+                </div>
+                <div class="filters-wrapper">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="open">Open</button>
+                    <button class="filter-btn" data-filter="in_progress">In Progress</button>
+                    <button class="filter-btn" data-filter="closed">Closed</button>
+                    <button class="filter-btn" data-filter="high_priority">High Priority</button>
+                </div>
+            </div>
+            
+            <!-- Tickets Table -->
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Date</th>
+                            <th>User</th>
+                            <th>Subject</th>
+                            <th>Priority</th>
+                            <th>Replies</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ticketsTableBody">
+                        <tr>
+                            <td colspan="8" class="text-center py-12">
+                                <div class="spinner mx-auto mb-3"></div>
+                                <p class="text-gray-500">Loading tickets...</p>
+                                                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div id="pagination" class="pagination-container"></div>
+        </main>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    <button id="adminMobileMenuBtn" class="admin-mobile-menu-btn">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+    
+    <!-- Ticket Detail Modal -->
+    <div id="ticketDetailModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Ticket Details</h3>
+                <button onclick="closeTicketDetailModal()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+            </div>
+            <div id="ticketDetailContent"></div>
+            <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <label class="block text-sm font-medium mb-2">Admin Reply</label>
+                <textarea id="adminReply" rows="4" class="form-input" placeholder="Type your reply here..."></textarea>
+                <div class="modal-buttons mt-3">
+                    <button onclick="closeTicketDetailModal()" class="btn-secondary">Cancel</button>
+                    <button id="sendReplyBtn" class="btn-primary">Send Reply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Change Status Modal -->
+    <div id="changeStatusModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Change Ticket Status</h3>
+                <button onclick="closeChangeStatusModal()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+            </div>
+            <form id="changeStatusForm">
+                <input type="hidden" id="statusTicketId">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">New Status</label>
+                    <select id="newTicketStatus" class="form-input" required>
+                        <option value="open">Open</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Note (Optional)</label>
+                    <textarea id="statusChangeNote" rows="2" class="form-input" placeholder="Add a note about this status change..."></textarea>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeChangeStatusModal()" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Update Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        let allTickets = [];
+        let currentFilter = 'all';
+        let currentSearch = '';
+        let currentPage = 1;
+        let currentTicketId = null;
+        const ITEMS_PER_PAGE = 20;
+        
+        // ============================================
+        // TOAST NOTIFICATION
+        // ============================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+                <i class="fas fa-times ml-2 cursor-pointer opacity-70 hover:opacity-100" onclick="this.parentElement.remove()"></i>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4000);
+        }
+        
+        // ============================================
+        // CHECK ADMIN AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (!userDoc.exists || !userDoc.data().isAdmin) {
+                window.location.href = '/dashboard/index.html';
+                return;
+            }
+            
+            const adminName = userDoc.data().displayName || user.email.split('@')[0];
+            document.getElementById('adminName').innerText = adminName;
+            document.getElementById('adminAvatar').innerText = adminName.charAt(0).toUpperCase();
+            
+            await loadTickets();
+        });
+        
+        // ============================================
+        // LOAD TICKETS
+        // ============================================
+        async function loadTickets() {
+            const tbody = document.getElementById('ticketsTableBody');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="8" class="text-center py-12">
+                        <div class="spinner mx-auto mb-3"></div>
+                        <p class="text-gray-500">Loading tickets...</p>
+                    </td>
+                </tr>
+            `;
+            
+            try {
+                const ticketsSnapshot = await db.collection('tickets').orderBy('createdAt', 'desc').get();
+                
+                allTickets = [];
+                let openCount = 0;
+                let progressCount = 0;
+                let closedCount = 0;
+                
+                for (const doc of ticketsSnapshot.docs) {
+                    const ticket = doc.data();
+                    
+                    let username = 'Unknown';
+                    if (ticket.userId) {
+                        const userDoc = await db.collection('users').doc(ticket.userId).get();
+                        if (userDoc.exists) {
+                            username = userDoc.data().displayName || userDoc.data().email?.split('@')[0] || 'Unknown';
+                        }
+                    }
+                    
+                    const ticketData = {
+                        id: doc.id,
+                        userId: ticket.userId,
+                        username: username,
+                        subject: ticket.subject || 'N/A',
+                        message: ticket.message || '',
+                        priority: ticket.priority || 'medium',
+                        status: ticket.status || 'open',
+                        replies: ticket.replies || [],
+                        createdAt: ticket.createdAt,
+                        relatedOrderId: ticket.relatedOrderId
+                    };
+                    
+                    allTickets.push(ticketData);
+                    
+                    if (ticketData.status === 'open') openCount++;
+                    else if (ticketData.status === 'in_progress') progressCount++;
+                    else if (ticketData.status === 'closed') closedCount++;
+                }
+                
+                document.getElementById('totalTickets').innerText = allTickets.length;
+                document.getElementById('openTickets').innerText = openCount;
+                document.getElementById('progressTickets').innerText = progressCount;
+                document.getElementById('closedTickets').innerText = closedCount;
+                
+                displayTickets();
+                
+            } catch (error) {
+                console.error('Error loading tickets:', error);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-12 text-red-500">
+                            <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                            <p>Failed to load tickets</p>
+                            <button onclick="loadTickets()" class="btn-primary mt-4">Try Again</button>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+        
+        // ============================================
+        // DISPLAY TICKETS
+        // ============================================
+        function displayTickets() {
+            let filtered = [...allTickets];
+            
+            if (currentFilter !== 'all') {
+                if (currentFilter === 'high_priority') {
+                    filtered = filtered.filter(t => t.priority === 'high');
+                } else {
+                    filtered = filtered.filter(t => t.status === currentFilter);
+                }
+            }
+            
+            if (currentSearch) {
+                const search = currentSearch.toLowerCase();
+                filtered = filtered.filter(t => 
+                    t.id.toLowerCase().includes(search) || 
+                    t.subject.toLowerCase().includes(search) ||
+                    t.username.toLowerCase().includes(search)
+                );
+            }
+            
+            const start = (currentPage - 1) * ITEMS_PER_PAGE;
+            const pageTickets = filtered.slice(start, start + ITEMS_PER_PAGE);
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            
+            const tbody = document.getElementById('ticketsTableBody');
+            
+            if (pageTickets.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-12">
+                            <div class="no-data">
+                                <i class="fas fa-ticket-alt"></i>
+                                <p>No tickets found</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+            
+            tbody.innerHTML = pageTickets.map(ticket => `
+                <tr class="ticket-row">
+                    <td class="font-mono text-primary text-sm">#${ticket.id.substring(0, 8)}</td>
+                    <td class="text-gray-500 text-xs">${formatDate(ticket.createdAt)}</td>
+                    <td>
+                        <a href="/admin/user-detail.html?id=${ticket.userId}" class="text-primary hover:underline text-sm">${escapeHtml(ticket.username)}</a>
+                    </td>
+                    <td class="max-w-[200px] truncate" title="${escapeHtml(ticket.subject)}">${escapeHtml(ticket.subject.substring(0, 35))}${ticket.subject.length > 35 ? '...' : ''}</td>
+                    <td><span class="priority-badge priority-${ticket.priority}">${getPriorityLabel(ticket.priority)}</span></td>
+                    <td class="text-center">${ticket.replies?.length || 0}</td>
+                    <td><span class="status-badge status-${ticket.status}">${getStatusLabel(ticket.status)}</span></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button onclick="viewTicketDetail('${ticket.id}')" class="action-view" title="View Details">
+                                <i class="fas fa-eye"></i> <span class="hidden xs:inline">View</span>
+                            </button>
+                            <button onclick="openChangeStatusModal('${ticket.id}', '${ticket.status}')" class="action-status" title="Change Status">
+                                <i class="fas fa-tag"></i> <span class="hidden xs:inline">Status</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+            
+            updatePagination(totalPages);
+        }
+        
+        function updatePagination(totalPages) {
+            const paginationDiv = document.getElementById('pagination');
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+            
+            let html = `
+                <button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-left"></i> Prev
+                </button>
+            `;
+            
+            const startPage = Math.max(1, currentPage - 2);
+            const endPage = Math.min(totalPages, currentPage + 2);
+            
+            if (startPage > 1) {
+                html += `<button class="pagination-btn" onclick="goToPage(1)">1</button>`;
+                if (startPage > 2) html += `<span class="px-1">...</span>`;
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button class="pagination-btn ${currentPage === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) html += `<span class="px-1">...</span>`;
+                html += `<button class="pagination-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+            }
+            
+            html += `
+                <button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            `;
+            
+            paginationDiv.innerHTML = html;
+        }
+        
+        window.goToPage = function(page) {
+            let filtered = [...allTickets];
+            if (currentFilter !== 'all') {
+                if (currentFilter === 'high_priority') {
+                    filtered = filtered.filter(t => t.priority === 'high');
+                } else {
+                    filtered = filtered.filter(t => t.status === currentFilter);
+                }
+            }
+            if (currentSearch) filtered = filtered.filter(t => t.id.toLowerCase().includes(currentSearch.toLowerCase()) || t.subject.toLowerCase().includes(currentSearch.toLowerCase()) || t.username.toLowerCase().includes(currentSearch.toLowerCase()));
+            
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            displayTickets();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        
+        // ============================================
+        // FILTER AND SEARCH HANDLERS
+        // ============================================
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                currentPage = 1;
+                displayTickets();
+            });
+        });
+        
+        let searchTimeout;
+        document.getElementById('searchTickets').addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentSearch = e.target.value;
+                currentPage = 1;
+                displayTickets();
+            }, 300);
+        });
+        
+        // ============================================
+        // VIEW TICKET DETAIL
+        // ============================================
+        window.viewTicketDetail = async (ticketId) => {
+            currentTicketId = ticketId;
+            const ticket = allTickets.find(t => t.id === ticketId);
+            if (!ticket) return;
+            
+            const modalContent = document.getElementById('ticketDetailContent');
+            
+            let repliesHtml = '';
+            if (ticket.replies && ticket.replies.length > 0) {
+                repliesHtml = ticket.replies.map(reply => `
+                    <div class="reply-message ${reply.isAdmin ? 'reply-admin' : ''}">
+                        <div class="flex justify-between items-center mb-2 flex-wrap gap-2">
+                            <span class="font-semibold">${reply.isAdmin ? '👨‍💼 Support Team' : '📝 ' + escapeHtml(ticket.username)}</span>
+                            <span class="text-xs text-gray-400">${formatDate(reply.createdAt)}</span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm whitespace-pre-wrap">${escapeHtml(reply.message)}</p>
+                    </div>
+                `).join('');
+            } else {
+                repliesHtml = '<div class="text-center text-gray-500 py-4">No replies yet.</div>';
+            }
+            
+            modalContent.innerHTML = `
+                <div class="mb-4 pb-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex justify-between items-start mb-3 flex-wrap gap-2">
+                        <div>
+                            <span class="status-badge status-${ticket.status} mr-2">${getStatusLabel(ticket.status)}</span>
+                            <span class="priority-badge priority-${ticket.priority}">${getPriorityLabel(ticket.priority)}</span>
+                        </div>
+                        <span class="text-xs text-gray-400">Created: ${formatDate(ticket.createdAt)}</span>
+                    </div>
+                    <h2 class="font-bold text-lg mb-2 break-words">${escapeHtml(ticket.subject)}</h2>
+                    ${ticket.relatedOrderId ? `<div class="text-sm text-gray-500 mb-2"><i class="fas fa-shopping-cart mr-1"></i> Related Order: #${ticket.relatedOrderId}</div>` : ''}
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 mt-2">
+                        <p class="text-gray-700 dark:text-gray-300 text-sm whitespace-pre-wrap">${escapeHtml(ticket.message)}</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3"><i class="far fa-comments mr-2"></i> Conversation (${ticket.replies?.length || 0})</h4>
+                    <div id="repliesContainer">${repliesHtml}</div>
+                </div>
+            `;
+            
+            document.getElementById('ticketDetailModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        window.closeTicketDetailModal = () => {
+            document.getElementById('ticketDetailModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            currentTicketId = null;
+            document.getElementById('adminReply').value = '';
+        };
+        
+        // Send reply button
+        document.getElementById('sendReplyBtn')?.addEventListener('click', async () => {
+            const replyMessage = document.getElementById('adminReply').value.trim();
+            if (!replyMessage) {
+                showToast('Please enter a reply message', 'warning');
+                return;
+            }
+            
+            if (!currentTicketId) return;
+            
+            const ticket = allTickets.find(t => t.id === currentTicketId);
+            if (!ticket) return;
+            
+            const sendBtn = document.getElementById('sendReplyBtn');
+            const originalText = sendBtn.innerHTML;
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<div class="spinner"></div> Sending...';
+            
+            try {
+                const newReply = {
+                    message: replyMessage,
+                    isAdmin: true,
+                    createdAt: new Date()
+                };
+                
+                const newReplies = [...(ticket.replies || []), newReply];
+                
+                await db.collection('tickets').doc(currentTicketId).update({
+                    replies: newReplies,
+                    status: 'in_progress',
+                    updatedAt: new Date()
+                });
+                
+                // Create notification for user
+                await db.collection('notifications').add({
+                    userId: ticket.userId,
+                    title: `New Reply on Ticket #${currentTicketId.substring(0, 8)}`,
+                    message: `Support team has replied to your ticket: "${ticket.subject.substring(0, 50)}"`,
+                    type: 'ticket',
+                    read: false,
+                    createdAt: new Date(),
+                    actionLink: '/dashboard/tickets.html'
+                });
+                
+                showToast('Reply sent successfully!', 'success');
+                document.getElementById('adminReply').value = '';
+                await loadTickets();
+                await viewTicketDetail(currentTicketId);
+                
+            } catch (error) {
+                console.error('Error sending reply:', error);
+                showToast('Failed to send reply', 'error');
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = originalText;
+            } finally {
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = originalText;
+            }
+        });
+        
+        // ============================================
+        // CHANGE STATUS MODAL
+        // ============================================
+        window.openChangeStatusModal = (ticketId, currentStatus) => {
+            document.getElementById('statusTicketId').value = ticketId;
+            document.getElementById('newTicketStatus').value = currentStatus;
+            document.getElementById('statusChangeNote').value = '';
+            document.getElementById('changeStatusModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        window.closeChangeStatusModal = () => {
+            document.getElementById('changeStatusModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        
+        document.getElementById('changeStatusForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const ticketId = document.getElementById('statusTicketId').value;
+            const newStatus = document.getElementById('newTicketStatus').value;
+            const note = document.getElementById('statusChangeNote').value;
+            
+            const ticket = allTickets.find(t => t.id === ticketId);
+            if (!ticket) return;
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="spinner"></div> Updating...';
+            
+            try {
+                await db.collection('tickets').doc(ticketId).update({
+                    status: newStatus,
+                    updatedAt: new Date(),
+                    adminNote: note
+                });
+                
+                // Create notification for user
+                await db.collection('notifications').add({
+                    userId: ticket.userId,
+                    title: `Ticket Status Updated to ${getStatusLabel(newStatus)}`,
+                    message: `Your ticket "${ticket.subject.substring(0, 50)}" status has been updated to ${getStatusLabel(newStatus)}. ${note ? `Note: ${note}` : ''}`,
+                    type: 'ticket',
+                    read: false,
+                    createdAt: new Date(),
+                    actionLink: '/dashboard/tickets.html'
+                });
+                
+                showToast(`Ticket status updated to ${getStatusLabel(newStatus)}!`, 'success');
+                closeChangeStatusModal();
+                await loadTickets();
+                
+            } catch (error) {
+                console.error('Error updating status:', error);
+                showToast('Failed to update status', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+        
+        // ============================================
+        // REFRESH BUTTON
+        // ============================================
+        document.getElementById('refreshTicketsBtn')?.addEventListener('click', async () => {
+            const btn = document.getElementById('refreshTicketsBtn');
+            btn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i>';
+            await loadTickets();
+            btn.innerHTML = '<i class="fas fa-sync-alt"></i>';
+            showToast('Tickets refreshed!', 'success');
+        });
+        
+        // ============================================
+        // HELPER FUNCTIONS
+        // ============================================
+        function getPriorityLabel(priority) {
+            if (priority === 'high') return '🔴 High';
+            if (priority === 'medium') return '🟡 Medium';
+            return '🟢 Low';
+        }
+        
+        function getStatusLabel(status) {
+            if (status === 'open') return 'Open';
+            if (status === 'in_progress') return 'In Progress';
+            return 'Closed';
+        }
+        
+        function formatDate(timestamp) {
+            if (!timestamp) return 'N/A';
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            return date.toLocaleString();
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // ============================================
+        // DARK MODE AND MOBILE TOGGLE
+        // ============================================
+        const adminDarkToggle = document.getElementById('adminDarkModeToggle');
+        if (adminDarkToggle) {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) document.body.classList.add('dark-mode');
+            adminDarkToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+                const icon = adminDarkToggle.querySelector('i');
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+            
+            const icon = adminDarkToggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+        
+        const adminMobileBtn = document.getElementById('adminMobileMenuBtn');
+        const adminSidebar = document.getElementById('adminSidebar');
+        if (adminMobileBtn && adminSidebar) {
+            adminMobileBtn.addEventListener('click', () => {
+                adminSidebar.classList.toggle('open');
+            });
+            
+            document.querySelectorAll('.admin-nav-item').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        adminSidebar.classList.remove('open');
+                    }
+                });
+            });
+        }
+        
+        document.getElementById('adminLogoutBtn')?.addEventListener('click', async () => {
+            await auth.signOut();
+            window.location.href = '/login.html';
+        });
+        
+        // Close modals on outside click
+        const ticketDetailModal = document.getElementById('ticketDetailModal');
+        const changeStatusModal = document.getElementById('changeStatusModal');
+        
+        if (ticketDetailModal) {
+            ticketDetailModal.addEventListener('click', (e) => {
+                if (e.target === ticketDetailModal) closeTicketDetailModal();
+            });
+        }
+        if (changeStatusModal) {
+            changeStatusModal.addEventListener('click', (e) => {
+                if (e.target === changeStatusModal) closeChangeStatusModal();
+            });
+        }
+        
+        console.log('✅ Admin Tickets page loaded');
+    </script>
+    
+    <!-- Universal Notifications Helper -->
+    <script src="/js/core/notifications-helper.js"></script>
+</body>
+</html>

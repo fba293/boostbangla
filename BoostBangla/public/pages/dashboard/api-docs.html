@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>API Documentation | BoostBangla - Reseller API</title>
+    <meta name="description" content="BoostBangla API documentation for resellers. Integrate our SMM services with your application using our REST API. Complete endpoints, examples, and testing tools.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if(typeof showToast !== 'function') window.showToast = (msg,type)=>{alert(msg)};
+
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                        'slide-down': 'slideDown 0.3s ease-out',
+                        'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'bounce-subtle': 'bounceSubtle 1s ease-in-out infinite',
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- <link rel="stylesheet" href="/public/assets/css/style.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/dark-mode.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/mobile.css"> -->
+    
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC5500;
+            --primary-light: #FF8C42;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark-bg: #02101A;
+            --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            --card-shadow-hover: 0 25px 30px -12px rgba(255, 107, 0, 0.15);
+        }
+        
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 60;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 28px rgba(255, 107, 0, 0.4);
+        }
+        
+        .mobile-menu-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .animate-slide-up {
+            animation: slideUp 0.5s ease-out forwards;
+        }
+        
+        .animate-slide-down {
+            animation: slideDown 0.4s ease-out forwards;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body.dark-mode .glass-card {
+            background: rgba(30, 41, 59, 0.95);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow-hover);
+        }
+        
+        /* Method Badges */
+        .method-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .method-get { background: #dbeafe; color: #2563eb; }
+        .method-post { background: #d1fae5; color: #059669; }
+        .method-put { background: #fef3c7; color: #d97706; }
+        .method-delete { background: #fee2e2; color: #dc2626; }
+        
+        body.dark-mode .method-get { background: #1e3a5f; color: #60a5fa; }
+        body.dark-mode .method-post { background: #064e3b; color: #34d399; }
+        body.dark-mode .method-put { background: #451a03; color: #fbbf24; }
+        body.dark-mode .method-delete { background: #7f1d1d; color: #f87171; }
+        
+        /* API Section */
+        .api-section {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+        
+        body.dark-mode .api-section {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .api-section:hover {
+            border-color: #FF6B00;
+        }
+        
+        .api-header {
+            padding: 18px 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .api-header:hover {
+            background: #fef9f5;
+        }
+        
+        body.dark-mode .api-header:hover {
+            background: #2d1a0f;
+        }
+        
+        .api-content {
+            padding: 0 24px 24px 24px;
+            display: none;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        body.dark-mode .api-content {
+            border-top-color: #334155;
+        }
+        
+        .api-content.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        /* Param Table */
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .param-table th,
+        .param-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        body.dark-mode .param-table th,
+        body.dark-mode .param-table td {
+            border-bottom-color: #334155;
+        }
+        
+        .param-table th {
+            background: #f8fafc;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        
+        body.dark-mode .param-table th {
+            background: #0f172a;
+            color: #94a3b8;
+        }
+        
+        /* Code Block */
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 14px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            position: relative;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #334155;
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background: #475569;
+        }
+        
+        /* API Key Box */
+        .api-key-box {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        body.dark-mode .api-key-box {
+            background: #0f172a;
+            border-color: #334155;
+        }
+        
+        /* API Tester */
+        .api-tester {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px;
+        }
+        
+        body.dark-mode .api-tester {
+            background: #0f172a;
+        }
+        
+        .response-preview {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 16px;
+            color: #e2e8f0;
+            font-family: monospace;
+            font-size: 12px;
+            overflow-x: auto;
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(255, 107, 0, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e5e7eb;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        body.dark-mode .btn-outline {
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .btn-outline:hover {
+            border-color: #FF6B00;
+            color: #FF6B00;
+            transform: translateY(-2px);
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            padding: 14px 24px;
+            border-radius: 60px;
+            background: white;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideUp 0.3s ease;
+            font-weight: 500;
+        }
+        
+        body.dark-mode .toast {
+            background: #1e293b;
+            color: white;
+        }
+        
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        .toast.warning { border-left: 4px solid #f59e0b; }
+        .toast.info { border-left: 4px solid #3b82f6; }
+        
+        /* Spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e7eb;
+            border-top-color: #FF6B00;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+        
+        /* Response Status */
+        .response-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .status-200 { background: #d1fae5; color: #059669; }
+        .status-400 { background: #fee2e2; color: #dc2626; }
+        .status-401 { background: #fef3c7; color: #d97706; }
+        
+        body.dark-mode .status-200 { background: #064e3b; color: #34d399; }
+        body.dark-mode .status-400 { background: #7f1d1d; color: #f87171; }
+        body.dark-mode .status-401 { background: #451a03; color: #fbbf24; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .api-header {
+                padding: 14px 16px;
+            }
+            .api-content {
+                padding: 0 16px 16px 16px;
+            }
+            .param-table th,
+            .param-table td {
+                padding: 8px;
+                font-size: 12px;
+            }
+            .code-block {
+                font-size: 10px;
+            }
+            .api-tester .flex {
+                flex-direction: column;
+            }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #FF6B00;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #CC5500;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+    <div id="header-placeholder"></div>
+    <!-- Sidebar Component Loader -->
+    <script>
+(function loadSidebar(){
+    const placeholder = document.getElementById('sidebar-placeholder');
+    if(!placeholder) return;
+
+    function injectSidebar(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/sidebar.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectSidebar)
+        .catch(() => { console.warn('Sidebar fetch failed - using inline fallback'); });
+})();
+</script>
+    <!-- Universal Header Component Loader -->
+    <script>
+(function loadHeader(){
+    const placeholder = document.getElementById('header-placeholder');
+    if(!placeholder) return;
+
+    function injectHeader(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/universal-header.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectHeader)
+        .catch(() => { console.warn('Header fetch failed - using inline fallback'); });
+})();
+</script>
+    
+    <div class="main-content">
+        <div class="p-4 md:p-8 lg:p-10">
+            <!-- Header Section -->
+            <div class="animate-slide-down mb-8">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-12 h-12 bg-gradient-to-br from-primary to-primaryDark rounded-2xl flex items-center justify-center shadow-lg animate-float">
+                                <i class="fas fa-code text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-primaryDark bg-clip-text text-transparent">
+                                    API Documentation
+                                </h1>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                                    Complete REST API documentation for resellers and developers
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/public/pages/dashboard/api-keys.html" class="btn-outline">
+                        <i class="fas fa-key mr-2"></i> Manage API Keys
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Welcome Banner -->
+            <div class="glass-card p-6 mb-8 animate-slide-up" style="animation-delay: 0.05s">
+                <div class="flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold mb-1">🚀 Reseller API</h2>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Integrate BoostBangla services directly into your application</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <span class="method-badge method-post">REST API</span>
+                        <span class="method-badge method-get">JSON Response</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- API Key Section -->
+            <div class="glass-card p-6 mb-8 animate-slide-up" style="animation-delay: 0.1s">
+                <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+                    <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-key text-primary text-lg"></i>
+                    </div>
+                    <h2 class="text-xl font-bold">Your API Credentials</h2>
+                </div>
+                <div class="api-key-box">
+                    <div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">API Key</div>
+                        <code id="apiKeyDisplay" class="text-sm font-mono dark:text-white">************************</code>
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="copyApiKeyBtn" class="btn-outline text-sm py-2 px-4">
+                            <i class="fas fa-copy mr-1"></i> Copy
+                        </button>
+                        <button id="regenerateApiKeyBtn" class="btn-outline text-sm py-2 px-4">
+                            <i class="fas fa-sync-alt mr-1"></i> Regenerate
+                        </button>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-400 mt-3">
+                    <i class="fas fa-shield-alt mr-1"></i> Keep your API key secure. Regenerate if compromised.
+                </p>
+            </div>
+            
+            <!-- API Tester Section -->
+            <div class="glass-card p-6 mb-8 animate-slide-up" style="animation-delay: 0.15s">
+                <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+                    <div class="w-10 h-10 bg-green-500/10 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-flask text-green-500 text-lg"></i>
+                    </div>
+                    <h2 class="text-xl font-bold">API Tester</h2>
+                </div>
+                <div class="api-tester">
+                    <div class="flex flex-wrap gap-4 mb-4">
+                        <div class="flex-1">
+                            <label class="block text-sm font-medium mb-2">Endpoint</label>
+                            <select id="testEndpoint" class="form-input">
+                                <option value="services">GET /services - List all services</option>
+                                <option value="balance">GET /balance - Check balance</option>
+                                <option value="order">POST /order - Place order</option>
+                                <option value="status">GET /status/:id - Order status</option>
+                            </select>
+                        </div>
+                        <div class="flex-1">
+                            <label class="block text-sm font-medium mb-2">Parameters (JSON)</label>
+                            <textarea id="testParams" rows="3" class="form-input font-mono text-sm" placeholder='{"service": 123, "link": "https://...", "quantity": 1000}'></textarea>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button id="testApiBtn" class="btn-primary">
+                            <i class="fas fa-play mr-2"></i> Test API Call
+                        </button>
+                        <button id="clearTestBtn" class="btn-outline">
+                            <i class="fas fa-eraser mr-2"></i> Clear
+                        </button>
+                    </div>
+                    <div id="testResponse" class="mt-4 hidden">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium">Response</span>
+                            <span id="responseStatus" class="response-status"></span>
+                        </div>
+                        <div id="responseContent" class="response-preview"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- API Information -->
+            <div class="api-section animate-slide-up" style="animation-delay: 0.2s">
+                <div class="api-header" data-section="info">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-info-circle text-primary text-lg"></i>
+                        <span class="font-semibold">API Information</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                </div>
+                <div class="api-content" id="info-content">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <span class="text-gray-500 dark:text-gray-400">Base URL:</span>
+                            <code class="block bg-gray-100 dark:bg-gray-800 px-3 py-2 rounded-lg mt-1 text-sm">https://boostbangla.com/api/v2</code>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 dark:text-gray-400">Response Format:</span>
+                            <code class="block bg-gray-100 dark:bg-gray-800 px-3 py-2 rounded-lg mt-1 text-sm">JSON</code>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 dark:text-gray-400">Authentication:</span>
+                            <code class="block bg-gray-100 dark:bg-gray-800 px-3 py-2 rounded-lg mt-1 text-sm">API Key (Bearer Token)</code>
+                        </div>
+                    </div>
+                    <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl">
+                        <i class="fas fa-globe text-blue-500 mr-2"></i>
+                        <span class="text-sm">All endpoints are accessible worldwide with super fast response times. Average response time: &lt; 200ms.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Authentication Endpoint -->
+            <div class="api-section animate-slide-up" style="animation-delay: 0.25s">
+                <div class="api-header" data-section="auth">
+                    <div class="flex items-center gap-2">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="font-semibold">/auth/verify</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                </div>
+                <div class="api-content" id="auth-content">
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Verify your API key and get account information.</p>
+                    <h4 class="font-semibold mb-2">Request Parameters</h4>
+                    <table class="param-table mb-4">
+                        <thead>
+                            <tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>key</td><td>string</td><td>Yes</td><td>Your API key</td></tr>
+                        </tbody>
+                    </table>
+                    <h4 class="font-semibold mb-2">Example Response</h4>
+                    <div class="code-block relative">
+                        <pre>{
+  "success": true,
+  "data": {
+    "user_id": "abc123",
+    "email": "user@example.com",
+    "balance": 1250.50,
+    "account_level": "Gold"
+  }
+}</pre>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Services Endpoint -->
+            <div class="api-section animate-slide-up" style="animation-delay: 0.3s">
+                <div class="api-header" data-section="services">
+                    <div class="flex items-center gap-2">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="font-semibold">/services</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                </div>
+                <div class="api-content" id="services-content">
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Get a list of all available services with pricing and details.</p>
+                    <h4 class="font-semibold mb-2">Request Parameters</h4>
+                    <table class="param-table mb-4">
+                        <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+                        <tbody>
+                            <tr><td>key</td><td>string</td><td>Yes</td><td>Your API key</td></tr>
+                            <tr><td>category</td><td>string</td><td>No</td><td>Filter by category (instagram, facebook, youtube, etc.)</td></tr>
+                        </tbody>
+                    </table>
+                    <h4 class="font-semibold mb-2">Example Response</h4>
+                    <div class="code-block relative">
+                        <pre>{
+  "success": true,
+  "services": [
+    {
+      "id": 12345,
+      "name": "Instagram Followers",
+      "category": "instagram",
+      "rate": 0.80,
+      "min": 100,
+      "max": 100000,
+      "speed": "medium",
+      "description": "Real Instagram followers"
+    }
+  ]
+}</pre>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Endpoint -->
+            <div class="api-section animate-slide-up" style="animation-delay: 0.35s">
+                <div class="api-header" data-section="order">
+                    <div class="flex items-center gap-2">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="font-semibold">/order</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                </div>
+                <div class="api-content" id="order-content">
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Place a new order for a service.</p>
+                    <h4 class="font-semibold mb-2">Request Parameters</h4>
+                    <table class="param-table mb-4">
+                        <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+                        <tbody>
+                            <tr><td>key</td><td>string</td><td>Yes</td><td>Your API key</td></tr>
+                            <tr><td>service</td><td>integer</td><td>Yes</td><td>Service ID</td></tr>
+                            <tr><td>link</td><td>string</td><td>Yes</td><td>URL or username</td></tr>
+                            <tr><td>quantity</td><td>integer</td><td>Yes</td><td>Number of units</td></tr>
+                        </tbody>
+                    </table>
+                    <h4 class="font-semibold mb-2">Example Response</h4>
+                    <div class="code-block relative">
+                        <pre>{
+  "success": true,
+  "order_id": "ORDER_123456",
+  "price": 12.50,
+  "status": "pending"
+}</pre>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Status Endpoint -->
+            <div class="api-section animate-slide-up" style="animation-delay: 0.4s">
+                <div class="api-header" data-section="status">
+                    <div class="flex items-center gap-2">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="font-semibold">/status/:id</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                </div>
+                <div class="api-content" id="status-content">
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Get the status of an existing order.</p>
+                    <h4 class="font-semibold mb-2">Request Parameters</h4>
+                    <table class="param-table mb-4">
+                        <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+                        <tbody>
+                            <tr><td>key</td><td>string</td><td>Yes</td><td>Your API key</td></tr>
+                            <tr><td>order_id</td><td>string</td><td>Yes</td><td>Order ID from placement</td></tr>
+                        </tbody>
+                    </table>
+                    <h4 class="font-semibold mb-2">Example Response</h4>
+                    <div class="code-block relative">
+                        <pre>{
+  "success": true,
+  "order_id": "ORDER_123456",
+  "status": "completed",
+  "quantity": 1000,
+  "start_count": 5000,
+  "current_count": 5980,
+  "price": 12.50
+}</pre>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Balance Endpoint -->
+            <div class="api-section animate-slide-up" style="animation-delay: 0.45s">
+                <div class="api-header" data-section="balance">
+                    <div class="flex items-center gap-2">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="font-semibold">/balance</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                </div>
+                <div class="api-content" id="balance-content">
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Check your account balance.</p>
+                    <h4 class="font-semibold mb-2">Request Parameters</h4>
+                    <table class="param-table mb-4">
+                        <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+                        <tbody>
+                            <tr><td>key</td><td>string</td><td>Yes</td><td>Your API key</td></tr>
+                        </tbody>
+                    </table>
+                    <h4 class="font-semibold mb-2">Example Response</h4>
+                    <div class="code-block relative">
+                        <pre>{
+  "success": true,
+  "balance": 1250.50,
+  "currency": "USD"
+}</pre>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Rate Limits Section -->
+            <div class="glass-card p-6 mt-8 animate-slide-up" style="animation-delay: 0.5s">
+                <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+                    <div class="w-10 h-10 bg-yellow-500/10 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-tachometer-alt text-yellow-500 text-lg"></i>
+                    </div>
+                    <h2 class="text-xl font-bold">Rate Limits</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                        <div class="text-3xl font-bold text-primary">100</div>
+                        <div class="text-sm text-gray-500">Requests per minute</div>
+                    </div>
+                    <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                        <div class="text-3xl font-bold text-primary">10,000</div>
+                        <div class="text-sm text-gray-500">Requests per day</div>
+                    </div>
+                    <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                        <div class="text-3xl font-bold text-primary">99.9%</div>
+                        <div class="text-sm text-gray-500">Uptime guaranteed</div>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-400 text-center mt-4">Rate limits apply per API key. Contact support for higher limits.</p>
+            </div>
+            
+            <!-- Code Examples Section -->
+            <div class="glass-card p-6 mt-8 animate-slide-up" style="animation-delay: 0.55s">
+                <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+                    <div class="w-10 h-10 bg-purple-500/10 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-code text-purple-500 text-lg"></i>
+                    </div>
+                    <h2 class="text-xl font-bold">Code Examples</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold mb-2">cURL</h3>
+                        <div class="code-block relative">
+                            <pre>curl -X POST https://boostbangla.com/api/v2/order \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"service": 12345, "link": "https://instagram.com/p/xxx", "quantity": 1000}'</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">JavaScript (Fetch)</h3>
+                        <div class="code-block relative">
+                            <pre>fetch('https://boostbangla.com/api/v2/order', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    service: 12345,
+    link: 'https://instagram.com/p/xxx',
+    quantity: 1000
+  })
+}).then(res => res.json())
+  .then(data => console.log(data));</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">PHP (cURL)</h3>
+                        <div class="code-block relative">
+                            <pre>$ch = curl_init('https://boostbangla.com/api/v2/order');
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Authorization: Bearer YOUR_API_KEY',
+    'Content-Type: application/json'
+]);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+    'service' => 12345,
+    'link' => 'https://instagram.com/p/xxx',
+    'quantity' => 1000
+]));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+$data = json_decode($response, true);</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Python (Requests)</h3>
+                        <div class="code-block relative">
+                            <pre>import requests
+
+headers = {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+}
+
+data = {
+    'service': 12345,
+    'link': 'https://instagram.com/p/xxx',
+    'quantity': 1000
+}
+
+response = requests.post(
+    'https://boostbangla.com/api/v2/order',
+    headers=headers,
+    json=data
+)
+print(response.json())</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Support Section -->
+            <div class="glass-card p-6 mt-8 text-center animate-slide-up" style="animation-delay: 0.6s">
+                <i class="fas fa-headset text-primary text-4xl mb-3"></i>
+                <h3 class="text-xl font-bold mb-2">Need API Support?</h3>
+                <p class="text-gray-500 dark:text-gray-400 mb-4">Our technical team is available 24/7 to assist with API integration</p>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <a href="/public/pages/dashboard/tickets.html" class="btn-primary">
+                        <i class="fas fa-ticket-alt mr-2"></i> Create Support Ticket
+                    </a>
+                    <a href="https://wa.me/8801676406896" target="_blank" class="btn-outline">
+                        <i class="fab fa-whatsapp mr-2"></i> WhatsApp Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+    
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="/public/assets/js/core/config.js"></script>
+    <script src="/public/assets/js/core/auth.js"></script>
+    <script src="/public/assets/js/core/utils.js"></script>
+    <script src="/public/assets/js/dark-mode.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        let currentUser = null;
+        let apiKey = '';
+        
+        // ============================================
+        // TOAST NOTIFICATION
+        // ============================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                <span>${message}</span>
+                <i class="fas fa-times ml-3 cursor-pointer opacity-70 hover:opacity-100" onclick="this.parentElement.remove()"></i>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4000);
+        }
+        
+        // ============================================
+        // LOAD API KEY
+        // ============================================
+        async function loadApiKey() {
+            if (!currentUser) return;
+            
+            try {
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                const userData = userDoc.data();
+                
+                if (userData.apiKey) {
+                    apiKey = userData.apiKey;
+                } else {
+                    apiKey = 'bb_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 8);
+                    await db.collection('users').doc(currentUser.uid).update({ apiKey: apiKey });
+                }
+                
+                document.getElementById('apiKeyDisplay').innerText = apiKey;
+                
+            } catch (error) {
+                console.error('Error loading API key:', error);
+            }
+        }
+        
+        // ============================================
+        // COPY API KEY
+        // ============================================
+        document.getElementById('copyApiKeyBtn')?.addEventListener('click', () => {
+            navigator.clipboard.writeText(apiKey);
+            showToast('API key copied to clipboard!', 'success');
+        });
+        
+        // ============================================
+        // REGENERATE API KEY
+        // ============================================
+        document.getElementById('regenerateApiKeyBtn')?.addEventListener('click', async () => {
+            if (!confirm('Are you sure you want to regenerate your API key? The old key will be invalidated immediately.')) return;
+            
+            const btn = document.getElementById('regenerateApiKeyBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner mr-2"></div> Regenerating...';
+            
+            try {
+                const newKey = 'bb_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 8);
+                await db.collection('users').doc(currentUser.uid).update({ apiKey: newKey });
+                apiKey = newKey;
+                document.getElementById('apiKeyDisplay').innerText = apiKey;
+                showToast('API key regenerated successfully!', 'success');
+            } catch (error) {
+                console.error('Error regenerating API key:', error);
+                showToast('Failed to regenerate API key', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        });
+        
+        // ============================================
+        // COPY CODE FUNCTION
+        // ============================================
+        window.copyCode = function(buttonElement) {
+            const codeBlock = buttonElement.previousElementSibling;
+            const code = codeBlock.textContent;
+            navigator.clipboard.writeText(code);
+            showToast('Code copied to clipboard!', 'success');
+        };
+        
+        // ============================================
+        // API TESTER
+        // ============================================
+        document.getElementById('testApiBtn')?.addEventListener('click', async () => {
+            const endpoint = document.getElementById('testEndpoint').value;
+            let paramsText = document.getElementById('testParams').value.trim();
+            const actionMap = { order: 'add', status: 'status', balance: 'get_user_balance', services: 'services' };
+            const action = actionMap[endpoint] || endpoint;
+            let url = `/public/php/api-proxy.php?action=${encodeURIComponent(action)}`;
+            let options = {
+                method: 'GET',
+                headers: {
+                    'X-API-Key': apiKey,
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            };
+            
+            if (endpoint === 'order') {
+                options.method = 'POST';
+                options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+                if (paramsText) {
+                    try {
+                        const params = JSON.parse(paramsText);
+                        options.body = new URLSearchParams({
+                            action: 'add',
+                            service: params.service || params.service_id,
+                            link: params.link,
+                            quantity: params.quantity
+                        });
+                    } catch (e) {
+                        showToast('Invalid JSON parameters', 'error');
+                        return;
+                    }
+                } else {
+                    showToast('Please enter parameters for order endpoint', 'warning');
+                    return;
+                }
+            } else if (endpoint === 'status') {
+                if (paramsText) {
+                    try {
+                        const params = JSON.parse(paramsText);
+                        if (params.order_id) {
+                            url += `&order=${encodeURIComponent(params.order_id)}`;
+                        }
+                    } catch (e) {}
+                }
+            } else if (endpoint === 'balance') {
+                url += `&user_id=${encodeURIComponent(currentUser?.uid || '')}`;
+            } else if (endpoint === 'services') {
+                if (paramsText) {
+                    try {
+                        const params = JSON.parse(paramsText);
+                        if (params.category) {
+                            url += `&category=${encodeURIComponent(params.category)}`;
+                        }
+                    } catch (e) {}
+                }
+            }
+            
+            const responseDiv = document.getElementById('testResponse');
+            const responseContent = document.getElementById('responseContent');
+            const responseStatus = document.getElementById('responseStatus');
+            
+            responseDiv.classList.remove('hidden');
+            responseContent.innerHTML = '<div class="spinner mx-auto"></div>';
+            responseStatus.innerHTML = '<span class="spinner" style="width:16px;height:16px;"></span> Sending...';
+            
+            try {
+                const response = await fetch(url, options);
+                const data = await response.json();
+                
+                responseContent.innerHTML = JSON.stringify(data, null, 2);
+                
+                if (response.ok) {
+                    responseStatus.innerHTML = `<span class="status-200"><i class="fas fa-check-circle"></i> ${response.status} OK</span>`;
+                } else if (response.status === 401) {
+                    responseStatus.innerHTML = `<span class="status-401"><i class="fas fa-exclamation-triangle"></i> ${response.status} Unauthorized</span>`;
+                } else {
+                    responseStatus.innerHTML = `<span class="status-400"><i class="fas fa-exclamation-circle"></i> ${response.status} Error</span>`;
+                }
+                
+            } catch (error) {
+                console.error('API test error:', error);
+                responseContent.innerHTML = `Error: ${error.message}`;
+                responseStatus.innerHTML = `<span class="status-400"><i class="fas fa-exclamation-circle"></i> Request Failed</span>`;
+            }
+        });
+        
+        document.getElementById('clearTestBtn')?.addEventListener('click', () => {
+            document.getElementById('testParams').value = '';
+            document.getElementById('testResponse').classList.add('hidden');
+        });
+        
+        // Update params placeholder based on endpoint
+        document.getElementById('testEndpoint')?.addEventListener('change', (e) => {
+            const endpoint = e.target.value;
+            const paramsTextarea = document.getElementById('testParams');
+            
+            switch(endpoint) {
+                case 'services':
+                    paramsTextarea.placeholder = '{"category": "instagram"} (optional)';
+                    break;
+                case 'balance':
+                    paramsTextarea.placeholder = 'No parameters needed';
+                    paramsTextarea.value = '';
+                    break;
+                case 'order':
+                    paramsTextarea.placeholder = '{"service": 12345, "link": "https://...", "quantity": 1000}';
+                    break;
+                case 'status':
+                    paramsTextarea.placeholder = '{"order_id": "ORDER_123456"}';
+                    break;
+            }
+        });
+        
+        // ============================================
+        // ACCORDION FUNCTIONALITY
+        // ============================================
+        document.querySelectorAll('.api-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const sectionId = header.dataset.section;
+                const content = document.getElementById(`${sectionId}-content`);
+                const icon = header.querySelector('.fa-chevron-down');
+                
+                content.classList.toggle('active');
+                icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0)';
+            });
+        });
+        
+        // Open first section by default
+        const firstHeader = document.querySelector('.api-header');
+        if (firstHeader) {
+            firstHeader.click();
+        }
+        
+        // ============================================
+        // AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/public/pages/public/login.html';
+                return;
+            }
+            
+            currentUser = user;
+            
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (userDoc.exists && userDoc.data().isAdmin === true) {
+                window.location.href = '/admin/index.html';
+                return;
+            }
+            
+            await loadApiKey();
+        });
+        // ============================================
+        // DARK MODE
+        // ============================================
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        
+        console.log('✅ API Documentation page loaded');
+    </script>
+    
+    <!-- Universal Notifications Helper -->
+    <script src="/public/assets/js/core/notifications-helper.js"></script>
+<script>
+// global-darkmode-fix
+const darkToggle = document.getElementById('darkModeToggle');
+if (darkToggle) {
+    darkToggle.onclick = () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    };
+}
+if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+</script>
+<script>
+// Global logout fix - ensures logout works everywhere
+(function fixLogout(){
+    const checkInterval = setInterval(() => {
+        const logoutBtn = document.getElementById('logoutBtn') || document.getElementById('sidebarLogoutBtn');
+        if(logoutBtn && typeof firebase !== 'undefined' && firebase.auth){
+            clearInterval(checkInterval);
+            logoutBtn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                firebase.auth().signOut()
+                    .then(() => { window.location.href = '/public/pages/public/login.html'; })
+                    .catch(err => { console.error('Logout error:', err); alert('Logout failed. Please try again.'); });
+            };
+        }
+    }, 500);
+})();
+</script>
+<button id="darkModeToggle" class="dark-mode-toggle-btn">
+    <i class="fas fa-moon"></i>
+</button>
+<script>
+document.getElementById('darkModeToggle')?.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark);
+    const icon = document.querySelector('#darkModeToggle i');
+    if(icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+});
+if(localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+</script>
+    <script src="/public/assets/js/core/toast.js"></script>
+    <script src="/public/assets/js/core/validation.js"></script>
+    <script src="/public/assets/js/core/offline.js"></script>
+    <script src="/public/assets/js/core/shortcuts.js"></script>
+    <script src="/public/assets/js/core/balance-manager.js"></script>
+    <script src="/public/assets/js/core/avatar-manager.js"></script>
+</body>
+</html>

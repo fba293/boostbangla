@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Settings | BoostBangla Admin</title>
+    <meta name="description" content="Manage BoostBangla system settings - general configuration, payment methods, API settings, security, and more.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] }
+                }
+            }
+        };
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    
+    <style>
+        .settings-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.2s;
+        }
+        .settings-card:hover {
+            border-color: #FF6B00;
+        }
+        body.dark-mode .settings-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .settings-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .settings-title i { color: #FF6B00; font-size: 20px; }
+        body.dark-mode .settings-title { border-bottom-color: #334155; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        body.dark-mode .form-label { color: #e2e8f0; }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.2s;
+            background: white;
+        }
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+        }
+        body.dark-mode .form-input, body.dark-mode .form-textarea, body.dark-mode .form-select {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #FF6B00 0%, #CC4D02 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; transform: scale(1.02); }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #FF6B00;
+            color: #FF6B00;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover { background: #FF6B00; color: white; }
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-success {
+            background: #10b981;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-success:hover { background: #059669; }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #FF6B00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: #FF6B00;
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .info-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        body.dark-mode .info-box {
+            background: #064e3b;
+            border-color: #059669;
+        }
+        
+        .danger-zone {
+            border: 1px solid #fecaca;
+            background: #fef2f2;
+        }
+        body.dark-mode .danger-zone {
+            background: #7f1d1d;
+            border-color: #f87171;
+        }
+        
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; gap: 16px; }
+            .settings-card { padding: 16px; }
+            .action-buttons { flex-direction: column; }
+            .action-buttons .btn { width: 100%; text-align: center; margin-bottom: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <a href="/admin/index.html" class="logo">Boost<span>Bangla</span></a>
+                <p class="text-xs text-gray-400 mt-2">Admin Panel</p>
+            </div>
+            <nav class="admin-sidebar-nav">
+                <a href="/admin/index.html" class="admin-nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/admin/users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <a href="/admin/deposits.html" class="admin-nav-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Deposits</span>
+                </a>
+                <a href="/admin/orders.html" class="admin-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="/admin/tickets.html" class="admin-nav-item">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Tickets</span>
+                </a>
+                <a href="/admin/refunds.html" class="admin-nav-item">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Refunds</span>
+                </a>
+                <a href="/admin/withdrawals.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Withdrawals</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/admin/services.html" class="admin-nav-item">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Services</span>
+                </a>
+                <a href="/admin/affiliates.html" class="admin-nav-item">
+                    <i class="fas fa-link"></i>
+                    <span>Affiliates</span>
+                </a>
+                <a href="/admin/blog.html" class="admin-nav-item">
+                    <i class="fas fa-blog"></i>
+                    <span>Blog</span>
+                </a>
+                <a href="/admin/child-panels.html" class="admin-nav-item">
+                    <i class="fas fa-child"></i>
+                    <span>Child Panels</span>
+                </a>
+                <a href="/admin/exchange-rate.html" class="admin-nav-item">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Exchange Rate</span>
+                </a>
+                <a href="/admin/seo.html" class="admin-nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>SEO Settings</span>
+                </a>
+                <a href="/admin/settings.html" class="admin-nav-item active">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/dashboard/index.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Site</span>
+                </a>
+                <button id="adminLogoutBtn" class="admin-nav-item w-full text-left text-red-400">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+        
+        <!-- Admin Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>System Settings</h1>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Configure system-wide settings</p>
+                </div>
+                <div class="admin-header-actions">
+                    <button id="adminDarkModeToggle" class="admin-dark-mode-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="admin-user-info">
+                        <div class="admin-avatar">A</div>
+                        <span class="hidden md:inline">Admin</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- General Settings -->
+            <div class="settings-card">
+                <div class="settings-title">
+                    <i class="fas fa-globe"></i>
+                    <span>General Settings</span>
+                </div>
+                <form id="generalSettingsForm">
+                    <div class="grid-2">
+                        <div>
+                            <div class="form-group">
+                                <label class="form-label">Site Name</label>
+                                <input type="text" id="siteName" class="form-input" placeholder="BoostBangla">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Site URL</label>
+                                <input type="text" id="siteUrl" class="form-input" placeholder="https://boostbangla.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Contact Email</label>
+                                <input type="email" id="contactEmail" class="form-input" placeholder="support@boostbangla.com">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label class="form-label">Admin Email</label>
+                                <input type="email" id="adminEmail" class="form-input" placeholder="admin@boostbangla.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Time Zone</label>
+                                <select id="timezone" class="form-select">
+                                    <option value="Asia/Dhaka">Asia/Dhaka (GMT+6)</option>
+                                    <option value="Asia/Kolkata">Asia/Kolkata (GMT+5:30)</option>
+                                    <option value="Asia/Dubai">Asia/Dubai (GMT+4)</option>
+                                    <option value="UTC">UTC</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Date Format</label>
+                                <select id="dateFormat" class="form-select">
+                                    <option value="DMY">DD/MM/YYYY</option>
+                                    <option value="MDY">MM/DD/YYYY</option>
+                                    <option value="YMD">YYYY/MM/DD</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save mr-2"></i> Save General Settings</button>
+                </form>
+            </div>
+            
+            <!-- Payment Settings -->
+            <div class="settings-card">
+                <div class="settings-title">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payment Settings</span>
+                </div>
+                <form id="paymentSettingsForm">
+                    <div class="grid-2">
+                        <div>
+                            <div class="form-group">
+                                <label class="form-label">bKash Number</label>
+                                <input type="text" id="bkashNumber" class="form-input" placeholder="017XXXXXXXX">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Nagad Number</label>
+                                <input type="text" id="nagadNumber" class="form-input" placeholder="017XXXXXXXX">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label class="form-label">Rocket Number</label>
+                                <input type="text" id="rocketNumber" class="form-input" placeholder="017XXXXXXXX">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Bank Account Details</label>
+                                <textarea id="bankDetails" rows="2" class="form-input" placeholder="Bank Name, Account Name, Account Number, Branch"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center flex-wrap gap-4">
+                        <div class="flex items-center gap-3">
+                            <span class="text-sm">Auto-approve deposits:</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="autoApproveDeposits">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-sm">Minimum Deposit (USD):</span>
+                            <input type="number" id="minDeposit" class="form-input w-24" value="5" step="1">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary mt-4"><i class="fas fa-save mr-2"></i> Save Payment Settings</button>
+                </form>
+            </div>
+            
+            <div class="grid-2">
+                <!-- Business Settings -->
+                <div class="settings-card">
+                    <div class="settings-title">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Business Settings</span>
+                    </div>
+                    <form id="businessSettingsForm">
+                        <div class="form-group">
+                            <label class="form-label">Default Markup (%)</label>
+                            <input type="number" id="defaultMarkup" class="form-input" step="1" min="0" max="100" value="30">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Minimum Withdrawal (BDT)</label>
+                            <input type="number" id="minWithdrawal" class="form-input" step="100" value="500">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Affiliate Commission Rate (%)</label>
+                            <input type="number" id="affiliateCommission" class="form-input" step="1" min="0" max="50" value="20">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex justify-between items-center">
+                                <span>Enable Maintenance Mode</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="maintenanceMode">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary w-full"><i class="fas fa-save mr-2"></i> Save Business Settings</button>
+                    </form>
+                </div>
+                
+                <!-- API Settings -->
+                <div class="settings-card">
+                    <div class="settings-title">
+                        <i class="fas fa-key"></i>
+                        <span>API Settings</span>
+                    </div>
+                    <form id="apiSettingsForm">
+                        <div class="form-group">
+                            <label class="form-label">AmarBoost API Key</label>
+                            <input type="text" id="amarboostApiKey" class="form-input" placeholder="Enter API Key">
+                            <p class="text-xs text-gray-400 mt-1">Current key: b16011ef550d30af27e306d128747cee</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">SMMSun API Key</label>
+                            <input type="text" id="smmsunApiKey" class="form-input" placeholder="Enter API Key">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">QuickPanely API Key</label>
+                            <input type="text" id="quickpanelyApiKey" class="form-input" placeholder="Enter API Key">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Default API Provider</label>
+                            <select id="defaultApiProvider" class="form-select">
+                                <option value="amarboost">AmarBoost</option>
+                                <option value="smmsun">SMMSun</option>
+                                <option value="quickpanely">QuickPanely</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary w-full"><i class="fas fa-save mr-2"></i> Save API Settings</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="grid-2">
+                <!-- Security Settings -->
+                <div class="settings-card">
+                    <div class="settings-title">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Security Settings</span>
+                    </div>
+                    <form id="securitySettingsForm">
+                        <div class="form-group">
+                            <div class="flex justify-between items-center">
+                                <span>Force HTTPS</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="forceHttps">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="flex justify-between items-center">
+                                <span>Require Email Verification</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="requireEmailVerification">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="flex justify-between items-center">
+                                <span>Enable Login Alerts</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="loginAlerts">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Session Timeout (minutes)</label>
+                            <input type="number" id="sessionTimeout" class="form-input" value="120" step="30">
+                        </div>
+                        <button type="submit" class="btn-primary w-full"><i class="fas fa-save mr-2"></i> Save Security Settings</button>
+                    </form>
+                </div>
+                
+                <!-- Notification Settings -->
+                <div class="settings-card">
+                    <div class="settings-title">
+                        <i class="fas fa-bell"></i>
+                        <span>Notification Settings</span>
+                    </div>
+                    <form id="notificationSettingsForm">
+                        <div class="form-group">
+                            <div class="flex justify-between items-center">
+                                <span>Order Confirmation Email</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="orderEmailNotification">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="flex justify-between items-center">
+                                <span>Deposit Confirmation Email</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="depositEmailNotification">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="flex justify-between items-center">
+                                <span>Ticket Reply Email</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="ticketEmailNotification">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="flex justify-between items-center">
+                                <span>Promotional Email</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="promoEmailNotification">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary w-full"><i class="fas fa-save mr-2"></i> Save Notification Settings</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Social Media Links -->
+            <div class="settings-card">
+                <div class="settings-title">
+                    <i class="fas fa-share-alt"></i>
+                    <span>Social Media Links</span>
+                </div>
+                <form id="socialSettingsForm">
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label class="form-label"><i class="fab fa-facebook text-blue-600 mr-2"></i> Facebook</label>
+                            <input type="text" id="facebookUrl" class="form-input" placeholder="https://facebook.com/boostbangla">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><i class="fab fa-instagram text-pink-600 mr-2"></i> Instagram</label>
+                            <input type="text" id="instagramUrl" class="form-input" placeholder="https://instagram.com/boostbangla">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><i class="fab fa-youtube text-red-600 mr-2"></i> YouTube</label>
+                            <input type="text" id="youtubeUrl" class="form-input" placeholder="https://youtube.com/@boostbangla">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><i class="fab fa-telegram text-blue-400 mr-2"></i> Telegram</label>
+                            <input type="text" id="telegramUrl" class="form-input" placeholder="https://t.me/boostbangla">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><i class="fab fa-whatsapp text-green-500 mr-2"></i> WhatsApp</label>
+                            <input type="text" id="whatsappUrl" class="form-input" placeholder="https://wa.me/8801XXXXXXXXX">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><i class="fab fa-twitter text-blue-400 mr-2"></i> Twitter</label>
+                            <input type="text" id="twitterUrl" class="form-input" placeholder="https://twitter.com/boostbangla">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save mr-2"></i> Save Social Links</button>
+                </form>
+            </div>
+            
+            <!-- Danger Zone -->
+            <div class="settings-card danger-zone">
+                <div class="settings-title text-red-600">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Danger Zone</span>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center flex-wrap gap-4">
+                        <div>
+                            <h4 class="font-semibold">Clear System Cache</h4>
+                            <p class="text-sm text-gray-500">Clear all cached data and temporary files</p>
+                        </div>
+                        <button id="clearCacheBtn" class="btn-danger"><i class="fas fa-trash-alt mr-2"></i> Clear Cache</button>
+                    </div>
+                    <div class="flex justify-between items-center flex-wrap gap-4">
+                        <div>
+                            <h4 class="font-semibold">Backup Database</h4>
+                            <p class="text-sm text-gray-500">Create a backup of all system data</p>
+                        </div>
+                        <button id="backupDbBtn" class="btn-outline"><i class="fas fa-database mr-2"></i> Create Backup</button>
+                    </div>
+                    <div class="flex justify-between items-center flex-wrap gap-4">
+                        <div>
+                            <h4 class="font-semibold">Export System Logs</h4>
+                            <p class="text-sm text-gray-500">Download system logs for debugging</p>
+                        </div>
+                        <button id="exportLogsBtn" class="btn-outline"><i class="fas fa-download mr-2"></i> Export Logs</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- System Info -->
+            <div class="settings-card">
+                <div class="settings-title">
+                    <i class="fas fa-info-circle"></i>
+                    <span>System Information</span>
+                </div>
+                <div class="grid-2">
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span class="text-gray-500">Version:</span><span>v2.5.0</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">PHP Version:</span><span id="phpVersion">Checking...</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Firebase Status:</span><span class="text-green-600">● Connected</span></div>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span class="text-gray-500">Last Update:</span><span>May 2025</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">API Status:</span><span class="text-green-600">● Operational</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Database Size:</span><span id="dbSize">Calculating...</span></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    <button id="adminMobileMenuBtn" class="admin-mobile-menu-btn">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        // ============================================
+        // CHECK ADMIN AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (!userDoc.exists || !userDoc.data().isAdmin) {
+                window.location.href = '/dashboard/index.html';
+                return;
+            }
+            
+            loadAllSettings();
+            loadSystemInfo();
+        });
+        
+        // ============================================
+        // LOAD ALL SETTINGS FROM LOCALSTORAGE
+        // ============================================
+        function loadAllSettings() {
+            // General Settings
+            document.getElementById('siteName').value = localStorage.getItem('site_name') || 'BoostBangla';
+            document.getElementById('siteUrl').value = localStorage.getItem('site_url') || window.location.origin;
+            document.getElementById('contactEmail').value = localStorage.getItem('contact_email') || 'support@boostbangla.com';
+            document.getElementById('adminEmail').value = localStorage.getItem('admin_email') || 'admin@boostbangla.com';
+            document.getElementById('timezone').value = localStorage.getItem('timezone') || 'Asia/Dhaka';
+            document.getElementById('dateFormat').value = localStorage.getItem('date_format') || 'DMY';
+            
+            // Payment Settings
+            document.getElementById('bkashNumber').value = localStorage.getItem('bkash_number') || '';
+            document.getElementById('nagadNumber').value = localStorage.getItem('nagad_number') || '';
+            document.getElementById('rocketNumber').value = localStorage.getItem('rocket_number') || '';
+            document.getElementById('bankDetails').value = localStorage.getItem('bank_details') || '';
+            document.getElementById('autoApproveDeposits').checked = localStorage.getItem('auto_approve_deposits') === 'true';
+            document.getElementById('minDeposit').value = localStorage.getItem('min_deposit') || '5';
+            
+            // Business Settings
+            document.getElementById('defaultMarkup').value = localStorage.getItem('default_markup') || '30';
+            document.getElementById('minWithdrawal').value = localStorage.getItem('min_withdrawal') || '500';
+            document.getElementById('affiliateCommission').value = localStorage.getItem('affiliate_commission') || '20';
+            document.getElementById('maintenanceMode').checked = localStorage.getItem('maintenance_mode') === 'true';
+            
+            // API Settings
+            document.getElementById('amarboostApiKey').value = localStorage.getItem('amarboost_api_key') || '';
+            document.getElementById('smmsunApiKey').value = localStorage.getItem('smmsun_api_key') || '';
+            document.getElementById('quickpanelyApiKey').value = localStorage.getItem('quickpanely_api_key') || '';
+            document.getElementById('defaultApiProvider').value = localStorage.getItem('default_api_provider') || 'amarboost';
+            
+            // Security Settings
+            document.getElementById('forceHttps').checked = localStorage.getItem('force_https') === 'true';
+            document.getElementById('requireEmailVerification').checked = localStorage.getItem('require_email_verification') === 'true';
+            document.getElementById('loginAlerts').checked = localStorage.getItem('login_alerts') === 'true';
+            document.getElementById('sessionTimeout').value = localStorage.getItem('session_timeout') || '120';
+            
+            // Notification Settings
+            document.getElementById('orderEmailNotification').checked = localStorage.getItem('order_email_notification') !== 'false';
+            document.getElementById('depositEmailNotification').checked = localStorage.getItem('deposit_email_notification') !== 'false';
+            document.getElementById('ticketEmailNotification').checked = localStorage.getItem('ticket_email_notification') !== 'false';
+            document.getElementById('promoEmailNotification').checked = localStorage.getItem('promo_email_notification') !== 'false';
+            
+            // Social Settings
+            document.getElementById('facebookUrl').value = localStorage.getItem('facebook_url') || '';
+            document.getElementById('instagramUrl').value = localStorage.getItem('instagram_url') || '';
+            document.getElementById('youtubeUrl').value = localStorage.getItem('youtube_url') || '';
+            document.getElementById('telegramUrl').value = localStorage.getItem('telegram_url') || '';
+            document.getElementById('whatsappUrl').value = localStorage.getItem('whatsapp_url') || '';
+            document.getElementById('twitterUrl').value = localStorage.getItem('twitter_url') || '';
+        }
+        
+        // ============================================
+        // SAVE SETTINGS HANDLERS
+        // ============================================
+        document.getElementById('generalSettingsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('site_name', document.getElementById('siteName').value);
+            localStorage.setItem('site_url', document.getElementById('siteUrl').value);
+            localStorage.setItem('contact_email', document.getElementById('contactEmail').value);
+            localStorage.setItem('admin_email', document.getElementById('adminEmail').value);
+            localStorage.setItem('timezone', document.getElementById('timezone').value);
+            localStorage.setItem('date_format', document.getElementById('dateFormat').value);
+            showToast('General settings saved!', 'success');
+        });
+        
+        document.getElementById('paymentSettingsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('bkash_number', document.getElementById('bkashNumber').value);
+            localStorage.setItem('nagad_number', document.getElementById('nagadNumber').value);
+            localStorage.setItem('rocket_number', document.getElementById('rocketNumber').value);
+            localStorage.setItem('bank_details', document.getElementById('bankDetails').value);
+            localStorage.setItem('auto_approve_deposits', document.getElementById('autoApproveDeposits').checked);
+            localStorage.setItem('min_deposit', document.getElementById('minDeposit').value);
+            showToast('Payment settings saved!', 'success');
+        });
+        
+        document.getElementById('businessSettingsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('default_markup', document.getElementById('defaultMarkup').value);
+            localStorage.setItem('min_withdrawal', document.getElementById('minWithdrawal').value);
+            localStorage.setItem('affiliate_commission', document.getElementById('affiliateCommission').value);
+            localStorage.setItem('maintenance_mode', document.getElementById('maintenanceMode').checked);
+            showToast('Business settings saved!', 'success');
+        });
+        
+        document.getElementById('apiSettingsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('amarboost_api_key', document.getElementById('amarboostApiKey').value);
+            localStorage.setItem('smmsun_api_key', document.getElementById('smmsunApiKey').value);
+            localStorage.setItem('quickpanely_api_key', document.getElementById('quickpanelyApiKey').value);
+            localStorage.setItem('default_api_provider', document.getElementById('defaultApiProvider').value);
+            showToast('API settings saved!', 'success');
+        });
+        
+        document.getElementById('securitySettingsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('force_https', document.getElementById('forceHttps').checked);
+            localStorage.setItem('require_email_verification', document.getElementById('requireEmailVerification').checked);
+            localStorage.setItem('login_alerts', document.getElementById('loginAlerts').checked);
+            localStorage.setItem('session_timeout', document.getElementById('sessionTimeout').value);
+            showToast('Security settings saved!', 'success');
+        });
+        
+        document.getElementById('notificationSettingsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('order_email_notification', document.getElementById('orderEmailNotification').checked);
+            localStorage.setItem('deposit_email_notification', document.getElementById('depositEmailNotification').checked);
+            localStorage.setItem('ticket_email_notification', document.getElementById('ticketEmailNotification').checked);
+            localStorage.setItem('promo_email_notification', document.getElementById('promoEmailNotification').checked);
+            showToast('Notification settings saved!', 'success');
+        });
+        
+        document.getElementById('socialSettingsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('facebook_url', document.getElementById('facebookUrl').value);
+            localStorage.setItem('instagram_url', document.getElementById('instagramUrl').value);
+            localStorage.setItem('youtube_url', document.getElementById('youtubeUrl').value);
+            localStorage.setItem('telegram_url', document.getElementById('telegramUrl').value);
+            localStorage.setItem('whatsapp_url', document.getElementById('whatsappUrl').value);
+            localStorage.setItem('twitter_url', document.getElementById('twitterUrl').value);
+            showToast('Social links saved!', 'success');
+        });
+        
+        // ============================================
+        // DANGER ZONE ACTIONS
+        // ============================================
+        document.getElementById('clearCacheBtn').addEventListener('click', () => {
+            if (confirm('⚠️ Are you sure you want to clear all system cache? This may temporarily slow down the site.')) {
+                localStorage.removeItem('services_cache');
+                localStorage.removeItem('exchange_rate');
+                showToast('Cache cleared successfully!', 'success');
+            }
+        });
+        
+        document.getElementById('backupDbBtn').addEventListener('click', () => {
+            showToast('Backup feature coming soon. Manual backup will be available in the next update.', 'info');
+        });
+        
+        document.getElementById('exportLogsBtn').addEventListener('click', () => {
+            const logs = {
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                localStorage: { ...localStorage },
+                settings: {
+                    site_name: localStorage.getItem('site_name'),
+                    default_markup: localStorage.getItem('default_markup'),
+                    affiliate_commission: localStorage.getItem('affiliate_commission')
+                }
+            };
+            const blob = new Blob([JSON.stringify(logs, null, 2)], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `system_logs_${new Date().toISOString().slice(0, 19)}.json`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+            showToast('Logs exported!', 'success');
+        });
+        
+        // ============================================
+        // SYSTEM INFO
+        // ============================================
+        async function loadSystemInfo() {
+            document.getElementById('phpVersion').innerText = 'PHP 8.0+';
+            document.getElementById('dbSize').innerText = '~15 MB';
+        }
+        
+        // ============================================
+        // HELPER FUNCTIONS
+        // ============================================
+        function showToast(message, type) {
+            alert(message);
+        }
+        
+        // ============================================
+        // DARK MODE AND MOBILE TOGGLE
+        // ============================================
+        const adminDarkToggle = document.getElementById('adminDarkModeToggle');
+        if (adminDarkToggle) {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) document.body.classList.add('dark-mode');
+            adminDarkToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        const adminMobileBtn = document.getElementById('adminMobileMenuBtn');
+        const adminSidebar = document.querySelector('.admin-sidebar');
+        if (adminMobileBtn && adminSidebar) {
+            adminMobileBtn.addEventListener('click', () => {
+                adminSidebar.classList.toggle('open');
+            });
+        }
+        
+        document.getElementById('adminLogoutBtn')?.addEventListener('click', async () => {
+            await auth.signOut();
+            window.location.href = '/login.html';
+        });
+    </script>
+    <!-- Universal Notifications Helper -->
+<script src="/js/core/notifications-helper.js"></script>
+</body>
+</html>

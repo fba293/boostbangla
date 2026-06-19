@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#FF6B00">
+    <title>About Us | BoostBangla - Bangladesh's #1 SMM Panel</title>
+    <meta name="description" content="Learn about BoostBangla - Bangladesh's leading SMM panel. We provide affordable social media marketing services with bKash & Nagad payment. Join 77K+ happy customers.">
+    <meta name="keywords" content="about BoostBangla, SMM panel Bangladesh, best SMM panel, BoostBangla story">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B00',
+                        primaryDark: '#CC5500',
+                        darkBg: '#02101A',
+                        softOrange: '#FFF3EA'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        premium: '0 24px 80px rgba(2, 16, 26, 0.12)',
+                        glow: '0 18px 60px rgba(255, 107, 0, 0.28)'
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC4D02;
+            --ink: #02101A;
+            --muted: #64748b;
+            --surface: rgba(255,255,255,0.82);
+            --border: rgba(148, 163, 184, 0.22);
+        }
+
+        * { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
+            color: #0f172a;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.14), transparent 32%),
+                radial-gradient(circle at 90% 8%, rgba(204, 77, 2, 0.12), transparent 30%),
+                linear-gradient(180deg, #fff7ed 0%, #f8fafc 34%, #ffffff 100%);
+            overflow-x: hidden;
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #FF7A1A 0%, #FF6B00 45%, #CC4D02 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, #FF6B00, #CC4D02);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .premium-shell {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .premium-shell::before,
+        .premium-shell::after {
+            content: "";
+            position: absolute;
+            width: 390px;
+            height: 390px;
+            border-radius: 999px;
+            filter: blur(74px);
+            opacity: 0.25;
+            z-index: -1;
+        }
+
+        .premium-shell::before {
+            top: 0;
+            left: -150px;
+            background: #FF6B00;
+        }
+
+        .premium-shell::after {
+            top: 90px;
+            right: -150px;
+            background: #FDBA74;
+        }
+
+        .glass-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
+        }
+
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .pill {
+            background: rgba(255, 107, 0, 0.10);
+            border: 1px solid rgba(255, 107, 0, 0.22);
+            color: #CC4D02;
+            border-radius: 999px;
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .value-card,
+        .mission-card,
+        .milestone-card,
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+            transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+            border: 1px solid rgba(226, 232, 240, 0.92);
+        }
+
+        .value-card::before,
+        .mission-card::before,
+        .milestone-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% -20%, rgba(255, 107, 0, 0.13), transparent 38%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s ease;
+        }
+
+        .value-card:hover,
+        .mission-card:hover,
+        .milestone-card:hover,
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 28px 70px rgba(15, 23, 42, 0.13);
+            border-color: rgba(255, 107, 0, 0.42);
+        }
+
+        .value-card:hover::before,
+        .mission-card:hover::before,
+        .milestone-card:hover::before {
+            opacity: 1;
+        }
+
+        .icon-box {
+            position: relative;
+            z-index: 1;
+        }
+
+        .icon-box::after {
+            content: "";
+            position: absolute;
+            inset: -9px;
+            border-radius: inherit;
+            background: rgba(255, 107, 0, 0.12);
+            z-index: -1;
+            animation: pulseRing 2.8s ease-in-out infinite;
+        }
+
+        @keyframes pulseRing {
+            0%, 100% { transform: scale(.88); opacity: .55; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .animate-float { animation: float 3s ease-in-out infinite; }
+
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 9%;
+            right: 9%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,107,0,.45), transparent);
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .milestone-dot {
+            transition: transform .35s ease, background .35s ease, box-shadow .35s ease;
+        }
+
+        .milestone-card:hover .milestone-dot {
+            transform: scale(1.14) rotate(-6deg);
+            background: linear-gradient(135deg, #FF7A1A, #CC4D02);
+            color: white;
+            box-shadow: 0 16px 44px rgba(255, 107, 0, 0.28);
+        }
+
+        .shine-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 70%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.38), transparent);
+            transform: skewX(-18deg);
+            transition: left .65s ease;
+        }
+
+        .shine-btn:hover::after { left: 130%; }
+
+        .story-visual {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-visual::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,.32), transparent 24%),
+                linear-gradient(135deg, rgba(255,107,0,.15), transparent 52%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        body.dark-mode {
+            color: #f8fafc;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.17), transparent 34%),
+                radial-gradient(circle at 90% 8%, rgba(59, 130, 246, 0.12), transparent 30%),
+                linear-gradient(180deg, #020617 0%, #0f172a 55%, #111827 100%);
+        }
+
+        body.dark-mode .glass-card,
+        body.dark-mode .value-card,
+        body.dark-mode .mission-card,
+        body.dark-mode .milestone-card,
+        body.dark-mode .stat-card {
+            background: rgba(15, 23, 42, 0.76) !important;
+            border-color: rgba(51, 65, 85, 0.92) !important;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .text-gray-600,
+        body.dark-mode .text-gray-500,
+        body.dark-mode .text-gray-400 {
+            color: #cbd5e1 !important;
+        }
+
+        body.dark-mode .bg-white,
+        body.dark-mode .bg-gray-100,
+        body.dark-mode .bg-gray-50 {
+            background: rgba(15, 23, 42, 0.82) !important;
+        }
+
+        body.dark-mode .hero-grid {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+        }
+
+        @media (max-width: 768px) {
+            .timeline-line { display: none; }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header will be loaded dynamically -->
+    <div id="header-placeholder"></div>
+
+    <script>
+        fetch('/public/components/header.html')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+
+                const darkModeToggle = document.getElementById('landingDarkModeToggle');
+                if (darkModeToggle) {
+                    const isDark = localStorage.getItem('darkMode') === 'true';
+                    if (isDark) document.body.classList.add('dark-mode');
+                    const icon = darkModeToggle.querySelector('i');
+                    if (icon && isDark) {
+                        icon.classList.remove('fa-moon');
+                        icon.classList.add('fa-sun');
+                    }
+                    darkModeToggle.addEventListener('click', () => {
+                        const active = document.body.classList.toggle('dark-mode');
+                        localStorage.setItem('darkMode', active ? 'true' : 'false');
+                        const icon = darkModeToggle.querySelector('i');
+                        if (icon) {
+                            icon.classList.toggle('fa-moon', !active);
+                            icon.classList.toggle('fa-sun', active);
+                        }
+                    });
+                }
+
+                const mobileMenuBtn = document.getElementById('landingMobileMenuBtn');
+                const mobileDrawer = document.getElementById('landingMobileDrawer');
+                const drawerOverlay = document.getElementById('landingDrawerOverlay');
+                const closeDrawerBtn = document.getElementById('closeMobileDrawer');
+
+                const closeDrawer = () => {
+                    if (mobileDrawer) mobileDrawer.classList.remove('open');
+                    if (drawerOverlay) drawerOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                };
+
+                if (mobileMenuBtn && mobileDrawer) {
+                    mobileMenuBtn.addEventListener('click', () => {
+                        mobileDrawer.classList.add('open');
+                        if (drawerOverlay) drawerOverlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+                if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+                if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+            })
+            .catch(error => {
+                console.error('Error loading header:', error);
+                document.getElementById('header-placeholder').innerHTML = `
+                    <div style="background:#FF6B00; color:white; text-align:center; padding:10px;">
+                        ⚠️ Header failed to load. Please refresh the page.
+                    </div>
+                `;
+            });
+    </script>
+
+    <main class="min-h-screen premium-shell">
+        <!-- Hero Section -->
+        <section class="hero-grid relative overflow-hidden pt-16 pb-12 md:pt-24 md:pb-20">
+            <div class="container mx-auto px-4">
+                <div class="max-w-5xl mx-auto text-center">
+                    <div class="inline-flex items-center gap-2 glass-card rounded-full px-4 py-2 shadow-sm mb-5">
+                        <i class="fas fa-info-circle text-primary"></i>
+                        <span class="text-sm font-extrabold">Built for Bangladesh, by people who understand Bangladesh</span>
+                    </div>
+
+                    <h1 class="text-4xl md:text-7xl font-black leading-tight tracking-tight mb-5">
+                        About <span class="text-gradient">BoostBangla</span>
+                    </h1>
+
+                    <p class="text-gray-600 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed mb-8">
+                        Bangladesh's trusted SMM panel helping creators, businesses, marketers, and resellers grow faster with affordable prices, local payment methods, and reliable support.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="/public/pages/public/signup.html" class="shine-btn bg-gradient-primary text-white px-8 py-4 rounded-2xl font-extrabold shadow-glow hover:scale-[1.02] transition">
+                            Join 77K+ Users <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="/public/pages/public/services.html" class="glass-card px-8 py-4 rounded-2xl font-extrabold text-primary hover:scale-[1.02] transition">
+                            Explore Services <i class="fas fa-layer-group ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero Stats -->
+        <section class="container mx-auto px-4 -mt-4 relative z-10">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                <div class="stat-card glass-card rounded-2xl p-5 text-center">
+                    <div class="text-2xl md:text-3xl font-black text-primary">2022</div>
+                    <p class="text-sm text-gray-500 mt-1">Founded</p>
+                </div>
+                <div class="stat-card glass-card rounded-2xl p-5 text-center">
+                    <div class="text-2xl md:text-3xl font-black text-primary">77K+</div>
+                    <p class="text-sm text-gray-500 mt-1">Active Users</p>
+                </div>
+                <div class="stat-card glass-card rounded-2xl p-5 text-center">
+                    <div class="text-2xl md:text-3xl font-black text-primary">3.8M+</div>
+                    <p class="text-sm text-gray-500 mt-1">Orders Completed</p>
+                </div>
+                <div class="stat-card glass-card rounded-2xl p-5 text-center">
+                    <div class="text-2xl md:text-3xl font-black text-primary">24/7</div>
+                    <p class="text-sm text-gray-500 mt-1">Support</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main About Content -->
+        <section class="container mx-auto px-4 py-16 md:py-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="story-visual animate-float rounded-[2rem] shadow-premium">
+                    <img src="/public/assets/images/hero-placeholder.png" alt="About BoostBangla Team" class="w-full rounded-[2rem]" onerror="this.src='https://placehold.co/720x560/FF6B00/white?text=BoostBangla+SMM+Panel'">
+                </div>
+                <div>
+                    <span class="pill mb-4"><i class="fas fa-users"></i> Who We Are</span>
+                    <h2 class="text-3xl md:text-5xl font-black leading-tight mb-5">
+                        Bangladesh's Leading <span class="text-gradient">SMM Panel</span>
+                    </h2>
+                    <div class="space-y-4 text-gray-600 leading-relaxed">
+                        <p>BoostBangla was founded with one clear goal: to give Bangladeshi businesses, creators, and marketers access to professional social media marketing services at prices that actually make sense for our market.</p>
+                        <p>We saw too many local users struggling with foreign SMM panels that charged in dollars, had no Bangla support, and offered no way to pay with bKash or Nagad. So we built a better solution.</p>
+                        <p>Today, BoostBangla serves over <strong class="text-primary">77,770+ active users</strong> from every district in Bangladesh and beyond, processing millions of orders with a customer-first experience.</p>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 mt-8">
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">64+</div>
+                            <p class="text-xs text-gray-500 mt-1">Districts Served</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">4.9/5</div>
+                            <p class="text-xs text-gray-500 mt-1">Trusted Rating</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">#1</div>
+                            <p class="text-xs text-gray-500 mt-1">Bangladesh Panel</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission & Vision Section -->
+        <section class="py-16 md:py-20 bg-gray-100/70">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-10">
+                    <span class="pill mb-4"><i class="fas fa-compass"></i> Direction</span>
+                    <h2 class="text-3xl md:text-5xl font-black mb-4">Mission & <span class="text-gradient">Vision</span></h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">The purpose and future that guide every product decision.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <div class="mission-card bg-white rounded-[2rem] p-8 shadow-premium text-center">
+                        <div class="icon-box w-18 h-18 bg-gradient-primary rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-glow" style="width:72px;height:72px;">
+                            <i class="fas fa-bullseye text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-black mb-3">Our Mission</h3>
+                        <p class="text-gray-600 leading-relaxed">To democratize social media growth by making professional SMM services affordable, accessible, and reliable for every Bangladeshi business, creator, and marketer.</p>
+                    </div>
+                    <div class="mission-card bg-white rounded-[2rem] p-8 shadow-premium text-center">
+                        <div class="icon-box w-18 h-18 bg-gradient-primary rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-glow" style="width:72px;height:72px;">
+                            <i class="fas fa-eye text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-black mb-3">Our Vision</h3>
+                        <p class="text-gray-600 leading-relaxed">To become the most trusted SMM panel in South Asia, empowering millions of businesses to succeed in the digital economy through smart social media marketing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Values Section -->
+        <section class="container mx-auto px-4 py-16 md:py-24">
+            <div class="text-center mb-12">
+                <span class="pill mb-4"><i class="fas fa-heart"></i> What Drives Us</span>
+                <h2 class="text-3xl md:text-5xl font-black mb-4">Our Core <span class="text-gradient">Values</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">The principles that guide everything we do.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+                <div class="value-card bg-white rounded-[2rem] p-7 text-center shadow-premium">
+                    <div class="icon-box w-16 h-16 bg-gradient-primary rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-glow">
+                        <i class="fas fa-hand-holding-heart text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-xl mb-3">Customer First</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Our customers are at the heart of every decision we make. Your success is our success.</p>
+                </div>
+                <div class="value-card bg-white rounded-[2rem] p-7 text-center shadow-premium">
+                    <div class="icon-box w-16 h-16 bg-gradient-primary rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-glow">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-xl mb-3">Trust & Transparency</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">We believe in honest pricing, clear policies, and delivering exactly what we promise.</p>
+                </div>
+                <div class="value-card bg-white rounded-[2rem] p-7 text-center shadow-premium">
+                    <div class="icon-box w-16 h-16 bg-gradient-primary rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-glow">
+                        <i class="fas fa-rocket text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-xl mb-3">Innovation</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Constantly improving our platform to provide faster, better, and more affordable services.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Milestones Section -->
+        <section class="py-16 md:py-20 bg-gray-100/70">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="pill mb-4"><i class="fas fa-route"></i> Our Journey</span>
+                    <h2 class="text-3xl md:text-5xl font-black">Key <span class="text-gradient">Milestones</span></h2>
+                </div>
+                <div class="relative max-w-6xl mx-auto">
+                    <div class="timeline-line"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
+                        <div class="milestone-card bg-white rounded-[2rem] p-6 text-center shadow-premium">
+                            <div class="milestone-dot w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 text-primary">
+                                <i class="fas fa-flag-checkered text-xl"></i>
+                            </div>
+                            <div class="text-3xl font-black text-primary">2022</div>
+                            <p class="font-black mt-1">Company Founded</p>
+                            <p class="text-xs text-gray-500 mt-1">Started with a vision</p>
+                        </div>
+                        <div class="milestone-card bg-white rounded-[2rem] p-6 text-center shadow-premium">
+                            <div class="milestone-dot w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 text-primary">
+                                <i class="fas fa-users text-xl"></i>
+                            </div>
+                            <div class="text-3xl font-black text-primary">10K+</div>
+                            <p class="font-black mt-1">First Milestone</p>
+                            <p class="text-xs text-gray-500 mt-1">Reached 10K users</p>
+                        </div>
+                        <div class="milestone-card bg-white rounded-[2rem] p-6 text-center shadow-premium">
+                            <div class="milestone-dot w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 text-primary">
+                                <i class="fas fa-chart-line text-xl"></i>
+                            </div>
+                            <div class="text-3xl font-black text-primary">1M+</div>
+                            <p class="font-black mt-1">Orders Processed</p>
+                            <p class="text-xs text-gray-500 mt-1">First million orders</p>
+                        </div>
+                        <div class="milestone-card bg-white rounded-[2rem] p-6 text-center shadow-premium">
+                            <div class="milestone-dot w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 text-primary">
+                                <i class="fas fa-trophy text-xl"></i>
+                            </div>
+                            <div class="text-3xl font-black text-primary">#1</div>
+                            <p class="font-black mt-1">Top Rated</p>
+                            <p class="text-xs text-gray-500 mt-1">Bangladesh's #1 SMM panel</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="container mx-auto px-4 py-16">
+            <div class="glass-card rounded-[2rem] p-6 md:p-10">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-black text-primary">77,770+</div>
+                        <p class="text-gray-500 text-sm mt-1">Happy Clients</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-black text-primary">3.8M+</div>
+                        <p class="text-gray-500 text-sm mt-1">Orders Completed</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-black text-primary">64+</div>
+                        <p class="text-gray-500 text-sm mt-1">Districts Served</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-black text-primary">24/7</div>
+                        <p class="text-gray-500 text-sm mt-1">Support Available</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="container mx-auto px-4 pb-20">
+            <div class="relative overflow-hidden rounded-[2rem] bg-gradient-primary py-16 px-6 text-center text-white shadow-glow">
+                <div class="absolute inset-0 opacity-20 hero-grid"></div>
+                <div class="relative z-10 max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-5xl font-black mb-4">Ready to Grow With Us?</h2>
+                    <p class="text-lg mb-8 opacity-90">Join 77,770+ satisfied customers and start your growth journey today.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="/public/pages/public/signup.html" class="shine-btn bg-white text-primary px-8 py-4 rounded-2xl font-extrabold hover:shadow-lg transition">
+                            Create Free Account
+                        </a>
+                        <a href="/public/pages/public/contact.html" class="border-2 border-white text-white px-8 py-4 rounded-2xl font-extrabold hover:bg-white hover:text-primary transition">
+                            Contact Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Premium Footer -->
+    <footer class="bg-[#02101A] text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <span class="text-2xl font-bold tracking-tight">Boost<span class="text-primary">Bangla</span></span>
+                    <p class="text-gray-400 text-sm mt-3 leading-relaxed">Bangladesh's #1 SMM Panel. Get real followers, likes, and views with bKash & Nagad payment.</p>
+                    <div class="flex gap-1 mt-3">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                        <span class="text-gray-400 text-xs ml-2">4.9/5 Trusted</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/index.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Home</a></li>
+                        <li><a href="/public/pages/public/services.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Services</a></li>
+                        <li><a href="/public/pages/public/pricing.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Pricing</a></li>
+                        <li><a href="/public/pages/public/about.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/public/pages/public/contact.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Contact Us</a></li>
+                        <li><a href="/public/pages/public/faq.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> FAQ</a></li>
+                        <li><a href="/public/pages/public/refund-policy.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Refund Policy</a></li>
+                        <li><a href="/public/pages/public/terms-of-service.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Get In Touch</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-whatsapp text-green-500 text-xl w-6"></i> +880 1XXX XXX XXX</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-telegram text-blue-400 text-xl w-6"></i> @boostbangla</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fas fa-envelope text-primary text-xl w-6"></i> support@boostbangla.com.bd</li>
+                    </ul>
+                    <div class="flex gap-3 mt-6">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-instagram text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-youtube text-gray-400"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
+                © 2025 BoostBangla. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

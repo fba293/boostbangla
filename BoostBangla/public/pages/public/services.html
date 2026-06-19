@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#FF6B00">
+    <title>Services | BoostBangla - Social Media Marketing Services</title>
+    <meta name="description" content="Explore BoostBangla's complete range of SMM services. Buy real followers, likes, views for YouTube, Facebook, Instagram, TikTok at cheapest rates in Bangladesh.">
+    <meta name="keywords" content="SMM services Bangladesh, buy YouTube views, Facebook likes, Instagram followers, TikTok views">
+    <meta name="author" content="BoostBangla">
+    <meta property="og:title" content="BoostBangla Services - Social Media Marketing Services">
+    <meta property="og:description" content="Browse YouTube, Facebook, Instagram, TikTok, Twitter and Telegram SMM services with bKash, Nagad and Rocket payment.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B00',
+                        primaryDark: '#CC5500',
+                        ink: '#07111F',
+                        darkBg: '#02101A',
+                        softOrange: '#FFF2E8'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        glow: '0 20px 80px rgba(255, 107, 0, 0.25)',
+                        soft: '0 22px 70px rgba(15, 23, 42, 0.10)'
+                    },
+                    animation: {
+                        float: 'float 4s ease-in-out infinite',
+                        shimmer: 'shimmer 2.2s linear infinite',
+                        fadeUp: 'fadeUp .7s ease both'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-14px)' }
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-800px 0' },
+                            '100%': { backgroundPosition: '800px 0' }
+                        },
+                        fadeUp: {
+                            '0%': { opacity: 0, transform: 'translateY(18px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: Inter, 'Noto Sans Bengali', sans-serif; }
+        .bg-gradient-primary { background: linear-gradient(135deg, #FF7A1A 0%, #FF4D00 48%, #B93A00 100%); }
+        .text-gradient { background: linear-gradient(135deg, #FF7A1A, #FF4D00, #8B2C00); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .glass { background: rgba(255,255,255,.78); backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,.7); }
+        .dark .glass, body.dark-mode .glass { background: rgba(15, 23, 42, .72); border-color: rgba(148, 163, 184, .16); }
+        .hero-orb { position:absolute; border-radius:9999px; filter: blur(34px); opacity:.35; pointer-events:none; }
+        .category-btn.active { background: linear-gradient(135deg, #FF6B00, #CC4D02); color: white; border-color: transparent; box-shadow: 0 12px 30px rgba(255,107,0,.25); }
+        .category-btn { white-space: nowrap; }
+        .service-card { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+        .service-card:hover { transform: translateY(-7px); box-shadow: 0 24px 60px rgba(15,23,42,.14); border-color: rgba(255,107,0,.28); }
+        .dark .service-card:hover, body.dark-mode .service-card:hover { box-shadow: 0 24px 60px rgba(0,0,0,.38); }
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+        .loader { width: 54px; height: 54px; border: 4px solid rgba(255,107,0,.14); border-top: 4px solid #FF6B00; border-radius: 50%; animation: spin 1s linear infinite; margin: 32px auto 16px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .skeleton { background: linear-gradient(90deg, #f1f5f9 25%, #ffffff 37%, #f1f5f9 63%); background-size: 800px 100%; animation: shimmer 2.2s linear infinite; }
+        .dark .skeleton, body.dark-mode .skeleton { background: linear-gradient(90deg, #1e293b 25%, #334155 37%, #1e293b 63%); background-size: 800px 100%; }
+        body.dark-mode { background: #0f172a !important; color: #e2e8f0; }
+        body.dark-mode .bg-white { background-color: #1e293b !important; }
+        body.dark-mode .bg-gray-50 { background-color: #0f172a !important; }
+        body.dark-mode .bg-gray-100 { background-color: #111827 !important; }
+        body.dark-mode .text-gray-600 { color: #cbd5e1 !important; }
+        body.dark-mode .text-gray-500 { color: #94a3b8 !important; }
+        body.dark-mode .border-gray-200 { border-color: #334155 !important; }
+        body.dark-mode input { background: #1e293b !important; color: #f8fafc !important; }
+        @media (max-width: 640px) { .services-grid { grid-template-columns: 1fr; gap: 16px; } }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+
+    <div id="header-placeholder"></div>
+
+    <script>
+        function initLandingHeader() {
+            const darkModeToggle = document.getElementById('landingDarkModeToggle');
+            const mobileMenuBtn = document.getElementById('landingMobileMenuBtn');
+            const mobileDrawer = document.getElementById('landingMobileDrawer');
+            const drawerOverlay = document.getElementById('landingDrawerOverlay');
+            const closeDrawerBtn = document.getElementById('closeMobileDrawer');
+
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            document.body.classList.toggle('dark-mode', isDark);
+            document.documentElement.classList.toggle('dark', isDark);
+            if (darkModeToggle) {
+                const icon = darkModeToggle.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('fa-sun', isDark);
+                    icon.classList.toggle('fa-moon', !isDark);
+                }
+                darkModeToggle.addEventListener('click', () => {
+                    const next = !document.body.classList.contains('dark-mode');
+                    document.body.classList.toggle('dark-mode', next);
+                    document.documentElement.classList.toggle('dark', next);
+                    localStorage.setItem('darkMode', String(next));
+                    const i = darkModeToggle.querySelector('i');
+                    if (i) {
+                        i.classList.toggle('fa-sun', next);
+                        i.classList.toggle('fa-moon', !next);
+                    }
+                });
+            }
+
+            const closeDrawer = () => {
+                if (mobileDrawer) mobileDrawer.classList.add('translate-x-full');
+                if (drawerOverlay) drawerOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            };
+            if (mobileMenuBtn && mobileDrawer) mobileMenuBtn.addEventListener('click', () => {
+                mobileDrawer.classList.remove('translate-x-full');
+                if (drawerOverlay) drawerOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+            if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+            if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+        }
+
+        fetch('/public/components/header.html')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                initLandingHeader();
+            })
+            .catch(() => {
+                document.getElementById('header-placeholder').innerHTML = `
+                    <header class="sticky top-0 z-50 glass">
+                        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+                            <a href="/index.html" class="text-2xl font-black tracking-tight">Boost<span class="text-primary">Bangla</span></a>
+                            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold">
+                                <a href="/index.html" class="hover:text-primary transition">Home</a>
+                                <a href="/public/pages/public/services.html" class="text-primary">Services</a>
+                                <a href="/public/pages/public/pricing.html" class="hover:text-primary transition">Pricing</a>
+                                <a href="/public/pages/public/contact.html" class="hover:text-primary transition">Contact</a>
+                            </nav>
+                            <div class="flex items-center gap-3">
+                                <button id="landingDarkModeToggle" class="w-10 h-10 rounded-full bg-white/80 dark:bg-slate-800 shadow flex items-center justify-center"><i class="fas fa-moon"></i></button>
+                                <a href="/public/pages/public/signup.html" class="hidden sm:inline-flex bg-gradient-primary text-white px-5 py-2.5 rounded-full font-bold shadow-glow">Get Started</a>
+                                <button id="landingMobileMenuBtn" class="md:hidden w-10 h-10 rounded-full bg-white/80 dark:bg-slate-800 shadow flex items-center justify-center"><i class="fas fa-bars"></i></button>
+                            </div>
+                        </div>
+                    </header>
+                    <div id="landingDrawerOverlay" class="hidden fixed inset-0 bg-black/50 z-50"></div>
+                    <aside id="landingMobileDrawer" class="fixed top-0 right-0 h-full w-80 max-w-[88vw] bg-white dark:bg-slate-900 z-[60] shadow-2xl translate-x-full transition-transform p-6">
+                        <div class="flex items-center justify-between mb-8"><span class="text-xl font-black">Boost<span class="text-primary">Bangla</span></span><button id="closeMobileDrawer" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800"><i class="fas fa-times"></i></button></div>
+                        <nav class="grid gap-4 font-semibold"><a href="/index.html">Home</a><a class="text-primary" href="/public/pages/public/services.html">Services</a><a href="/public/pages/public/pricing.html">Pricing</a><a href="/public/pages/public/contact.html">Contact</a><a href="/public/pages/public/signup.html" class="bg-gradient-primary text-white text-center py-3 rounded-xl">Create Account</a></nav>
+                    </aside>`;
+                initLandingHeader();
+            });
+    </script>
+
+    <main class="min-h-screen overflow-hidden">
+        <section class="relative pt-16 pb-10 md:pt-24 md:pb-16">
+            <div class="hero-orb bg-orange-400 w-72 h-72 -top-20 -left-20"></div>
+            <div class="hero-orb bg-purple-400 w-80 h-80 top-16 -right-20"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,107,0,.14),transparent_34%),linear-gradient(180deg,#fff7ed_0%,#ffffff_65%,#f8fafc_100%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(255,107,0,.18),transparent_34%),linear-gradient(180deg,#020617_0%,#0f172a_70%,#111827_100%)] -z-10"></div>
+
+            <div class="container mx-auto px-4">
+                <div class="grid lg:grid-cols-[1.1fr_.9fr] gap-10 items-center">
+                    <div class="animate-fadeUp">
+                        <div class="inline-flex items-center gap-2 glass rounded-full px-4 py-2 shadow-sm mb-6">
+                            <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
+                            <span class="text-sm font-bold text-slate-700 dark:text-slate-200">Live SMM Marketplace • Bangladesh Ready</span>
+                        </div>
+                        <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-5">
+                            Find the perfect <span class="text-gradient">SMM Service</span><br class="hidden md:block"> in seconds
+                        </h1>
+                        <p class="text-lg md:text-xl text-gray-600 dark:text-slate-300 max-w-2xl leading-relaxed mb-8">
+                            Browse YouTube, Facebook, Instagram, TikTok, Twitter and Telegram growth services with instant pricing in BDT, smart filtering and one-click signup.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                            <a href="#service-browser" class="bg-gradient-primary text-white text-center px-8 py-4 rounded-2xl font-extrabold shadow-glow hover:scale-[1.02] transition">Browse Services <i class="fas fa-arrow-down ml-2"></i></a>
+                            <a href="/public/pages/public/signup.html" class="glass text-center px-8 py-4 rounded-2xl font-extrabold hover:border-primary transition">Create Free Account</a>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3 max-w-xl">
+                            <div class="glass rounded-2xl p-4 text-center"><div class="font-black text-xl text-primary">4,200+</div><div class="text-xs text-gray-500 dark:text-slate-400">Services</div></div>
+                            <div class="glass rounded-2xl p-4 text-center"><div class="font-black text-xl text-primary">24/7</div><div class="text-xs text-gray-500 dark:text-slate-400">Support</div></div>
+                            <div class="glass rounded-2xl p-4 text-center"><div class="font-black text-xl text-primary">BDT</div><div class="text-xs text-gray-500 dark:text-slate-400">Pricing</div></div>
+                        </div>
+                    </div>
+
+                    <div class="relative animate-float hidden lg:block">
+                        <div class="glass rounded-[2rem] shadow-soft p-6 border border-white/70">
+                            <div class="flex items-center justify-between mb-5">
+                                <div>
+                                    <p class="text-xs text-gray-500 dark:text-slate-400 font-semibold">SERVICE PREVIEW</p>
+                                    <h3 class="text-xl font-black">BoostBangla Panel</h3>
+                                </div>
+                                <div class="w-12 h-12 rounded-2xl bg-gradient-primary flex items-center justify-center text-white shadow-glow"><i class="fas fa-bolt"></i></div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-orange-100 dark:border-slate-700">
+                                    <div class="flex items-center justify-between mb-2"><span class="font-bold"><i class="fab fa-youtube text-red-600 mr-2"></i>YouTube Views</span><span class="text-primary font-black">৳144</span></div>
+                                    <div class="h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-primary rounded-full w-4/5"></div></div>
+                                </div>
+                                <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-orange-100 dark:border-slate-700">
+                                    <div class="flex items-center justify-between mb-2"><span class="font-bold"><i class="fab fa-facebook text-blue-600 mr-2"></i>Facebook Likes</span><span class="text-primary font-black">৳85</span></div>
+                                    <div class="h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-primary rounded-full w-3/5"></div></div>
+                                </div>
+                                <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-orange-100 dark:border-slate-700">
+                                    <div class="flex items-center justify-between mb-2"><span class="font-bold"><i class="fab fa-instagram text-pink-600 mr-2"></i>Instagram Reels</span><span class="text-primary font-black">৳120</span></div>
+                                    <div class="h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-primary rounded-full w-5/6"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 -mt-2 md:-mt-4 relative z-10">
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="glass rounded-3xl p-5 shadow-soft flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-orange-100 text-primary flex items-center justify-center"><i class="fas fa-exchange-alt"></i></div>
+                    <div><p class="text-xs uppercase tracking-wider text-gray-500 dark:text-slate-400 font-bold">Live Exchange Rate</p><p class="font-black text-lg"><span id="exchangeRate">122.78</span> BDT / USD</p></div>
+                </div>
+                <div class="glass rounded-3xl p-5 shadow-soft flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-orange-100 text-primary flex items-center justify-center"><i class="fas fa-tags"></i></div>
+                    <div><p class="text-xs uppercase tracking-wider text-gray-500 dark:text-slate-400 font-bold">Smart Price Markup</p><p class="font-black text-lg">15% Applied</p></div>
+                </div>
+                <div class="glass rounded-3xl p-5 shadow-soft flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-orange-100 text-primary flex items-center justify-center"><i class="fas fa-shield-halved"></i></div>
+                    <div><p class="text-xs uppercase tracking-wider text-gray-500 dark:text-slate-400 font-bold">Payment Ready</p><p class="font-black text-lg">bKash • Nagad • Rocket</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="service-browser" class="container mx-auto px-4 py-14">
+            <div class="glass rounded-[2rem] shadow-soft p-5 md:p-7 mb-8">
+                <div class="flex flex-col lg:flex-row gap-5 lg:items-center lg:justify-between mb-6">
+                    <div>
+                        <p class="text-primary font-extrabold uppercase tracking-wider text-sm mb-1">Service Browser</p>
+                        <h2 class="text-2xl md:text-3xl font-black">Search, filter and order faster</h2>
+                    </div>
+                    <div class="relative w-full lg:w-[420px]">
+                        <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="searchServices" placeholder="Search YouTube, Instagram, followers, views..." class="w-full pl-14 pr-4 py-4 rounded-2xl border border-gray-200 bg-white/90 dark:bg-slate-800 dark:border-slate-700 focus:outline-none focus:ring-4 focus:ring-orange-100 focus:border-primary transition font-medium">
+                    </div>
+                </div>
+
+                <div class="flex overflow-x-auto pb-2 gap-3 md:flex-wrap md:overflow-visible">
+                    <button class="category-btn active px-5 py-3 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 hover:border-primary transition font-bold" data-cat="all">📌 All Services</button>
+                    <button class="category-btn px-5 py-3 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 hover:border-primary transition font-bold" data-cat="youtube">🎬 YouTube</button>
+                    <button class="category-btn px-5 py-3 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 hover:border-primary transition font-bold" data-cat="facebook">📘 Facebook</button>
+                    <button class="category-btn px-5 py-3 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 hover:border-primary transition font-bold" data-cat="instagram">📸 Instagram</button>
+                    <button class="category-btn px-5 py-3 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 hover:border-primary transition font-bold" data-cat="tiktok">🎵 TikTok</button>
+                    <button class="category-btn px-5 py-3 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 hover:border-primary transition font-bold" data-cat="twitter">🐦 Twitter</button>
+                    <button class="category-btn px-5 py-3 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 hover:border-primary transition font-bold" data-cat="telegram">✈️ Telegram</button>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between mb-5 px-1">
+                <p id="resultSummary" class="text-sm text-gray-500 dark:text-slate-400 font-semibold">Loading premium services...</p>
+                <button id="clearFilters" class="text-sm font-bold text-primary hover:underline hidden">Clear filters</button>
+            </div>
+
+            <div id="servicesGrid" class="services-grid">
+                <div class="text-center py-14 col-span-full">
+                    <div class="loader"></div>
+                    <p class="text-gray-500 dark:text-gray-400 mt-3 font-semibold">Loading services from AmarBoost...</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="relative py-16 md:py-20 overflow-hidden">
+            <div class="absolute inset-0 bg-[#02101A]"></div>
+            <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_20%_20%,rgba(255,107,0,.45),transparent_30%),radial-gradient(circle_at_80%_60%,rgba(99,102,241,.35),transparent_30%)]"></div>
+            <div class="container mx-auto px-4 relative z-10 text-center text-white">
+                <div class="inline-flex items-center gap-2 bg-white/10 border border-white/10 rounded-full px-4 py-2 mb-5"><i class="fas fa-rocket text-primary"></i><span class="text-sm font-bold">Start growing today</span></div>
+                <h2 class="text-3xl md:text-5xl font-black mb-5">Ready to boost your social media?</h2>
+                <p class="text-slate-300 max-w-2xl mx-auto mb-8 text-lg">Create your free account, add funds with local payment methods, choose any service, and track every order from your dashboard.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/public/pages/public/signup.html" class="bg-gradient-primary text-white px-8 py-4 rounded-2xl font-extrabold shadow-glow hover:scale-[1.02] transition">Create Free Account</a>
+                    <a href="/public/pages/public/contact.html" class="border border-white/20 bg-white/10 text-white px-8 py-4 rounded-2xl font-extrabold hover:bg-white/20 transition">Contact Support</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#02101A] text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <span class="text-2xl font-black tracking-tight">Boost<span class="text-primary">Bangla</span></span>
+                    <p class="text-gray-400 text-sm mt-3 leading-relaxed">Bangladesh's #1 SMM Panel. Get real followers, likes, and views with bKash & Nagad payment.</p>
+                    <div class="flex gap-1 mt-3"><i class="fas fa-star text-yellow-400 text-xs"></i><i class="fas fa-star text-yellow-400 text-xs"></i><i class="fas fa-star text-yellow-400 text-xs"></i><i class="fas fa-star text-yellow-400 text-xs"></i><i class="fas fa-star-half-alt text-yellow-400 text-xs"></i><span class="text-gray-400 text-xs ml-2">4.9/5 Trusted</span></div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Quick Links</h4>
+                    <ul class="space-y-2 text-sm"><li><a href="/index.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Home</a></li><li><a href="/public/pages/public/services.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Services</a></li><li><a href="/public/pages/public/pricing.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Pricing</a></li><li><a href="/public/pages/public/about.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> About Us</a></li></ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Support</h4>
+                    <ul class="space-y-2 text-sm"><li><a href="/public/pages/public/contact.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Contact Us</a></li><li><a href="/public/pages/public/faq.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> FAQ</a></li><li><a href="/public/pages/public/refund-policy.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Refund Policy</a></li><li><a href="/public/pages/public/terms-of-service.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Terms of Service</a></li></ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Get In Touch</h4>
+                    <ul class="space-y-3 text-sm"><li class="flex items-center gap-3 text-gray-400"><i class="fab fa-whatsapp text-green-500 text-xl w-6"></i> +880 1XXX XXX XXX</li><li class="flex items-center gap-3 text-gray-400"><i class="fab fa-telegram text-blue-400 text-xl w-6"></i> @boostbangla</li><li class="flex items-center gap-3 text-gray-400"><i class="fas fa-envelope text-primary text-xl w-6"></i> support@boostbangla.com.bd</li></ul>
+                    <div class="flex gap-3 mt-6"><a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f text-gray-400"></i></a><a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-instagram text-gray-400"></i></a><a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-youtube text-gray-400"></i></a></div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">© 2025 BoostBangla. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        const API_PROXY = '/public/php/api-proxy.php';
+        const MARKUP_PERCENTAGE = 15;
+        let allServices = [];
+        let currentCategory = 'all';
+        let currentSearch = '';
+        let exchangeRate = 122.78;
+
+        const platformMeta = {
+            youtube: { icon: 'fab fa-youtube', color: 'text-red-600', badge: 'bg-red-50 text-red-700' },
+            facebook: { icon: 'fab fa-facebook', color: 'text-blue-600', badge: 'bg-blue-50 text-blue-700' },
+            instagram: { icon: 'fab fa-instagram', color: 'text-pink-600', badge: 'bg-pink-50 text-pink-700' },
+            tiktok: { icon: 'fab fa-tiktok', color: 'text-slate-900 dark:text-white', badge: 'bg-slate-100 text-slate-700' },
+            twitter: { icon: 'fab fa-x-twitter', color: 'text-slate-900 dark:text-white', badge: 'bg-slate-100 text-slate-700' },
+            telegram: { icon: 'fab fa-telegram', color: 'text-sky-500', badge: 'bg-sky-50 text-sky-700' },
+            other: { icon: 'fas fa-star', color: 'text-primary', badge: 'bg-orange-50 text-orange-700' }
+        };
+
+        async function getExchangeRate() {
+            try {
+                const response = await fetch('https://api.frankfurter.app/latest?from=USD&to=BDT');
+                const data = await response.json();
+                if (data && data.rates && data.rates.BDT) {
+                    exchangeRate = data.rates.BDT;
+                    const rateEl = document.getElementById('exchangeRate');
+                    if (rateEl) rateEl.innerText = exchangeRate.toFixed(2);
+                }
+            } catch (e) {
+                exchangeRate = 122.78;
+            }
+            return exchangeRate;
+        }
+
+        function getServiceCategory(name) {
+            const n = String(name || '').toLowerCase();
+            if (n.includes('youtube')) return 'youtube';
+            if (n.includes('facebook') || n.includes('fb ')) return 'facebook';
+            if (n.includes('instagram') || n.includes('ig ')) return 'instagram';
+            if (n.includes('tiktok')) return 'tiktok';
+            if (n.includes('twitter') || n.includes('x ')) return 'twitter';
+            if (n.includes('telegram')) return 'telegram';
+            return 'other';
+        }
+
+        function calculatePriceBDT(usdRate) {
+            const markedUpUSD = parseFloat(usdRate || 0) * (1 + MARKUP_PERCENTAGE / 100);
+            return Math.max(1, Math.round(markedUpUSD * exchangeRate));
+        }
+
+        function formatBDT(amount) { return '৳' + Number(amount || 0).toLocaleString(); }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text || '';
+            return div.innerHTML;
+        }
+
+        function serviceSkeletons() {
+            return Array.from({length: 6}).map(() => `
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm">
+                    <div class="skeleton h-12 w-12 rounded-2xl mb-4"></div>
+                    <div class="skeleton h-4 w-3/4 rounded mb-3"></div>
+                    <div class="skeleton h-4 w-5/6 rounded mb-5"></div>
+                    <div class="skeleton h-8 w-1/2 rounded mb-5"></div>
+                    <div class="skeleton h-10 w-full rounded-xl"></div>
+                </div>`).join('');
+        }
+
+        function updateSummary(count) {
+            const summary = document.getElementById('resultSummary');
+            const clearBtn = document.getElementById('clearFilters');
+            if (summary) {
+                const catLabel = currentCategory === 'all' ? 'all platforms' : currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
+                summary.textContent = `${count.toLocaleString()} services found for ${catLabel}${currentSearch ? ` matching “${currentSearch}”` : ''}`;
+            }
+            if (clearBtn) clearBtn.classList.toggle('hidden', currentCategory === 'all' && !currentSearch);
+        }
+
+        function displayServices() {
+            const grid = document.getElementById('servicesGrid');
+            if (!grid) return;
+            let filtered = [...allServices];
+            if (currentCategory !== 'all') filtered = filtered.filter(s => getServiceCategory(s.name) === currentCategory);
+            if (currentSearch) filtered = filtered.filter(s => String(s.name || '').toLowerCase().includes(currentSearch.toLowerCase()));
+            updateSummary(filtered.length);
+
+            if (!filtered.length) {
+                grid.innerHTML = `
+                    <div class="col-span-full glass rounded-[2rem] p-10 text-center shadow-soft">
+                        <div class="w-16 h-16 rounded-2xl bg-orange-100 text-primary mx-auto flex items-center justify-center mb-4"><i class="fas fa-magnifying-glass text-2xl"></i></div>
+                        <h3 class="text-2xl font-black mb-2">No services found</h3>
+                        <p class="text-gray-500 dark:text-slate-400 mb-5">Try another keyword or select All Services.</p>
+                        <button onclick="resetFilters()" class="bg-gradient-primary text-white px-6 py-3 rounded-xl font-bold">Reset Filters</button>
+                    </div>`;
+                return;
+            }
+
+            const displayItems = filtered.slice(0, 30);
+            grid.innerHTML = displayItems.map((service, index) => {
+                const category = getServiceCategory(service.name);
+                const meta = platformMeta[category] || platformMeta.other;
+                const priceBDT = calculatePriceBDT(service.rate);
+                const originalName = String(service.name || 'SMM Service');
+                const shortName = originalName.length > 74 ? originalName.substring(0, 71) + '...' : originalName;
+                const min = Number(service.min || 10).toLocaleString();
+                const max = Number(service.max || 1000000).toLocaleString();
+                return `
+                    <article class="service-card bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-6 border border-gray-100 dark:border-slate-700 shadow-sm animate-fadeUp" style="animation-delay:${Math.min(index * 0.025, .35)}s">
+                        <div class="flex items-start justify-between gap-3 mb-5">
+                            <div class="w-13 h-13 min-w-13 rounded-2xl bg-orange-50 dark:bg-slate-900 border border-orange-100 dark:border-slate-700 flex items-center justify-center">
+                                <i class="${meta.icon} ${meta.color} text-2xl"></i>
+                            </div>
+                            <span class="text-[11px] font-black uppercase tracking-wide ${meta.badge} px-3 py-1 rounded-full dark:bg-slate-900 dark:text-slate-300">${category}</span>
+                        </div>
+                        <h3 class="font-black text-lg text-slate-900 dark:text-white mb-3 line-clamp-2" title="${escapeHtml(originalName)}">${escapeHtml(shortName)}</h3>
+                        <div class="flex items-end justify-between gap-3 mb-4">
+                            <div>
+                                <p class="text-xs uppercase tracking-wider text-gray-400 font-bold">Starting price</p>
+                                <div class="text-3xl font-black text-primary">${formatBDT(priceBDT)}</div>
+                            </div>
+                            <span class="text-xs font-bold text-gray-400">ID: ${escapeHtml(service.service || service.id || 'N/A')}</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 mb-5 text-sm">
+                            <div class="rounded-2xl bg-slate-50 dark:bg-slate-900 p-3"><p class="text-gray-400 text-xs font-bold">Minimum</p><p class="font-black">${min}</p></div>
+                            <div class="rounded-2xl bg-slate-50 dark:bg-slate-900 p-3"><p class="text-gray-400 text-xs font-bold">Maximum</p><p class="font-black">${max}</p></div>
+                        </div>
+                        <a href="/public/pages/public/signup.html" class="block w-full text-center bg-gradient-primary text-white py-3 rounded-2xl text-sm font-black hover:opacity-95 transition shadow-glow">
+                            Order Now <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </article>`;
+            }).join('');
+        }
+
+        async function loadServices() {
+            const grid = document.getElementById('servicesGrid');
+            if (!grid) return;
+            grid.innerHTML = serviceSkeletons();
+            await getExchangeRate();
+            try {
+                const response = await fetch(API_PROXY + '?action=services');
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                const services = await response.json();
+                if (Array.isArray(services) && services.length) {
+                    allServices = services;
+                    displayServices();
+                } else {
+                    allServices = [];
+                    updateSummary(0);
+                    grid.innerHTML = `<div class="col-span-full text-center glass rounded-[2rem] p-10 shadow-soft"><h3 class="text-2xl font-black mb-2">No services available</h3><p class="text-gray-500 dark:text-slate-400">Please check again later.</p></div>`;
+                }
+            } catch (error) {
+                console.error('Error loading services:', error);
+                updateSummary(0);
+                grid.innerHTML = `
+                    <div class="col-span-full glass rounded-[2rem] p-10 text-center shadow-soft">
+                        <div class="w-16 h-16 rounded-2xl bg-red-50 text-red-500 mx-auto flex items-center justify-center mb-4"><i class="fas fa-triangle-exclamation text-2xl"></i></div>
+                        <h3 class="text-2xl font-black mb-2">Failed to load services</h3>
+                        <p class="text-gray-500 dark:text-slate-400 mb-5">${escapeHtml(error.message)}</p>
+                        <button onclick="loadServices()" class="bg-gradient-primary text-white px-6 py-3 rounded-xl font-bold">Try Again</button>
+                    </div>`;
+            }
+        }
+
+        function resetFilters() {
+            currentCategory = 'all';
+            currentSearch = '';
+            const searchInput = document.getElementById('searchServices');
+            if (searchInput) searchInput.value = '';
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
+            displayServices();
+        }
+
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.cat;
+                displayServices();
+            });
+        });
+
+        const searchInput = document.getElementById('searchServices');
+        if (searchInput) searchInput.addEventListener('input', (e) => { currentSearch = e.target.value.trim(); displayServices(); });
+        const clearBtn = document.getElementById('clearFilters');
+        if (clearBtn) clearBtn.addEventListener('click', resetFilters);
+
+        loadServices();
+    </script>
+</body>
+</html>

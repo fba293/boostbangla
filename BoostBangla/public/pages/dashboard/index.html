@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | BoostBangla - SMM Panel</title>
+    <meta name="description" content="Manage your orders, track balance, and place new orders from your BoostBangla dashboard.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if(typeof showToast !== 'function') window.showToast = (msg,type)=>{alert(msg)};
+tailwind.config={theme:{extend:{colors:{primary:'#FF6B00',primaryDark:'#CC5500',darkBg:'#02101A'},fontFamily:{inter:['Inter','sans-serif'],bangla:['Noto Sans Bengali','Inter','sans-serif']}}}}</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- <link rel="stylesheet" href="/public/assets/css/style.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/dark-mode.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/mobile.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/animations.css"> -->
+    <style>
+        .bg-gradient-primary{background:linear-gradient(90deg,#FF6B00 0%,#CC4D02 100%)}
+        body.dark-mode .bg-white{background:#1e293b!important}
+        body.dark-mode .text-gray-600,body.dark-mode .text-gray-500{color:#94a3b8!important}
+        
+        .bg-white { background-color: white; }
+        body.dark-mode .bg-white { background-color: #1e293b; }
+        .rounded-xl { border-radius: 1rem; }
+        
+        /* Stat card animations */
+        .stat-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Quick action buttons */
+        .quick-action {
+            transition: all 0.3s ease;
+        }
+        .quick-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255,107,0,0.2);
+        }
+        
+        /* Welcome banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, #FF6B00 0%, #FF8C42 100%);
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Status badges */
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-pending { background: #fef3c7; color: #d97706; }
+        .status-processing { background: #dbeafe; color: #2563eb; }
+        .status-completed { background: #d1fae5; color: #059669; }
+        .status-cancelled { background: #fee2e2; color: #dc2626; }
+        body.dark-mode .status-pending { background: #451a03; color: #fbbf24; }
+        body.dark-mode .status-processing { background: #1e3a5f; color: #60a5fa; }
+        body.dark-mode .status-completed { background: #064e3b; color: #34d399; }
+        body.dark-mode .status-cancelled { background: #7f1d1d; color: #f87171; }
+        
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        body.dark-mode .skeleton {
+            background: linear-gradient(90deg, #2d2d2d 25%, #3d3d3d 50%, #2d2d2d 75%);
+        }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Chart container */
+        .chart-container {
+            position: relative;
+            min-height: 250px;
+        }
+        
+        @media (max-width: 768px){
+            .stats-grid{grid-template-columns:1fr!important;gap:12px}
+            .grid-cols-2{grid-template-columns:1fr!important}
+            .welcome-banner .flex{flex-direction:column;align-items:stretch}
+            .welcome-banner .flex .flex{flex-direction:column;gap:10px}
+            .quick-actions{grid-template-columns:repeat(2,1fr)!important}
+            .chart-container{height:200px}
+            .data-table th,.data-table td{padding:8px;font-size:12px}
+            .status-badge{font-size:10px;padding:2px 8px}
+        }
+        
+        /* Progress bar */
+        .progress-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B00, #FF8C42);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+    <div id="header-placeholder"></div>
+    <script src="/public/assets/js/core/config.js"></script>
+    <script src="/public/assets/js/core/auth.js"></script>
+  <script src="/public/assets/js/core/balance-manager.js"></script>
+    <script src="/public/assets/js/core/toast.js"></script>
+    <script src="/public/assets/js/core/utils.js"></script>
+    <script src="/public/assets/js/core/validation.js"></script>
+    <script src="/public/assets/js/core/offline.js"></script>
+    <script src="/public/assets/js/core/shortcuts.js"></script>
+    <!-- Sidebar Component Loader -->
+    <script>
+(function loadSidebar(){
+    const placeholder = document.getElementById('sidebar-placeholder');
+    if(!placeholder) return;
+
+    function injectSidebar(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/sidebar.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectSidebar)
+        .catch(() => { console.warn('Sidebar fetch failed - using inline fallback'); });
+})();
+</script>
+    <!-- Universal Header Component Loader -->
+    <script>
+(function loadHeader(){
+    const placeholder = document.getElementById('header-placeholder');
+    if(!placeholder) return;
+
+    function injectHeader(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/universal-header.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectHeader)
+        .catch(() => { console.warn('Header fetch failed - using inline fallback'); });
+})();
+</script>
+    <div class="main-content">
+        <div class="p-4 md:p-6">
+            <!-- Welcome Banner -->
+            <div class="welcome-banner rounded-xl p-6 mb-6 text-white">
+                <div class="flex justify-between items-start flex-wrap gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-1" id="welcomeMessage">Welcome back!</h2>
+                        <p class="opacity-90">Your SMM panel is ready. Start growing your social media presence today.</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="/public/pages/dashboard/add-funds.html" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition flex items-center gap-2">
+                            <i class="fas fa-plus-circle"></i> Add Funds
+                        </a>
+                        <a href="/public/pages/dashboard/new-order.html" class="bg-white hover:bg-opacity-90 text-primary px-4 py-2 rounded-lg transition flex items-center gap-2">
+                            <i class="fas fa-rocket"></i> New Order
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div class="stat-card bg-gradient-primary text-white rounded-xl p-5" onclick="window.location.href='/public/pages/dashboard/add-funds.html'">
+                    <i class="fas fa-wallet text-2xl mb-2 opacity-80"></i>
+                    <p class="text-3xl font-bold" id="balanceAmount">৳0</p>
+                    <p class="text-sm opacity-80">Available Balance</p>
+                    <div class="mt-2 text-xs opacity-70">
+                        <i class="fas fa-arrow-right"></i> Click to add funds
+                    </div>
+                </div>
+                <div class="stat-card bg-white dark:bg-gray-800 rounded-xl p-5 shadow" onclick="window.location.href='/public/pages/dashboard/orders.html'">
+                    <i class="fas fa-shopping-cart text-primary text-2xl mb-2"></i>
+                    <p class="text-2xl font-bold" id="totalOrders">0</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Total Orders</p>
+                    <div class="progress-bar mt-3">
+                        <div class="progress-fill" id="orderProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="stat-card bg-white dark:bg-gray-800 rounded-xl p-5 shadow" onclick="window.location.href='/public/pages/dashboard/orders.html?status=completed'">
+                    <i class="fas fa-check-circle text-green-500 text-2xl mb-2"></i>
+                    <p class="text-2xl font-bold" id="completedOrders">0</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Completed Orders</p>
+                    <p class="text-xs text-green-500 mt-1" id="completionRate">Completion Rate: 0%</p>
+                </div>
+                <div class="stat-card bg-white dark:bg-gray-800 rounded-xl p-5 shadow" onclick="window.location.href='/public/pages/dashboard/orders.html?status=pending'">
+                    <i class="fas fa-clock text-yellow-500 text-2xl mb-2"></i>
+                    <p class="text-2xl font-bold" id="pendingOrders">0</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Pending Orders</p>
+                    <p class="text-xs text-yellow-500 mt-1" id="estimatedWait">Est. wait: ~2-5 min</p>
+                </div>
+            </div>
+            
+            <!-- Quick Actions Row -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+                <a href="/public/pages/dashboard/services.html" class="quick-action bg-white dark:bg-gray-800 rounded-xl p-3 text-center shadow hover:shadow-lg transition">
+                    <i class="fas fa-layer-group text-primary text-xl mb-1"></i>
+                    <p class="text-sm font-medium">Services</p>
+                </a>
+                <a href="/public/pages/dashboard/new-order.html" class="quick-action bg-white dark:bg-gray-800 rounded-xl p-3 text-center shadow hover:shadow-lg transition">
+                    <i class="fas fa-cart-plus text-primary text-xl mb-1"></i>
+                    <p class="text-sm font-medium">Quick Order</p>
+                </a>
+                <a href="/public/pages/dashboard/orders.html" class="quick-action bg-white dark:bg-gray-800 rounded-xl p-3 text-center shadow hover:shadow-lg transition">
+                    <i class="fas fa-history text-primary text-xl mb-1"></i>
+                    <p class="text-sm font-medium">Order History</p>
+                </a>
+                <a href="/public/pages/dashboard/affiliates.html" class="quick-action bg-white dark:bg-gray-800 rounded-xl p-3 text-center shadow hover:shadow-lg transition">
+                    <i class="fas fa-link text-primary text-xl mb-1"></i>
+                    <p class="text-sm font-medium">Affiliate</p>
+                </a>
+                <a href="/public/pages/dashboard/tickets.html" class="quick-action bg-white dark:bg-gray-800 rounded-xl p-3 text-center shadow hover:shadow-lg transition">
+                    <i class="fas fa-headset text-primary text-xl mb-1"></i>
+                    <p class="text-sm font-medium">Support</p>
+                </a>
+            </div>
+            
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <!-- Orders Chart -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-lg"><i class="fas fa-chart-line text-primary mr-2"></i> Order Activity (Last 7 Days)</h3>
+                        <button id="refreshChartBtn" class="text-gray-400 hover:text-primary transition">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="ordersChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Spending Breakdown -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
+                    <h3 class="font-bold text-lg mb-4"><i class="fas fa-chart-pie text-primary mr-2"></i> Spending Breakdown</h3>
+                    <div class="chart-container">
+                        <canvas id="spendingChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Orders Section -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow">
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center flex-wrap gap-3">
+                    <h3 class="font-bold text-lg"><i class="fas fa-clock text-primary mr-2"></i> Recent Orders</h3>
+                    <div class="flex gap-2">
+                        <select id="orderFilter" class="text-sm border rounded-lg px-3 py-1 dark:bg-gray-700 dark:border-gray-600">
+                            <option value="all">All Orders</option>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                        <button id="refreshOrdersBtn" class="text-primary hover:text-primaryDark transition">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="recentOrdersTable" class="overflow-x-auto">
+                    <div class="text-center py-8">
+                        <div class="spinner"></div>
+                        <p class="mt-2 text-gray-500">Loading orders...</p>
+                    </div>
+                </div>
+                <div class="p-4 border-t border-gray-200 dark:border-gray-700 text-center">
+                    <a href="/public/pages/dashboard/orders.html" class="text-primary hover:underline">View All Orders →</a>
+                </div>
+            </div>
+            
+            <!-- Tips Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow">
+                    <i class="fas fa-tachometer-alt text-primary text-xl mb-2"></i>
+                    <h4 class="font-semibold mb-1">Getting Started</h4>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Add funds to your wallet, then browse services and place orders.</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow">
+                    <i class="fas fa-gift text-primary text-xl mb-2"></i>
+                    <h4 class="font-semibold mb-1">Earn Bonus</h4>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Deposit $100+ and get 1% bonus instantly added to your balance!</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow">
+                    <i class="fas fa-headset text-primary text-xl mb-2"></i>
+                    <h4 class="font-semibold mb-1">24/7 Support</h4>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Have questions? Open a support ticket and we'll help you ASAP.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        let currentUser = null;
+        let ordersChart = null;
+        let spendingChart = null;
+        let currentFilter = 'all';
+        let balanceListener = null;
+
+        function setupRealtimeBalance() {
+            const user = firebase.auth().currentUser;
+            if(!user) return;
+            if(balanceListener) balanceListener();
+            balanceListener = db.collection('users').doc(user.uid)
+                .onSnapshot((doc) => {
+                    if(doc.exists){
+                        const balance = doc.data()?.balance || 0;
+                        const balanceUSD = (balance / 124).toFixed(2);
+                        const balanceElements = [
+                            'userBalance', 'currentBalance', 'sidebarUserBalance',
+                            'balanceAmount', 'headerBalanceValue', 'availableBalance'
+                        ];
+                        balanceElements.forEach(id => {
+                            const el = document.getElementById(id);
+                            if(el) el.innerHTML = `৳${balance.toLocaleString()}`;
+                        });
+                        const usdEl = document.getElementById('currentBalanceUSD');
+                        if(usdEl) usdEl.innerText = balanceUSD;
+                        const balanceEl = document.getElementById('balanceAmount');
+                        if(balanceEl) {
+                            balanceEl.classList.add('animate-pulse-slow');
+                            setTimeout(() => balanceEl.classList.remove('animate-pulse-slow'), 500);
+                        }
+                        console.log(`💰 Balance updated: ৳${balance.toLocaleString()}`);
+                    }
+                }, (error) => {
+                    console.error('Balance listener error:', error);
+                });
+        }
+        
+        // ============================================
+        // TOAST NOTIFICATION FUNCTION
+        // ============================================
+        function showToast(message, type = 'success') {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
+        // ============================================
+        // FORMAT CURRENCY
+        // ============================================
+        function formatCurrencyBDT(amount) {
+            if (amount === undefined || amount === null) return '৳0';
+            return '৳' + Number(amount).toLocaleString('en-BD');
+        }
+        
+        // ============================================
+        // FORMAT DATE
+        // ============================================
+        function formatDate(timestamp) {
+            if (!timestamp) return 'N/A';
+            if (timestamp.toDate) {
+                return timestamp.toDate().toLocaleString();
+            }
+            return 'N/A';
+        }
+        
+        // ============================================
+        // CHECK AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/public/pages/public/login.html';
+                return;
+            }
+            
+            currentUser = user;
+            
+            // Check if user is admin (redirect if admin)
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (userDoc.exists && userDoc.data().isAdmin === true) {
+                window.location.href = '/admin/index.html';
+                return;
+            }
+            
+            // Set welcome message with name
+            const displayName = userDoc.data()?.displayName || user.email?.split('@')[0] || 'User';
+            document.getElementById('welcomeMessage').innerHTML = `Welcome back, ${displayName}! <i class="fas fa-smile-wink"></i>`;
+            
+            await loadDashboardStats();
+            await loadRecentOrders();
+            await loadCharts();
+            setupRealtimeBalance();
+            
+            // Setup realtime listeners
+            setupRealtimeListeners();
+        });
+        
+        // ============================================
+        // LOAD DASHBOARD STATS
+        // ============================================
+async function loadDashboardStats() {
+            if (!currentUser) return;
+            try {
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                const balance = userDoc.data()?.balance || 0;
+                const balanceElement = document.getElementById('balanceAmount');
+                if(balanceElement){
+                    // Animate balance
+                    let start = 0;
+                    let end = balance;
+                    let duration = 800;
+                    let step = (end - start) / (duration / 16);
+                    let current = start;
+                    const timer = setInterval(() => {
+                        current += step;
+                        if(current >= end){
+                            balanceElement.innerHTML = `৳${end.toLocaleString()}`;
+                            clearInterval(timer);
+                        } else {
+                            balanceElement.innerHTML = `৳${Math.floor(current).toLocaleString()}`;
+                        }
+                    }, 16);
+                }
+                
+                // Get orders stats
+                const ordersSnapshot = await db.collection('orders').where('userId', '==', currentUser.uid).get();
+                let totalOrders = 0;
+                let completedOrders = 0;
+                let pendingOrders = 0;
+                ordersSnapshot.forEach(doc => {
+                    const order = doc.data();
+                    totalOrders++;
+                    if(order.status === 'completed') completedOrders++;
+                    else if(order.status === 'pending' || order.status === 'processing') pendingOrders++;
+                });
+                
+                document.getElementById('totalOrders').innerText = totalOrders;
+                document.getElementById('completedOrders').innerText = completedOrders;
+                document.getElementById('pendingOrders').innerText = pendingOrders;
+                
+                const completionRate = totalOrders > 0 ? Math.round((completedOrders / totalOrders) * 100) : 0;
+                document.getElementById('completionRate').innerHTML = `Completion Rate: ${completionRate}%`;
+                document.getElementById('orderProgress').style.width = `${completionRate}%`;
+                
+            } catch(error) {
+                console.error('Error loading dashboard stats:', error);
+                document.getElementById('balanceAmount').innerHTML = '৳0';
+            }
+        }
+        
+        // ============================================
+        // LOAD RECENT ORDERS
+        // ============================================
+        async function loadRecentOrders() {
+            if (!currentUser) return;
+            
+            const container = document.getElementById('recentOrdersTable');
+            
+            try {
+                let query = db.collection('orders')
+                    .where('userId', '==', currentUser.uid)
+                    .orderBy('createdAt', 'desc')
+                    .limit(10);
+                
+                const snapshot = await query.get();
+                
+                if (snapshot.empty) {
+                    container.innerHTML = `
+                        <div class="text-center py-12">
+                            <i class="fas fa-inbox text-5xl text-gray-300 mb-3"></i>
+                            <p class="text-gray-500">No orders yet</p>
+                            <a href="/public/pages/dashboard/new-order.html" class="inline-block mt-3 text-primary hover:underline">Place your first order →</a>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let html = `
+                    <table class="w-full">
+                        <thead class="bg-gray-50 dark:bg-gray-900">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order ID</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Service</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Quantity</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                `;
+                
+                for (const doc of snapshot.docs) {
+                    const order = doc.data();
+                    const statusClass = {
+                        pending: 'status-pending',
+                        processing: 'status-processing',
+                        completed: 'status-completed',
+                        cancelled: 'status-cancelled'
+                    }[order.status] || 'status-pending';
+                    
+                    const statusText = order.status?.charAt(0).toUpperCase() + order.status?.slice(1) || 'Pending';
+                    
+                    html += `
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                            <td class="px-4 py-3 text-sm font-mono">${doc.id.substring(0, 8)}</td>
+                            <td class="px-4 py-3 text-sm">${order.serviceName?.substring(0, 30) || 'N/A'}</td>
+                            <td class="px-4 py-3 text-sm">${order.quantity || 0}</td>
+                            <td class="px-4 py-3 text-sm font-medium text-primary">${formatCurrencyBDT(order.priceBDT)}</td>
+                            <td class="px-4 py-3"><span class="status-badge ${statusClass}">${statusText}</span></td>
+                            <td class="px-4 py-3 text-sm text-gray-500">${formatDate(order.createdAt)}</td>
+                            <td class="px-4 py-3">
+                                <button onclick="viewOrder('${doc.id}')" class="text-primary hover:text-primaryDark text-sm">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }
+                
+                html += `</tbody></table>`;
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading recent orders:', error);
+                container.innerHTML = '<div class="text-center py-8 text-red-500">Failed to load orders</div>';
+            }
+        }
+        
+        // ============================================
+        // LOAD CHARTS
+        // ============================================
+        async function loadCharts() {
+            if (!currentUser) return;
+            
+            try {
+                // Get last 7 days data
+                const last7Days = [];
+                const ordersCount = [];
+                
+                for (let i = 6; i >= 0; i--) {
+                    const date = new Date();
+                    date.setDate(date.getDate() - i);
+                    date.setHours(0, 0, 0, 0);
+                    const nextDate = new Date(date);
+                    nextDate.setDate(nextDate.getDate() + 1);
+                    
+                    const dayName = date.toLocaleDateString('en', { weekday: 'short' });
+                    last7Days.push(dayName);
+                    
+                    const snapshot = await db.collection('orders')
+                        .where('userId', '==', currentUser.uid)
+                        .where('createdAt', '>=', date)
+                        .where('createdAt', '<', nextDate)
+                        .get();
+                    
+                    ordersCount.push(snapshot.size);
+                }
+                
+                // Orders Chart
+                const ordersCtx = document.getElementById('ordersChart').getContext('2d');
+                if (ordersChart) ordersChart.destroy();
+                
+                ordersChart = new Chart(ordersCtx, {
+                    type: 'line',
+                    data: {
+                        labels: last7Days,
+                        datasets: [{
+                            label: 'Orders',
+                            data: ordersCount,
+                            borderColor: '#FF6B00',
+                            backgroundColor: 'rgba(255, 107, 0, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { position: 'bottom' }
+                        }
+                    }
+                });
+                
+                // Spending by service type
+                const servicesSnapshot = await db.collection('orders')
+                    .where('userId', '==', currentUser.uid)
+                    .get();
+                
+                const serviceSpending = {};
+                servicesSnapshot.forEach(doc => {
+                    const order = doc.data();
+                    const serviceName = order.serviceName || 'Other';
+                    const amount = order.priceBDT || 0;
+                    serviceSpending[serviceName] = (serviceSpending[serviceName] || 0) + amount;
+                });
+                
+                const sortedServices = Object.entries(serviceSpending)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 5);
+                
+                const spendingCtx = document.getElementById('spendingChart').getContext('2d');
+                if (spendingChart) spendingChart.destroy();
+                
+                spendingChart = new Chart(spendingCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: sortedServices.map(s => s[0].substring(0, 20)),
+                        datasets: [{
+                            data: sortedServices.map(s => s[1]),
+                            backgroundColor: ['#FF6B00', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { position: 'bottom' }
+                        }
+                    }
+                });
+                
+            } catch (error) {
+                console.error('Error loading charts:', error);
+            }
+        }
+        
+        // ============================================
+        // VIEW ORDER DETAILS
+        // ============================================
+        window.viewOrder = function(orderId) {
+            window.location.href = `/public/pages/dashboard/order-detail.html?id=${orderId}`;
+        };
+        
+        // ============================================
+        // SETUP REALTIME LISTENERS
+        // ============================================
+        function setupRealtimeListeners() {
+            if (!currentUser) return;
+            
+            // Listen for balance changes
+            db.collection('users').doc(currentUser.uid)
+                .onSnapshot((doc) => {
+                    if (doc.exists) {
+                        const balance = doc.data().balance || 0;
+                        document.getElementById('balanceAmount').innerHTML = formatCurrencyBDT(balance);
+                    }
+                });
+            
+            // Listen for new orders
+            db.collection('orders')
+                .where('userId', '==', currentUser.uid)
+                .orderBy('createdAt', 'desc')
+                .onSnapshot(() => {
+                    loadDashboardStats();
+                    loadRecentOrders();
+                    loadCharts();
+                });
+        }
+        
+        // ============================================
+        // REFRESH FUNCTIONS
+        // ============================================
+        document.getElementById('refreshOrdersBtn')?.addEventListener('click', () => {
+            showToast('Refreshing orders...', 'info');
+            loadRecentOrders();
+        });
+        
+        document.getElementById('refreshChartBtn')?.addEventListener('click', () => {
+            showToast('Refreshing charts...', 'info');
+            loadCharts();
+        });
+        
+        // Order filter
+        document.getElementById('orderFilter')?.addEventListener('change', (e) => {
+            currentFilter = e.target.value;
+            loadRecentOrders();
+        });
+        // ============================================
+        // DARK MODE
+        // ============================================
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        // ============================================
+        // AUTO REFRESH (every 30 seconds)
+        // ============================================
+        setInterval(() => {
+            if (currentUser) {
+                loadDashboardStats();
+                loadRecentOrders();
+            }
+        }, 30000);
+        
+        console.log('✅ User dashboard loaded');
+    </script>
+    
+<!-- Sidebar Component Loader -->
+<script>
+(function loadSidebar(){
+    const placeholder = document.getElementById('sidebar-placeholder');
+    if(!placeholder) return;
+
+    function injectSidebar(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/sidebar.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectSidebar)
+        .catch(() => { console.warn('Sidebar fetch failed - using inline fallback'); });
+})();
+</script>
+
+
+    
+    <!-- Universal Notifications Helper -->
+<script>
+// global-darkmode-fix
+const darkToggle = document.getElementById('darkModeToggle');
+if (darkToggle) {
+    darkToggle.onclick = () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    };
+}
+if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+</script>
+<script>
+// Global logout fix - ensures logout works everywhere
+(function fixLogout(){
+    const checkInterval = setInterval(() => {
+        const logoutBtn = document.getElementById('logoutBtn') || document.getElementById('sidebarLogoutBtn');
+        if(logoutBtn && typeof firebase !== 'undefined' && firebase.auth){
+            clearInterval(checkInterval);
+            logoutBtn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                firebase.auth().signOut()
+                    .then(() => { window.location.href = '/public/pages/public/login.html'; })
+                    .catch(err => { console.error('Logout error:', err); alert('Logout failed. Please try again.'); });
+            };
+        }
+    }, 500);
+})();
+</script>
+
+
+    <script src="/public/assets/js/core/avatar-manager.js"></script>
+</body>
+</html>

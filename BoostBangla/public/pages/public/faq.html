@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#FF6B00">
+    <title>FAQ | BoostBangla - Frequently Asked Questions</title>
+    <meta name="description" content="Find answers to common questions about BoostBangla SMM panel. Learn about payments, delivery, safety, refunds, and more. 24/7 support available.">
+    <meta name="keywords" content="SMM panel FAQ, BoostBangla questions, bKash payment SMM, SMM panel safety, refund policy">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B00',
+                        primaryDark: '#CC5500',
+                        darkBg: '#02101A',
+                        softOrange: '#FFF3EA'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        premium: '0 24px 80px rgba(2, 16, 26, 0.12)',
+                        glow: '0 18px 60px rgba(255, 107, 0, 0.28)'
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC4D02;
+            --ink: #02101A;
+            --muted: #64748b;
+            --surface: rgba(255,255,255,0.82);
+            --border: rgba(148, 163, 184, 0.22);
+        }
+
+        * { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
+            color: #0f172a;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.14), transparent 32%),
+                radial-gradient(circle at 90% 8%, rgba(204, 77, 2, 0.12), transparent 30%),
+                linear-gradient(180deg, #fff7ed 0%, #f8fafc 34%, #ffffff 100%);
+            overflow-x: hidden;
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #FF7A1A 0%, #FF6B00 45%, #CC4D02 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, #FF6B00, #CC4D02);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .premium-shell {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .premium-shell::before,
+        .premium-shell::after {
+            content: "";
+            position: absolute;
+            width: 390px;
+            height: 390px;
+            border-radius: 999px;
+            filter: blur(74px);
+            opacity: 0.25;
+            z-index: -1;
+        }
+
+        .premium-shell::before {
+            top: 0;
+            left: -150px;
+            background: #FF6B00;
+        }
+
+        .premium-shell::after {
+            top: 90px;
+            right: -150px;
+            background: #FDBA74;
+        }
+
+        .glass-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
+        }
+
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .pill {
+            background: rgba(255, 107, 0, 0.10);
+            border: 1px solid rgba(255, 107, 0, 0.22);
+            color: #CC4D02;
+            border-radius: 999px;
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cat-btn {
+            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease, color .22s ease;
+            cursor: pointer;
+            border: 1px solid rgba(226, 232, 240, 0.95);
+            background: rgba(255, 255, 255, 0.74);
+            backdrop-filter: blur(14px);
+            font-weight: 800;
+        }
+
+        .cat-btn:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 107, 0, 0.38);
+            box-shadow: 0 14px 38px rgba(15, 23, 42, 0.08);
+        }
+
+        .cat-btn.active {
+            background: linear-gradient(135deg, #FF7A1A, #CC4D02);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 16px 42px rgba(255, 107, 0, 0.25);
+        }
+
+        .faq-item {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(226, 232, 240, 0.92);
+            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+        }
+
+        .faq-item::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% -30%, rgba(255, 107, 0, 0.12), transparent 42%);
+            opacity: 0;
+            transition: opacity .3s ease;
+            pointer-events: none;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 107, 0, 0.42);
+            box-shadow: 0 20px 55px rgba(15, 23, 42, 0.09);
+        }
+
+        .faq-item:hover::before { opacity: 1; }
+
+        .faq-question {
+            position: relative;
+            z-index: 1;
+            transition: color .2s ease, background .2s ease;
+            cursor: pointer;
+        }
+
+        .faq-question:hover {
+            color: #FF6B00;
+            background: rgba(255, 107, 0, 0.035);
+        }
+
+        .faq-answer {
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+            border-top: 1px solid transparent;
+        }
+
+        .faq-answer.show {
+            display: block;
+            border-top-color: rgba(226, 232, 240, 0.85);
+        }
+
+        .faq-answer p {
+            line-height: 1.75;
+        }
+
+        .rotate-icon {
+            transform: rotate(180deg);
+        }
+
+        .help-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .help-card::before {
+            content: "";
+            position: absolute;
+            width: 330px;
+            height: 330px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.18);
+            top: -150px;
+            left: -120px;
+        }
+
+        .help-card::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.15);
+            bottom: -130px;
+            right: -100px;
+        }
+
+        .shine-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 70%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.38), transparent);
+            transform: skewX(-18deg);
+            transition: left .65s ease;
+        }
+
+        .shine-btn:hover::after { left: 130%; }
+
+        .support-tile {
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+
+        .support-tile:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 107, 0, 0.4);
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.10);
+        }
+
+        body.dark-mode {
+            color: #f8fafc;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.17), transparent 34%),
+                radial-gradient(circle at 90% 8%, rgba(59, 130, 246, 0.12), transparent 30%),
+                linear-gradient(180deg, #020617 0%, #0f172a 55%, #111827 100%);
+        }
+
+        body.dark-mode .glass-card,
+        body.dark-mode .faq-item,
+        body.dark-mode .cat-btn,
+        body.dark-mode .support-tile {
+            background: rgba(15, 23, 42, 0.76) !important;
+            border-color: rgba(51, 65, 85, 0.92) !important;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .cat-btn.active {
+            background: linear-gradient(135deg, #FF7A1A, #CC4D02) !important;
+            color: white !important;
+            border-color: transparent !important;
+        }
+
+        body.dark-mode .faq-answer.show {
+            border-top-color: rgba(51, 65, 85, 0.92);
+        }
+
+        body.dark-mode .text-gray-600,
+        body.dark-mode .text-gray-500,
+        body.dark-mode .text-gray-400,
+        body.dark-mode .text-gray-700,
+        body.dark-mode .text-gray-800 {
+            color: #cbd5e1 !important;
+        }
+
+        body.dark-mode .bg-white,
+        body.dark-mode .bg-gray-50,
+        body.dark-mode .bg-gray-100 {
+            background: rgba(15, 23, 42, 0.82) !important;
+        }
+
+        body.dark-mode .hero-grid {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header will be loaded dynamically -->
+    <div id="header-placeholder"></div>
+
+    <script>
+        fetch('/public/components/header.html')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+
+                const darkModeToggle = document.getElementById('landingDarkModeToggle');
+                if (darkModeToggle) {
+                    const isDark = localStorage.getItem('darkMode') === 'true';
+                    if (isDark) document.body.classList.add('dark-mode');
+                    const icon = darkModeToggle.querySelector('i');
+                    if (icon && isDark) {
+                        icon.classList.remove('fa-moon');
+                        icon.classList.add('fa-sun');
+                    }
+                    darkModeToggle.addEventListener('click', () => {
+                        const active = document.body.classList.toggle('dark-mode');
+                        localStorage.setItem('darkMode', active ? 'true' : 'false');
+                        const icon = darkModeToggle.querySelector('i');
+                        if (icon) {
+                            icon.classList.toggle('fa-moon', !active);
+                            icon.classList.toggle('fa-sun', active);
+                        }
+                    });
+                }
+
+                const mobileMenuBtn = document.getElementById('landingMobileMenuBtn');
+                const mobileDrawer = document.getElementById('landingMobileDrawer');
+                const drawerOverlay = document.getElementById('landingDrawerOverlay');
+                const closeDrawerBtn = document.getElementById('closeMobileDrawer');
+
+                const closeDrawer = () => {
+                    if (mobileDrawer) mobileDrawer.classList.remove('open');
+                    if (drawerOverlay) drawerOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                };
+
+                if (mobileMenuBtn && mobileDrawer) {
+                    mobileMenuBtn.addEventListener('click', () => {
+                        mobileDrawer.classList.add('open');
+                        if (drawerOverlay) drawerOverlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+                if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+                if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+            })
+            .catch(error => {
+                console.error('Error loading header:', error);
+                document.getElementById('header-placeholder').innerHTML = `
+                    <div style="background:#FF6B00; color:white; text-align:center; padding:10px;">
+                        ⚠️ Header failed to load. Please refresh the page.
+                    </div>
+                `;
+            });
+    </script>
+
+    <main class="min-h-screen premium-shell">
+        <!-- Hero Section -->
+        <section class="hero-grid relative overflow-hidden pt-16 pb-12 md:pt-24 md:pb-20">
+            <div class="container mx-auto px-4">
+                <div class="max-w-5xl mx-auto text-center">
+                    <div class="inline-flex items-center gap-2 glass-card rounded-full px-4 py-2 shadow-sm mb-5">
+                        <i class="fas fa-question-circle text-primary"></i>
+                        <span class="text-sm font-extrabold">Got Questions? We've Got Answers</span>
+                    </div>
+
+                    <h1 class="text-4xl md:text-7xl font-black leading-tight tracking-tight mb-5">
+                        Frequently Asked<br>
+                        <span class="text-gradient">Questions</span>
+                    </h1>
+
+                    <p class="text-gray-600 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed mb-8">
+                        Find answers to common questions about BoostBangla SMM panel services, payments, delivery, safety, account setup, and refunds.
+                    </p>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">24/7</div>
+                            <p class="text-xs text-gray-500 mt-1">Support</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">5</div>
+                            <p class="text-xs text-gray-500 mt-1">Categories</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">৳50</div>
+                            <p class="text-xs text-gray-500 mt-1">Min Deposit</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">Safe</div>
+                            <p class="text-xs text-gray-500 mt-1">No Password</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Tabs -->
+        <section class="container mx-auto px-4 -mt-3 relative z-10">
+            <div class="glass-card rounded-[2rem] p-4 md:p-5 max-w-5xl mx-auto">
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button class="cat-btn active px-5 py-3 rounded-full text-gray-700" data-cat="general">📌 General</button>
+                    <button class="cat-btn px-5 py-3 rounded-full text-gray-700" data-cat="payments">💰 Payments</button>
+                    <button class="cat-btn px-5 py-3 rounded-full text-gray-700" data-cat="delivery">🚀 Delivery</button>
+                    <button class="cat-btn px-5 py-3 rounded-full text-gray-700" data-cat="safety">🔒 Safety</button>
+                    <button class="cat-btn px-5 py-3 rounded-full text-gray-700" data-cat="account">👤 Account</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Accordion Section -->
+        <section class="container mx-auto px-4 py-16">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-10">
+                    <span class="pill mb-4"><i class="fas fa-book-open"></i> Help Center</span>
+                    <h2 class="text-3xl md:text-5xl font-black mb-4">
+                        Quick <span class="text-gradient">Answers</span>
+                    </h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Choose a category above and open any question to read the answer.</p>
+                </div>
+
+                <!-- General Questions -->
+                <div id="general" class="faq-category">
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">What is BoostBangla SMM panel?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">BoostBangla is Bangladesh's #1 SMM (Social Media Marketing) panel where you can buy real social media services like followers, likes, views, and comments for platforms including Facebook, Instagram, YouTube, TikTok, and more at affordable prices.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">Who can use BoostBangla?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">Anyone! Whether you're an influencer, business owner, content creator, digital marketer, or agency, BoostBangla helps you grow your social media presence quickly and affordably.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">Do I need to share my password?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">No, never! We only need the public link to your post or profile. We never ask for your password or login credentials. Your account security is our top priority.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Questions -->
+                <div id="payments" class="faq-category hidden">
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">What payment methods do you accept?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">We accept bKash, Nagad, Rocket, and Upay for Bangladeshi users. International users can pay via PayPal, Skrill, and major credit/debit cards.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">How do I add funds to my account?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">Simply go to the "Add Funds" page in your dashboard, select your preferred payment method, enter the amount, and follow the instructions. Funds are added instantly after payment confirmation.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">Is there a minimum deposit amount?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">Minimum deposit is ৳50 BDT (approximately $0.50 USD). This makes it affordable for everyone to start growing their social media presence.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">Can I get a refund?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">Refunds are only available for undelivered orders or technical errors on our side. Completed orders are non-refundable as services are delivered instantly. Please read our refund policy for details.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery Questions -->
+                <div id="delivery" class="faq-category hidden">
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">How fast is delivery?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">Most orders start processing within 30-60 seconds. Small orders (under 1000 units) typically complete within 1-2 hours. Larger orders may take 6-24 hours for natural-looking delivery.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">What is a "non-drop" service?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">Non-drop services mean the followers, likes, or views you receive will not decrease over time. We offer refill guarantees for eligible services if any drop occurs.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">What is a mass order?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">Mass order allows you to place multiple orders at once using a simple format. Perfect for agencies and resellers who need to fulfill many orders quickly.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Safety Questions -->
+                <div id="safety" class="faq-category hidden">
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">Is it safe to use BoostBangla?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">Absolutely! We use secure, encrypted systems and never access your account. Our services comply with social media platform guidelines to keep your account safe from bans or restrictions.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">Will I get banned for using SMM services?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">No. We use high-quality, real-looking engagement that mimics organic growth. As long as you use our services moderately alongside organic content, your account remains safe.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">Is my payment information secure?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">Yes! All payments are processed through secure, encrypted gateways. We never store your payment information on our servers.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Questions -->
+                <div id="account" class="faq-category hidden">
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">How do I create an account?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">Click the "Sign Up" button on our homepage, enter your email, username, and password. That's it! Your account is created instantly and ready to use.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">I forgot my password. What should I do?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">Click "Forgot Password" on the login page, enter your email, and we'll send you a password reset link. You can create a new password instantly.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <button class="faq-question w-full px-6 py-5 text-left flex justify-between items-center transition gap-4">
+                            <span class="font-black text-gray-800">How do I contact support?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 shrink-0"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-5">
+                            <p class="text-gray-600 pt-4">You can reach us 24/7 via WhatsApp (+880 1XXX XXX XXX), Telegram (@boostbangla), email (support@boostbangla.com.bd), or through the support ticket system in your dashboard.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Tiles -->
+        <section class="container mx-auto px-4 pb-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+                <div class="support-tile bg-white rounded-3xl p-6 text-center shadow-sm">
+                    <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-lg mb-1">WhatsApp</h3>
+                    <p class="text-sm text-gray-500">Fast response for urgent help.</p>
+                </div>
+                <div class="support-tile bg-white rounded-3xl p-6 text-center shadow-sm">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-telegram text-blue-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-lg mb-1">Telegram</h3>
+                    <p class="text-sm text-gray-500">Get updates and support.</p>
+                </div>
+                <div class="support-tile bg-white rounded-3xl p-6 text-center shadow-sm">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-envelope text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-lg mb-1">Email</h3>
+                    <p class="text-sm text-gray-500">Best for detailed questions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Still Need Help Section -->
+        <section class="container mx-auto px-4 pb-20">
+            <div class="help-card bg-gradient-primary rounded-[2rem] py-14 px-6 md:px-10 text-white shadow-glow text-center">
+                <div class="relative z-10 max-w-3xl mx-auto">
+                    <div class="w-20 h-20 bg-white/20 border border-white/30 rounded-3xl flex items-center justify-center mx-auto mb-5">
+                        <i class="fas fa-headset text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-3xl md:text-5xl font-black mb-4">Still Have Questions?</h3>
+                    <p class="text-white/85 mb-8 text-lg">Our support team is available 24/7 to help you with orders, payments, account issues, and reseller questions.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="/public/pages/public/contact.html" class="shine-btn bg-white text-primary px-8 py-4 rounded-2xl font-extrabold hover:shadow-lg transition inline-block">
+                            Contact Support
+                        </a>
+                        <a href="https://wa.me/8801XXXXXXXXX" class="border-2 border-white text-white px-8 py-4 rounded-2xl font-extrabold hover:bg-white hover:text-primary transition inline-block">
+                            <i class="fab fa-whatsapp mr-2"></i> WhatsApp Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Premium Footer -->
+    <footer class="bg-[#02101A] text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <span class="text-2xl font-bold tracking-tight">Boost<span class="text-primary">Bangla</span></span>
+                    <p class="text-gray-400 text-sm mt-3 leading-relaxed">Bangladesh's #1 SMM Panel. Get real followers, likes, and views with bKash & Nagad payment.</p>
+                    <div class="flex gap-1 mt-3">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                        <span class="text-gray-400 text-xs ml-2">4.9/5 Trusted</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/index.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Home</a></li>
+                        <li><a href="/public/pages/public/services.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Services</a></li>
+                        <li><a href="/public/pages/public/pricing.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Pricing</a></li>
+                        <li><a href="/public/pages/public/about.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/public/pages/public/contact.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Contact Us</a></li>
+                        <li><a href="/public/pages/public/faq.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> FAQ</a></li>
+                        <li><a href="/public/pages/public/refund-policy.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Refund Policy</a></li>
+                        <li><a href="/public/pages/public/terms-of-service.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Get In Touch</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-whatsapp text-green-500 text-xl w-6"></i> +880 1XXX XXX XXX</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-telegram text-blue-400 text-xl w-6"></i> @boostbangla</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fas fa-envelope text-primary text-xl w-6"></i> support@boostbangla.com.bd</li>
+                    </ul>
+                    <div class="flex gap-3 mt-6">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-instagram text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-youtube text-gray-400"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
+                © 2025 BoostBangla. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ ACCORDION FUNCTIONALITY
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const icon = button.querySelector('.fa-chevron-down');
+
+                document.querySelectorAll('.faq-answer').forEach(otherAnswer => {
+                    if (otherAnswer !== answer && otherAnswer.classList.contains('show')) {
+                        otherAnswer.classList.remove('show');
+                        otherAnswer.classList.add('hidden');
+                        const otherIcon = otherAnswer.previousElementSibling.querySelector('.fa-chevron-down');
+                        if (otherIcon) otherIcon.classList.remove('rotate-icon');
+                    }
+                });
+
+                if (answer.classList.contains('show')) {
+                    answer.classList.remove('show');
+                    answer.classList.add('hidden');
+                } else {
+                    answer.classList.remove('hidden');
+                    answer.classList.add('show');
+                }
+                icon.classList.toggle('rotate-icon');
+            });
+        });
+
+        // CATEGORY FILTERING
+        const categories = ['general', 'payments', 'delivery', 'safety', 'account'];
+
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.cat;
+
+                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                document.querySelectorAll('.faq-answer').forEach(answer => {
+                    answer.classList.remove('show');
+                    answer.classList.add('hidden');
+                });
+                document.querySelectorAll('.faq-question .fa-chevron-down').forEach(icon => {
+                    icon.classList.remove('rotate-icon');
+                });
+
+                categories.forEach(cat => {
+                    const section = document.getElementById(cat);
+                    if (section) {
+                        if (cat === category) {
+                            section.classList.remove('hidden');
+                        } else {
+                            section.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

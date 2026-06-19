@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#FF6B00">
+    <title>Blog | BoostBangla - SMM Tips, Guides & Updates</title>
+    <meta name="description" content="Latest social media marketing tips, SMM strategies, and platform updates. Learn how to grow your YouTube, Instagram, Facebook, and TikTok presence with BoostBangla.">
+    <meta name="keywords" content="SMM blog, social media tips, YouTube growth, Instagram marketing, Facebook engagement, TikTok viral">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B00',
+                        primaryDark: '#CC5500',
+                        darkBg: '#02101A',
+                        softOrange: '#FFF3EA'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        premium: '0 24px 80px rgba(2, 16, 26, 0.12)',
+                        glow: '0 18px 60px rgba(255, 107, 0, 0.28)'
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC4D02;
+            --ink: #02101A;
+            --muted: #64748b;
+            --surface: rgba(255,255,255,0.82);
+            --border: rgba(148, 163, 184, 0.22);
+        }
+
+        * { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
+            color: #0f172a;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.14), transparent 32%),
+                radial-gradient(circle at 90% 8%, rgba(204, 77, 2, 0.12), transparent 30%),
+                linear-gradient(180deg, #fff7ed 0%, #f8fafc 34%, #ffffff 100%);
+            overflow-x: hidden;
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #FF7A1A 0%, #FF6B00 45%, #CC4D02 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, #FF6B00, #CC4D02);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .premium-shell {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .premium-shell::before,
+        .premium-shell::after {
+            content: "";
+            position: absolute;
+            width: 390px;
+            height: 390px;
+            border-radius: 999px;
+            filter: blur(74px);
+            opacity: 0.25;
+            z-index: -1;
+        }
+
+        .premium-shell::before {
+            top: 0;
+            left: -150px;
+            background: #FF6B00;
+        }
+
+        .premium-shell::after {
+            top: 90px;
+            right: -150px;
+            background: #FDBA74;
+        }
+
+        .glass-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
+        }
+
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .category-badge {
+            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease, color .22s ease;
+            cursor: pointer;
+            border: 1px solid rgba(226, 232, 240, 0.95);
+            background: rgba(255, 255, 255, 0.74);
+            backdrop-filter: blur(14px);
+        }
+
+        .category-badge:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 107, 0, 0.38);
+            box-shadow: 0 14px 38px rgba(15, 23, 42, 0.08);
+        }
+
+        .category-badge.active {
+            background: linear-gradient(135deg, #FF7A1A, #CC4D02);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 16px 42px rgba(255, 107, 0, 0.25);
+        }
+
+        .blog-card {
+            position: relative;
+            overflow: hidden;
+            transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+            border: 1px solid rgba(226, 232, 240, 0.92);
+        }
+
+        .blog-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% -20%, rgba(255, 107, 0, 0.13), transparent 38%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 28px 70px rgba(15, 23, 42, 0.13);
+            border-color: rgba(255, 107, 0, 0.42);
+        }
+
+        .blog-card:hover::before { opacity: 1; }
+
+        .blog-image {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+        }
+
+        .blog-image::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 15%, rgba(255,255,255,.36), transparent 24%),
+                linear-gradient(135deg, rgba(255,255,255,.16), transparent 48%);
+            z-index: -1;
+        }
+
+        .blog-image i {
+            filter: drop-shadow(0 18px 28px rgba(0,0,0,.22));
+            transform: scale(1);
+            transition: transform .35s ease;
+        }
+
+        .blog-card:hover .blog-image i { transform: scale(1.08) rotate(-3deg); }
+
+        .pill {
+            background: rgba(255, 107, 0, 0.10);
+            border: 1px solid rgba(255, 107, 0, 0.22);
+            color: #CC4D02;
+            border-radius: 999px;
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .author-avatar {
+            background: linear-gradient(135deg, rgba(255,107,0,.18), rgba(255,107,0,.05));
+            border: 1px solid rgba(255,107,0,.18);
+        }
+
+        .newsletter-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-card::before {
+            content: "";
+            position: absolute;
+            width: 330px;
+            height: 330px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.20);
+            top: -150px;
+            left: -120px;
+        }
+
+        .newsletter-card::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.16);
+            bottom: -130px;
+            right: -100px;
+        }
+
+        .shine-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 70%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.38), transparent);
+            transform: skewX(-18deg);
+            transition: left .65s ease;
+        }
+
+        .shine-btn:hover::after { left: 130%; }
+
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        body.dark-mode {
+            color: #f8fafc;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.17), transparent 34%),
+                radial-gradient(circle at 90% 8%, rgba(59, 130, 246, 0.12), transparent 30%),
+                linear-gradient(180deg, #020617 0%, #0f172a 55%, #111827 100%);
+        }
+
+        body.dark-mode .glass-card,
+        body.dark-mode .blog-card,
+        body.dark-mode .category-badge {
+            background: rgba(15, 23, 42, 0.76) !important;
+            border-color: rgba(51, 65, 85, 0.92) !important;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .category-badge.active {
+            background: linear-gradient(135deg, #FF7A1A, #CC4D02) !important;
+            color: white !important;
+            border-color: transparent !important;
+        }
+
+        body.dark-mode .text-gray-600,
+        body.dark-mode .text-gray-500,
+        body.dark-mode .text-gray-400 {
+            color: #cbd5e1 !important;
+        }
+
+        body.dark-mode .bg-white,
+        body.dark-mode .bg-gray-100,
+        body.dark-mode .bg-gray-50 {
+            background: rgba(15, 23, 42, 0.82) !important;
+        }
+
+        body.dark-mode input {
+            background: rgba(15, 23, 42, 0.75) !important;
+            border-color: rgba(51, 65, 85, 0.9) !important;
+            color: white !important;
+        }
+
+        body.dark-mode .hero-grid {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header will be loaded dynamically -->
+    <div id="header-placeholder"></div>
+
+    <script>
+        fetch('/public/components/header.html')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+
+                const darkModeToggle = document.getElementById('landingDarkModeToggle');
+                if (darkModeToggle) {
+                    const isDark = localStorage.getItem('darkMode') === 'true';
+                    if (isDark) document.body.classList.add('dark-mode');
+                    const icon = darkModeToggle.querySelector('i');
+                    if (icon && isDark) {
+                        icon.classList.remove('fa-moon');
+                        icon.classList.add('fa-sun');
+                    }
+                    darkModeToggle.addEventListener('click', () => {
+                        const active = document.body.classList.toggle('dark-mode');
+                        localStorage.setItem('darkMode', active ? 'true' : 'false');
+                        const icon = darkModeToggle.querySelector('i');
+                        if (icon) {
+                            icon.classList.toggle('fa-moon', !active);
+                            icon.classList.toggle('fa-sun', active);
+                        }
+                    });
+                }
+
+                const mobileMenuBtn = document.getElementById('landingMobileMenuBtn');
+                const mobileDrawer = document.getElementById('landingMobileDrawer');
+                const drawerOverlay = document.getElementById('landingDrawerOverlay');
+                const closeDrawerBtn = document.getElementById('closeMobileDrawer');
+
+                const closeDrawer = () => {
+                    if (mobileDrawer) mobileDrawer.classList.remove('open');
+                    if (drawerOverlay) drawerOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                };
+
+                if (mobileMenuBtn && mobileDrawer) {
+                    mobileMenuBtn.addEventListener('click', () => {
+                        mobileDrawer.classList.add('open');
+                        if (drawerOverlay) drawerOverlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+                if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+                if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+            })
+            .catch(error => {
+                console.error('Error loading header:', error);
+                document.getElementById('header-placeholder').innerHTML = `
+                    <div style="background:#FF6B00; color:white; text-align:center; padding:10px;">
+                        ⚠️ Header failed to load. Please refresh the page.
+                    </div>
+                `;
+            });
+    </script>
+
+    <main class="min-h-screen premium-shell">
+        <!-- Hero Section -->
+        <section class="hero-grid relative overflow-hidden pt-16 pb-12 md:pt-24 md:pb-20">
+            <div class="container mx-auto px-4">
+                <div class="max-w-5xl mx-auto text-center">
+                    <div class="inline-flex items-center gap-2 glass-card rounded-full px-4 py-2 shadow-sm mb-5">
+                        <i class="fas fa-newspaper text-primary"></i>
+                        <span class="text-sm font-extrabold">Latest SMM insights, guides & growth strategies</span>
+                    </div>
+
+                    <h1 class="text-4xl md:text-7xl font-black leading-tight tracking-tight mb-5">
+                        Learn Social Growth<br>
+                        <span class="text-gradient">Like a Pro</span>
+                    </h1>
+
+                    <p class="text-gray-600 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed mb-8">
+                        Expert tips, platform updates, and practical SMM strategies to grow your YouTube, Instagram, Facebook, and TikTok presence faster.
+                    </p>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">6+</div>
+                            <p class="text-xs text-gray-500 mt-1">Growth Guides</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">5</div>
+                            <p class="text-xs text-gray-500 mt-1">Categories</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">2025</div>
+                            <p class="text-xs text-gray-500 mt-1">Latest Tips</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 text-center">
+                            <div class="text-2xl font-black text-primary">24/7</div>
+                            <p class="text-xs text-gray-500 mt-1">Support</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Filters -->
+        <section class="container mx-auto px-4 -mt-3 relative z-10">
+            <div class="glass-card rounded-[2rem] p-4 md:p-5 max-w-5xl mx-auto">
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button class="category-badge active px-5 py-3 rounded-full text-gray-700 font-bold" data-cat="all">📰 All Posts</button>
+                    <button class="category-badge px-5 py-3 rounded-full text-gray-700 font-bold" data-cat="youtube">🎬 YouTube</button>
+                    <button class="category-badge px-5 py-3 rounded-full text-gray-700 font-bold" data-cat="instagram">📸 Instagram</button>
+                    <button class="category-badge px-5 py-3 rounded-full text-gray-700 font-bold" data-cat="facebook">📘 Facebook</button>
+                    <button class="category-badge px-5 py-3 rounded-full text-gray-700 font-bold" data-cat="tiktok">🎵 TikTok</button>
+                    <button class="category-badge px-5 py-3 rounded-full text-gray-700 font-bold" data-cat="tips">💡 Tips</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Article Banner -->
+        <section class="container mx-auto px-4 pt-12">
+            <div class="glass-card rounded-[2rem] overflow-hidden max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-2">
+                    <div class="bg-gradient-primary p-8 md:p-10 text-white relative overflow-hidden">
+                        <div class="absolute inset-0 hero-grid opacity-20"></div>
+                        <div class="relative z-10">
+                            <span class="inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-2 text-sm font-extrabold mb-5">
+                                <i class="fas fa-star"></i> Featured Guide
+                            </span>
+                            <h2 class="text-3xl md:text-4xl font-black leading-tight mb-4">
+                                How to Grow Your YouTube Channel in 2025
+                            </h2>
+                            <p class="text-white/85 mb-6 leading-relaxed">
+                                Learn SEO, thumbnails, watch-time strategy, and smart SMM usage in one complete beginner-friendly guide.
+                            </p>
+                            <a href="/public/pages/public/blog-single.html?id=1" class="shine-btn inline-flex items-center gap-2 bg-white text-primary px-6 py-3 rounded-2xl font-extrabold hover:shadow-lg transition">
+                                Read Featured Post <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-8 md:p-10 flex items-center">
+                        <div class="grid grid-cols-2 gap-4 w-full">
+                            <div class="rounded-3xl bg-red-50 p-6 text-center">
+                                <i class="fab fa-youtube text-red-600 text-4xl mb-3"></i>
+                                <p class="font-black">YouTube SEO</p>
+                            </div>
+                            <div class="rounded-3xl bg-pink-50 p-6 text-center">
+                                <i class="fab fa-instagram text-pink-600 text-4xl mb-3"></i>
+                                <p class="font-black">Reels Growth</p>
+                            </div>
+                            <div class="rounded-3xl bg-blue-50 p-6 text-center">
+                                <i class="fab fa-facebook text-blue-600 text-4xl mb-3"></i>
+                                <p class="font-black">Page Reach</p>
+                            </div>
+                            <div class="rounded-3xl bg-orange-50 p-6 text-center">
+                                <i class="fas fa-lightbulb text-primary text-4xl mb-3"></i>
+                                <p class="font-black">SMM Tips</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Posts Grid -->
+        <section class="container mx-auto px-4 py-16">
+            <div class="text-center mb-10">
+                <span class="pill mb-4"><i class="fas fa-book-open"></i> Latest Articles</span>
+                <h2 class="text-3xl md:text-5xl font-black mb-4">
+                    Fresh <span class="text-gradient">Growth Guides</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Read short, practical articles made for creators, agencies, and resellers.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="blogGrid">
+                <div class="text-center py-12 col-span-full">
+                    <div class="spinner"></div>
+                    <p class="text-gray-500 mt-3">Loading articles...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="container mx-auto px-4 pb-20">
+            <div class="newsletter-card bg-gradient-primary rounded-[2rem] py-14 px-6 md:px-10 text-white shadow-glow">
+                <div class="relative z-10 max-w-3xl mx-auto text-center">
+                    <div class="w-20 h-20 bg-white/20 border border-white/30 rounded-3xl flex items-center justify-center mx-auto mb-5">
+                        <i class="fas fa-envelope-open-text text-white text-3xl"></i>
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-black mb-4">Get Growth Tips in Your Inbox</h2>
+                    <p class="text-white/85 mb-7 text-lg">Latest SMM tips, platform changes, and strategy updates delivered straight to you.</p>
+                    <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto bg-white/15 p-2 rounded-2xl border border-white/20 backdrop-blur">
+                        <input type="email" id="newsletterEmail" placeholder="Enter your email address" class="flex-1 px-5 py-4 rounded-xl border border-white/20 bg-white text-slate-900 focus:outline-none focus:ring-4 focus:ring-white/30" required>
+                        <button type="submit" class="shine-btn bg-white text-primary px-7 py-4 rounded-xl font-extrabold hover:shadow-lg transition">
+                            Subscribe
+                        </button>
+                    </form>
+                    <p class="text-xs text-white/70 mt-4">No spam, unsubscribe anytime.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Premium Footer -->
+    <footer class="bg-[#02101A] text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <span class="text-2xl font-bold tracking-tight">Boost<span class="text-primary">Bangla</span></span>
+                    <p class="text-gray-400 text-sm mt-3 leading-relaxed">Bangladesh's #1 SMM Panel. Get real followers, likes, and views with bKash & Nagad payment.</p>
+                    <div class="flex gap-1 mt-3">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                        <span class="text-gray-400 text-xs ml-2">4.9/5 Trusted</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/index.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Home</a></li>
+                        <li><a href="/public/pages/public/services.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Services</a></li>
+                        <li><a href="/public/pages/public/pricing.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Pricing</a></li>
+                        <li><a href="/public/pages/public/about.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/public/pages/public/contact.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Contact Us</a></li>
+                        <li><a href="/public/pages/public/faq.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> FAQ</a></li>
+                        <li><a href="/public/pages/public/refund-policy.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Refund Policy</a></li>
+                        <li><a href="/public/pages/public/terms-of-service.html" class="text-gray-400 hover:text-primary transition flex items-center gap-2"><i class="fas fa-angle-right text-primary text-xs"></i> Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-0.5 after:bg-primary">Get In Touch</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-whatsapp text-green-500 text-xl w-6"></i> +880 1XXX XXX XXX</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fab fa-telegram text-blue-400 text-xl w-6"></i> @boostbangla</li>
+                        <li class="flex items-center gap-3 text-gray-400"><i class="fas fa-envelope text-primary text-xl w-6"></i> support@boostbangla.com.bd</li>
+                    </ul>
+                    <div class="flex gap-3 mt-6">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-instagram text-gray-400"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-youtube text-gray-400"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
+                © 2025 BoostBangla. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // BLOG POSTS DATA
+        const blogPosts = [
+            {
+                id: 1,
+                title: "How to Grow Your YouTube Channel in 2025: Complete Guide",
+                excerpt: "Learn proven strategies to increase your YouTube subscribers, watch time, and views. Includes tips on SEO, thumbnails, and content strategy.",
+                category: "youtube",
+                date: "May 15, 2025",
+                readTime: "8 min read",
+                author: "Rakib Hasan",
+                authorAvatar: "RH",
+                imageIcon: "fab fa-youtube",
+                imageColor: "text-red-600",
+                bgGradient: "from-red-500 to-red-700"
+            },
+            {
+                id: 2,
+                title: "Instagram Growth Hacks 2025: Gain Real Followers Fast",
+                excerpt: "Discover the latest Instagram algorithm secrets and proven growth strategies to gain real followers and increase engagement.",
+                category: "instagram",
+                date: "May 10, 2025",
+                readTime: "6 min read",
+                author: "Sumaiya Akter",
+                authorAvatar: "SA",
+                imageIcon: "fab fa-instagram",
+                imageColor: "text-pink-600",
+                bgGradient: "from-pink-500 to-purple-600"
+            },
+            {
+                id: 3,
+                title: "TikTok Algorithm Explained: How to Go Viral in 2025",
+                excerpt: "Understanding the TikTok algorithm is key to going viral. Learn what works, what doesn't, and how to get millions of views.",
+                category: "tiktok",
+                date: "May 5, 2025",
+                readTime: "7 min read",
+                author: "Tanvir Islam",
+                authorAvatar: "TI",
+                imageIcon: "fab fa-tiktok",
+                imageColor: "text-black dark:text-white",
+                bgGradient: "from-gray-800 to-black"
+            },
+            {
+                id: 4,
+                title: "Facebook Page Growth: From 0 to 100K Followers",
+                excerpt: "Step-by-step guide to growing your Facebook page organically and using SMM services strategically for maximum reach.",
+                category: "facebook",
+                date: "April 28, 2025",
+                readTime: "10 min read",
+                author: "Nusrat Jahan",
+                authorAvatar: "NJ",
+                imageIcon: "fab fa-facebook",
+                imageColor: "text-blue-600",
+                bgGradient: "from-blue-500 to-blue-700"
+            },
+            {
+                id: 5,
+                title: "10 Social Media Marketing Tips for Small Businesses",
+                excerpt: "Affordable social media strategies for small businesses to increase brand awareness, engagement, and sales without breaking the bank.",
+                category: "tips",
+                date: "April 20, 2025",
+                readTime: "5 min read",
+                author: "Rakib Hasan",
+                authorAvatar: "RH",
+                imageIcon: "fas fa-lightbulb",
+                imageColor: "text-yellow-500",
+                bgGradient: "from-yellow-400 to-orange-500"
+            },
+            {
+                id: 6,
+                title: "Why SMM Panels Are Essential for Digital Marketers",
+                excerpt: "Learn how SMM panels can supercharge your marketing efforts, save time, and deliver measurable results for your clients.",
+                category: "tips",
+                date: "April 12, 2025",
+                readTime: "6 min read",
+                author: "Sumaiya Akter",
+                authorAvatar: "SA",
+                imageIcon: "fas fa-chart-line",
+                imageColor: "text-green-500",
+                bgGradient: "from-green-400 to-green-600"
+            }
+        ];
+
+        function getCategoryLabel(category) {
+            const labels = {
+                youtube: 'YouTube',
+                instagram: 'Instagram',
+                tiktok: 'TikTok',
+                facebook: 'Facebook',
+                tips: 'Tips'
+            };
+            return labels[category] || 'Guide';
+        }
+
+        // DISPLAY BLOG POSTS
+        function displayPosts(category = "all") {
+            const grid = document.getElementById('blogGrid');
+            if (!grid) return;
+
+            const filteredPosts = category === "all" ? blogPosts : blogPosts.filter(post => post.category === category);
+
+            if (filteredPosts.length === 0) {
+                grid.innerHTML = '<div class="glass-card rounded-3xl text-center py-12 col-span-full text-gray-500 font-semibold">No posts found in this category.</div>';
+                return;
+            }
+
+            grid.innerHTML = filteredPosts.map(post => `
+                <article class="blog-card bg-white rounded-[2rem] overflow-hidden shadow-premium">
+                    <div class="blog-image h-52 bg-gradient-to-r ${post.bgGradient} flex items-center justify-center">
+                        <i class="${post.imageIcon} text-7xl text-white opacity-90"></i>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <div class="flex flex-wrap items-center gap-2 mb-4">
+                            <span class="pill">${getCategoryLabel(post.category)}</span>
+                            <span class="text-xs text-gray-500"><i class="far fa-calendar-alt mr-1"></i> ${post.date}</span>
+                            <span class="text-xs text-gray-500"><i class="far fa-clock mr-1"></i> ${post.readTime}</span>
+                        </div>
+                        <h3 class="font-black text-xl mb-3 line-clamp-2">${post.title}</h3>
+                        <p class="text-gray-500 text-sm mb-5 line-clamp-3 leading-relaxed">${post.excerpt}</p>
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-2 min-w-0">
+                                <div class="author-avatar w-9 h-9 rounded-full flex items-center justify-center text-primary font-black text-sm shrink-0">${post.authorAvatar}</div>
+                                <span class="text-sm text-gray-600 truncate">${post.author}</span>
+                            </div>
+                            <a href="/public/pages/public/blog-single.html?id=${post.id}" class="text-primary text-sm font-extrabold hover:underline shrink-0">
+                                Read More <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // CATEGORY FILTERING
+        document.querySelectorAll('.category-badge').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.cat;
+                document.querySelectorAll('.category-badge').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                displayPosts(category);
+            });
+        });
+
+        // NEWSLETTER SUBSCRIPTION
+        const newsletterForm = document.getElementById('newsletterForm');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('newsletterEmail').value;
+                const btn = e.target.querySelector('button[type="submit"]');
+                const originalText = btn.innerHTML;
+
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Subscribing...';
+
+                setTimeout(() => {
+                    alert('✅ Thank you for subscribing! Check your inbox for updates.');
+                    document.getElementById('newsletterEmail').value = '';
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }, 1000);
+            });
+        }
+
+        displayPosts('all');
+    </script>
+</body>
+</html>

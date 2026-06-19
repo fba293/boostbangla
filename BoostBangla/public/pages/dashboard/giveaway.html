@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Giveaway & Promotions | BoostBangla - Win Exciting Prizes</title>
+    <meta name="description" content="Participate in BoostBangla monthly giveaways. Win exciting prizes including cash rewards up to ৳10,000 and free SMM services.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if(typeof showToast !== 'function') window.showToast = (msg,type)=>{alert(msg)};
+
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                        'slide-down': 'slideDown 0.3s ease-out',
+                        'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'bounce-subtle': 'bounceSubtle 1s ease-in-out infinite',
+                        'confetti': 'confetti 1s ease-out',
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- <link rel="stylesheet" href="/public/assets/css/style.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/dark-mode.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/mobile.css"> -->
+    
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC5500;
+            --primary-light: #FF8C42;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark-bg: #02101A;
+            --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            --card-shadow-hover: 0 25px 30px -12px rgba(255, 107, 0, 0.15);
+        }
+        
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 60;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 28px rgba(255, 107, 0, 0.4);
+        }
+        
+        .mobile-menu-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes bounceSubtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .animate-slide-up {
+            animation: slideUp 0.5s ease-out forwards;
+        }
+        
+        .animate-slide-down {
+            animation: slideDown 0.4s ease-out forwards;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            border-radius: 32px;
+            padding: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        /* Prize Cards */
+        .prize-card {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e5e7eb;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body.dark-mode .prize-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .prize-card:hover {
+            transform: translateY(-8px);
+            border-color: #FF6B00;
+            box-shadow: 0 20px 30px -12px rgba(255, 107, 0, 0.2);
+        }
+        
+        .prize-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        
+        /* Countdown */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 24px 0;
+        }
+        
+        .countdown-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 12px 20px;
+            min-width: 80px;
+        }
+        
+        .countdown-number {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        
+        .countdown-label {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        
+        /* Entry Methods */
+        .entry-method {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 16px;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        body.dark-mode .entry-method {
+            background: #0f172a;
+        }
+        
+        .entry-method:hover {
+            border-color: #FF6B00;
+            transform: translateX(5px);
+        }
+        
+        .entry-method.completed {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: #10b981;
+        }
+        
+        body.dark-mode .entry-method.completed {
+            background: linear-gradient(135deg, #064e3b, #065f46);
+        }
+        
+        /* Leaderboard */
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 16px;
+            transition: all 0.2s;
+        }
+        
+        body.dark-mode .leaderboard-item {
+            background: #0f172a;
+        }
+        
+        .leaderboard-item:hover {
+            transform: translateX(5px);
+            background: #fef9f5;
+        }
+        
+        body.dark-mode .leaderboard-item:hover {
+            background: #2d1a0f;
+        }
+        
+        .rank-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .rank-1 { background: linear-gradient(135deg, #FFD700, #FFA500); color: white; }
+        .rank-2 { background: linear-gradient(135deg, #C0C0C0, #A8A8A8); color: white; }
+        .rank-3 { background: linear-gradient(135deg, #CD7F32, #B87333); color: white; }
+        .rank-other { background: #e5e7eb; color: #6b7280; }
+        body.dark-mode .rank-other { background: #334155; color: #94a3b8; }
+        
+        /* Winners */
+        .winner-card {
+            background: linear-gradient(135deg, #fef9f5, #ffffff);
+            border-radius: 20px;
+            padding: 16px;
+            transition: all 0.3s;
+        }
+        
+        body.dark-mode .winner-card {
+            background: linear-gradient(135deg, #2d1a0f, #1e293b);
+        }
+        
+        .winner-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .winner-avatar {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B00, #FF8C42);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        body.dark-mode .progress-container {
+            background: #334155;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            padding: 14px 24px;
+            border-radius: 60px;
+            background: white;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideUp 0.3s ease;
+            font-weight: 500;
+        }
+        
+        body.dark-mode .toast {
+            background: #1e293b;
+            color: white;
+        }
+        
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        .toast.warning { border-left: 4px solid #f59e0b; }
+        .toast.info { border-left: 4px solid #3b82f6; }
+        
+        /* Spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #FF6B00;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+        }
+        
+        body.dark-mode .empty-state i {
+            color: #475569;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-banner {
+                padding: 24px;
+            }
+            .countdown-container {
+                gap: 8px;
+            }
+            .countdown-item {
+                padding: 8px 12px;
+                min-width: 60px;
+            }
+            .countdown-number {
+                font-size: 20px;
+            }
+            .prize-card {
+                padding: 16px;
+            }
+            .prize-badge {
+                font-size: 9px;
+                padding: 4px 10px;
+            }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #FF6B00;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #CC5500;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+    <div id="header-placeholder"></div>
+    <!-- Sidebar Component Loader -->
+    <script>
+(function loadSidebar(){
+    const placeholder = document.getElementById('sidebar-placeholder');
+    if(!placeholder) return;
+
+    function injectSidebar(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/sidebar.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectSidebar)
+        .catch(() => { console.warn('Sidebar fetch failed - using inline fallback'); });
+})();
+</script>
+    <!-- Universal Header Component Loader -->
+    <script>
+(function loadHeader(){
+    const placeholder = document.getElementById('header-placeholder');
+    if(!placeholder) return;
+
+    function injectHeader(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/universal-header.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectHeader)
+        .catch(() => { console.warn('Header fetch failed - using inline fallback'); });
+})();
+</script>
+    
+    <div class="main-content">
+        <div class="p-4 md:p-8 lg:p-10">
+            <!-- Header Section -->
+            <div class="animate-slide-down mb-8">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-12 h-12 bg-gradient-to-br from-primary to-primaryDark rounded-2xl flex items-center justify-center shadow-lg animate-float">
+                                <i class="fas fa-gift text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-primaryDark bg-clip-text text-transparent">
+                                    Giveaway & Promotions
+                                </h1>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                                    Participate and win exciting prizes every month
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="refreshGiveawayBtn" class="btn-outline">
+                        <i class="fas fa-sync-alt mr-2"></i> Refresh
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Hero Banner -->
+            <div class="hero-banner animate-fade-in mb-8" style="animation-delay: 0.05s">
+                <div class="inline-block bg-white/20 rounded-full px-4 py-1 text-sm mb-3 animate-pulse">
+                    🔥 LIMITED TIME OFFER
+                </div>
+                <h2 class="text-2xl md:text-4xl font-bold mb-3">Win ৳10,000 BDT + Free Services!</h2>
+                <p class="opacity-90 mb-6 max-w-2xl mx-auto">Participate in our monthly giveaway and win exciting prizes. The more entries you have, the higher your chances!</p>
+                
+                <!-- Countdown Timer -->
+                <div class="countdown-container" id="countdown">
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="days">00</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="hours">00</div>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="minutes">00</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="seconds">00</div>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+                
+                <a href="#entries" class="inline-block bg-white text-primary px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition transform hover:scale-105">
+                    Join Giveaway Now <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            
+            <!-- Prizes Section -->
+            <div class="mb-8 animate-slide-up" style="animation-delay: 0.1s">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-trophy text-primary text-lg"></i>
+                    </div>
+                    <h2 class="text-xl font-bold">Prizes</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="prize-card">
+                        <div class="prize-badge">🥇 1st Prize</div>
+                        <div class="text-5xl mb-3">🏆</div>
+                        <div class="text-2xl font-bold text-primary mb-1">৳5,000 BDT</div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">+ Free 1000 Instagram Followers</p>
+                    </div>
+                    <div class="prize-card">
+                        <div class="prize-badge">🥈 2nd Prize</div>
+                        <div class="text-5xl mb-3">🎁</div>
+                        <div class="text-2xl font-bold text-primary mb-1">৳3,000 BDT</div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">+ Free 500 TikTok Views</p>
+                    </div>
+                    <div class="prize-card">
+                        <div class="prize-badge">🥉 3rd Prize</div>
+                        <div class="text-5xl mb-3">✨</div>
+                        <div class="text-2xl font-bold text-primary mb-1">৳1,000 BDT</div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">+ Free 100 YouTube Views</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Entry Methods & Leaderboard Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8" id="entries">
+                <!-- Entry Methods -->
+                <div class="glass-card p-6 animate-slide-up" style="animation-delay: 0.15s">
+                    <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+                        <div class="w-10 h-10 bg-green-500/10 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-pen-alt text-green-500 text-lg"></i>
+                        </div>
+                        <h2 class="text-xl font-bold">How to Enter</h2>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="entry-method" data-method="order">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-shopping-cart text-primary text-xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-semibold">Place an Order</div>
+                                    <div class="text-xs text-gray-500">1 entry per ৳100 spent</div>
+                                </div>
+                                <div class="text-primary font-bold text-xl" id="orderEntries">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="entry-method" data-method="referral">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-users text-blue-500 text-xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-semibold">Refer a Friend</div>
+                                    <div class="text-xs text-gray-500">5 entries per referral</div>
+                                </div>
+                                <div class="text-primary font-bold text-xl" id="referralEntries">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="entry-method" data-method="social">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                                    <i class="fab fa-facebook text-blue-600 text-xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-semibold">Share on Social Media</div>
+                                    <div class="text-xs text-gray-500">3 entries per share</div>
+                                </div>
+                                <button id="shareFacebookBtn" class="btn-outline text-sm py-1 px-3">
+                                    <i class="fab fa-facebook mr-1"></i> Share
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="entry-method" data-method="telegram">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-sky-100 dark:bg-sky-900/30 rounded-full flex items-center justify-center">
+                                    <i class="fab fa-telegram text-sky-500 text-xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-semibold">Join Telegram Channel</div>
+                                    <div class="text-xs text-gray-500">10 entries</div>
+                                </div>
+                                <button id="joinTelegramBtn" class="btn-outline text-sm py-1 px-3">
+                                    <i class="fab fa-telegram mr-1"></i> Join
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Section -->
+                    <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-semibold">Your Total Entries</span>
+                            <span class="text-2xl font-bold text-primary" id="totalEntries">0</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2">
+                            <i class="fas fa-chart-line mr-1"></i> Get 50+ entries for better chances!
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Leaderboard -->
+                <div class="glass-card p-6 animate-slide-up" style="animation-delay: 0.2s">
+                    <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+                        <div class="w-10 h-10 bg-yellow-500/10 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-chart-simple text-yellow-500 text-lg"></i>
+                        </div>
+                        <h2 class="text-xl font-bold">Leaderboard</h2>
+                    </div>
+                    <div id="leaderboardList" class="space-y-3 max-h-96 overflow-y-auto">
+                        <div class="text-center py-8">
+                            <div class="spinner mx-auto mb-3"></div>
+                            <p class="text-gray-500">Loading leaderboard...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Previous Winners -->
+            <div class="glass-card p-6 animate-slide-up" style="animation-delay: 0.25s">
+                <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+                    <div class="w-10 h-10 bg-purple-500/10 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-history text-purple-500 text-lg"></i>
+                    </div>
+                    <h2 class="text-xl font-bold">Previous Winners</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="winnersList">
+                    <div class="winner-card flex items-center gap-3">
+                        <div class="winner-avatar">R</div>
+                        <div>
+                            <div class="font-semibold">Rakib H.</div>
+                            <div class="text-xs text-gray-500">Won ৳5,000 - March 2025</div>
+                        </div>
+                    </div>
+                    <div class="winner-card flex items-center gap-3">
+                        <div class="winner-avatar">S</div>
+                        <div>
+                            <div class="font-semibold">Sumaiya A.</div>
+                            <div class="text-xs text-gray-500">Won ৳3,000 - February 2025</div>
+                        </div>
+                    </div>
+                    <div class="winner-card flex items-center gap-3">
+                        <div class="winner-avatar">T</div>
+                        <div>
+                            <div class="font-semibold">Tanvir I.</div>
+                            <div class="text-xs text-gray-500">Won ৳1,000 - January 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Terms & Conditions -->
+            <div class="mt-8 text-center text-xs text-gray-400 animate-fade-in">
+                <i class="fas fa-gavel mr-1"></i> Terms & Conditions Apply. Winners will be announced on the last day of each month via email and Telegram.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+    
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="/public/assets/js/core/config.js"></script>
+    <script src="/public/assets/js/core/auth.js"></script>
+  <script src="/public/assets/js/core/balance-manager.js"></script>
+    <script src="/public/assets/js/core/utils.js"></script>
+    <script src="/public/assets/js/dark-mode.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        let currentUser = null;
+        let giveawayData = null;
+        let countdownInterval = null;
+        
+        // ============================================
+        // TOAST NOTIFICATION
+        // ============================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                <span>${message}</span>
+                <i class="fas fa-times ml-3 cursor-pointer opacity-70 hover:opacity-100" onclick="this.parentElement.remove()"></i>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4000);
+        }
+        
+        // ============================================
+        // FORMAT CURRENCY
+        // ============================================
+        function formatCurrencyBDT(amount) {
+            if (amount === undefined || amount === null) return '৳0';
+            return '৳' + Number(amount).toLocaleString('en-BD');
+        }
+        
+        // ============================================
+        // COUNTDOWN TIMER
+        // ============================================
+        function startCountdown() {
+            // Set end date to last day of current month
+            const now = new Date();
+            const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+            
+            function updateCountdown() {
+                const current = new Date();
+                const diff = endDate - current;
+                
+                if (diff <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('days').innerText = '00';
+                    document.getElementById('hours').innerText = '00';
+                    document.getElementById('minutes').innerText = '00';
+                    document.getElementById('seconds').innerText = '00';
+                    return;
+                }
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (86400000)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (3600000)) / (1000 * 60));
+                const seconds = Math.floor((diff % (60000)) / 1000);
+                
+                document.getElementById('days').innerText = days.toString().padStart(2, '0');
+                document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+            }
+            
+            updateCountdown();
+            countdownInterval = setInterval(updateCountdown, 1000);
+        }
+        
+        // ============================================
+        // LOAD GIVEAWAY DATA
+        // ============================================
+        async function loadGiveawayData() {
+            if (!currentUser) return;
+            
+            try {
+                const giveawayDoc = await db.collection('giveaway').doc(currentUser.uid).get();
+                
+                if (giveawayDoc.exists) {
+                    giveawayData = giveawayDoc.data();
+                } else {
+                    giveawayData = {
+                        userId: currentUser.uid,
+                        orderEntries: 0,
+                        referralEntries: 0,
+                        socialShares: 0,
+                        telegramJoined: false,
+                        totalEntries: 0,
+                        lastUpdated: new Date()
+                    };
+                    await db.collection('giveaway').doc(currentUser.uid).set(giveawayData);
+                }
+                
+                // Calculate total entries based on orders and referrals
+                await calculateEntries();
+                updateUI();
+                loadLeaderboard();
+                
+            } catch (error) {
+                console.error('Error loading giveaway data:', error);
+            }
+        }
+        
+        // ============================================
+        // CALCULATE ENTRIES
+        // ============================================
+        async function calculateEntries() {
+            try {
+                // Get total order amount
+                const ordersSnapshot = await db.collection('orders')
+                    .where('userId', '==', currentUser.uid)
+                    .where('createdAt', '>=', new Date(new Date().getFullYear(), new Date().getMonth(), 1))
+                    .get();
+                
+                let totalSpent = 0;
+                ordersSnapshot.forEach(doc => {
+                    totalSpent += doc.data().priceBDT || 0;
+                });
+                
+                const orderEntries = Math.floor(totalSpent / 100);
+                
+                // Get referrals this month
+                const referralsSnapshot = await db.collection('affiliates')
+                    .where('referredBy', '==', currentUser.uid)
+                    .where('createdAt', '>=', new Date(new Date().getFullYear(), new Date().getMonth(), 1))
+                    .get();
+                
+                const referralEntries = referralsSnapshot.size * 5;
+                
+                // Update giveaway data
+                giveawayData.orderEntries = orderEntries;
+                giveawayData.referralEntries = referralEntries;
+                giveawayData.totalEntries = orderEntries + referralEntries + (giveawayData.socialShares || 0) * 3 + (giveawayData.telegramJoined ? 10 : 0);
+                giveawayData.lastUpdated = new Date();
+                
+                await db.collection('giveaway').doc(currentUser.uid).set(giveawayData);
+                
+            } catch (error) {
+                console.error('Error calculating entries:', error);
+            }
+        }
+        
+        // ============================================
+        // UPDATE UI
+        // ============================================
+        function updateUI() {
+            const totalEntries = giveawayData.totalEntries || 0;
+            const maxEntries = 100;
+            const progressPercent = Math.min((totalEntries / maxEntries) * 100, 100);
+            
+            document.getElementById('orderEntries').innerText = giveawayData.orderEntries || 0;
+            document.getElementById('referralEntries').innerText = giveawayData.referralEntries || 0;
+            document.getElementById('totalEntries').innerText = totalEntries;
+            document.getElementById('progressFill').style.width = `${progressPercent}%`;
+            
+            // Update entry method completed status
+            if (giveawayData.telegramJoined) {
+                document.querySelector('[data-method="telegram"]').classList.add('completed');
+            }
+            if ((giveawayData.socialShares || 0) > 0) {
+                document.querySelector('[data-method="social"]').classList.add('completed');
+            }
+        }
+        
+        // ============================================
+        // LOAD LEADERBOARD
+        // ============================================
+        async function loadLeaderboard() {
+            const container = document.getElementById('leaderboardList');
+            
+            try {
+                const snapshot = await db.collection('giveaway')
+                    .orderBy('totalEntries', 'desc')
+                    .limit(10)
+                    .get();
+                
+                if (snapshot.empty) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-trophy"></i>
+                            <p class="text-gray-500">No participants yet</p>
+                            <p class="text-xs text-gray-400 mt-1">Be the first to join!</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let html = '';
+                let rank = 1;
+                
+                for (const doc of snapshot.docs) {
+                    const data = doc.data();
+                    let userName = 'Anonymous';
+                    
+                    // Get user name
+                    if (data.userId) {
+                        const userDoc = await db.collection('users').doc(data.userId).get();
+                        if (userDoc.exists) {
+                            userName = userDoc.data().displayName || userDoc.data().email?.split('@')[0] || 'User';
+                        }
+                    }
+                    
+                    const rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : 'rank-other';
+                    const medalIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
+                    
+                    html += `
+                        <div class="leaderboard-item">
+                            <div class="rank-badge ${rankClass}">${medalIcon || rank}</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">${escapeHtml(userName)}</div>
+                                <div class="text-xs text-gray-500">${data.totalEntries || 0} entries</div>
+                            </div>
+                            <div class="text-primary font-bold">${formatCurrencyBDT((data.totalEntries || 0) * 10)}</div>
+                        </div>
+                    `;
+                    rank++;
+                }
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading leaderboard:', error);
+                container.innerHTML = '<div class="empty-state"><p class="text-gray-500">Failed to load leaderboard</p></div>';
+            }
+        }
+        
+        // ============================================
+        // SHARE ON FACEBOOK
+        // ============================================
+        document.getElementById('shareFacebookBtn')?.addEventListener('click', () => {
+            const url = encodeURIComponent(window.location.href);
+            const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+            
+            // Update shares count
+            const currentShares = giveawayData.socialShares || 0;
+            giveawayData.socialShares = currentShares + 1;
+            giveawayData.totalEntries = (giveawayData.orderEntries || 0) + (giveawayData.referralEntries || 0) + (giveawayData.socialShares * 3) + (giveawayData.telegramJoined ? 10 : 0);
+            
+            db.collection('giveaway').doc(currentUser.uid).update({
+                socialShares: giveawayData.socialShares,
+                totalEntries: giveawayData.totalEntries,
+                lastUpdated: new Date()
+            });
+            
+            updateUI();
+            showToast('Shared successfully! +3 entries added!', 'success');
+        });
+        
+        // ============================================
+        // JOIN TELEGRAM
+        // ============================================
+        document.getElementById('joinTelegramBtn')?.addEventListener('click', () => {
+            window.open('https://t.me/boostbangla', '_blank');
+            
+            if (!giveawayData.telegramJoined) {
+                giveawayData.telegramJoined = true;
+                giveawayData.totalEntries = (giveawayData.orderEntries || 0) + (giveawayData.referralEntries || 0) + (giveawayData.socialShares || 0) * 3 + 10;
+                
+                db.collection('giveaway').doc(currentUser.uid).update({
+                    telegramJoined: true,
+                    totalEntries: giveawayData.totalEntries,
+                    lastUpdated: new Date()
+                });
+                
+                updateUI();
+                showToast('Joined Telegram! +10 entries added!', 'success');
+            }
+        });
+        
+        // ============================================
+        // REFRESH BUTTON
+        // ============================================
+        document.getElementById('refreshGiveawayBtn')?.addEventListener('click', async () => {
+            const btn = document.getElementById('refreshGiveawayBtn');
+            btn.innerHTML = '<i class="fas fa-sync-alt fa-spin mr-2"></i> Refreshing...';
+            await calculateEntries();
+            await loadGiveawayData();
+            btn.innerHTML = '<i class="fas fa-sync-alt mr-2"></i> Refresh';
+            showToast('Giveaway data refreshed!', 'success');
+        });
+        
+        // ============================================
+        // ESCAPE HTML
+        // ============================================
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // ============================================
+        // AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/public/pages/public/login.html';
+                return;
+            }
+            
+            currentUser = user;
+            
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (userDoc.exists && userDoc.data().isAdmin === true) {
+                window.location.href = '/admin/index.html';
+                return;
+            }
+            
+            startCountdown();
+            await loadGiveawayData();
+            
+            // Setup realtime listener for giveaway updates
+            db.collection('giveaway').doc(user.uid)
+                .onSnapshot((doc) => {
+                    if (doc.exists) {
+                        giveawayData = doc.data();
+                        updateUI();
+                    }
+                });
+        });
+        // ============================================
+        // DARK MODE
+        // ============================================
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        
+        console.log('✅ Giveaway page loaded');
+    </script>
+    
+    <!-- Universal Notifications Helper -->
+    <script src="/public/assets/js/core/notifications-helper.js"></script>
+<script>
+// global-darkmode-fix
+const darkToggle = document.getElementById('darkModeToggle');
+if (darkToggle) {
+    darkToggle.onclick = () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    };
+}
+if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+</script>
+<script>
+// Global logout fix - ensures logout works everywhere
+(function fixLogout(){
+    const checkInterval = setInterval(() => {
+        const logoutBtn = document.getElementById('logoutBtn') || document.getElementById('sidebarLogoutBtn');
+        if(logoutBtn && typeof firebase !== 'undefined' && firebase.auth){
+            clearInterval(checkInterval);
+            logoutBtn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                firebase.auth().signOut()
+                    .then(() => { window.location.href = '/public/pages/public/login.html'; })
+                    .catch(err => { console.error('Logout error:', err); alert('Logout failed. Please try again.'); });
+            };
+        }
+    }, 500);
+})();
+</script>
+<button id="darkModeToggle" class="dark-mode-toggle-btn">
+    <i class="fas fa-moon"></i>
+</button>
+<script>
+document.getElementById('darkModeToggle')?.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark);
+    const icon = document.querySelector('#darkModeToggle i');
+    if(icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+});
+if(localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+</script>
+    <script src="/public/assets/js/core/toast.js"></script>
+    <script src="/public/assets/js/core/validation.js"></script>
+    <script src="/public/assets/js/core/offline.js"></script>
+    <script src="/public/assets/js/core/shortcuts.js"></script>
+    <script src="/public/assets/js/core/avatar-manager.js"></script>
+</body>
+</html>

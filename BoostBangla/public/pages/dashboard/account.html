@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>BoostBangla | Unified Dashboard</title>
+    <meta name="description" content="Manage your BoostBangla account, funds, affiliates, API keys, and more from one unified interface.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* ----- Unified Design System ----- */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC5500;
+            --primary-light: #FF8C42;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark-bg: #02101A;
+            --gray-bg: #f9fafb;
+            --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            --card-shadow-hover: 0 25px 30px -12px rgba(255, 107, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body {
+            font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            color: #111827;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        body.dark-mode {
+            background: linear-gradient(135deg, #02101A 0%, #031a2a 100%);
+            color: #e2e8f0;
+        }
+        /* Glass Card Unified */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        body.dark-mode .glass-card {
+            background: rgba(30, 41, 59, 0.95);
+            border-color: rgba(255,255,255,0.05);
+        }
+        
+        .glass-card:hover { transform: translateY(-2px); box-shadow: var(--card-shadow-hover); }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(255, 107, 0, 0.4); }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e5e7eb;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        body.dark-mode .btn-outline { border-color: #334155; color: #e2e8f0; }
+        .btn-outline:hover { border-color: #FF6B00; color: #FF6B00; transform: translateY(-2px); }
+        .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 12px 24px; border-radius: 40px; border: none; cursor: pointer; transition: var(--transition); }
+        .btn-danger:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(239,68,68,0.4); }
+        
+        /* Form Inputs */
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 20px;
+            transition: var(--transition);
+            background: white;
+        }
+        body.dark-mode .form-input { background: #0f172a; border-color: #334155; color: #e2e8f0; }
+        .form-input:focus { outline: none; border-color: #FF6B00; box-shadow: 0 0 0 4px rgba(255,107,0,0.1); transform: scale(1.01); }
+        
+        /* Stats Cards */
+        .stat-card {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            border-radius: 24px;
+            padding: 20px;
+            color: white;
+            transition: var(--transition);
+        }
+        .stat-card-alt { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .stat-card-success { background: linear-gradient(135deg, #10b981, #059669); }
+        
+        /* Badges */
+        .badge-success { background: #d1fae5; color: #059669; padding: 4px 12px; border-radius: 30px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+        body.dark-mode .badge-success { background: #064e3b; color: #34d399; }
+        
+        /* Toggle Switch */
+        .toggle-switch { position: relative; display: inline-block; width: 52px; height: 28px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e5e7eb; border-radius: 34px; transition: 0.3s; }
+        input:checked + .toggle-slider { background: linear-gradient(135deg, #FF6B00, #CC5500); }
+        .toggle-slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: 0.3s; }
+        input:checked + .toggle-slider:before { transform: translateX(24px); }
+        
+        /* Code / API Display */
+        .api-key-box { background: #f8fafc; border-radius: 18px; padding: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border: 1px solid #e5e7eb; }
+        body.dark-mode .api-key-box { background: #0f172a; border-color: #334155; }
+        .code-block { background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 16px; font-family: monospace; font-size: 12px; overflow-x: auto; position: relative; }
+        
+        /* Modal & Toast */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal-content { background: white; border-radius: 32px; padding: 28px; max-width: 500px; width: 90%; animation: slideUp 0.4s; }
+        body.dark-mode .modal-content { background: #1e293b; }
+        .toast { position: fixed; bottom: 24px; right: 24px; z-index: 9999; padding: 14px 24px; border-radius: 60px; background: white; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 12px; animation: slideUp 0.3s; font-weight: 500; border-left: 4px solid #10b981; }
+        body.dark-mode .toast { background: #1e293b; color: white; }
+        .spinner { width: 24px; height: 24px; border: 3px solid #e5e7eb; border-top-color: #FF6B00; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
+        
+        @keyframes slideUp { from { opacity:0; transform:translateY(30px);} to { opacity:1; transform:translateY(0);} }
+        @keyframes spin { to { transform: rotate(360deg);} }
+        
+        /* Responsive Grid */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 12px !important;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .glass-card {
+                border-radius: 20px;
+            }
+            
+            .tab-btn {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+            
+            .api-key-box,
+            .modal-content {
+                border-radius: 20px;
+            }
+            
+            .dashboard-grid > .glass-card {
+                padding: 16px !important;
+            }
+        }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #FF6B00; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+    <div id="header-placeholder"></div>
+    <script src="/public/assets/js/core/config.js"></script>
+    <script src="/public/assets/js/core/auth.js"></script>
+  <script src="/public/assets/js/core/balance-manager.js"></script>
+    <script src="/public/assets/js/core/toast.js"></script>
+    <script src="/public/assets/js/core/utils.js"></script>
+    <script src="/public/assets/js/core/validation.js"></script>
+    <script src="/public/assets/js/core/offline.js"></script>
+    <script src="/public/assets/js/core/shortcuts.js"></script>
+    <script src="/public/assets/js/core/avatar-manager.js"></script>
+    <!-- Sidebar Component Loader -->
+    <script>
+(function loadSidebar(){
+    const placeholder = document.getElementById('sidebar-placeholder');
+    if(!placeholder) return;
+
+    function injectSidebar(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/sidebar.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectSidebar)
+        .catch(() => { console.warn('Sidebar fetch failed - using inline fallback'); });
+})();
+</script>
+    <!-- Universal Header Component Loader -->
+    <script>
+(function loadHeader(){
+    const placeholder = document.getElementById('header-placeholder');
+    if(!placeholder) return;
+
+    function injectHeader(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/universal-header.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectHeader)
+        .catch(() => { console.warn('Header fetch failed - using inline fallback'); });
+})();
+</script>
+<div class="main-content">
+    <!-- Dynamic Tabs Navigation -->
+    <div class="flex flex-wrap gap-3 mb-8 border-b border-gray-200 dark:border-gray-700 pb-3">
+        <button data-tab="account" class="tab-btn px-5 py-2 rounded-full font-semibold transition bg-primary text-white shadow-md">Account</button>
+        <button data-tab="funds" class="tab-btn px-5 py-2 rounded-full font-semibold transition bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">Add Funds</button>
+        <button data-tab="affiliate" class="tab-btn px-5 py-2 rounded-full font-semibold transition bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">Affiliate</button>
+        <button data-tab="api-keys" class="tab-btn px-5 py-2 rounded-full font-semibold transition bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">API Keys</button>
+        <button data-tab="api-docs" class="tab-btn px-5 py-2 rounded-full font-semibold transition bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">API Docs</button>
+    </div>
+
+    <!-- ========================= ACCOUNT TAB ========================= -->
+    <div id="tab-account" class="tab-content">
+        <div class="dashboard-grid">
+            <div class="glass-card p-6">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primaryDark flex items-center justify-center text-white text-3xl font-bold shadow-lg" id="avatarInitials">U</div>
+                    <div><h2 class="text-2xl font-bold" id="displayName">User</h2><p id="displayEmail" class="text-gray-500 dark:text-gray-400">email@example.com</p></div>
+                </div>
+                <div class="space-y-3"><div class="flex justify-between"><span class="text-gray-500">Phone</span><span id="displayPhone">Not set</span></div><div class="flex justify-between"><span class="text-gray-500">Member Since</span><span id="memberSince">-</span></div><div class="flex justify-between"><span class="text-gray-500">BDT Balance</span><span id="bdtBalance" class="font-bold text-primary text-xl">৳0</span></div></div>
+                <button id="editProfileBtn" class="btn-primary w-full mt-4"><i class="fas fa-edit"></i> Edit Profile</button>
+            </div>
+            <div class="glass-card p-6"><h3 class="font-bold text-lg mb-3">Change Password</h3><form id="passwordForm"><input type="password" id="currentPassword" placeholder="Current Password" class="form-input mb-3"><input type="password" id="newPassword" placeholder="New Password" class="form-input mb-3"><input type="password" id="confirmPassword" placeholder="Confirm" class="form-input mb-3"><button type="submit" class="btn-primary w-full">Update Password</button></form></div>
+            <div class="glass-card p-6"><h3 class="font-bold text-lg mb-3">Notifications</h3><div class="space-y-3"><label class="flex justify-between items-center"><span>Email Notifications</span><div class="toggle-switch"><input type="checkbox" id="emailNotifications"><span class="toggle-slider"></span></div></label><label class="flex justify-between items-center"><span>WhatsApp Alerts</span><div class="toggle-switch"><input type="checkbox" id="whatsappNotifications"><span class="toggle-slider"></span></div></label><button id="saveNotificationsBtn" class="btn-primary w-full mt-3">Save Preferences</button></div></div>
+            <div class="glass-card p-6 border border-red-300"><h3 class="font-bold text-lg text-red-500">Danger Zone</h3><button id="deleteAccountBtn" class="btn-danger w-full mt-2">Delete Account</button></div>
+        </div>
+    </div>
+
+    <!-- ========================= ADD FUNDS TAB ========================= -->
+    <div id="tab-funds" class="tab-content hidden">
+        <div class="dashboard-grid">
+            <div class="glass-card p-6"><h3 class="text-xl font-bold">Deposit Funds</h3><div class="mt-4"><label>Amount (USD)</label><input type="number" id="amountUSD" class="form-input mt-1" placeholder="10.00" min="0.2"><div class="flex gap-2 mt-2 flex-wrap"><button type="button" data-amount="5" class="amount-preset px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-700">$5</button><button data-amount="10" class="amount-preset">$10</button><button data-amount="25">$25</button><button data-amount="100">$100</button></div><div class="mt-4 p-3 bg-orange-50 dark:bg-orange-950/30 rounded-xl"><div class="flex justify-between"><span>Your Rate (incl fee)</span><span id="yourRate">1 USD = 126 BDT</span></div><div class="flex justify-between font-bold mt-2"><span>You'll Pay (BDT)</span><span id="totalBDT" class="text-primary text-xl">৳0</span></div></div><div class="mt-4"><label>Payment Method</label><select id="paymentMethodSelect" class="form-input mt-1"><option value="bkash">bKash</option><option value="nagad">Nagad</option><option value="rocket">Rocket</option></select></div><div class="mt-4"><label>Transaction ID</label><input type="text" id="transactionId" class="form-input mt-1" placeholder="e.g., 8VK7S9A"></div><button id="submitDepositBtn" class="btn-primary w-full mt-4">Submit Request</button></div></div>
+            <div class="glass-card p-6"><h3 class="font-bold text-lg">Recent Deposits</h3><div id="recentDepositsList" class="mt-3 space-y-2 text-sm"><div class="text-center py-4 text-gray-500">No deposits yet</div></div></div>
+        </div>
+    </div>
+
+    <!-- ========================= AFFILIATE TAB ========================= -->
+    <div id="tab-affiliate" class="tab-content hidden">
+        <div class="dashboard-grid">
+            <div class="glass-card p-6"><div class="grid grid-cols-2 gap-4"><div><i class="fas fa-users text-primary text-2xl"></i><p class="text-2xl font-bold" id="totalReferrals">0</p><p>Referrals</p></div><div><i class="fas fa-dollar-sign text-primary text-2xl"></i><p class="text-2xl font-bold" id="totalEarnings">৳0</p><p>Earnings</p></div></div><div class="mt-4 referral-box bg-primary/10 p-3 rounded-xl"><code id="referralLink" class="text-sm break-all">Loading...</code><button id="copyLinkBtn" class="btn-outline text-sm mt-2 w-full">Copy Link</button></div><div class="mt-4"><label>Withdraw (BDT)</label><input type="number" id="withdrawAmount" class="form-input mt-1" min="500"><select id="withdrawMethod" class="form-input mt-2"><option value="bkash">bKash</option><option value="nagad">Nagad</option></select><input type="text" id="withdrawAccount" class="form-input mt-2" placeholder="Account number"><button id="requestWithdrawBtn" class="btn-primary w-full mt-3">Withdraw</button></div></div>
+            <div class="glass-card p-6"><h3 class="font-bold text-lg">Commission Tiers</h3><div class="grid grid-cols-2 gap-3 mt-3"><div class="text-center p-2 rounded-xl bg-gray-100 dark:bg-gray-800"><span class="block text-2xl">🥉</span><span>15%</span><span class="text-xs">Bronze</span></div><div class="text-center p-2 rounded-xl bg-gray-100 dark:bg-gray-800"><span class="block text-2xl">🥈</span><span>20%</span><span class="text-xs">Silver</span></div><div class="text-center p-2 rounded-xl bg-gray-100 dark:bg-gray-800"><span class="block text-2xl">🥇</span><span>25%</span><span class="text-xs">Gold</span></div><div class="text-center p-2 rounded-xl bg-gray-100 dark:bg-gray-800"><span class="block text-2xl">👑</span><span>30%</span><span class="text-xs">Platinum</span></div></div><div id="referralsList" class="mt-4 max-h-60 overflow-y-auto text-sm"></div></div>
+        </div>
+    </div>
+
+    <!-- ========================= API KEYS TAB ========================= -->
+    <div id="tab-api-keys" class="tab-content hidden">
+        <div class="dashboard-grid">
+            <div class="glass-card p-6"><h3 class="font-bold text-lg">Main API Key</h3><div class="api-key-box mt-2"><code id="mainApiKeyDisplay" class="text-sm">****************</code><button id="copyMainKeyBtn" class="btn-outline text-sm py-1 px-3">Copy</button></div><div class="flex gap-2 mt-3"><button id="regenerateMainKeyBtn" class="btn-outline text-sm flex-1">Regenerate</button><button id="showMainKeyBtn" class="btn-outline text-sm flex-1">Show</button></div></div>
+            <div class="glass-card p-6"><div class="flex justify-between items-center"><h3 class="font-bold text-lg">Child API Keys</h3><button id="createChildApiBtn" class="btn-primary text-sm py-2 px-3">+ Create</button></div><div id="childApiKeysList" class="mt-3 space-y-3"></div></div>
+        </div>
+    </div>
+
+    <!-- ========================= API DOCS TAB ========================= -->
+    <div id="tab-api-docs" class="tab-content hidden">
+        <div class="glass-card p-6"><h3 class="text-xl font-bold mb-2">API Documentation</h3><p>Base URL: <code class="bg-gray-200 dark:bg-gray-800 px-3 py-2 rounded">https://boostbangla.com/api/v2</code></p><p>Auth: Bearer Token (Your API Key)</p><div class="mt-4"><h4 class="font-semibold">Endpoints</h4><ul class="list-disc pl-5 space-y-1 text-sm"><li><span class="text-green-600">GET</span> /services - List all services</li><li><span class="text-blue-600">POST</span> /order - Place order</li><li><span class="text-green-600">GET</span> /status/:id - Order status</li><li><span class="text-green-600">GET</span> /balance - Check balance</li></ul></div><div class="mt-4 code-block"><pre>curl -X POST https://boostbangla.com/api/v2/order \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{"service":123,"link":"https://...","quantity":1000}'</pre><button id="copyCurlBtn" class="absolute top-2 right-2 bg-gray-600 text-white text-xs px-3 py-2 rounded">Copy</button></div><a href="/public/pages/dashboard/api-docs.html" class="text-primary mt-3 inline-block">Full Documentation →</a></div>
+    </div>
+</div>
+
+<!-- Modals -->
+<div id="editProfileModal" class="modal-overlay"><div class="modal-content"><h3 class="text-xl font-bold mb-4">Edit Profile</h3><form id="editProfileForm"><input type="text" id="editUsername" class="form-input mb-3" placeholder="Username"><input type="tel" id="editPhone" class="form-input mb-3" placeholder="Phone"><div class="flex gap-2"><button type="button" onclick="closeModal('editProfileModal')" class="btn-outline flex-1">Cancel</button><button type="submit" class="btn-primary flex-1">Save</button></div></form></div></div>
+<div id="deleteConfirmModal" class="modal-overlay"><div class="modal-content text-center"><i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-3"></i><h3 class="text-xl font-bold">Delete Account?</h3><input type="text" id="deleteConfirmText" class="form-input my-3" placeholder='Type "DELETE"'><div class="flex gap-2"><button onclick="closeModal('deleteConfirmModal')" class="btn-outline flex-1">Cancel</button><button id="confirmDeleteBtn" class="btn-danger flex-1">Delete</button></div></div></div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script>
+    // Firebase Config
+    const firebaseConfig = { apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g", authDomain: "boostbangla-629a1.firebaseapp.com", projectId: "boostbangla-629a1", storageBucket: "boostbangla-629a1.firebasestorage.app", messagingSenderId: "384867462668", appId: "1:384867462668:web:bbc79c6a7ead66b439c829" };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth(), db = firebase.firestore();
+    let currentUser = null, mainApiKey = '', exchangeRate = 120;
+
+    // Helper functions
+    function showToast(msg, type='success') { let t=document.createElement('div'); t.className=`toast ${type}`; t.innerHTML=`<i class="fas fa-${type==='success'?'check-circle':'exclamation-circle'}"></i><span>${msg}</span><i class="fas fa-times ml-3 cursor-pointer" onclick="this.parentElement.remove()"></i>`; document.body.appendChild(t); setTimeout(()=>t.remove(),4000); }
+    function formatBDT(amt){ return '৳'+Number(amt||0).toLocaleString('en-BD'); }
+    function closeModal(id){ document.getElementById(id).style.display='none'; document.body.style.overflow='auto'; }
+
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn=>{ btn.addEventListener('click',()=>{ document.querySelectorAll('.tab-content').forEach(t=>t.classList.add('hidden')); document.getElementById(`tab-${btn.dataset.tab}`).classList.remove('hidden'); document.querySelectorAll('.tab-btn').forEach(b=>{b.classList.remove('bg-primary','text-white');b.classList.add('bg-gray-200','dark:bg-gray-700','text-gray-700');}); btn.classList.add('bg-primary','text-white'); btn.classList.remove('bg-gray-200'); }); });
+
+    // Load all data
+    async function loadUserData() { if(!currentUser) return; const doc=await db.collection('users').doc(currentUser.uid).get(); let data=doc.data()||{}; let name=data.displayName||currentUser.email.split('@')[0]; document.getElementById('displayName').innerText=name; document.getElementById('displayEmail').innerText=currentUser.email; document.getElementById('displayPhone').innerText=data.phone||'Not set'; document.getElementById('memberSince').innerText=data.createdAt?.toDate().toLocaleDateString()||'N/A'; document.getElementById('bdtBalance').innerHTML=formatBDT(data.balance||0); mainApiKey=data.apiKey||'bb_'+Math.random().toString(36).substring(2); if(!data.apiKey) await db.collection('users').doc(currentUser.uid).update({apiKey:mainApiKey}); document.getElementById('mainApiKeyDisplay').innerText='•'.repeat(32); window.mainApiKeyVisible=false; }
+    async function loadAffiliate(){ if(!currentUser) return; let refDoc=await db.collection('affiliates').doc(currentUser.uid).get(); let aff=refDoc.data()||{totalReferrals:0,totalEarnings:0,referralCode:'REF_'+Math.random().toString(36).substring(2)}; if(!refDoc.exists) await db.collection('affiliates').doc(currentUser.uid).set(aff); document.getElementById('totalReferrals').innerText=aff.totalReferrals; document.getElementById('totalEarnings').innerHTML=formatBDT(aff.totalEarnings); document.getElementById('referralLink').innerText=`${location.origin}/public/pages/public/signup.html?ref=${aff.referralCode}`; }
+    async function loadChildKeys(){ if(!currentUser) return; let snap=await db.collection('apiKeys').where('userId','==',currentUser.uid).where('type','==','child').get(); let container=document.getElementById('childApiKeysList'); if(snap.empty){ container.innerHTML='<div class="text-center py-4 text-gray-500">No child keys</div>'; return; } container.innerHTML=snap.docs.map(d=>`<div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800"><div class="flex justify-between"><span class="font-semibold">${d.data().name}</span><span class="text-xs ${d.data().status==='active'?'text-green-500':'text-red-500'}">${d.data().status}</span></div><code class="text-xs break-all">${d.data().key.slice(0,10)}...</code><div class="flex gap-2 mt-2"><button onclick="copyText('${d.data().key}')" class="text-xs btn-outline py-1 px-2">Copy</button><button onclick="revokeKey('${d.id}')" class="text-xs btn-danger py-1 px-2">Revoke</button></div></div>`).join(''); }
+    window.copyText=(t)=>{ navigator.clipboard.writeText(t); showToast('Copied!'); };
+    window.revokeKey=async(id)=>{ await db.collection('apiKeys').doc(id).update({status:'revoked'}); loadChildKeys(); showToast('Key revoked'); };
+    document.getElementById('copyMainKeyBtn')?.addEventListener('click',()=>{ navigator.clipboard.writeText(mainApiKey); showToast('Main key copied'); });
+    document.getElementById('showMainKeyBtn')?.addEventListener('click',()=>{ window.mainApiKeyVisible=!window.mainApiKeyVisible; document.getElementById('mainApiKeyDisplay').innerText=window.mainApiKeyVisible?mainApiKey:'•'.repeat(32); });
+    document.getElementById('regenerateMainKeyBtn')?.addEventListener('click',async()=>{ let newKey='bb_'+Math.random().toString(36).substring(2,15); await db.collection('users').doc(currentUser.uid).update({apiKey:newKey}); mainApiKey=newKey; showToast('Regenerated'); });
+    document.getElementById('createChildApiBtn')?.addEventListener('click',async()=>{ let name=prompt('Key name:'); if(!name) return; let newKey='bb_child_'+Math.random().toString(36).substring(2); await db.collection('apiKeys').add({userId:currentUser.uid,name,key:newKey,type:'child',status:'active',accessLevel:'full',createdAt:new Date()}); loadChildKeys(); showToast('Child key created'); });
+    document.getElementById('copyLinkBtn')?.addEventListener('click',()=>{ let link=document.getElementById('referralLink').innerText; navigator.clipboard.writeText(link); showToast('Link copied'); });
+    document.getElementById('copyCurlBtn')?.addEventListener('click',()=>{ navigator.clipboard.writeText(`curl -X POST https://boostbangla.com/api/v2/order -H "Authorization: Bearer ${mainApiKey}" -d '{"service":123,"link":"https://...","quantity":1000}'`); showToast('cURL copied'); });
+    // Deposit logic
+    document.getElementById('submitDepositBtn')?.addEventListener('click',async()=>{ let usd=parseFloat(document.getElementById('amountUSD').value); let txid=document.getElementById('transactionId').value.trim(); if(usd<0.2||!txid){ showToast('Invalid amount or TXID','error'); return; } let bdt=Math.round(usd*exchangeRate*1.05); if(usd>=100) bdt+=Math.round(bdt*0.01); await db.collection('deposits').add({userId:currentUser.uid,amountUSD:usd,amountBDT:bdt,transactionId:txid,method:document.getElementById('paymentMethodSelect').value,status:'pending',createdAt:new Date()}); showToast('Deposit request sent!'); document.getElementById('amountUSD').value=''; document.getElementById('transactionId').value=''; });
+    // Password change
+    document.getElementById('passwordForm')?.addEventListener('submit',async(e)=>{ e.preventDefault(); let curr=document.getElementById('currentPassword').value, newp=document.getElementById('newPassword').value, conf=document.getElementById('confirmPassword').value; if(newp!==conf||newp.length<6){ showToast('Passwords mismatch or too short','warning'); return; } try{ let cred=firebase.auth.EmailAuthProvider.credential(currentUser.email,curr); await currentUser.reauthenticateWithCredential(cred); await currentUser.updatePassword(newp); showToast('Password updated'); document.getElementById('password

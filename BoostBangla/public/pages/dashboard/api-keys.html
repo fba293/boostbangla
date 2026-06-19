@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>API Keys Management | BoostBangla - Developer Tools</title>
+    <meta name="description" content="Manage your BoostBangla API keys. Create, edit, revoke API keys for reseller integration and developer access.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if(typeof showToast !== 'function') window.showToast = (msg,type)=>{alert(msg)};
+
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                        'slide-down': 'slideDown 0.3s ease-out',
+                        'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'bounce-subtle': 'bounceSubtle 1s ease-in-out infinite',
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- <link rel="stylesheet" href="/public/assets/css/style.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/dark-mode.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/mobile.css"> -->
+    
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC5500;
+            --primary-light: #FF8C42;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark-bg: #02101A;
+            --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            --card-shadow-hover: 0 25px 30px -12px rgba(255, 107, 0, 0.15);
+        }
+        
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 60;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 28px rgba(255, 107, 0, 0.4);
+        }
+        
+        .mobile-menu-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .animate-slide-up {
+            animation: slideUp 0.5s ease-out forwards;
+        }
+        
+        .animate-slide-down {
+            animation: slideDown 0.4s ease-out forwards;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body.dark-mode .glass-card {
+            background: rgba(30, 41, 59, 0.95);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow-hover);
+        }
+        
+        /* API Key Cards */
+        .api-key-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            transition: all 0.3s;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 16px;
+        }
+        
+        body.dark-mode .api-key-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .api-key-card:hover {
+            transform: translateY(-2px);
+            border-color: #FF6B00;
+            box-shadow: 0 10px 25px -5px rgba(255, 107, 0, 0.15);
+        }
+        
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .status-active { background: #d1fae5; color: #059669; }
+        .status-revoked { background: #fee2e2; color: #dc2626; }
+        .status-expired { background: #fef3c7; color: #d97706; }
+        
+        body.dark-mode .status-active { background: #064e3b; color: #34d399; }
+        body.dark-mode .status-revoked { background: #7f1d1d; color: #f87171; }
+        body.dark-mode .status-expired { background: #451a03; color: #fbbf24; }
+        
+        /* API Key Display */
+        .api-key-display {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 12px 16px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            word-break: break-all;
+        }
+        
+        body.dark-mode .api-key-display {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        /* Usage Stats */
+        .usage-stat {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        body.dark-mode .usage-stat {
+            background: #0f172a;
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(255, 107, 0, 0.4);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e5e7eb;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        body.dark-mode .btn-outline {
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .btn-outline:hover {
+            border-color: #FF6B00;
+            color: #FF6B00;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.4);
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            padding: 28px;
+            max-width: 500px;
+            width: 90%;
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body.dark-mode .modal-content {
+            background: #1e293b;
+        }
+        
+        /* Form Inputs */
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            background: white;
+        }
+        
+        body.dark-mode .form-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.1);
+            transform: scale(1.01);
+        }
+        
+        select.form-input {
+            cursor: pointer;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            padding: 14px 24px;
+            border-radius: 60px;
+            background: white;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideUp 0.3s ease;
+            font-weight: 500;
+        }
+        
+        body.dark-mode .toast {
+            background: #1e293b;
+            color: white;
+        }
+        
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        .toast.warning { border-left: 4px solid #f59e0b; }
+        .toast.info { border-left: 4px solid #3b82f6; }
+        
+        /* Spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #FF6B00;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .empty-state i {
+            font-size: 64px;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+        
+        body.dark-mode .empty-state i {
+            color: #475569;
+        }
+        
+        /* Code Block */
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 14px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .api-key-card .flex {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .action-buttons {
+                flex-wrap: wrap;
+            }
+            .usage-stats {
+                flex-direction: column;
+            }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #FF6B00;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #CC5500;
+        }
+        
+        /* API Endpoint Table */
+        .endpoint-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .endpoint-table th {
+            text-align: left;
+            padding: 12px;
+            background: #f8fafc;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        
+        body.dark-mode .endpoint-table th {
+            background: #0f172a;
+        }
+        
+        .endpoint-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 13px;
+        }
+        
+        body.dark-mode .endpoint-table td {
+            border-bottom-color: #334155;
+        }
+        
+        .method-get { color: #10b981; }
+        .method-post { color: #3b82f6; }
+        .method-delete { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+    <div id="header-placeholder"></div>
+    <!-- Sidebar Component Loader -->
+    <script>
+(function loadSidebar(){
+    const placeholder = document.getElementById('sidebar-placeholder');
+    if(!placeholder) return;
+
+    function injectSidebar(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/sidebar.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectSidebar)
+        .catch(() => { console.warn('Sidebar fetch failed - using inline fallback'); });
+})();
+</script>
+    <!-- Universal Header Component Loader -->
+    <script>
+(function loadHeader(){
+    const placeholder = document.getElementById('header-placeholder');
+    if(!placeholder) return;
+
+    function injectHeader(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/universal-header.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectHeader)
+        .catch(() => { console.warn('Header fetch failed - using inline fallback'); });
+})();
+</script>
+    
+    <div class="main-content">
+        <div class="p-4 md:p-8 lg:p-10">
+            <!-- Header Section -->
+            <div class="animate-slide-down mb-8">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-12 h-12 bg-gradient-to-br from-primary to-primaryDark rounded-2xl flex items-center justify-center shadow-lg animate-float">
+                                <i class="fas fa-key text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-primaryDark bg-clip-text text-transparent">
+                                    API Keys Management
+                                </h1>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                                    Manage your API keys for seamless integration
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="refreshApiBtn" class="btn-outline">
+                        <i class="fas fa-sync-alt mr-2"></i> Refresh
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="glass-card p-4 text-center animate-fade-in" style="animation-delay: 0.05s">
+                    <i class="fas fa-key text-primary text-2xl mb-2"></i>
+                    <p class="text-2xl font-bold" id="totalKeys">0</p>
+                    <p class="text-xs text-gray-500">Total API Keys</p>
+                </div>
+                <div class="glass-card p-4 text-center animate-fade-in" style="animation-delay: 0.1s">
+                    <i class="fas fa-chart-line text-green-500 text-2xl mb-2"></i>
+                    <p class="text-2xl font-bold" id="totalRequests">0</p>
+                    <p class="text-xs text-gray-500">Total API Requests</p>
+                </div>
+                <div class="glass-card p-4 text-center animate-fade-in" style="animation-delay: 0.15s">
+                    <i class="fas fa-calendar-day text-blue-500 text-2xl mb-2"></i>
+                    <p class="text-2xl font-bold" id="todayRequests">0</p>
+                    <p class="text-xs text-gray-500">Requests Today</p>
+                </div>
+                <div class="glass-card p-4 text-center animate-fade-in" style="animation-delay: 0.2s">
+                    <i class="fas fa-clock text-yellow-500 text-2xl mb-2"></i>
+                    <p class="text-2xl font-bold" id="rateLimit">100</p>
+                    <p class="text-xs text-gray-500">Rate Limit (per min)</p>
+                </div>
+            </div>
+            
+            <!-- Main API Key Section -->
+            <div class="glass-card p-6 mb-8 animate-slide-up" style="animation-delay: 0.25s">
+                <div class="flex flex-wrap justify-between items-start gap-4 mb-4">
+                    <div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-star text-primary text-lg"></i>
+                            </div>
+                            <h2 class="text-xl font-bold">Main API Key</h2>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Use this key for your main application integration</p>
+                    </div>
+                    <span class="status-badge status-active" id="mainKeyStatus">
+                        <i class="fas fa-circle text-xs"></i> Active
+                    </span>
+                </div>
+                <div class="api-key-display mb-4" id="mainApiKeyDisplay">
+                    ************************
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <button id="copyMainKeyBtn" class="btn-outline">
+                        <i class="fas fa-copy mr-2"></i> Copy Key
+                    </button>
+                    <button id="regenerateMainKeyBtn" class="btn-outline">
+                        <i class="fas fa-sync-alt mr-2"></i> Regenerate
+                    </button>
+                    <button id="showMainKeyBtn" class="btn-outline">
+                        <i class="fas fa-eye mr-2"></i> Show/Hide
+                    </button>
+                </div>
+                <div class="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl text-sm text-yellow-700 dark:text-yellow-400">
+                    <i class="fas fa-shield-alt mr-2"></i> Keep your API key secure. Regenerate if compromised. Never share it publicly.
+                </div>
+            </div>
+            
+            <!-- Child API Keys Section -->
+            <div class="mb-8 animate-slide-up" style="animation-delay: 0.3s">
+                <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-child text-blue-500 text-lg"></i>
+                        </div>
+                        <h2 class="text-xl font-bold">Child API Keys</h2>
+                    </div>
+                    <button id="createChildApiBtn" class="btn-primary">
+                        <i class="fas fa-plus-circle mr-2"></i> Create New Key
+                    </button>
+                </div>
+                
+                <div id="childApiKeysList">
+                    <div class="text-center py-12">
+                        <div class="spinner mx-auto mb-4"></div>
+                        <p class="text-gray-500">Loading child API keys...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- API Documentation Section -->
+            <div class="glass-card p-6 animate-slide-up" style="animation-delay: 0.35s">
+                <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+                    <div class="w-10 h-10 bg-purple-500/10 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-book text-purple-500 text-lg"></i>
+                    </div>
+                    <h2 class="text-xl font-bold">API Documentation</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold mb-2">Base URL</h3>
+                        <div class="code-block mb-4">
+                            https://boostbangla.com/api/v2
+                        </div>
+                        
+                        <h3 class="font-semibold mb-2">Authentication</h3>
+                        <div class="code-block mb-4">
+                            curl -X POST https://boostbangla.com/api/v2/order \<br>
+                            &nbsp;&nbsp;-H "Authorization: Bearer YOUR_API_KEY" \<br>
+                            &nbsp;&nbsp;-H "Content-Type: application/json" \<br>
+                            &nbsp;&nbsp;-d '{"service":123,"link":"https://...","quantity":1000}'
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-semibold mb-2">Endpoints</h3>
+                        <table class="endpoint-table">
+                            <thead>
+                                <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><span class="method-get">GET</span></td><td>/services</td><td>List all services</td></tr>
+                                <tr><td><span class="method-post">POST</span></td><td>/order</td><td>Place new order</td></tr>
+                                <tr><td><span class="method-get">GET</span></td><td>/status/:id</td><td>Get order status</td></tr>
+                                <tr><td><span class="method-get">GET</span></td><td>/balance</td><td>Check balance</td></tr>
+                                <tr><td><span class="method-delete">DELETE</span></td><td>/order/:id</td><td>Cancel order</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
+                    <a href="/public/pages/dashboard/api-docs.html" class="text-primary hover:underline inline-flex items-center gap-1">
+                        View Full Documentation <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    
+    <!-- Create Child API Key Modal -->
+    <div id="createChildModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Create Child API Key</h3>
+                <button onclick="closeCreateChildModal()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+            </div>
+            <form id="createChildApiForm">
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold mb-2">Key Name</label>
+                    <input type="text" id="childKeyName" class="form-input" placeholder="e.g., My Website Integration" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold mb-2">Access Level</label>
+                    <select id="childKeyAccess" class="form-input">
+                        <option value="full">🔓 Full Access - All endpoints</option>
+                        <option value="limited">🔒 Limited - Orders only</option>
+                        <option value="readonly">👁️ Read Only - View only</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold mb-2">Rate Limit (requests/minute)</label>
+                    <input type="number" id="childRateLimit" class="form-input" value="100" min="10" max="500">
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeCreateChildModal()" class="flex-1 btn-outline">Cancel</button>
+                    <button type="submit" class="flex-1 btn-primary">Create Key</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Delete Key Confirmation Modal -->
+    <div id="deleteKeyModal" class="modal-overlay">
+        <div class="modal-content text-center">
+            <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Revoke API Key?</h3>
+            <p class="text-gray-500 dark:text-gray-400 mb-4" id="deleteKeyMessage">Are you sure you want to revoke this API key? This action cannot be undone.</p>
+            <div class="flex gap-3">
+                <button onclick="closeDeleteKeyModal()" class="flex-1 btn-outline">Cancel</button>
+                <button id="confirmDeleteKeyBtn" class="flex-1 btn-danger">Revoke Key</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- New Key Created Modal -->
+    <div id="newKeyModal" class="modal-overlay">
+        <div class="modal-content text-center">
+            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce-subtle">
+                <i class="fas fa-key text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">New API Key Created</h3>
+            <p class="text-gray-500 dark:text-gray-400 mb-4">Copy your new API key now. You won't be able to see it again!</p>
+            <div class="api-key-display mb-4" id="newKeyDisplay"></div>
+            <div class="flex gap-3">
+                <button onclick="copyNewKey()" class="flex-1 btn-primary">Copy Key</button>
+                <button onclick="closeNewKeyModal()" class="flex-1 btn-outline">Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+    
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="/public/assets/js/core/config.js"></script>
+    <script src="/public/assets/js/core/auth.js"></script>
+    <script src="/public/assets/js/core/utils.js"></script>
+    <script src="/public/assets/js/dark-mode.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        let currentUser = null;
+        let childApiKeys = [];
+        let mainKeyVisible = false;
+        let mainApiKey = '';
+        let newKeyValue = '';
+        
+        // ============================================
+        // TOAST NOTIFICATION
+        // ============================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                <span>${message}</span>
+                <i class="fas fa-times ml-3 cursor-pointer opacity-70 hover:opacity-100" onclick="this.parentElement.remove()"></i>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4000);
+        }
+        
+        // ============================================
+        // GENERATE API KEY
+        // ============================================
+        function generateApiKey(prefix = 'bb') {
+            return `${prefix}_${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 8)}`;
+        }
+        
+        // ============================================
+        // LOAD MAIN API KEY
+        // ============================================
+        async function loadMainApiKey() {
+            if (!currentUser) return;
+            
+            try {
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                const userData = userDoc.data();
+                
+                if (userData.apiKey) {
+                    mainApiKey = userData.apiKey;
+                } else {
+                    mainApiKey = generateApiKey();
+                    await db.collection('users').doc(currentUser.uid).update({ apiKey: mainApiKey });
+                }
+                
+                updateMainKeyDisplay();
+                
+            } catch (error) {
+                console.error('Error loading main API key:', error);
+            }
+        }
+        
+        function updateMainKeyDisplay() {
+            const display = document.getElementById('mainApiKeyDisplay');
+            if (mainKeyVisible) {
+                display.innerText = mainApiKey;
+            } else {
+                display.innerText = '•'.repeat(32);
+            }
+        }
+        
+        // ============================================
+        // LOAD CHILD API KEYS
+        // ============================================
+        async function loadChildApiKeys() {
+            if (!currentUser) return;
+            
+            const container = document.getElementById('childApiKeysList');
+            container.innerHTML = `
+                <div class="text-center py-12">
+                    <div class="spinner mx-auto mb-4"></div>
+                    <p class="text-gray-500">Loading child API keys...</p>
+                </div>
+            `;
+            
+            try {
+                const snapshot = await db.collection('apiKeys')
+                    .where('userId', '==', currentUser.uid)
+                    .where('type', '==', 'child')
+                    .orderBy('createdAt', 'desc')
+                    .get();
+                
+                childApiKeys = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                
+                document.getElementById('totalKeys').innerText = childApiKeys.length + 1;
+                
+                if (childApiKeys.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-key"></i>
+                            <h3 class="text-lg font-semibold mb-2">No child API keys</h3>
+                            <p class="text-gray-500">Create your first child API key for integration</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = childApiKeys.map(key => `
+                    <div class="api-key-card">
+                        <div class="flex flex-wrap justify-between items-start gap-3 mb-3">
+                            <div>
+                                <h3 class="font-bold">${escapeHtml(key.name)}</h3>
+                                <p class="text-xs text-gray-500">Created: ${formatDate(key.createdAt)}</p>
+                            </div>
+                            <span class="status-badge ${key.status === 'active' ? 'status-active' : 'status-revoked'}">
+                                <i class="fas fa-${key.status === 'active' ? 'check-circle' : 'times-circle'}"></i>
+                                ${key.status === 'active' ? 'Active' : 'Revoked'}
+                            </span>
+                        </div>
+                        <div class="api-key-display mb-3">
+                            ${key.status === 'active' ? '••••••••••••••••••••••••' : key.key}
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="flex-1">
+                                <div class="text-xs text-gray-500">Access Level</div>
+                                <div class="text-sm">${getAccessLevelText(key.accessLevel)}</div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-xs text-gray-500">Requests Today</div>
+                                <div class="text-sm">${key.requestsToday || 0} / ${key.rateLimit || 100}</div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-xs text-gray-500">Total Requests</div>
+                                <div class="text-sm">${key.totalRequests || 0}</div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 mt-3">
+                            ${key.status === 'active' ? `
+                                <button onclick="copyChildKey('${key.key}')" class="btn-outline text-sm">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                                <button onclick="revokeChildKey('${key.id}')" class="btn-danger text-sm">
+                                    <i class="fas fa-ban"></i> Revoke
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Error loading child API keys:', error);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-3"></i>
+                        <p class="text-gray-500">Failed to load API keys</p>
+                        <button onclick="loadChildApiKeys()" class="btn-primary mt-4">Try Again</button>
+                    </div>
+                `;
+            }
+        }
+        
+        function getAccessLevelText(level) {
+            switch(level) {
+                case 'full': return '🔓 Full Access';
+                case 'limited': return '🔒 Limited (Orders Only)';
+                case 'readonly': return '👁️ Read Only';
+                default: return '🔓 Full Access';
+            }
+        }
+        
+        // ============================================
+        // CREATE CHILD API KEY
+        // ============================================
+        document.getElementById('createChildApiForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('childKeyName').value.trim();
+            const accessLevel = document.getElementById('childKeyAccess').value;
+            const rateLimit = parseInt(document.getElementById('childRateLimit').value);
+            
+            if (!name) {
+                showToast('Please enter a key name', 'warning');
+                return;
+            }
+            
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner" style="width:20px;height:20px;margin:0 auto;"></div>';
+            
+            try {
+                const newKey = generateApiKey('bb_child');
+                newKeyValue = newKey;
+                
+                await db.collection('apiKeys').add({
+                    userId: currentUser.uid,
+                    name: name,
+                    key: newKey,
+                    accessLevel: accessLevel,
+                    rateLimit: rateLimit,
+                    status: 'active',
+                    type: 'child',
+                    requestsToday: 0,
+                    totalRequests: 0,
+                    createdAt: new Date(),
+                    lastUsed: null
+                });
+                
+                showToast('Child API key created successfully!', 'success');
+                closeCreateChildModal();
+                document.getElementById('createChildApiForm').reset();
+                
+                // Show new key modal
+                document.getElementById('newKeyDisplay').innerText = newKey;
+                document.getElementById('newKeyModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                
+                await loadChildApiKeys();
+                
+            } catch (error) {
+                console.error('Error creating child API key:', error);
+                showToast('Failed to create API key', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        });
+        
+        window.copyNewKey = function() {
+            navigator.clipboard.writeText(newKeyValue);
+            showToast('API key copied to clipboard!', 'success');
+            closeNewKeyModal();
+        };
+        
+        window.closeNewKeyModal = function() {
+            document.getElementById('newKeyModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        
+        // ============================================
+        // COPY CHILD KEY
+        // ============================================
+        window.copyChildKey = function(key) {
+            navigator.clipboard.writeText(key);
+            showToast('API key copied to clipboard!', 'success');
+        };
+        
+        // ============================================
+        // REVOKE CHILD KEY
+        // ============================================
+        let revokeKeyId = null;
+        
+        window.revokeChildKey = function(keyId) {
+            revokeKeyId = keyId;
+            document.getElementById('deleteKeyMessage').innerHTML = 'Are you sure you want to revoke this API key? This action cannot be undone.';
+            document.getElementById('deleteKeyModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        document.getElementById('confirmDeleteKeyBtn')?.addEventListener('click', async () => {
+            if (!revokeKeyId) return;
+            
+            const btn = document.getElementById('confirmDeleteKeyBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner" style="width:20px;height:20px;margin:0 auto;"></div>';
+            
+            try {
+                await db.collection('apiKeys').doc(revokeKeyId).update({
+                    status: 'revoked',
+                    revokedAt: new Date()
+                });
+                
+                showToast('API key revoked successfully', 'success');
+                closeDeleteKeyModal();
+                await loadChildApiKeys();
+                
+            } catch (error) {
+                console.error('Error revoking key:', error);
+                showToast('Failed to revoke API key', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        });
+        
+        // ============================================
+        // REGENERATE MAIN KEY
+        // ============================================
+        document.getElementById('regenerateMainKeyBtn')?.addEventListener('click', async () => {
+            if (!confirm('Are you sure you want to regenerate your main API key? The old key will be invalidated immediately.')) return;
+            
+            const btn = document.getElementById('regenerateMainKeyBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner" style="width:20px;height:20px;margin:0 auto;"></div>';
+            
+            try {
+                const newKey = generateApiKey();
+                await db.collection('users').doc(currentUser.uid).update({ apiKey: newKey });
+                mainApiKey = newKey;
+                updateMainKeyDisplay();
+                showToast('Main API key regenerated successfully!', 'success');
+                
+            } catch (error) {
+                console.error('Error regenerating key:', error);
+                showToast('Failed to regenerate API key', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        });
+        
+        // ============================================
+        // COPY MAIN KEY
+        // ============================================
+        document.getElementById('copyMainKeyBtn')?.addEventListener('click', () => {
+            navigator.clipboard.writeText(mainApiKey);
+            showToast('Main API key copied to clipboard!', 'success');
+        });
+        
+        // ============================================
+        // SHOW/HIDE MAIN KEY
+        // ============================================
+        document.getElementById('showMainKeyBtn')?.addEventListener('click', () => {
+            mainKeyVisible = !mainKeyVisible;
+            updateMainKeyDisplay();
+            document.getElementById('showMainKeyBtn').innerHTML = mainKeyVisible ? 
+                '<i class="fas fa-eye-slash mr-2"></i> Hide' : 
+                '<i class="fas fa-eye mr-2"></i> Show';
+        });
+        
+        // ============================================
+        // LOAD API STATS
+        // ============================================
+        async function loadApiStats() {
+            if (!currentUser) return;
+            
+            try {
+                const statsDoc = await db.collection('apiStats').doc(currentUser.uid).get();
+                const stats = statsDoc.data() || {};
+                
+                document.getElementById('totalRequests').innerText = stats.totalRequests?.toLocaleString() || '0';
+                document.getElementById('todayRequests').innerText = stats.todayRequests || '0';
+                
+            } catch (error) {
+                console.error('Error loading API stats:', error);
+            }
+        }
+        
+        // ============================================
+        // FORMAT DATE
+        // ============================================
+        function formatDate(timestamp) {
+            if (!timestamp) return 'N/A';
+            if (timestamp.toDate) {
+                return timestamp.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            }
+            return 'N/A';
+        }
+        
+        // ============================================
+        // ESCAPE HTML
+        // ============================================
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // ============================================
+        // MODAL FUNCTIONS
+        // ============================================
+        document.getElementById('createChildApiBtn')?.addEventListener('click', () => {
+            document.getElementById('createChildModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+        
+        window.closeCreateChildModal = function() {
+            document.getElementById('createChildModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        
+        window.closeDeleteKeyModal = function() {
+            document.getElementById('deleteKeyModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            revokeKeyId = null;
+        };
+        
+        document.getElementById('refreshApiBtn')?.addEventListener('click', async () => {
+            const btn = document.getElementById('refreshApiBtn');
+            btn.innerHTML = '<i class="fas fa-sync-alt fa-spin mr-2"></i> Refreshing...';
+            await Promise.all([loadChildApiKeys(), loadApiStats()]);
+            btn.innerHTML = '<i class="fas fa-sync-alt mr-2"></i> Refresh';
+            showToast('API keys refreshed!', 'success');
+        });
+        
+        // ============================================
+        // AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/public/pages/public/login.html';
+                return;
+            }
+            
+            currentUser = user;
+            
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (userDoc.exists && userDoc.data().isAdmin === true) {
+                window.location.href = '/admin/index.html';
+                return;
+            }
+            
+            await loadMainApiKey();
+            await loadChildApiKeys();
+            await loadApiStats();
+        });
+        // ============================================
+        // DARK MODE
+        // ============================================
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        
+        console.log('✅ API Keys page loaded');
+    </script>
+    
+    <!-- Universal Notifications Helper -->
+    <script src="/public/assets/js/core/notifications-helper.js"></script>
+<script>
+// global-darkmode-fix
+const darkToggle = document.getElementById('darkModeToggle');
+if (darkToggle) {
+    darkToggle.onclick = () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    };
+}
+if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+</script>
+<script>
+// Global logout fix - ensures logout works everywhere
+(function fixLogout(){
+    const checkInterval = setInterval(() => {
+        const logoutBtn = document.getElementById('logoutBtn') || document.getElementById('sidebarLogoutBtn');
+        if(logoutBtn && typeof firebase !== 'undefined' && firebase.auth){
+            clearInterval(checkInterval);
+            logoutBtn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                firebase.auth().signOut()
+                    .then(() => { window.location.href = '/public/pages/public/login.html'; })
+                    .catch(err => { console.error('Logout error:', err); alert('Logout failed. Please try again.'); });
+            };
+        }
+    }, 500);
+})();
+</script>
+<button id="darkModeToggle" class="dark-mode-toggle-btn">
+    <i class="fas fa-moon"></i>
+</button>
+<script>
+document.getElementById('darkModeToggle')?.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark);
+    const icon = document.querySelector('#darkModeToggle i');
+    if(icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+});
+if(localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+</script>
+    <script src="/public/assets/js/core/toast.js"></script>
+    <script src="/public/assets/js/core/validation.js"></script>
+    <script src="/public/assets/js/core/offline.js"></script>
+    <script src="/public/assets/js/core/shortcuts.js"></script>
+    <script src="/public/assets/js/core/balance-manager.js"></script>
+    <script src="/public/assets/js/core/avatar-manager.js"></script>
+</body>
+</html>

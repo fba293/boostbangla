@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Order Details | BoostBangla - Track Your Order</title>
+    <meta name="description" content="View detailed information about your BoostBangla order including status, quantity, price, and tracking information.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if(typeof showToast !== 'function') window.showToast = (msg,type)=>{alert(msg)};
+
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                        'slide-down': 'slideDown 0.3s ease-out',
+                        'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'bounce-subtle': 'bounceSubtle 1s ease-in-out infinite',
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- <link rel="stylesheet" href="/public/assets/css/style.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/dark-mode.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/mobile.css"> -->
+    
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC5500;
+            --primary-light: #FF8C42;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark-bg: #02101A;
+            --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            --card-shadow-hover: 0 25px 30px -12px rgba(255, 107, 0, 0.15);
+        }
+        
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 60;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 28px rgba(255, 107, 0, 0.4);
+        }
+        
+        .mobile-menu-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .animate-slide-up {
+            animation: slideUp 0.5s ease-out forwards;
+        }
+        
+        .animate-slide-down {
+            animation: slideDown 0.4s ease-out forwards;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body.dark-mode .glass-card {
+            background: rgba(30, 41, 59, 0.95);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow-hover);
+        }
+        
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .status-pending { background: #fef3c7; color: #d97706; }
+        .status-processing { background: #dbeafe; color: #2563eb; }
+        .status-completed { background: #d1fae5; color: #059669; }
+        .status-partial { background: #fed7aa; color: #c2410c; }
+        .status-cancelled { background: #fee2e2; color: #dc2626; }
+        .status-refunded { background: #e9d5ff; color: #7e22ce; }
+        
+        body.dark-mode .status-pending { background: #451a03; color: #fbbf24; }
+        body.dark-mode .status-processing { background: #1e3a5f; color: #60a5fa; }
+        body.dark-mode .status-completed { background: #064e3b; color: #34d399; }
+        body.dark-mode .status-partial { background: #7c2d12; color: #fdba74; }
+        body.dark-mode .status-cancelled { background: #7f1d1d; color: #f87171; }
+        body.dark-mode .status-refunded { background: #4c1d95; color: #d8b4fe; }
+        
+        /* Info Cards */
+        .info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.3s;
+            border: 1px solid #e5e7eb;
+        }
+        
+        body.dark-mode .info-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-2px);
+            border-color: #FF6B00;
+        }
+        
+        .info-row {
+            display: flex;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        body.dark-mode .info-row {
+            border-bottom-color: #334155;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 12px !important;
+            }
+
+            .glass-card,
+            .info-card {
+                border-radius: 18px;
+            }
+
+            .info-card {
+                padding: 16px;
+            }
+
+            .info-row {
+                flex-direction: column;
+                gap: 4px;
+                padding: 12px 0;
+            }
+        }
+        
+        .info-label {
+            width: 140px;
+            font-weight: 600;
+            color: #6b7280;
+        }
+        
+        body.dark-mode .info-label {
+            color: #94a3b8;
+        }
+        
+        .info-value {
+            flex: 1;
+            color: #1f2937;
+            font-weight: 500;
+            word-break: break-word;
+        }
+        
+        body.dark-mode .info-value {
+            color: #e2e8f0;
+        }
+        
+        /* Timeline */
+        .timeline-container {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 24px;
+        }
+        
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #cbd5e1;
+            z-index: 2;
+        }
+        
+        body.dark-mode .timeline-dot {
+            background: #475569;
+            box-shadow: 0 0 0 2px #475569;
+        }
+        
+        .timeline-dot.completed {
+            background: #10b981;
+            box-shadow: 0 0 0 2px #10b981;
+        }
+        
+        .timeline-dot.current {
+            background: #FF6B00;
+            box-shadow: 0 0 0 2px #FF6B00;
+            animation: pulseGlow 1.5s infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 2px #FF6B00; }
+            50% { box-shadow: 0 0 0 6px rgba(255, 107, 0, 0.3); }
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: -22px;
+            top: 20px;
+            bottom: -4px;
+            width: 2px;
+            background: #e5e7eb;
+        }
+        
+        body.dark-mode .timeline-line {
+            background: #334155;
+        }
+        
+        .timeline-content {
+            padding-left: 16px;
+        }
+        
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .timeline-date {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(255, 107, 0, 0.4);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e5e7eb;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        body.dark-mode .btn-outline {
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .btn-outline:hover {
+            border-color: #FF6B00;
+            color: #FF6B00;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.4);
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            padding: 28px;
+            max-width: 500px;
+            width: 90%;
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body.dark-mode .modal-content {
+            background: #1e293b;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            padding: 14px 24px;
+            border-radius: 60px;
+            background: white;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideUp 0.3s ease;
+            font-weight: 500;
+        }
+        
+        body.dark-mode .toast {
+            background: #1e293b;
+            color: white;
+        }
+        
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        .toast.warning { border-left: 4px solid #f59e0b; }
+        .toast.info { border-left: 4px solid #3b82f6; }
+        
+        /* Spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #FF6B00;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+        
+        /* Back Link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #FF6B00;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .back-link:hover {
+            transform: translateX(-4px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .info-row {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .info-label {
+                width: 100%;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+            .action-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .timeline-container {
+                padding-left: 20px;
+            }
+            .timeline-dot {
+                left: -20px;
+            }
+            .timeline-line {
+                left: -12px;
+            }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #FF6B00;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #CC5500;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B00, #FF8C42);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        body.dark-mode .progress-container {
+            background: #334155;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+    <div id="header-placeholder"></div>
+    <!-- Sidebar Component Loader -->
+    <script>
+(function loadSidebar(){
+    const placeholder = document.getElementById('sidebar-placeholder');
+    if(!placeholder) return;
+
+    function injectSidebar(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/sidebar.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectSidebar)
+        .catch(() => { console.warn('Sidebar fetch failed - using inline fallback'); });
+})();
+</script>
+    <!-- Universal Header Component Loader -->
+    <script>
+(function loadHeader(){
+    const placeholder = document.getElementById('header-placeholder');
+    if(!placeholder) return;
+
+    function injectHeader(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/universal-header.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectHeader)
+        .catch(() => { console.warn('Header fetch failed - using inline fallback'); });
+})();
+</script>
+    
+    <div class="main-content">
+        <div class="p-4 md:p-8 lg:p-10">
+            <!-- Back Button -->
+            <div class="animate-slide-down mb-6">
+                <a href="/public/pages/dashboard/orders.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Orders
+                </a>
+            </div>
+            
+            <!-- Order Content -->
+            <div id="orderContent">
+                <div class="text-center py-12">
+                    <div class="spinner mx-auto mb-4"></div>
+                    <p class="text-gray-500">Loading order details...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    
+    <!-- Cancel Order Modal -->
+    <div id="cancelModal" class="modal-overlay">
+        <div class="modal-content text-center">
+            <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Cancel Order</h3>
+            <p class="text-gray-500 dark:text-gray-400 mb-4" id="cancelMessage">Are you sure you want to cancel this order?</p>
+            <div class="flex gap-3">
+                <button onclick="closeCancelModal()" class="flex-1 btn-outline">No, Keep It</button>
+                <button id="confirmCancelBtn" class="flex-1 btn-danger">Yes, Cancel Order</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Refill Request Modal -->
+    <div id="refillModal" class="modal-overlay">
+        <div class="modal-content text-center">
+            <div class="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-sync-alt text-orange-500 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Request Refill</h3>
+            <p class="text-gray-500 dark:text-gray-400 mb-4" id="refillMessage">Are you sure you want to request a refill for this order?</p>
+            <div class="flex gap-3">
+                <button onclick="closeRefillModal()" class="flex-1 btn-outline">Cancel</button>
+                <button id="confirmRefillBtn" class="flex-1 btn-primary">Confirm Refill</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+    
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="/public/assets/js/core/config.js"></script>
+    <script src="/public/assets/js/core/auth.js"></script>
+    <script src="/public/assets/js/core/toast.js"></script>
+    <script src="/public/assets/js/core/utils.js"></script>
+    <script src="/public/assets/js/core/validation.js"></script>
+    <script src="/public/assets/js/core/offline.js"></script>
+    <script src="/public/assets/js/core/shortcuts.js"></script>
+    <script src="/public/assets/js/core/balance-manager.js"></script>
+    <script src="/public/assets/js/core/avatar-manager.js"></script>
+    <script src="/public/assets/js/dark-mode.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        let currentUser = null;
+        let currentOrder = null;
+        let currentOrderId = null;
+        
+        // ============================================
+        // TOAST NOTIFICATION
+        // ============================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                <span>${message}</span>
+                <i class="fas fa-times ml-3 cursor-pointer opacity-70 hover:opacity-100" onclick="this.parentElement.remove()"></i>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4000);
+        }
+        
+        // ============================================
+        // FORMAT CURRENCY
+        // ============================================
+        function formatCurrencyBDT(amount) {
+            if (amount === undefined || amount === null) return '৳0';
+            return '৳' + Number(amount).toLocaleString('en-BD');
+        }
+        
+        // ============================================
+        // FORMAT DATE
+        // ============================================
+        function formatDate(timestamp) {
+            if (!timestamp) return 'N/A';
+            if (timestamp.toDate) {
+                return timestamp.toDate().toLocaleString();
+            }
+            const date = timestamp instanceof Date ? timestamp : new Date(timestamp);
+            return Number.isNaN(date.getTime()) ? 'N/A' : date.toLocaleString();
+        }
+        
+        // ============================================
+        // GET ORDER ID FROM URL
+        // ============================================
+        function getOrderIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+        
+        // ============================================
+        // LOAD ORDER DETAILS
+        // ============================================
+        async function loadOrderDetails() {
+            const orderId = getOrderIdFromUrl();
+            if (!orderId) {
+                document.getElementById('orderContent').innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-3"></i>
+                        <p class="text-gray-500">No order ID specified</p>
+                        <a href="/public/pages/dashboard/orders.html" class="btn-primary mt-4 inline-block">View Orders</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            currentOrderId = orderId;
+            
+            try {
+                const orderDoc = await db.collection('orders').doc(orderId).get();
+                
+                if (!orderDoc.exists) {
+                    document.getElementById('orderContent').innerHTML = `
+                        <div class="text-center py-12">
+                            <i class="fas fa-search text-4xl text-red-400 mb-3"></i>
+                            <p class="text-gray-500">Order not found</p>
+                            <a href="/public/pages/dashboard/orders.html" class="btn-primary mt-4 inline-block">View Orders</a>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                currentOrder = { id: orderDoc.id, ...orderDoc.data() };
+                
+                // Verify order belongs to current user
+                if (currentOrder.userId !== currentUser.uid) {
+                    document.getElementById('orderContent').innerHTML = `
+                        <div class="text-center py-12">
+                            <i class="fas fa-lock text-4xl text-red-400 mb-3"></i>
+                            <p class="text-gray-500">You don't have permission to view this order</p>
+                            <a href="/public/pages/dashboard/orders.html" class="btn-primary mt-4 inline-block">View Orders</a>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                renderOrderDetails();
+                
+            } catch (error) {
+                console.error('Error loading order:', error);
+                document.getElementById('orderContent').innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-3"></i>
+                        <p class="text-gray-500">Failed to load order details</p>
+                        <button onclick="loadOrderDetails()" class="btn-primary mt-4">Try Again</button>
+                    </div>
+                `;
+            }
+        }
+        
+        // ============================================
+        // RENDER ORDER DETAILS
+        // ============================================
+        function renderOrderDetails() {
+            const order = currentOrder;
+            const statusClass = getStatusClass(order.status);
+            const statusText = getStatusText(order.status);
+            const statusIcon = getStatusIcon(order.status);
+            
+            const container = document.getElementById('orderContent');
+            
+            container.innerHTML = `
+                <div class="animate-slide-up">
+                    <!-- Header Card -->
+                    <div class="glass-card p-6 mb-6">
+                        <div class="flex flex-wrap justify-between items-start gap-4">
+                            <div>
+                                <h1 class="text-2xl font-bold mb-2">Order Details</h1>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Order ID: <span class="font-mono">#${order.id}</span></p>
+                            </div>
+                            <div class="status-badge ${statusClass}">
+                                <i class="fas ${statusIcon}"></i> ${statusText}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Order Information Card -->
+                    <div class="info-card mb-6 animate-slide-up" style="animation-delay: 0.1s">
+                        <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+                            <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-info-circle text-primary text-lg"></i>
+                            </div>
+                            <h2 class="text-xl font-bold">Order Information</h2>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Service Name</div>
+                            <div class="info-value">${escapeHtml(order.serviceName || 'N/A')}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Service ID</div>
+                            <div class="info-value">${order.serviceId || 'N/A'}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Link / Username</div>
+                            <div class="info-value">
+                                <a href="${order.link}" target="_blank" class="text-primary hover:underline break-all">${escapeHtml(order.link || 'N/A')}</a>
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Quantity</div>
+                            <div class="info-value">${(order.quantity || 0).toLocaleString()}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Amount (USD)</div>
+                            <div class="info-value">$${(order.priceUSD || 0).toFixed(2)}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Amount (BDT)</div>
+                            <div class="info-value font-bold text-primary text-lg">${formatCurrencyBDT(order.priceBDT)}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Order Date</div>
+                            <div class="info-value">${formatDate(order.createdAt)}</div>
+                        </div>
+                        ${order.completedAt ? `
+                            <div class="info-row">
+                                <div class="info-label">Completed Date</div>
+                                <div class="info-value">${formatDate(order.completedAt)}</div>
+                            </div>
+                        ` : ''}
+                        ${order.apiOrderId ? `
+                            <div class="info-row">
+                                <div class="info-label">API Order ID</div>
+                                <div class="info-value font-mono text-sm">${order.apiOrderId}</div>
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    <!-- Order Status Timeline -->
+                    <div class="info-card mb-6 animate-slide-up" style="animation-delay: 0.15s">
+                        <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+                            <div class="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-chart-line text-blue-500 text-lg"></i>
+                            </div>
+                            <h2 class="text-xl font-bold">Order Timeline</h2>
+                        </div>
+                        <div class="timeline-container">
+                            ${renderTimeline()}
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="info-card animate-slide-up" style="animation-delay: 0.2s">
+                        <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+                            <div class="w-10 h-10 bg-green-500/10 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-bolt text-green-500 text-lg"></i>
+                            </div>
+                            <h2 class="text-xl font-bold">Actions</h2>
+                        </div>
+                        <div class="action-buttons flex flex-wrap gap-3">
+                            <a href="/public/pages/dashboard/new-order.html?serviceId=${order.serviceId}" class="btn-primary">
+                                <i class="fas fa-cart-plus mr-2"></i> Order Again
+                            </a>
+                            ${order.status === 'pending' ? `
+                                <button id="cancelOrderBtn" class="btn-danger">
+                                    <i class="fas fa-times-circle mr-2"></i> Cancel Order
+                                </button>
+                            ` : ''}
+                            ${order.status === 'completed' ? `
+                                <button id="requestRefillBtn" class="btn-outline">
+                                    <i class="fas fa-sync-alt mr-2"></i> Request Refill
+                                </button>
+                            ` : ''}
+                            <button id="downloadInvoiceBtn" class="btn-outline">
+                                <i class="fas fa-download mr-2"></i> Download Invoice
+                            </button>
+                            <button id="contactSupportBtn" class="btn-outline">
+                                <i class="fas fa-headset mr-2"></i> Contact Support
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Attach event listeners
+            document.getElementById('cancelOrderBtn')?.addEventListener('click', () => openCancelModal());
+            document.getElementById('requestRefillBtn')?.addEventListener('click', () => openRefillModal());
+            document.getElementById('downloadInvoiceBtn')?.addEventListener('click', downloadInvoice);
+            document.getElementById('contactSupportBtn')?.addEventListener('click', () => {
+                window.location.href = '/public/pages/dashboard/tickets.html';
+            });
+        }
+        
+        // ============================================
+        // RENDER TIMELINE
+        // ============================================
+        function renderTimeline() {
+            const order = currentOrder;
+            const status = order.status;
+            
+            const timelineSteps = [
+                { key: 'pending', title: 'Order Placed', icon: 'fa-shopping-cart', description: 'Your order has been received' },
+                { key: 'processing', title: 'Processing', icon: 'fa-spinner', description: 'Your order is being processed' },
+                { key: 'completed', title: 'Completed', icon: 'fa-check-circle', description: 'Your order has been completed' }
+            ];
+            
+            let currentStep = 0;
+            if (status === 'pending') currentStep = 0;
+            else if (status === 'processing') currentStep = 1;
+            else if (status === 'completed' || status === 'partial') currentStep = 2;
+            else if (status === 'cancelled') currentStep = -1;
+            
+            if (status === 'cancelled') {
+                return `
+                    <div class="timeline-item">
+                        <div class="timeline-dot completed"></div>
+                        <div class="timeline-line"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Order Cancelled</div>
+                            <div class="timeline-date">${formatDate(order.cancelledAt || order.updatedAt)}</div>
+                            <p class="text-sm text-red-500 mt-1">This order has been cancelled.</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            return timelineSteps.map((step, index) => {
+                let dotClass = 'timeline-dot';
+                let isCompleted = index <= currentStep;
+                let isCurrent = index === currentStep && status !== 'completed';
+                
+                if (isCompleted) dotClass += ' completed';
+                if (isCurrent) dotClass += ' current';
+                
+                let date = '';
+                if (index === 0 && order.createdAt) date = formatDate(order.createdAt);
+                if (index === 1 && order.processingAt) date = formatDate(order.processingAt);
+                if (index === 2 && order.completedAt) date = formatDate(order.completedAt);
+                
+                let progressPercent = 0;
+                if (status === 'processing') progressPercent = 50;
+                else if (status === 'completed') progressPercent = 100;
+                else if (status === 'pending') progressPercent = 10;
+                
+                return `
+                    <div class="timeline-item">
+                        <div class="${dotClass}"></div>
+                        ${index < timelineSteps.length - 1 ? '<div class="timeline-line"></div>' : ''}
+                        <div class="timeline-content">
+                            <div class="timeline-title">${step.title}</div>
+                            <div class="timeline-date">${date || 'Pending'}</div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${step.description}</p>
+                            ${isCurrent && status === 'processing' ? `
+                                <div class="progress-container mt-2">
+                                    <div class="progress-bar" style="width: ${progressPercent}%"></div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // ============================================
+        // GET STATUS STYLES
+        // ============================================
+        function getStatusClass(status) {
+            switch(status) {
+                case 'pending': return 'status-pending';
+                case 'processing': return 'status-processing';
+                case 'completed': return 'status-completed';
+                case 'partial': return 'status-partial';
+                case 'cancelled': return 'status-cancelled';
+                case 'refunded': return 'status-refunded';
+                default: return 'status-pending';
+            }
+        }
+        
+        function getStatusText(status) {
+            switch(status) {
+                case 'pending': return 'Pending';
+                case 'processing': return 'Processing';
+                case 'completed': return 'Completed';
+                case 'partial': return 'Partial';
+                case 'cancelled': return 'Cancelled';
+                case 'refunded': return 'Refunded';
+                default: return status || 'Pending';
+            }
+        }
+        
+        function getStatusIcon(status) {
+            switch(status) {
+                case 'pending': return 'fa-clock';
+                case 'processing': return 'fa-spinner fa-spin';
+                case 'completed': return 'fa-check-circle';
+                case 'partial': return 'fa-chart-line';
+                case 'cancelled': return 'fa-times-circle';
+                case 'refunded': return 'fa-undo-alt';
+                default: return 'fa-question-circle';
+            }
+        }
+        
+        // ============================================
+        // CANCEL ORDER
+        // ============================================
+        window.openCancelModal = function() {
+            document.getElementById('cancelMessage').innerHTML = `Are you sure you want to cancel order <span class="font-mono">#${currentOrder.id.substring(0, 8)}</span>? This will refund the amount to your balance.`;
+            document.getElementById('cancelModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        window.closeCancelModal = function() {
+            document.getElementById('cancelModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        
+        document.getElementById('confirmCancelBtn')?.addEventListener('click', async () => {
+            const btn = document.getElementById('confirmCancelBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner" style="width:20px;height:20px;margin:0 auto;"></div>';
+            
+            try {
+                const mysqlOrderId = currentOrder.mysqlId || currentOrder.localOrderId || currentOrder.local_order_id || currentOrder.id;
+                const response = await fetch('/public/php/api-proxy.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+                    body: new URLSearchParams({ action: 'cancel_order', order_id: mysqlOrderId })
+                });
+                const result = await response.json();
+                if (!response.ok || result.success === false) throw new Error(result.error || 'Failed to cancel order');
+
+                await db.runTransaction(async (transaction) => {
+                    const userRef = db.collection('users').doc(currentUser.uid);
+                    const userSnap = await transaction.get(userRef);
+                    const currentBalance = Number(userSnap.data()?.balance || 0);
+                    transaction.update(userRef, {
+                        balance: currentBalance + Number(currentOrder.priceBDT || 0),
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    transaction.update(db.collection('orders').doc(currentOrderId), {
+                        status: 'cancelled',
+                        cancelledAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                });
+                
+                // Create notification
+                await db.collection('notifications').add({
+                    userId: currentUser.uid,
+                    title: 'Order Cancelled',
+                    message: `Order #${currentOrder.id.substring(0, 8)} has been cancelled. ${formatCurrencyBDT(currentOrder.priceBDT)} has been refunded to your balance.`,
+                    type: 'order',
+                    read: false,
+                    createdAt: new Date()
+                });
+                
+                showToast('Order cancelled and refunded successfully!', 'success');
+                closeCancelModal();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Error cancelling order:', error);
+                showToast('Failed to cancel order', 'error');
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        });
+        
+        // ============================================
+        // REQUEST REFILL
+        // ============================================
+        window.openRefillModal = function() {
+            document.getElementById('refillMessage').innerHTML = `Are you sure you want to request a refill for order <span class="font-mono">#${currentOrder.id.substring(0, 8)}</span>?`;
+            document.getElementById('refillModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        window.closeRefillModal = function() {
+            document.getElementById('refillModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        
+        document.getElementById('confirmRefillBtn')?.addEventListener('click', async () => {
+            const btn = document.getElementById('confirmRefillBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner" style="width:20px;height:20px;margin:0 auto;"></div>';
+            
+            try {
+                // Create refill request
+                await db.collection('refills').add({
+                    orderId: currentOrderId,
+                    userId: currentUser.uid,
+                    status: 'pending',
+                    requestedAt: new Date()
+                });
+                
+                // Create admin notification
+                await db.collection('adminNotifications').add({
+                    type: 'refill_request',
+                    orderId: currentOrderId,
+                    userId: currentUser.uid,
+                    message: `Refill requested for order #${currentOrder.id.substring(0, 8)}`,
+                    read: false,
+                    createdAt: new Date()
+                });
+                
+                showToast('Refill request submitted successfully!', 'success');
+                closeRefillModal();
+                
+            } catch (error) {
+                console.error('Error requesting refill:', error);
+                showToast('Failed to submit refill request', 'error');
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        });
+        
+        // ============================================
+        // DOWNLOAD INVOICE
+        // ============================================
+        function downloadInvoice() {
+            const order = currentOrder;
+            const invoiceData = {
+                invoiceId: `INV-${order.id.substring(0, 8)}`,
+                date: new Date().toISOString(),
+                orderId: order.id,
+                service: order.serviceName,
+                link: order.link,
+                quantity: order.quantity,
+                amountUSD: order.priceUSD,
+                amountBDT: order.priceBDT,
+                status: order.status,
+                createdAt: order.createdAt?.toDate?.() || new Date()
+            };
+            
+            const invoiceHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Invoice ${invoiceData.invoiceId}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 40px; max-width: 800px; margin: 0 auto; }
+                        .header { text-align: center; margin-bottom: 30px; }
+                        .logo { color: #FF6B00; font-size: 24px; font-weight: bold; }
+                        .invoice-title { font-size: 28px; margin: 20px 0; }
+                        .info-row { display: flex; padding: 8px 0; border-bottom: 1px solid #eee; }
+                        .info-label { width: 150px; font-weight: bold; }
+                        .total { font-size: 20px; font-weight: bold; color: #FF6B00; margin-top: 20px; }
+                        .footer { text-align: center; margin-top: 40px; color: #666; font-size: 12px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <div class="logo">BoostBangla</div>
+                        <div class="invoice-title">INVOICE</div>
+                    </div>
+                    <div class="info-row"><div class="info-label">Invoice ID:</div><div>${invoiceData.invoiceId}</div></div>
+                    <div class="info-row"><div class="info-label">Date:</div><div>${invoiceData.date}</div></div>
+                    <div class="info-row"><div class="info-label">Order ID:</div><div>${invoiceData.orderId}</div></div>
+                    <div class="info-row"><div class="info-label">Service:</div><div>${invoiceData.service}</div></div>
+                    <div class="info-row"><div class="info-label">Link:</div><div>${invoiceData.link}</div></div>
+                    <div class="info-row"><div class="info-label">Quantity:</div><div>${invoiceData.quantity.toLocaleString()}</div></div>
+                    <div class="info-row"><div class="info-label">Amount (USD):</div><div>$${invoiceData.amountUSD}</div></div>
+                    <div class="info-row"><div class="info-label">Amount (BDT):</div><div>৳${invoiceData.amountBDT.toLocaleString()}</div></div>
+                    <div class="info-row"><div class="info-label">Status:</div><div>${invoiceData.status}</div></div>
+                    <div class="total">Total: ৳${invoiceData.amountBDT.toLocaleString()}</div>
+                    <div class="footer">Thank you for choosing BoostBangla!</div>
+                </body>
+                </html>
+            `;
+            
+            const blob = new Blob([invoiceHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `invoice-${invoiceData.invoiceId}.html`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showToast('Invoice downloaded!', 'success');
+        }
+        
+        // ============================================
+        // ESCAPE HTML
+        // ============================================
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // ============================================
+        // AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/public/pages/public/login.html';
+                return;
+            }
+            
+            currentUser = user;
+            
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (userDoc.exists && userDoc.data().isAdmin === true) {
+                window.location.href = '/admin/index.html';
+                return;
+            }
+            
+            await loadOrderDetails();
+            
+            // Setup realtime listener for order updates
+            const orderId = getOrderIdFromUrl();
+            if (orderId) {
+                db.collection('orders').doc(orderId)
+                    .onSnapshot((doc) => {
+                        if (doc.exists && doc.data().userId === currentUser.uid) {
+                            currentOrder = { id: doc.id, ...doc.data() };
+                            renderOrderDetails();
+                        }
+                    });
+            }
+        });
+        // ============================================
+        // DARK MODE
+        // ============================================
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        
+        console.log('✅ Order Detail page loaded');
+    </script>
+    
+    <!-- Universal Notifications Helper -->
+    <script src="/public/assets/js/core/notifications-helper.js"></script>
+</body>
+</html>

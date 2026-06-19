@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Place New Order | BoostBangla</title>
+    <meta name="description" content="Place new SMM orders quickly - choose services, enter link, quantity with real-time price calculation">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if(typeof showToast !== 'function') window.showToast = (msg,type)=>{alert(msg)};
+
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                        'slide-down': 'slideDown 0.3s ease-out',
+                        'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-subtle': 'bounceSubtle 1s ease-in-out infinite',
+                        'spin-slow': 'spin 3s linear infinite',
+                        'shimmer': 'shimmer 2s infinite',
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- <link rel="stylesheet" href="/public/assets/css/style.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/dark-mode.css"> -->
+    <!-- <link rel="stylesheet" href="/public/assets/css/mobile.css"> -->
+    
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #CC5500;
+            --primary-light: #FF8C42;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark-bg: #02101A;
+            --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            --card-shadow-hover: 0 25px 30px -12px rgba(255, 107, 0, 0.15);
+        }
+        
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 60;
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 28px rgba(255, 107, 0, 0.4);
+        }
+        
+        .mobile-menu-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounceSubtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.4); }
+            50% { box-shadow: 0 0 0 20px rgba(255, 107, 0, 0); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .animate-slide-up {
+            animation: slideUp 0.5s ease-out forwards;
+        }
+        
+        .animate-slide-down {
+            animation: slideDown 0.4s ease-out forwards;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Card Styles */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body.dark-mode .glass-card {
+            background: rgba(30, 41, 59, 0.95);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+        }
+        
+        /* Service Cards */
+        .service-card {
+            padding: 14px 16px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e5e7eb;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body.dark-mode .service-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .service-card::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 107, 0, 0.05), transparent);
+            transition: width 0.3s;
+        }
+        
+        .service-card:hover::after {
+            width: 100%;
+        }
+        
+        .service-card:hover {
+            border-color: #FF6B00;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(255, 107, 0, 0.15);
+        }
+        
+        .service-card.selected {
+            border-color: #FF6B00;
+            background: linear-gradient(135deg, #FFF7ED, #FFFFFF);
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.2);
+        }
+        
+        body.dark-mode .service-card.selected {
+            background: linear-gradient(135deg, #2d1a0f, #1e293b);
+        }
+        
+        /* Form Inputs */
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            background: white;
+        }
+        
+        body.dark-mode .form-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.1);
+            transform: scale(1.01);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(255, 107, 0, 0.4);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e5e7eb;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        body.dark-mode .btn-outline {
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .btn-outline:hover {
+            border-color: #FF6B00;
+            color: #FF6B00;
+            transform: translateY(-2px);
+        }
+        
+        /* Balance Card */
+        .balance-card {
+            background: linear-gradient(135deg, #FF6B00, #CC5500);
+            border-radius: 24px;
+            padding: 20px 24px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        /* Spinner */
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #FF6B00;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            padding: 14px 24px;
+            border-radius: 60px;
+            background: white;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideUp 0.3s ease;
+            font-weight: 500;
+        }
+        
+        body.dark-mode .toast {
+            background: #1e293b;
+            color: white;
+        }
+        
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        .toast.warning { border-left: 4px solid #f59e0b; }
+        .toast.info { border-left: 4px solid #3b82f6; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #FF6B00;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #CC5500;
+        }
+        
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        body.dark-mode .skeleton {
+            background: linear-gradient(90deg, #2d2d2d 25%, #3d3d3d 50%, #2d2d2d 75%);
+        }
+        
+        /* Utility Classes */
+        .bg-white { background-color: white; }
+        body.dark-mode .bg-white { background-color: #1e293b; }
+        .rounded-2xl { border-radius: 1.5rem; }
+        .rounded-3xl { border-radius: 2rem; }
+        
+        /* Number Input Spinner Hide */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            opacity: 0.5;
+        }
+        
+        /* Focus Visible for Accessibility */
+        .focus-visible:focus-visible {
+            outline: 2px solid #FF6B00;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div id="sidebar-placeholder"></div>
+    <div id="header-placeholder"></div>
+    <!-- Sidebar Component Loader -->
+    <script>
+(function loadSidebar(){
+    const placeholder = document.getElementById('sidebar-placeholder');
+    if(!placeholder) return;
+
+    function injectSidebar(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/sidebar.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectSidebar)
+        .catch(() => { console.warn('Sidebar fetch failed - using inline fallback'); });
+})();
+</script>
+    <!-- Universal Header Component Loader -->
+    <script>
+(function loadHeader(){
+    const placeholder = document.getElementById('header-placeholder');
+    if(!placeholder) return;
+
+    function injectHeader(html){
+        placeholder.innerHTML = html;
+        placeholder.querySelectorAll('script').forEach((oldScript) => {
+            const s = document.createElement('script');
+            if (oldScript.src) s.src = oldScript.src;
+            else s.textContent = oldScript.textContent;
+            document.body.appendChild(s);
+            oldScript.remove();
+        });
+    }
+
+    fetch('/public/components/universal-header.html')
+        .then(res => res.ok ? res.text() : Promise.reject())
+        .then(injectHeader)
+        .catch(() => { console.warn('Header fetch failed - using inline fallback'); });
+})();
+</script>
+    
+    <div class="main-content">
+        <div class="p-4 md:p-8 lg:p-10">
+            <!-- Header Section -->
+            <div class="animate-slide-down mb-8">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-12 h-12 bg-gradient-to-br from-primary to-primaryDark rounded-2xl flex items-center justify-center shadow-lg animate-float">
+                                <i class="fas fa-shopping-cart text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-primaryDark bg-clip-text text-transparent">
+                                    New Order
+                                </h1>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                                    Place orders with real-time pricing and instant processing
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="balance-card w-full md:w-auto min-w-[200px] animate-fade-in">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs opacity-80">Available Balance</p>
+                                <p class="text-2xl font-bold" id="userBalance">৳0</p>
+                            </div>
+                            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-wallet text-white text-lg"></i>
+                            </div>
+                        </div>
+                        <a href="/public/pages/dashboard/add-funds.html" class="text-xs opacity-75 hover:opacity-100 transition mt-2 inline-block">
+                            <i class="fas fa-plus-circle mr-1"></i> Add Funds
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left Column - Order Form (2/3 width on desktop) -->
+                <div class="lg:col-span-2">
+                    <div class="glass-card p-6 md:p-8 animate-slide-up" style="animation-delay: 0.1s">
+                        <div class="flex items-center gap-3 mb-6 pb-3 border-b border-gray-200 dark:border-gray-700">
+                            <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-layer-group text-primary text-lg"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold">Order Details</h2>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Fill in the information below</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Service Selection -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold mb-3 dark:text-gray-300">
+                                <i class="fas fa-tags text-primary mr-2"></i> Select Service
+                                <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative mb-3">
+                                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+                                <input type="text" id="serviceSearch" 
+                                       placeholder="Search by service name or ID..." 
+                                       class="form-input pl-11 pr-4"
+                                       autocomplete="off">
+                                <i class="fas fa-sliders-h absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm cursor-pointer hover:text-primary transition"></i>
+                            </div>
+                            
+                            <!-- Category Tabs -->
+                            <div class="flex gap-2 mb-3 overflow-x-auto pb-2">
+                                <button class="category-btn active px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap" data-category="all">
+                                    <i class="fas fa-th-large mr-1"></i> All
+                                </button>
+                                <button class="category-btn px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap" data-category="instagram">
+                                    <i class="fab fa-instagram mr-1"></i> Instagram
+                                </button>
+                                <button class="category-btn px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap" data-category="facebook">
+                                    <i class="fab fa-facebook mr-1"></i> Facebook
+                                </button>
+                                <button class="category-btn px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap" data-category="youtube">
+                                    <i class="fab fa-youtube mr-1"></i> YouTube
+                                </button>
+                                <button class="category-btn px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap" data-category="tiktok">
+                                    <i class="fab fa-tiktok mr-1"></i> TikTok
+                                </button>
+                                <button class="category-btn px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap" data-category="twitter">
+                                    <i class="fab fa-twitter mr-1"></i> Twitter
+                                </button>
+                            </div>
+                            
+                            <div id="serviceList" class="max-h-80 overflow-y-auto space-y-2 pr-1">
+                                <div class="text-center py-8">
+                                    <div class="spinner mx-auto mb-3"></div>
+                                    <p class="text-gray-500 text-sm">Loading services...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Selected Service Display -->
+                        <div id="selectedServiceDisplay" class="hidden mb-6 p-4 bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-950/20 dark:to-amber-950/20 rounded-xl border border-orange-200 dark:border-orange-800 animate-slide-down">
+                            <div class="flex justify-between items-start">
+                                <div class="flex gap-3">
+                                    <div class="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-check-circle text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Selected Service</p>
+                                        <p class="font-semibold" id="selectedServiceName">-</p>
+                                        <p class="text-xs text-gray-400 mt-1">Service ID: <span id="selectedServiceId">-</span></p>
+                                    </div>
+                                </div>
+                                <button type="button" id="clearServiceBtn" class="text-red-500 text-sm hover:underline transition">
+                                    <i class="fas fa-times-circle mr-1"></i> Change
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <form id="orderForm">
+                            <!-- Link Input -->
+                            <div class="mb-5">
+                                <label class="block text-sm font-semibold mb-2 dark:text-gray-300">
+                                    <i class="fas fa-link text-primary mr-2"></i> Link / Username
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input type="url" id="orderLink" class="form-input" 
+                                       placeholder="https://instagram.com/p/xxxxx or username" required>
+                                <div class="flex items-center gap-2 mt-2">
+                                    <i class="fas fa-info-circle text-gray-400 text-xs"></i>
+                                    <p class="text-xs text-gray-400">Enter the post/video/profile link or username</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Quantity Input -->
+                            <div class="mb-5">
+                                <label class="block text-sm font-semibold mb-2 dark:text-gray-300">
+                                    <i class="fas fa-sort-numeric-up text-primary mr-2"></i> Quantity
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input type="number" id="orderQuantity" class="form-input" 
+                                       placeholder="Enter quantity" required>
+                                <div class="flex justify-between mt-2">
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-arrow-down text-gray-400 text-xs"></i>
+                                        <span class="text-xs text-gray-400">Min: <span id="minQty" class="font-medium">-</span></span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-arrow-up text-gray-400 text-xs"></i>
+                                        <span class="text-xs text-gray-400">Max: <span id="maxQty" class="font-medium">-</span></span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-chart-line text-gray-400 text-xs"></i>
+                                        <span class="text-xs text-gray-400">Rate/1K: <span id="ratePerK" class="font-medium">-</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Quantity Buttons -->
+                            <div class="flex flex-wrap gap-2 mb-5">
+                                <button type="button" class="quick-qty-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-100 dark:bg-gray-700 hover:bg-primary/20 hover:text-primary transition">+100</button>
+                                <button type="button" class="quick-qty-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-100 dark:bg-gray-700 hover:bg-primary/20 hover:text-primary transition">+500</button>
+                                <button type="button" class="quick-qty-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-100 dark:bg-gray-700 hover:bg-primary/20 hover:text-primary transition">+1000</button>
+                                <button type="button" class="quick-qty-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-100 dark:bg-gray-700 hover:bg-primary/20 hover:text-primary transition">+5000</button>
+                            </div>
+                            
+                            <!-- Price Summary Card -->
+                            <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-800/50 rounded-2xl p-5 mb-6">
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-sm text-gray-600 dark:text-gray-400">Service Rate</span>
+                                    <span class="font-semibold text-primary text-lg" id="rateDisplay">-</span>
+                                </div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-sm text-gray-600 dark:text-gray-400">Quantity</span>
+                                    <span class="font-medium" id="qtyDisplay">0</span>
+                                </div>
+                                <div class="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-700">
+                                    <div>
+                                        <span class="text-sm text-gray-600 dark:text-gray-400">Total Amount</span>
+                                        <p class="text-xs text-gray-400">+5% platform fee included</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-3xl font-bold text-primary" id="totalPrice">৳0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <button type="submit" id="placeOrderBtn" class="btn-primary flex-1">
+                                    <i class="fas fa-paper-plane"></i>
+                                    <span>Place Order</span>
+                                </button>
+                                <button type="button" id="resetBtn" class="btn-outline flex-1">
+                                    <i class="fas fa-undo-alt"></i>
+                                    <span>Reset Form</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Sidebar (1/3 width on desktop) -->
+                <div class="space-y-6">
+                    <!-- Quick Stats Card -->
+                    <div class="glass-card p-5 animate-slide-up" style="animation-delay: 0.2s">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-simple text-primary text-sm"></i>
+                            </div>
+                            <h3 class="font-bold">Quick Stats</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">Orders Today</span>
+                                <span class="font-semibold" id="ordersToday">0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">Total Spent</span>
+                                <span class="font-semibold text-primary" id="totalSpent">৳0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">Avg Order Value</span>
+                                <span class="font-semibold" id="avgOrder">৳0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Tips -->
+                    <div class="glass-card p-5 animate-slide-up" style="animation-delay: 0.25s">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-8 h-8 bg-green-500/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-lightbulb text-green-500 text-sm"></i>
+                            </div>
+                            <h3 class="font-bold">Pro Tips</h3>
+                        </div>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex gap-2 items-start">
+                                <i class="fas fa-check-circle text-green-500 text-sm mt-0.5"></i>
+                                <span class="text-gray-600 dark:text-gray-400">Double-check your link before ordering</span>
+                            </li>
+                            <li class="flex gap-2 items-start">
+                                <i class="fas fa-check-circle text-green-500 text-sm mt-0.5"></i>
+                                <span class="text-gray-600 dark:text-gray-400">Orders start processing within 5 minutes</span>
+                            </li>
+                            <li class="flex gap-2 items-start">
+                                <i class="fas fa-check-circle text-green-500 text-sm mt-0.5"></i>
+                                <span class="text-gray-600 dark:text-gray-400">Refill available within 30 days of order</span>
+                            </li>
+                            <li class="flex gap-2 items-start">
+                                <i class="fas fa-check-circle text-green-500 text-sm mt-0.5"></i>
+                                <span class="text-gray-600 dark:text-gray-400">Contact support for bulk discounts</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Recent Orders -->
+                    <div class="glass-card p-5 animate-slide-up" style="animation-delay: 0.3s">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-history text-blue-500 text-sm"></i>
+                                </div>
+                                <h3 class="font-bold">Recent Orders</h3>
+                            </div>
+                            <a href="/public/pages/dashboard/orders.html" class="text-primary text-xs hover:underline">
+                                View All <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                        <div id="recentOrdersList" class="space-y-3 max-h-80 overflow-y-auto pr-1">
+                            <div class="text-center py-6">
+                                <div class="spinner mx-auto mb-2"></div>
+                                <p class="text-xs text-gray-500">Loading orders...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 modal-overlay hidden items-center justify-center z-50">
+        <div class="modal-content bg-white dark:bg-gray-800 rounded-3xl p-8 max-w-md w-full mx-4 text-center transform transition-all">
+            <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg animate-bounce-subtle">
+                <i class="fas fa-check text-white text-3xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-2">Order Placed! 🎉</h3>
+            <p class="text-gray-500 dark:text-gray-400 mb-5">Your order has been submitted successfully</p>
+            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4 mb-5 text-left space-y-2">
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-500">Order ID:</span>
+                    <span class="font-mono text-xs font-medium" id="modalOrderId">-</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-500">Service:</span>
+                    <span class="font-medium" id="modalService">-</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-500">Quantity:</span>
+                    <span id="modalQuantity">-</span>
+                </div>
+                <div class="flex justify-between text-sm pt-2 border-t border-gray-200 dark:border-gray-600">
+                    <span class="font-semibold">Amount:</span>
+                    <span class="font-bold text-primary text-lg" id="modalAmount">৳0</span>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="closeSuccessModal()" class="btn-outline flex-1">
+                    <i class="fas fa-shopping-cart mr-2"></i> Continue
+                </button>
+                <a href="/public/pages/dashboard/orders.html" class="btn-primary flex-1 text-center">
+                    <i class="fas fa-list mr-2"></i> View Orders
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confetti Canvas -->
+    <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50 hidden"></canvas>
+    
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="/public/assets/js/core/config.js"></script>
+    <script src="/public/assets/js/core/auth.js"></script>
+  <script src="/public/assets/js/core/balance-manager.js"></script>
+    <script src="/public/assets/js/core/utils.js"></script>
+    <script src="/public/assets/js/dark-mode.js"></script>
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const pageFirebaseConfig = window.firebaseConfig || {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        if (typeof firebase !== 'undefined' && !firebase.apps?.length) {
+            firebase.initializeApp(pageFirebaseConfig);
+        }
+        if (typeof firebase !== 'undefined') {
+            auth = firebase.auth();
+            db = firebase.firestore();
+            window.auth = auth;
+            window.db = db;
+        }
+        
+        let currentUser = null;
+        let allServices = [];
+        let selectedService = null;
+        let currentCategory = 'all';
+        let currentExchangeRate = 120;
+        let balanceListener = null;
+        let servicesLoaded = false;
+        const preselectServiceId = new URLSearchParams(window.location.search).get('serviceId');
+
+        window.normalizeService = function(service) {
+            const id = String(service.service ?? service.id ?? '');
+            const rate = parseFloat(service.rate ?? service.ratePerKilo ?? 0);
+            const pricePerKiloBDT = parseFloat(service.price_per_1000_bdt ?? service.price_bdt ?? service.rateBdt ?? service.pricePerKiloBDT ?? (rate * currentExchangeRate * 1.30 * 1.05));
+            return {
+                id,
+                apiServiceId: service.service ?? service.apiServiceId ?? service.id,
+                name: service.name || 'Service',
+                category: service.category || 'other',
+                type: service.type || 'Default',
+                rate,
+                ratePerKilo: rate,
+                pricePerKiloBDT,
+                minQuantity: Number(service.min ?? service.minQuantity ?? 100),
+                maxQuantity: Number(service.max ?? service.maxQuantity ?? 10000),
+                refill: !!service.refill,
+                cancel: !!service.cancel,
+                averageTime: service.average_time || service.avg_time || service.avgTime || service.time || service.speed || 'Instant / varies',
+                description: service.description || service.desc || ''
+            };
+        }
+
+        function getServicesFromResponse(data) {
+            if (Array.isArray(data)) return data;
+            if (Array.isArray(data?.services)) return data.services;
+            if (Array.isArray(data?.data)) return data.data;
+            if (Array.isArray(data?.result)) return data.result;
+            if (Array.isArray(data?.data?.services)) return data.data.services;
+            return [];
+        }
+
+        function getCachedPreselectService() {
+            if (!preselectServiceId) return null;
+            try {
+                const cached = JSON.parse(sessionStorage.getItem('boostbangla_preselect_service') || 'null');
+                if (cached && String(cached.id ?? cached.service) === String(preselectServiceId)) {
+                    return window.normalizeService(cached);
+                }
+            } catch (error) {
+                console.warn('Unable to read cached selected service:', error);
+            }
+            return null;
+        }
+
+        function applyPreselectedService() {
+            if (!preselectServiceId || !allServices.length) return false;
+            const match = allServices.find(s => String(s.id) === String(preselectServiceId) || String(s.apiServiceId || '') === String(preselectServiceId));
+            if (!match) return false;
+            window.selectService(String(match.id));
+            return true;
+        }
+        
+        // ============================================
+        // TOAST NOTIFICATION
+        // ============================================
+        function showToast(message, type = 'success') {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'} ${type === 'success' ? 'text-green-500' : type === 'error' ? 'text-red-500' : type === 'warning' ? 'text-yellow-500' : 'text-blue-500'}"></i>
+                <span>${message}</span>
+                <i class="fas fa-times text-gray-400 cursor-pointer hover:text-gray-600 ml-3" onclick="this.parentElement.remove()"></i>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4000);
+        }
+        
+        // ============================================
+        // CONFETTI EFFECT
+        // ============================================
+        function triggerConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            canvas.classList.remove('hidden');
+            
+            const duration = 3000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+            
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+            
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    canvas.classList.add('hidden');
+                    return;
+                }
+                
+                const particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+        
+        // Simple confetti fallback if library not loaded
+        function simpleConfetti() {
+            const colors = ['#FF6B00', '#10b981', '#3b82f6', '#f59e0b', '#ef4444'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.top = '-20px';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = '50%';
+                confetti.style.pointerEvents = 'none';
+                confetti.style.zIndex = '9999';
+                confetti.style.animation = `fall ${Math.random() * 2 + 1}s linear forwards`;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fall {
+                    to {
+                        transform: translateY(100vh) rotate(360deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // ============================================
+        // FORMAT CURRENCY
+        // ============================================
+        function formatCurrencyBDT(amount) {
+            if (amount === undefined || amount === null) return '৳0';
+            return '৳' + Number(amount).toLocaleString('en-BD');
+        }
+
+        async function fetchExchangeRate(){
+            try{
+                const response = await fetch('/public/php/api-proxy.php?action=services', { cache: 'no-store' });
+                const data = await response.json();
+                currentExchangeRate = Number(data.exchange_rate || data.rate || 120);
+            } catch(e){
+                currentExchangeRate = 120;
+            }
+            const rateWithFee = currentExchangeRate * 1.05;
+            const marketRateEl = document.getElementById('marketRate');
+            const yourRateEl = document.getElementById('yourRate');
+            if(marketRateEl) marketRateEl.innerHTML = `1 USD = ${currentExchangeRate.toFixed(2)} BDT`;
+            if(yourRateEl) yourRateEl.innerHTML = `1 USD = ${rateWithFee.toFixed(2)} BDT (+5% fee)`;
+            if (typeof calculateTotal === 'function') calculateTotal();
+        }
+
+        function calculateTotal(){
+            const usdAmount = parseFloat(document.getElementById('amountUSD')?.value) || 0;
+            const rateWithFee = currentExchangeRate * 1.05;
+            let totalBDT = usdAmount * rateWithFee;
+            let bonus = 0;
+            if(usdAmount >= 100){
+                bonus = totalBDT * 0.01;
+                totalBDT += bonus;
+            }
+            if (document.getElementById('totalBDT')) {
+                document.getElementById('totalBDT').innerHTML = `৳${Math.round(totalBDT).toLocaleString()}`;
+            }
+            if(document.getElementById('bonusDisplay')) {
+                if(bonus > 0){
+                    document.getElementById('bonusDisplay').classList.remove('hidden');
+                    if (document.getElementById('bonusAmount')) document.getElementById('bonusAmount').innerHTML = `+৳${Math.round(bonus).toLocaleString()}`;
+                } else {
+                    document.getElementById('bonusDisplay').classList.add('hidden');
+                }
+            }
+        }
+        
+        // ============================================
+        // CHECK AUTHENTICATION
+        // ============================================
+        if (auth && typeof auth.onAuthStateChanged === 'function') auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/public/pages/public/login.html';
+                return;
+            }
+            
+            currentUser = user;
+            
+            // Check if admin
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (userDoc.exists && userDoc.data().isAdmin === true) {
+                window.location.href = '/admin/index.html';
+                return;
+            }
+            
+            // Load user balance
+            const balance = userDoc.data()?.balance || 0;
+            document.getElementById('userBalance').innerHTML = formatCurrencyBDT(balance);
+            
+            // Realtime balance updates
+            if (balanceListener) balanceListener();
+            balanceListener = db.collection('users').doc(user.uid).onSnapshot((doc) => {
+                const newBalance = doc.data()?.balance || 0;
+                document.getElementById('userBalance').innerHTML = `৳${newBalance.toLocaleString()}`;
+            });
+            
+            // Load services
+            await fetchExchangeRate();
+            await window.loadServices();
+            
+            // Load recent orders
+            await loadRecentOrders();
+            
+            // Load quick stats
+            await loadQuickStats();
+        });
+        
+        // ============================================
+        // LOAD SERVICES
+        // ============================================
+        window.loadServices = async function() {
+            if (servicesLoaded) {
+                window.renderServices();
+                applyPreselectedService();
+                return;
+            }
+            const container = document.getElementById('serviceList');
+            const cachedPreselect = getCachedPreselectService();
+            if (cachedPreselect) {
+                allServices = [cachedPreselect];
+                window.renderServices();
+                applyPreselectedService();
+            }
+
+            try {
+                const response = await fetch('/public/php/api-proxy.php?action=services', { cache: 'no-store' });
+                const data = await response.json();
+                if (!response.ok || data.success === false) throw new Error(data.error || `HTTP ${response.status}`);
+                currentExchangeRate = Number(data.exchange_rate || currentExchangeRate || 120);
+                const liveServices = getServicesFromResponse(data).map(window.normalizeService).filter(service => service.id && service.name);
+                if (cachedPreselect && !liveServices.some(service => String(service.id) === String(cachedPreselect.id))) {
+                    liveServices.unshift(cachedPreselect);
+                }
+                allServices = liveServices;
+            } catch (error) {
+                console.error('Error loading services:', error);
+                if (!allServices.length) allServices = cachedPreselect ? [cachedPreselect] : [];
+                showToast(cachedPreselect ? 'Using selected service. Live service list could not load.' : 'Unable to load live services. Please refresh.', cachedPreselect ? 'warning' : 'error');
+            }
+
+            if (!allServices.length) {
+                container.innerHTML = '<div class="text-center py-8"><i class="fas fa-exclamation-triangle text-4xl text-gray-300 mb-3"></i><p class="text-gray-500">No services available</p></div>';
+                return;
+            }
+
+            window.renderServices();
+            servicesLoaded = true;
+            if (preselectServiceId && !applyPreselectedService()) {
+                showToast(`Service #${preselectServiceId} was not found in the live service list.`, 'warning');
+            }
+        }
+        
+        // ============================================
+        // RENDER SERVICES
+        // ============================================
+        window.renderServices = function() {
+            const container = document.getElementById('serviceList');
+            const searchTerm = document.getElementById('serviceSearch')?.value.toLowerCase() || '';
+            
+            let filteredServices = allServices;
+            
+            // Filter by category
+            if (currentCategory !== 'all') {
+                filteredServices = filteredServices.filter(s => 
+                    s.category?.toLowerCase() === currentCategory
+                );
+            }
+            
+            // Filter by search
+            if (searchTerm) {
+                filteredServices = filteredServices.filter(s => 
+                    s.name?.toLowerCase().includes(searchTerm) || 
+                    s.id?.toString().includes(searchTerm)
+                );
+            }
+            
+            if (filteredServices.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8">
+                        <i class="fas fa-search text-4xl text-gray-300 mb-3"></i>
+                        <p class="text-gray-500">No services found</p>
+                        <p class="text-xs text-gray-400 mt-1">Try a different search term</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = filteredServices.map(service => `
+                <div class="service-card ${selectedService?.id === service.id ? 'selected' : ''}" 
+                     onclick="selectService('${service.id}')"
+                     data-service-id="${service.id}">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="text-xs font-mono text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">#${service.id}</span>
+                                ${service.category ? `<span class="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">${service.category}</span>` : ''}
+                            </div>
+                            <p class="font-medium mt-2">${escapeHtml(service.name)}</p>
+                            <div class="flex gap-4 mt-2 text-xs text-gray-500">
+                                <span><i class="fas fa-arrow-down mr-1"></i>Min: ${service.minQuantity || 100}</span>
+                                <span><i class="fas fa-arrow-up mr-1"></i>Max: ${service.maxQuantity || 10000}</span>
+                                <span><i class="fas fa-clock mr-1"></i>${service.averageTime || 'Instant / varies'}</span>
+                                <span><i class="fas fa-tachometer-alt mr-1"></i>Rate/1K: ${formatCurrencyBDT(service.pricePerKiloBDT || service.ratePerKilo || service.rate || 0)}</span>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                                <i class="fas fa-chevron-right text-primary text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // ============================================
+        // SELECT SERVICE
+        // ============================================
+        window.selectService = function(serviceId) {
+            const service = allServices.find(s => String(s.id) === String(serviceId) || String(s.apiServiceId || '') === String(serviceId));
+            if (!service) return;
+            
+            selectedService = service;
+            
+            // Update display
+            document.getElementById('selectedServiceName').innerText = service.name;
+            document.getElementById('selectedServiceId').innerText = service.id;
+            document.getElementById('selectedServiceDisplay').classList.remove('hidden');
+            document.getElementById('selectedServiceDisplay').classList.add('animate-slide-down');
+            
+            // Update rate display
+            const rate = service.pricePerKiloBDT || service.ratePerKilo || service.rate || 0;
+            document.getElementById('rateDisplay').innerHTML = formatCurrencyBDT(rate) + ' / 1K';
+            document.getElementById('ratePerK').innerHTML = formatCurrencyBDT(rate);
+            
+            // Update min/max
+            document.getElementById('minQty').innerText = service.minQuantity || 100;
+            document.getElementById('maxQty').innerText = service.maxQuantity || 10000;
+            
+            // Reset quantity field
+            const qtyInput = document.getElementById('orderQuantity');
+            if (qtyInput) qtyInput.value = service.minQuantity || 100;
+            
+            // Update price calculation
+            calculateTotalPrice();
+            
+            // Re-render to highlight selected
+            window.renderServices();
+            
+            // Scroll to selected
+            const selectedCard = document.querySelector(`.service-card[data-service-id="${serviceId}"]`);
+            if (selectedCard) {
+                selectedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            
+            showToast(`Selected: ${service.name.substring(0, 50)}`, 'info');
+        };
+        
+        // ============================================
+        // CALCULATE TOTAL PRICE
+        // ============================================
+        function calculateTotalPrice() {
+            if (!selectedService) {
+                document.getElementById('totalPrice').innerHTML = formatCurrencyBDT(0);
+                return;
+            }
+            
+            const quantity = parseInt(document.getElementById('orderQuantity')?.value) || 0;
+            const rate = selectedService.pricePerKiloBDT || selectedService.ratePerKilo || selectedService.rate || 0;
+            
+            const userPrice = (quantity / 1000) * rate;
+            
+            document.getElementById('qtyDisplay').innerText = quantity.toLocaleString();
+            document.getElementById('totalPrice').innerHTML = formatCurrencyBDT(Math.round(userPrice));
+            
+            return Math.round(userPrice);
+        }
+        
+        // ============================================
+        // LOAD RECENT ORDERS
+        // ============================================
+        async function loadRecentOrders() {
+            if (!currentUser) return;
+            
+            const container = document.getElementById('recentOrdersList');
+            
+            try {
+                const snapshot = await db.collection('orders')
+                    .where('userId', '==', currentUser.uid)
+                    .orderBy('createdAt', 'desc')
+                    .limit(3)
+                    .get();
+                
+                if (snapshot.empty) {
+                    container.innerHTML = `
+                        <div class="text-center py-6">
+                            <i class="fas fa-inbox text-3xl text-gray-300 mb-2"></i>
+                            <p class="text-xs text-gray-500">No orders yet</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = snapshot.docs.map(doc => {
+                    const order = doc.data();
+                    const statusColors = {
+                        pending: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
+                        processing: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+                        completed: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+                        cancelled: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                    };
+                    const statusColor = statusColors[order.status] || statusColors.pending;
+                    
+                    return `
+                        <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700/30 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition cursor-pointer" onclick="window.location.href='/public/pages/dashboard/order-detail.html?id=${doc.id}'">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs font-mono text-gray-500">#${doc.id.substring(0, 8)}</span>
+                                    <span class="text-xs px-2 py-0.5 rounded-full ${statusColor}">${order.status || 'pending'}</span>
+                                </div>
+                                <p class="text-sm font-medium truncate">${order.serviceName?.substring(0, 30) || 'Unknown'}</p>
+                                <div class="flex gap-3 mt-1 text-xs text-gray-400">
+                                    <span><i class="fas fa-sort-numeric-up"></i> ${order.quantity || 0}</span>
+                                    <span><i class="fas fa-taka"></i> ${(order.priceBDT || 0).toLocaleString()}</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch (error) {
+                console.error('Error loading recent orders:', error);
+                container.innerHTML = '<div class="text-center py-6 text-red-500 text-xs">Failed to load orders</div>';
+            }
+        }
+        
+        // ============================================
+        // LOAD QUICK STATS
+        // ============================================
+        async function loadQuickStats() {
+            if (!currentUser) return;
+            
+            try {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                const ordersSnapshot = await db.collection('orders')
+                    .where('userId', '==', currentUser.uid)
+                    .get();
+                
+                let totalSpent = 0;
+                let totalOrders = 0;
+                let todayOrders = 0;
+                
+                ordersSnapshot.forEach(doc => {
+                    const order = doc.data();
+                    const amount = order.priceBDT || 0;
+                    totalSpent += amount;
+                    totalOrders++;
+                    
+                    const createdAt = order.createdAt?.toDate();
+                    if (createdAt && createdAt >= today) {
+                        todayOrders++;
+                    }
+                });
+                
+                const avgOrder = totalOrders > 0 ? totalSpent / totalOrders : 0;
+                
+                document.getElementById('ordersToday').innerText = todayOrders;
+                document.getElementById('totalSpent').innerHTML = formatCurrencyBDT(Math.round(totalSpent));
+                document.getElementById('avgOrder').innerHTML = formatCurrencyBDT(Math.round(avgOrder));
+                
+            } catch (error) {
+                console.error('Error loading quick stats:', error);
+            }
+        }
+        
+        // ============================================
+        // PLACE ORDER
+        // ============================================
+        async function placeOrder(event) {
+            event.preventDefault();
+            
+            if (!selectedService) {
+                showToast('Please select a service first', 'warning');
+                return;
+            }
+            
+            const link = document.getElementById('orderLink').value.trim();
+            const quantity = parseInt(document.getElementById('orderQuantity').value);
+            const totalPrice = calculateTotalPrice();
+            
+            if (!link) {
+                showToast('Please enter a valid link', 'warning');
+                return;
+            }
+            
+            if (!quantity || quantity < (selectedService.minQuantity || 100)) {
+                showToast(`Minimum quantity is ${selectedService.minQuantity || 100}`, 'warning');
+                return;
+            }
+            
+            if (quantity > (selectedService.maxQuantity || 10000)) {
+                showToast(`Maximum quantity is ${selectedService.maxQuantity || 10000}`, 'warning');
+                return;
+            }
+            
+            const btn = document.getElementById('placeOrderBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+            
+            try {
+                // Get current user ID (from Firebase or your auth system)
+                let userId = currentUser?.uid || localStorage.getItem('userId');
+                if (!userId) {
+                    throw new Error('User not authenticated');
+                }
+                const userSnapshot = currentUser?.uid ? await db.collection('users').doc(currentUser.uid).get() : null;
+                const firestoreBalance = Number(userSnapshot?.data()?.balance || 0);
+                
+                // Call the PHP order-handler API
+                const response = await fetch('/public/php/order-handler.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: new URLSearchParams({
+                        action: 'place_order',
+                        user_id: userId,
+                        service_id: selectedService.id,
+                        service_name: selectedService.name,
+                        rate_bdt: selectedService.pricePerKiloBDT || selectedService.ratePerKilo || selectedService.rate || 0,
+                        user_balance: firestoreBalance,
+                        link: link,
+                        quantity: quantity
+                    })
+                });
+                
+                const responseText = await response.text();
+                let result = {};
+                try {
+                    result = responseText ? JSON.parse(responseText) : {};
+                } catch (parseError) {
+                    result = { success: false, error: responseText || `HTTP error! status: ${response.status}` };
+                }
+
+                if (!response.ok) {
+                    throw new Error(result.error || result.message || `HTTP error! status: ${response.status}`);
+                }
+                
+                if (!result.success) {
+                    throw new Error(result.error || 'Failed to place order');
+                }
+
+                if (db && currentUser?.uid) {
+                    try {
+                        const firestoreOrderId = String(result.local_order_id || result.data?.local_order_id || Date.now());
+                        await db.runTransaction(async (transaction) => {
+                            const userRef = db.collection('users').doc(currentUser.uid);
+                            const userSnap = await transaction.get(userRef);
+                            const balanceBefore = Number(userSnap.data()?.balance || 0);
+                            if (balanceBefore < totalPrice) throw new Error('Insufficient Firestore balance');
+                            transaction.update(userRef, {
+                                balance: balanceBefore - totalPrice,
+                                totalSpent: firebase.firestore.FieldValue.increment(totalPrice),
+                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+                            transaction.set(db.collection('orders').doc(firestoreOrderId), {
+                                userId: currentUser.uid,
+                                serviceId: selectedService.id,
+                                serviceName: selectedService.name,
+                                link,
+                                quantity,
+                                priceBDT: totalPrice,
+                                ratePerKiloBDT: selectedService.pricePerKiloBDT || selectedService.ratePerKilo || selectedService.rate || 0,
+                                status: result.status || 'processing',
+                                localOrderId: result.local_order_id || result.data?.local_order_id || null,
+                                amarboostOrderId: result.amarboost_order_id || result.data?.amarboost_order_id || null,
+                                syncStatus: 'synced',
+                                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            }, { merge: true });
+                        });
+                    } catch (syncError) {
+                        console.error('Firestore order sync failed:', syncError);
+                        showToast('Order placed, but dashboard sync needs refresh.', 'warning');
+                    }
+                }
+                
+                // Show success modal
+                document.getElementById('modalOrderId').innerText = result.local_order_id || result.data?.local_order_id || 'N/A';
+                document.getElementById('modalService').innerText = selectedService.name.substring(0, 40);
+                document.getElementById('modalQuantity').innerText = quantity.toLocaleString();
+                document.getElementById('modalAmount').innerHTML = formatCurrencyBDT(totalPrice);
+                
+                // Show success modal with celebration
+                document.getElementById('successModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                if (window.triggerConfetti) window.triggerConfetti();
+                if (window.simpleConfetti) window.simpleConfetti();
+                
+                // Show toast notification
+                showToast('✅ Order placed successfully! Forwarding to AmarBoost...', 'success');
+                
+                // Refresh balance immediately
+                if (window.BALANCE_MANAGER) {
+                    window.BALANCE_MANAGER.refresh();
+                }
+                
+                // Reset form
+                resetForm();
+                
+                // Refresh orders after short delay
+                setTimeout(() => {
+                    if (window.loadRecentOrders) window.loadRecentOrders();
+                    if (window.loadQuickStats) window.loadQuickStats();
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Error placing order:', error);
+                showToast(`❌ Failed to place order: ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+        
+        // ============================================
+        // RESET FORM
+        // ============================================
+        function resetForm() {
+            selectedService = null;
+            document.getElementById('selectedServiceDisplay').classList.add('hidden');
+            document.getElementById('orderLink').value = '';
+            document.getElementById('orderQuantity').value = '';
+            document.getElementById('rateDisplay').innerHTML = '-';
+            document.getElementById('qtyDisplay').innerText = '0';
+            document.getElementById('totalPrice').innerHTML = formatCurrencyBDT(0);
+            document.getElementById('minQty').innerText = '-';
+            document.getElementById('maxQty').innerText = '-';
+            document.getElementById('ratePerK').innerHTML = '-';
+            window.renderServices();
+        }
+        
+        // ============================================
+        // ESCAPE HTML
+        // ============================================
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+        document.getElementById('orderForm')?.addEventListener('submit', placeOrder);
+        document.getElementById('resetBtn')?.addEventListener('click', resetForm);
+        document.getElementById('clearServiceBtn')?.addEventListener('click', () => {
+            selectedService = null;
+            document.getElementById('selectedServiceDisplay').classList.add('hidden');
+            window.renderServices();
+            calculateTotalPrice();
+        });
+        
+        document.getElementById('orderQuantity')?.addEventListener('input', calculateTotalPrice);
+        document.getElementById('orderQuantity')?.addEventListener('change', calculateTotalPrice);
+        
+        // Quick quantity buttons
+        document.querySelectorAll('.quick-qty-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const currentValue = parseInt(document.getElementById('orderQuantity').value) || 0;
+                const addValue = parseInt(btn.innerText);
+                const newValue = currentValue + addValue;
+                
+                const max = parseInt(document.getElementById('maxQty').innerText) || 10000;
+                if (newValue <= max) {
+                    document.getElementById('orderQuantity').value = newValue;
+                    calculateTotalPrice();
+                } else {
+                    showToast(`Maximum quantity is ${max.toLocaleString()}`, 'warning');
+                }
+            });
+        });
+        
+        // Category buttons
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active', 'bg-primary', 'text-white'));
+                btn.classList.add('active', 'bg-primary', 'text-white');
+                currentCategory = btn.dataset.category;
+                window.renderServices();
+            });
+            // Style default
+            if (btn.classList.contains('active')) {
+                btn.classList.add('bg-primary', 'text-white');
+            } else {
+                btn.classList.add('bg-gray-100', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+            }
+        });
+        
+        // Search input
+        document.getElementById('serviceSearch')?.addEventListener('input', () => {
+            window.renderServices();
+        });
+        window.loadServices();
+        // ============================================
+        // DARK MODE
+        // ============================================
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        
+        window.closeSuccessModal = function() {
+            document.getElementById('successModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        
+        console.log('✅ New Order page loaded');
+    </script>
+    
+    <!-- Universal Notifications Helper -->
+    <script src="/public/assets/js/core/notifications-helper.js"></script>
+    <script src="/public/assets/js/api/order-api.js"></script>
+<script>
+// global-darkmode-fix
+const darkToggle = document.getElementById('darkModeToggle');
+if (darkToggle) {
+    darkToggle.onclick = () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    };
+}
+if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+</script>
+<script>
+// Global logout fix - ensures logout works everywhere
+(function fixLogout(){
+    const checkInterval = setInterval(() => {
+        const logoutBtn = document.getElementById('logoutBtn') || document.getElementById('sidebarLogoutBtn');
+        if(logoutBtn && typeof firebase !== 'undefined' && firebase.auth){
+            clearInterval(checkInterval);
+            logoutBtn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                firebase.auth().signOut()
+                    .then(() => { window.location.href = '/public/pages/public/login.html'; })
+                    .catch(err => { console.error('Logout error:', err); alert('Logout failed. Please try again.'); });
+            };
+        }
+    }, 500);
+})();
+</script>
+<button id="darkModeToggle" class="dark-mode-toggle-btn">
+    <i class="fas fa-moon"></i>
+</button>
+<script>
+document.getElementById('darkModeToggle')?.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark);
+    const icon = document.querySelector('#darkModeToggle i');
+    if(icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+});
+if(localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+</script>
+    <script src="/public/assets/js/core/toast.js"></script>
+    <script src="/public/assets/js/core/validation.js"></script>
+    <script src="/public/assets/js/core/offline.js"></script>
+    <script src="/public/assets/js/core/shortcuts.js"></script>
+    <script src="/public/assets/js/core/avatar-manager.js"></script>
+</body>
+</html>

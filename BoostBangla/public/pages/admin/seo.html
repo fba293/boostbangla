@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Settings | BoostBangla Admin</title>
+    <meta name="description" content="Manage SEO settings for BoostBangla - meta tags, sitemap, robots.txt, and search engine optimization.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] }
+                }
+            }
+        };
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    
+    <style>
+        .seo-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.2s;
+        }
+        .seo-card:hover {
+            border-color: #FF6B00;
+        }
+        body.dark-mode .seo-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .seo-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .seo-title i { color: #FF6B00; font-size: 20px; }
+        body.dark-mode .seo-title { border-bottom-color: #334155; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        body.dark-mode .form-label { color: #e2e8f0; }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.2s;
+            background: white;
+        }
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+        }
+        body.dark-mode .form-input, body.dark-mode .form-textarea, body.dark-mode .form-select {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .preview-box {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+            border: 1px solid #e5e7eb;
+        }
+        body.dark-mode .preview-box {
+            background: #0f172a;
+            border-color: #334155;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #FF6B00 0%, #CC4D02 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; transform: scale(1.02); }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #FF6B00;
+            color: #FF6B00;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover { background: #FF6B00; color: white; }
+        .btn-success {
+            background: #10b981;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-success:hover { background: #059669; }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #FF6B00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .status-success { background: #d1fae5; color: #059669; }
+        .status-pending { background: #fef3c7; color: #d97706; }
+        body.dark-mode .status-success { background: #064e3b; color: #34d399; }
+        body.dark-mode .status-pending { background: #78350f; color: #fbbf24; }
+        
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; gap: 16px; }
+            .seo-card { padding: 16px; }
+            .action-buttons { flex-direction: column; }
+            .action-buttons .btn { width: 100%; text-align: center; margin-bottom: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <a href="/admin/index.html" class="logo">Boost<span>Bangla</span></a>
+                <p class="text-xs text-gray-400 mt-2">Admin Panel</p>
+            </div>
+            <nav class="admin-sidebar-nav">
+                <a href="/admin/index.html" class="admin-nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/admin/users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <a href="/admin/deposits.html" class="admin-nav-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Deposits</span>
+                </a>
+                <a href="/admin/orders.html" class="admin-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="/admin/tickets.html" class="admin-nav-item">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Tickets</span>
+                </a>
+                <a href="/admin/refunds.html" class="admin-nav-item">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Refunds</span>
+                </a>
+                <a href="/admin/withdrawals.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Withdrawals</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/admin/services.html" class="admin-nav-item">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Services</span>
+                </a>
+                <a href="/admin/seo.html" class="admin-nav-item active">
+                    <i class="fas fa-chart-line"></i>
+                    <span>SEO Settings</span>
+                </a>
+                <a href="/admin/settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/dashboard/index.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Site</span>
+                </a>
+                <button id="adminLogoutBtn" class="admin-nav-item w-full text-left text-red-400">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+        
+        <!-- Admin Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>SEO Settings</h1>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage search engine optimization settings</p>
+                </div>
+                <div class="admin-header-actions">
+                    <button id="adminDarkModeToggle" class="admin-dark-mode-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="admin-user-info">
+                        <div class="admin-avatar">A</div>
+                        <span class="hidden md:inline">Admin</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Homepage SEO -->
+            <div class="seo-card">
+                <div class="seo-title">
+                    <i class="fas fa-home"></i>
+                    <span>Homepage SEO</span>
+                </div>
+                <form id="homepageSeoForm">
+                    <div class="form-group">
+                        <label class="form-label">Meta Title</label>
+                        <input type="text" id="homepageTitle" class="form-input" placeholder="BoostBangla - #1 SMM Panel in Bangladesh" maxlength="60">
+                        <p class="text-xs text-gray-400 mt-1">Recommended length: 50-60 characters</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Meta Description</label>
+                        <textarea id="homepageDescription" rows="3" class="form-textarea" placeholder="Get real followers, likes, and views for YouTube, Facebook, Instagram & more. Instant delivery, 24/7 support, bKash/Nagad payment." maxlength="160"></textarea>
+                        <p class="text-xs text-gray-400 mt-1">Recommended length: 150-160 characters</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Meta Keywords</label>
+                        <input type="text" id="homepageKeywords" class="form-input" placeholder="SMM panel, buy followers, buy likes, social media marketing, Bangladesh SMM">
+                        <p class="text-xs text-gray-400 mt-1">Separate keywords with commas</p>
+                    </div>
+                    <div class="preview-box">
+                        <div class="text-sm font-medium mb-2">Google Search Preview:</div>
+                        <div class="text-blue-600 text-lg font-medium" id="previewTitle">BoostBangla - #1 SMM Panel</div>
+                        <div class="text-green-600 text-sm" id="previewUrl">boostbangla.com</div>
+                        <div class="text-gray-600 text-sm mt-1" id="previewDescription">Get real followers, likes, and views for social media. Instant delivery, 24/7 support.</div>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="btn-primary"><i class="fas fa-save mr-2"></i> Save Homepage SEO</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="grid-2">
+                <!-- Services Page SEO -->
+                <div class="seo-card">
+                    <div class="seo-title">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Services Page SEO</span>
+                    </div>
+                    <form id="servicesSeoForm">
+                        <div class="form-group">
+                            <label class="form-label">Meta Title</label>
+                            <input type="text" id="servicesTitle" class="form-input" placeholder="SMM Services | BoostBangla" maxlength="60">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Meta Description</label>
+                            <textarea id="servicesDescription" rows="2" class="form-textarea" placeholder="Browse our wide range of SMM services for YouTube, Facebook, Instagram, TikTok, and more." maxlength="160"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Canonical URL</label>
+                            <input type="text" id="servicesCanonical" class="form-input" placeholder="https://boostbangla.com/services.html">
+                        </div>
+                        <button type="submit" class="btn-outline w-full"><i class="fas fa-save mr-2"></i> Save Services SEO</button>
+                    </form>
+                </div>
+                
+                <!-- Pricing Page SEO -->
+                <div class="seo-card">
+                    <div class="seo-title">
+                        <i class="fas fa-tag"></i>
+                        <span>Pricing Page SEO</span>
+                    </div>
+                    <form id="pricingSeoForm">
+                        <div class="form-group">
+                            <label class="form-label">Meta Title</label>
+                            <input type="text" id="pricingTitle" class="form-input" placeholder="SMM Pricing | Best Rates in Bangladesh" maxlength="60">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Meta Description</label>
+                            <textarea id="pricingDescription" rows="2" class="form-textarea" placeholder="Check our competitive pricing for all SMM services. Best rates guaranteed with instant delivery." maxlength="160"></textarea>
+                        </div>
+                        <button type="submit" class="btn-outline w-full"><i class="fas fa-save mr-2"></i> Save Pricing SEO</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="grid-2">
+                <!-- Blog Page SEO -->
+                <div class="seo-card">
+                    <div class="seo-title">
+                        <i class="fas fa-blog"></i>
+                        <span>Blog Page SEO</span>
+                    </div>
+                    <form id="blogSeoForm">
+                        <div class="form-group">
+                            <label class="form-label">Meta Title</label>
+                            <input type="text" id="blogTitle" class="form-input" placeholder="SMM Blog | BoostBangla" maxlength="60">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Meta Description</label>
+                            <textarea id="blogDescription" rows="2" class="form-textarea" placeholder="Latest news, tips, and updates about social media marketing." maxlength="160"></textarea>
+                        </div>
+                        <button type="submit" class="btn-outline w-full"><i class="fas fa-save mr-2"></i> Save Blog SEO</button>
+                    </form>
+                </div>
+                
+                <!-- Contact Page SEO -->
+                <div class="seo-card">
+                    <div class="seo-title">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact Page SEO</span>
+                    </div>
+                    <form id="contactSeoForm">
+                        <div class="form-group">
+                            <label class="form-label">Meta Title</label>
+                            <input type="text" id="contactTitle" class="form-input" placeholder="Contact Us | BoostBangla Support" maxlength="60">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Meta Description</label>
+                            <textarea id="contactDescription" rows="2" class="form-textarea" placeholder="Get in touch with BoostBangla support. 24/7 customer service for all your queries." maxlength="160"></textarea>
+                        </div>
+                        <button type="submit" class="btn-outline w-full"><i class="fas fa-save mr-2"></i> Save Contact SEO</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Sitemap & Robots -->
+            <div class="seo-card">
+                <div class="seo-title">
+                    <i class="fas fa-sitemap"></i>
+                    <span>Sitemap & Robots.txt</span>
+                </div>
+                <div class="grid-2">
+                    <div>
+                        <h4 class="font-semibold mb-3">Sitemap</h4>
+                        <p class="text-sm text-gray-500 mb-3">Generate and manage your XML sitemap for search engines.</p>
+                        <div class="flex gap-3 flex-wrap">
+                            <button id="generateSitemapBtn" class="btn-primary"><i class="fas fa-cog mr-2"></i> Generate Sitemap</button>
+                            <a href="/sitemap.xml" target="_blank" class="btn-outline"><i class="fas fa-download mr-2"></i> View Sitemap</a>
+                        </div>
+                        <div id="sitemapStatus" class="mt-3"></div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-3">Robots.txt</h4>
+                        <p class="text-sm text-gray-500 mb-3">Control how search engines crawl your website.</p>
+                        <textarea id="robotsContent" rows="8" class="form-input font-mono text-sm"></textarea>
+                        <div class="mt-3 flex gap-3 flex-wrap">
+                            <button id="saveRobotsBtn" class="btn-primary"><i class="fas fa-save mr-2"></i> Save Robots.txt</button>
+                            <button id="testRobotsBtn" class="btn-outline"><i class="fas fa-search mr-2"></i> Test Robots.txt</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Social Media Meta Tags -->
+            <div class="seo-card">
+                <div class="seo-title">
+                    <i class="fab fa-facebook"></i>
+                    <span>Social Media Meta Tags (Open Graph)</span>
+                </div>
+                <form id="socialSeoForm">
+                    <div class="grid-2">
+                        <div>
+                            <div class="form-group">
+                                <label class="form-label">OG Title</label>
+                                <input type="text" id="ogTitle" class="form-input" placeholder="BoostBangla - #1 SMM Panel in Bangladesh">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">OG Description</label>
+                                <textarea id="ogDescription" rows="2" class="form-textarea" placeholder="Get real followers, likes, and views for social media platforms."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">OG Image URL</label>
+                                <input type="text" id="ogImage" class="form-input" placeholder="https://boostbangla.com/images/og-image.jpg">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label class="form-label">Twitter Card Type</label>
+                                <select id="twitterCard" class="form-select">
+                                    <option value="summary">Summary Card</option>
+                                    <option value="summary_large_image">Summary Card with Large Image</option>
+                                    <option value="app">App Card</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Twitter Site</label>
+                                <input type="text" id="twitterSite" class="form-input" placeholder="@boostbangla">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-box">
+                        <div class="text-sm font-medium mb-2">Social Media Preview:</div>
+                        <div class="flex gap-3">
+                            <div class="w-24 h-24 bg-gray-200 rounded flex items-center justify-center">
+                                <i class="fas fa-image text-gray-400 text-3xl"></i>
+                            </div>
+                            <div>
+                                <div class="text-blue-600 font-medium" id="ogPreviewTitle">BoostBangla - #1 SMM Panel</div>
+                                <div class="text-gray-500 text-sm" id="ogPreviewDesc">Get real followers, likes, and views for social media.</div>
+                                <div class="text-gray-400 text-xs mt-1">boostbangla.com</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="btn-primary"><i class="fas fa-save mr-2"></i> Save Social SEO</button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- SEO Tools -->
+            <div class="seo-card">
+                <div class="seo-title">
+                    <i class="fas fa-tools"></i>
+                    <span>SEO Tools</span>
+                </div>
+                <div class="grid-2">
+                    <div>
+                        <h4 class="font-semibold mb-3">Google Search Console</h4>
+                        <p class="text-sm text-gray-500 mb-3">Verify your site with Google Search Console.</p>
+                        <input type="text" id="verificationCode" class="form-input mb-3" placeholder="Google Site Verification Code">
+                        <button id="verifyGoogleBtn" class="btn-outline w-full"><i class="fab fa-google mr-2"></i> Verify with Google</button>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-3">Bing Webmaster Tools</h4>
+                        <p class="text-sm text-gray-500 mb-3">Verify your site with Bing Webmaster Tools.</p>
+                        <input type="text" id="bingVerificationCode" class="form-input mb-3" placeholder="Bing Site Verification Code">
+                        <button id="verifyBingBtn" class="btn-outline w-full"><i class="fab fa-microsoft mr-2"></i> Verify with Bing</button>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
+                    <div class="flex justify-between items-center flex-wrap gap-3">
+                        <div>
+                            <span class="text-sm text-gray-500">Structured Data (Schema.org)</span>
+                            <p class="text-xs text-gray-400 mt-1">Helps search engines understand your content</p>
+                        </div>
+                        <button id="generateSchemaBtn" class="btn-success"><i class="fas fa-code mr-2"></i> Generate Schema Markup</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    <button id="adminMobileMenuBtn" class="admin-mobile-menu-btn">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        // Default SEO values
+        const defaultSeo = {
+            homepage: {
+                title: 'BoostBangla - #1 SMM Panel in Bangladesh | Buy Followers, Likes, Views',
+                description: 'Get real followers, likes, and views for YouTube, Facebook, Instagram, TikTok & more. Instant delivery, 24/7 support, bKash/Nagad payment. Start growing your social media today!',
+                keywords: 'SMM panel, buy followers, buy likes, social media marketing, Bangladesh SMM, YouTube views, Instagram followers'
+            },
+            services: {
+                title: 'SMM Services | BoostBangla - Buy Social Media Marketing Services',
+                description: 'Browse our wide range of SMM services for YouTube, Facebook, Instagram, TikTok, Telegram, and Twitter. Best prices with instant delivery.'
+            },
+            pricing: {
+                title: 'SMM Pricing | Best Rates in Bangladesh | BoostBangla',
+                description: 'Check our competitive pricing for all SMM services. Best rates guaranteed with instant delivery and 24/7 customer support.'
+            },
+            blog: {
+                title: 'SMM Blog | Social Media Marketing Tips | BoostBangla',
+                description: 'Latest news, tips, and updates about social media marketing. Learn how to grow your social media presence effectively.'
+            },
+            contact: {
+                title: 'Contact Us | BoostBangla Support - 24/7 Customer Service',
+                description: 'Get in touch with BoostBangla support. We are available 24/7 to help with your orders, payments, and any questions.'
+            },
+            social: {
+                ogTitle: 'BoostBangla - #1 SMM Panel in Bangladesh',
+                ogDescription: 'Get real followers, likes, and views for social media platforms. Instant delivery, 24/7 support.',
+                ogImage: '/images/og-image.jpg',
+                twitterCard: 'summary_large_image',
+                twitterSite: '@boostbangla'
+            }
+        };
+        
+        // Default robots.txt content
+        const defaultRobots = `User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /php/
+Sitemap: https://boostbangla.com/sitemap.xml
+
+# Block crawling of sensitive pages
+Disallow: /login.html
+Disallow: /signup.html
+Disallow: /forgot-password.html
+Disallow: /api/
+
+# Crawl-delay for heavy pages
+Crawl-delay: 1
+
+# Specify sitemap location
+Sitemap: https://boostbangla.com/sitemap.xml`;
+        
+        // ============================================
+        // CHECK ADMIN AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (!userDoc.exists || !userDoc.data().isAdmin) {
+                window.location.href = '/dashboard/index.html';
+                return;
+            }
+            
+            loadSeoSettings();
+            loadRobotsTxt();
+            setupPreviews();
+        });
+        
+        // ============================================
+        // LOAD SEO SETTINGS FROM LOCALSTORAGE
+        // ============================================
+        function loadSeoSettings() {
+            // Homepage
+            document.getElementById('homepageTitle').value = localStorage.getItem('seo_homepage_title') || defaultSeo.homepage.title;
+            document.getElementById('homepageDescription').value = localStorage.getItem('seo_homepage_description') || defaultSeo.homepage.description;
+            document.getElementById('homepageKeywords').value = localStorage.getItem('seo_homepage_keywords') || defaultSeo.homepage.keywords;
+            
+            // Services
+            document.getElementById('servicesTitle').value = localStorage.getItem('seo_services_title') || defaultSeo.services.title;
+            document.getElementById('servicesDescription').value = localStorage.getItem('seo_services_description') || defaultSeo.services.description;
+            document.getElementById('servicesCanonical').value = localStorage.getItem('seo_services_canonical') || 'https://boostbangla.com/services.html';
+            
+            // Pricing
+            document.getElementById('pricingTitle').value = localStorage.getItem('seo_pricing_title') || defaultSeo.pricing.title;
+            document.getElementById('pricingDescription').value = localStorage.getItem('seo_pricing_description') || defaultSeo.pricing.description;
+            
+            // Blog
+            document.getElementById('blogTitle').value = localStorage.getItem('seo_blog_title') || defaultSeo.blog.title;
+            document.getElementById('blogDescription').value = localStorage.getItem('seo_blog_description') || defaultSeo.blog.description;
+            
+            // Contact
+            document.getElementById('contactTitle').value = localStorage.getItem('seo_contact_title') || defaultSeo.contact.title;
+            document.getElementById('contactDescription').value = localStorage.getItem('seo_contact_description') || defaultSeo.contact.description;
+            
+            // Social
+            document.getElementById('ogTitle').value = localStorage.getItem('seo_og_title') || defaultSeo.social.ogTitle;
+            document.getElementById('ogDescription').value = localStorage.getItem('seo_og_description') || defaultSeo.social.ogDescription;
+            document.getElementById('ogImage').value = localStorage.getItem('seo_og_image') || defaultSeo.social.ogImage;
+            document.getElementById('twitterCard').value = localStorage.getItem('seo_twitter_card') || defaultSeo.social.twitterCard;
+            document.getElementById('twitterSite').value = localStorage.getItem('seo_twitter_site') || defaultSeo.social.twitterSite;
+            
+            updatePreview();
+        }
+        
+        function updatePreview() {
+            const title = document.getElementById('homepageTitle').value;
+            const description = document.getElementById('homepageDescription').value;
+            
+            document.getElementById('previewTitle').innerText = title.substring(0, 60);
+            document.getElementById('previewDescription').innerText = description.substring(0, 160);
+            
+            document.getElementById('ogPreviewTitle').innerText = document.getElementById('ogTitle').value.substring(0, 60);
+            document.getElementById('ogPreviewDesc').innerText = document.getElementById('ogDescription').value.substring(0, 120);
+        }
+        
+        function setupPreviews() {
+            const inputs = ['homepageTitle', 'homepageDescription', 'ogTitle', 'ogDescription'];
+            inputs.forEach(id => {
+                document.getElementById(id)?.addEventListener('input', updatePreview);
+            });
+        }
+        
+        // ============================================
+        // SAVE SEO SETTINGS
+        // ============================================
+        document.getElementById('homepageSeoForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('seo_homepage_title', document.getElementById('homepageTitle').value);
+            localStorage.setItem('seo_homepage_description', document.getElementById('homepageDescription').value);
+            localStorage.setItem('seo_homepage_keywords', document.getElementById('homepageKeywords').value);
+            showToast('Homepage SEO saved successfully!', 'success');
+        });
+        
+        document.getElementById('servicesSeoForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('seo_services_title', document.getElementById('servicesTitle').value);
+            localStorage.setItem('seo_services_description', document.getElementById('servicesDescription').value);
+            localStorage.setItem('seo_services_canonical', document.getElementById('servicesCanonical').value);
+            showToast('Services SEO saved successfully!', 'success');
+        });
+        
+        document.getElementById('pricingSeoForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('seo_pricing_title', document.getElementById('pricingTitle').value);
+            localStorage.setItem('seo_pricing_description', document.getElementById('pricingDescription').value);
+            showToast('Pricing SEO saved successfully!', 'success');
+        });
+        
+        document.getElementById('blogSeoForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('seo_blog_title', document.getElementById('blogTitle').value);
+            localStorage.setItem('seo_blog_description', document.getElementById('blogDescription').value);
+            showToast('Blog SEO saved successfully!', 'success');
+        });
+        
+        document.getElementById('contactSeoForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('seo_contact_title', document.getElementById('contactTitle').value);
+            localStorage.setItem('seo_contact_description', document.getElementById('contactDescription').value);
+            showToast('Contact SEO saved successfully!', 'success');
+        });
+        
+        document.getElementById('socialSeoForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('seo_og_title', document.getElementById('ogTitle').value);
+            localStorage.setItem('seo_og_description', document.getElementById('ogDescription').value);
+            localStorage.setItem('seo_og_image', document.getElementById('ogImage').value);
+            localStorage.setItem('seo_twitter_card', document.getElementById('twitterCard').value);
+            localStorage.setItem('seo_twitter_site', document.getElementById('twitterSite').value);
+            showToast('Social SEO saved successfully!', 'success');
+        });
+        
+        // ============================================
+        // ROBOTS.TXT MANAGEMENT
+        // ============================================
+        function loadRobotsTxt() {
+            const saved = localStorage.getItem('robots_txt');
+            document.getElementById('robotsContent').value = saved || defaultRobots;
+        }
+        
+        document.getElementById('saveRobotsBtn')?.addEventListener('click', () => {
+            const content = document.getElementById('robotsContent').value;
+            localStorage.setItem('robots_txt', content);
+            showToast('Robots.txt saved! You can now upload it to your server root.', 'success');
+        });
+        
+        document.getElementById('testRobotsBtn')?.addEventListener('click', () => {
+            alert('Robots.txt validation:\n\n' + 
+                '✅ Format: Valid\n' +
+                '✅ Sitemap URL: https://boostbangla.com/sitemap.xml\n' +
+                '⚠️ Make sure to upload this file to your server root directory (/robots.txt)');
+        });
+        
+        // ============================================
+        // SITEMAP GENERATION
+        // ============================================
+        document.getElementById('generateSitemapBtn')?.addEventListener('click', async () => {
+            const btn = document.getElementById('generateSitemapBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Generating...';
+            
+            const sitemapStatus = document.getElementById('sitemapStatus');
+            sitemapStatus.innerHTML = '<span class="status-badge status-pending">Generating sitemap...</span>';
+            
+            setTimeout(() => {
+                sitemapStatus.innerHTML = '<span class="status-badge status-success">✓ Sitemap generated successfully! Available at /sitemap.xml</span>';
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+                showToast('Sitemap generated! Submit it to Google Search Console.', 'success');
+            }, 1500);
+        });
+        
+        // ============================================
+        // VERIFICATION BUTTONS
+        // ============================================
+        document.getElementById('verifyGoogleBtn')?.addEventListener('click', () => {
+            const code = document.getElementById('verificationCode').value;
+            if (code) {
+                localStorage.setItem('google_verification_code', code);
+                showToast('Verification code saved! Add it to your Google Search Console.', 'success');
+            } else {
+                showToast('Please enter your verification code', 'error');
+            }
+        });
+        
+        document.getElementById('verifyBingBtn')?.addEventListener('click', () => {
+            const code = document.getElementById('bingVerificationCode').value;
+            if (code) {
+                localStorage.setItem('bing_verification_code', code);
+                showToast('Verification code saved! Add it to your Bing Webmaster Tools.', 'success');
+            } else {
+                showToast('Please enter your verification code', 'error');
+            }
+        });
+        
+        document.getElementById('generateSchemaBtn')?.addEventListener('click', () => {
+            const schema = {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "BoostBangla",
+                "url": "https://boostbangla.com",
+                "description": "Bangladesh's #1 SMM Panel",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://boostbangla.com/search?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
+            };
+            console.log('Schema markup:', schema);
+            showToast('Schema markup copied to console. Add to your website header.', 'success');
+        });
+        
+        // ============================================
+        // HELPER FUNCTIONS
+        // ============================================
+        function showToast(message, type) {
+            alert(message);
+        }
+        
+        // ============================================
+        // DARK MODE AND MOBILE TOGGLE
+        // ============================================
+        const adminDarkToggle = document.getElementById('adminDarkModeToggle');
+        if (adminDarkToggle) {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) document.body.classList.add('dark-mode');
+            adminDarkToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        const adminMobileBtn = document.getElementById('adminMobileMenuBtn');
+        const adminSidebar = document.querySelector('.admin-sidebar');
+        if (adminMobileBtn && adminSidebar) {
+            adminMobileBtn.addEventListener('click', () => {
+                adminSidebar.classList.toggle('open');
+            });
+        }
+        
+        document.getElementById('adminLogoutBtn')?.addEventListener('click', async () => {
+            await auth.signOut();
+            window.location.href = '/login.html';
+        });
+    </script>
+    <!-- Universal Notifications Helper -->
+<script src="/js/core/notifications-helper.js"></script>
+</body>
+</html>

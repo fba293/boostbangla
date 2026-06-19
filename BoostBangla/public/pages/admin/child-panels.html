@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Child Panels | BoostBangla Admin</title>
+    <meta name="description" content="Admin panel to manage BoostBangla child panels - view, approve, suspend, and manage reseller sub-accounts.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#FF6B00', primaryDark: '#CC5500', darkBg: '#02101A' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], bangla: ['Noto Sans Bengali', 'Inter', 'sans-serif'] }
+                }
+            }
+        };
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    
+    <style>
+        .panel-row {
+            transition: all 0.2s ease;
+        }
+        .panel-row:hover {
+            background: #fef9f5;
+            transform: translateX(2px);
+        }
+        body.dark-mode .panel-row:hover {
+            background: #2d1a0f;
+        }
+        
+        .status-active {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #d1fae5;
+            color: #059669;
+        }
+        .status-suspended {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        body.dark-mode .status-active { background: #064e3b; color: #34d399; }
+        body.dark-mode .status-suspended { background: #7f1d1d; color: #f87171; }
+        
+        .access-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .access-full { background: #d1fae5; color: #059669; }
+        .access-limited { background: #fef3c7; color: #d97706; }
+        .access-none { background: #fee2e2; color: #dc2626; }
+        body.dark-mode .access-full { background: #064e3b; color: #34d399; }
+        body.dark-mode .access-limited { background: #78350f; color: #fbbf24; }
+        body.dark-mode .access-none { background: #7f1d1d; color: #f87171; }
+        
+        .filter-btn {
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+            border: 1px solid #e5e7eb;
+            color: #6b7280;
+        }
+        .filter-btn.active {
+            background: #FF6B00;
+            color: white;
+            border-color: #FF6B00;
+        }
+        .filter-btn:hover:not(.active) {
+            border-color: #FF6B00;
+            color: #FF6B00;
+        }
+        body.dark-mode .filter-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        body.dark-mode .filter-btn.active {
+            background: #FF6B00;
+            color: white;
+        }
+        
+        .search-input {
+            padding: 10px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 30px;
+            font-size: 14px;
+            width: 300px;
+            transition: all 0.2s;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+        }
+        body.dark-mode .search-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 500px;
+            width: 90%;
+        }
+        body.dark-mode .modal-content {
+            background: #1e293b;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+        }
+        body.dark-mode .form-input, body.dark-mode .form-textarea, body.dark-mode .form-select {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #FF6B00 0%, #CC4D02 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; transform: scale(1.02); }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #FF6B00;
+            color: #FF6B00;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover { background: #FF6B00; color: white; }
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-danger:hover { background: #dc2626; }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #FF6B00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .pagination-btn {
+            padding: 6px 12px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .pagination-btn:hover { border-color: #FF6B00; color: #FF6B00; }
+        .pagination-btn.active { background: #FF6B00; color: white; border-color: #FF6B00; }
+        body.dark-mode .pagination-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        body.dark-mode .pagination-btn.active {
+            background: #FF6B00;
+            color: white;
+        }
+        
+        .balance-cell {
+            font-weight: 700;
+            color: #FF6B00;
+        }
+        
+        .api-key-display {
+            font-family: monospace;
+            font-size: 11px;
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        body.dark-mode .api-key-display {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        
+        .stats-card {
+            transition: all 0.3s ease;
+        }
+        .stats-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            .search-input { width: 100%; }
+            .filters { flex-wrap: wrap; }
+            .table-responsive { overflow-x: auto; }
+            .admin-table th, .admin-table td { padding: 10px 8px; font-size: 12px; }
+            .action-buttons { flex-direction: column; gap: 8px; }
+            .action-buttons button { width: 100%; }
+            .stats-card { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <a href="/admin/index.html" class="logo">Boost<span>Bangla</span></a>
+                <p class="text-xs text-gray-400 mt-2">Admin Panel</p>
+            </div>
+            <nav class="admin-sidebar-nav">
+                <a href="/admin/index.html" class="admin-nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/admin/users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <a href="/admin/deposits.html" class="admin-nav-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Deposits</span>
+                </a>
+                <a href="/admin/orders.html" class="admin-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="/admin/tickets.html" class="admin-nav-item">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Tickets</span>
+                </a>
+                <a href="/admin/refunds.html" class="admin-nav-item">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Refunds</span>
+                </a>
+                <a href="/admin/withdrawals.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Withdrawals</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/admin/child-panels.html" class="admin-nav-item active">
+                    <i class="fas fa-child"></i>
+                    <span>Child Panels</span>
+                </a>
+                <a href="/admin/exchange-rate.html" class="admin-nav-item">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Exchange Rate</span>
+                </a>
+                <a href="/admin/services.html" class="admin-nav-item">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Services</span>
+                </a>
+                <a href="/admin/seo.html" class="admin-nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>SEO Settings</span>
+                </a>
+                <a href="/admin/settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <div class="admin-nav-divider"></div>
+                <a href="/dashboard/index.html" class="admin-nav-item">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Site</span>
+                </a>
+                <button id="adminLogoutBtn" class="admin-nav-item w-full text-left text-red-400">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+        
+        <!-- Admin Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>Child Panels Management</h1>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage reseller child panels and sub-accounts</p>
+                </div>
+                <div class="admin-header-actions">
+                    <button id="adminDarkModeToggle" class="admin-dark-mode-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="admin-user-info">
+                        <div class="admin-avatar">A</div>
+                        <span class="hidden md:inline">Admin</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Summary -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">Total Panels</div>
+                    <div class="text-2xl font-bold" id="totalPanels">0</div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">Active</div>
+                    <div class="text-2xl font-bold text-green-600" id="activePanels">0</div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">Suspended</div>
+                    <div class="text-2xl font-bold text-red-600" id="suspendedPanels">0</div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">Total Balance</div>
+                    <div class="text-2xl font-bold text-primary" id="totalBalance">৳0</div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 stats-card">
+                    <div class="text-sm text-gray-500">Total Orders</div>
+                    <div class="text-2xl font-bold" id="totalOrders">0</div>
+                </div>
+            </div>
+            
+            <!-- Search and Filters -->
+            <div class="flex justify-between items-center flex-wrap gap-4 mb-6">
+                <input type="text" id="searchPanels" placeholder="🔍 Search by Panel Name, Parent User, or API Key..." class="search-input">
+                <div class="filters flex gap-2">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="active">Active</button>
+                    <button class="filter-btn" data-filter="suspended">Suspended</button>
+                </div>
+            </div>
+            
+            <!-- Child Panels Table -->
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Panel Name</th>
+                            <th>Parent User</th>
+                            <th>Balance</th>
+                            <th>API Key</th>
+                            <th>Access Level</th>
+                            <th>Orders</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="panelsTableBody">
+                        <tr><td colspan="9" class="text-center py-12"><div class="spinner mx-auto"></div><p class="text-gray-500 mt-2">Loading child panels...</p></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div id="pagination" class="flex justify-center gap-2 mt-6 flex-wrap"></div>
+        </main>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    <button id="adminMobileMenuBtn" class="admin-mobile-menu-btn">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+    
+    <!-- Edit Panel Modal -->
+    <div id="editPanelModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Edit Child Panel</h3>
+                <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <form id="editPanelForm">
+                <input type="hidden" id="editPanelId">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Panel Name</label>
+                    <input type="text" id="editPanelName" class="form-input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Status</label>
+                    <select id="editPanelStatus" class="form-select">
+                        <option value="active">Active</option>
+                        <option value="suspended">Suspended</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">API Access Level</label>
+                    <select id="editApiAccess" class="form-select">
+                        <option value="full">Full API Access</option>
+                        <option value="limited">Limited (Orders Only)</option>
+                        <option value="none">No API Access</option>
+                    </select>
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeEditModal()" class="flex-1 border border-gray-300 py-2 rounded-lg hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="flex-1 btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Adjust Balance Modal -->
+    <div id="balanceModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Adjust Balance</h3>
+                <button onclick="closeBalanceModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <form id="balanceForm">
+                <input type="hidden" id="balancePanelId">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Panel Name</label>
+                    <input type="text" id="balancePanelName" class="form-input bg-gray-100 dark:bg-gray-700" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Current Balance</label>
+                    <input type="text" id="currentPanelBalance" class="form-input bg-gray-100 dark:bg-gray-700" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Amount (BDT)</label>
+                    <input type="number" id="adjustAmount" class="form-input" step="0.01" required>
+                    <p class="text-xs text-gray-400 mt-1">Positive to add, negative to deduct</p>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Reason / Note</label>
+                    <textarea id="balanceNote" rows="2" class="form-input" placeholder="Reason for balance adjustment..."></textarea>
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeBalanceModal()" class="flex-1 border border-gray-300 py-2 rounded-lg hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="flex-1 btn-primary">Update Balance</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- View API Key Modal -->
+    <div id="apiKeyModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">API Key Details</h3>
+                <button onclick="closeApiKeyModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div id="apiKeyContent"></div>
+            <div class="mt-4">
+                <button onclick="copyApiKey()" class="btn-outline w-full"><i class="fas fa-copy mr-2"></i> Copy API Key</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDypaa-pHjEc4rrXHrtj8i_8vgo_5XMY9g",
+            authDomain: "boostbangla-629a1.firebaseapp.com",
+            projectId: "boostbangla-629a1",
+            storageBucket: "boostbangla-629a1.firebasestorage.app",
+            messagingSenderId: "384867462668",
+            appId: "1:384867462668:web:bbc79c6a7ead66b439c829"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        let allPanels = [];
+        let currentFilter = 'all';
+        let currentSearch = '';
+        let currentPage = 1;
+        let currentApiKey = '';
+        const ITEMS_PER_PAGE = 20;
+        
+        // ============================================
+        // CHECK ADMIN AUTHENTICATION
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (!userDoc.exists || !userDoc.data().isAdmin) {
+                window.location.href = '/dashboard/index.html';
+                return;
+            }
+            
+            await loadChildPanels();
+        });
+        
+        // ============================================
+        // LOAD CHILD PANELS
+        // ============================================
+        async function loadChildPanels() {
+            const tbody = document.getElementById('panelsTableBody');
+            tbody.innerHTML = '<table><td colspan="9" class="text-center py-12"><div class="spinner mx-auto"></div><p class="text-gray-500 mt-2">Loading child panels...</p></td></tr>';
+            
+            try {
+                const panelsSnapshot = await db.collection('childPanels').orderBy('createdAt', 'desc').get();
+                
+                allPanels = [];
+                let totalBalance = 0;
+                let totalOrders = 0;
+                let activeCount = 0;
+                let suspendedCount = 0;
+                
+                for (const doc of panelsSnapshot.docs) {
+                    const panel = doc.data();
+                    
+                    // Get parent user info
+                    let parentUsername = 'Unknown';
+                    if (panel.parentId) {
+                        const parentDoc = await db.collection('users').doc(panel.parentId).get();
+                        if (parentDoc.exists) {
+                            parentUsername = parentDoc.data().username || parentDoc.data().email?.split('@')[0] || 'Unknown';
+                        }
+                    }
+                    
+                    const panelData = {
+                        id: doc.id,
+                        name: panel.name || 'Unnamed',
+                        parentId: panel.parentId,
+                        parentUsername: parentUsername,
+                        balance: panel.balance || 0,
+                        apiKey: panel.apiKey || 'N/A',
+                        apiAccess: panel.apiAccess || 'none',
+                        status: panel.status || 'active',
+                        totalOrders: panel.totalOrders || 0,
+                        createdAt: panel.createdAt,
+                        lastActive: panel.lastActive
+                    };
+                    
+                    allPanels.push(panelData);
+                    totalBalance += panelData.balance;
+                    totalOrders += panelData.totalOrders;
+                    if (panelData.status === 'active') activeCount++;
+                    else suspendedCount++;
+                }
+                
+                document.getElementById('totalPanels').innerText = allPanels.length;
+                document.getElementById('activePanels').innerText = activeCount;
+                document.getElementById('suspendedPanels').innerText = suspendedCount;
+                document.getElementById('totalBalance').innerHTML = `৳${totalBalance.toLocaleString()}`;
+                document.getElementById('totalOrders').innerText = totalOrders;
+                
+                displayPanels();
+                
+            } catch (error) {
+                console.error('Error loading child panels:', error);
+                tbody.innerHTML = '<tr><td colspan="9" class="text-center py-12 text-red-500">❌ Failed to load child panels</td></tr>';
+            }
+        }
+        
+        // ============================================
+        // DISPLAY PANELS
+        // ============================================
+        function displayPanels() {
+            let filtered = [...allPanels];
+            
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(p => p.status === currentFilter);
+            }
+            
+            if (currentSearch) {
+                const search = currentSearch.toLowerCase();
+                filtered = filtered.filter(p => 
+                    p.name.toLowerCase().includes(search) || 
+                    p.parentUsername.toLowerCase().includes(search) ||
+                    (p.apiKey !== 'N/A' && p.apiKey.toLowerCase().includes(search))
+                );
+            }
+            
+            const start = (currentPage - 1) * ITEMS_PER_PAGE;
+            const pagePanels = filtered.slice(start, start + ITEMS_PER_PAGE);
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            
+            const tbody = document.getElementById('panelsTableBody');
+            
+            if (pagePanels.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="text-center py-12 text-gray-500">No child panels found</td></tr>';
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+            
+            tbody.innerHTML = pagePanels.map(panel => `
+                <tr class="panel-row">
+                    <td class="font-medium">${escapeHtml(panel.name)}</td>
+                    <td>
+                        <a href="/admin/user-detail.html?id=${panel.parentId}" class="text-primary hover:underline">${escapeHtml(panel.parentUsername)}</a>
+                    </td>
+                    <td class="balance-cell">৳${panel.balance.toLocaleString()}</td>
+                    <td>
+                        <span class="api-key-display" title="${panel.apiKey}">${panel.apiKey.substring(0, 16)}...</span>
+                        <button onclick="viewApiKey('${escapeHtml(panel.apiKey)}', '${escapeHtml(panel.name)}')" class="text-primary text-xs ml-1"><i class="fas fa-eye"></i></button>
+                    </td>
+                    <td><span class="access-badge access-${panel.apiAccess}">${getAccessLabel(panel.apiAccess)}</span></td>
+                    <td>${panel.totalOrders}</td>
+                    <td><span class="status-${panel.status}">${panel.status === 'active' ? 'Active' : 'Suspended'}</span></td>
+                    <td class="text-gray-500 text-sm">${formatDate(panel.createdAt)}</td>
+                    <td class="action-buttons">
+                        <button onclick="editPanel('${panel.id}', '${escapeHtml(panel.name)}', '${panel.status}', '${panel.apiAccess}')" class="action-edit text-xs px-3 py-2 rounded"><i class="fas fa-edit mr-1"></i>Edit</button>
+                        <button onclick="openBalanceModal('${panel.id}', '${escapeHtml(panel.name)}', ${panel.balance})" class="action-view text-xs px-3 py-2 rounded"><i class="fas fa-money-bill-wave mr-1"></i>Balance</button>
+                        ${panel.status === 'active' ? 
+                            `<button onclick="suspendPanel('${panel.id}')" class="action-delete text-xs px-3 py-2 rounded"><i class="fas fa-ban mr-1"></i>Suspend</button>` :
+                            `<button onclick="activatePanel('${panel.id}')" class="action-edit text-xs px-3 py-2 rounded"><i class="fas fa-check-circle mr-1"></i>Activate</button>`
+                        }
+                        <button onclick="deletePanel('${panel.id}')" class="action-delete text-xs px-3 py-2 rounded"><i class="fas fa-trash-alt mr-1"></i>Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+            
+            updatePagination(totalPages);
+        }
+        
+        function updatePagination(totalPages) {
+            const paginationDiv = document.getElementById('pagination');
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+            
+            let html = `<button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled style="opacity:0.5"' : ''}>◀ Prev</button>`;
+            for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+                html += `<button class="pagination-btn ${currentPage === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            if (totalPages > 5) html += `<span class="px-2">...</span><button class="pagination-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+            html += `<button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled style="opacity:0.5"' : ''}>Next ▶</button>`;
+            paginationDiv.innerHTML = html;
+        }
+        
+        window.goToPage = function(page) {
+            let filtered = [...allPanels];
+            if (currentFilter !== 'all') filtered = filtered.filter(p => p.status === currentFilter);
+            if (currentSearch) filtered = filtered.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()) || p.parentUsername.toLowerCase().includes(currentSearch.toLowerCase()));
+            
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            displayPanels();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        
+        // ============================================
+        // FILTER AND SEARCH HANDLERS
+        // ============================================
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                currentPage = 1;
+                displayPanels();
+            });
+        });
+        
+        document.getElementById('searchPanels').addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            currentPage = 1;
+            displayPanels();
+        });
+        
+        // ============================================
+        // HELPER FUNCTIONS
+        // ============================================
+        function getAccessLabel(access) {
+            if (access === 'full') return '🔓 Full API';
+            if (access === 'limited') return '🔒 Limited';
+            return '🚫 No API';
+        }
+        
+        function formatDate(timestamp) {
+            if (!timestamp) return 'N/A';
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            return date.toLocaleDateString();
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function showToast(message, type) {
+            alert(message);
+        }
+        
+        // ============================================
+        // EDIT PANEL
+        // ============================================
+        window.editPanel = (panelId, panelName, status, apiAccess) => {
+            document.getElementById('editPanelId').value = panelId;
+            document.getElementById('editPanelName').value = panelName;
+            document.getElementById('editPanelStatus').value = status;
+            document.getElementById('editApiAccess').value = apiAccess;
+            document.getElementById('editPanelModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        window.closeEditModal = () => {
+            document.getElementById('editPanelModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        
+        document.getElementById('editPanelForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const panelId = document.getElementById('editPanelId').value;
+            const name = document.getElementById('editPanelName').value.trim();
+            const status = document.getElementById('editPanelStatus').value;
+            const apiAccess = document.getElementById('editApiAccess').value;
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span> Saving...';
+            
+            try {
+                await db.collection('childPanels').doc(panelId).update({
+                    name: name,
+                    status: status,
+                    apiAccess: apiAccess,
+                    updatedAt: new Date()
+                });
+                
+                showToast('Panel updated successfully!', 'success');
+                closeEditModal();
+                await loadChildPanels();
+                
+            } catch (error) {
+                console.error('Error updating panel:', error);
+                showToast('Failed to update panel', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+        
+        // ============================================
+        // BALANCE ADJUSTMENT
+        // ============================================
+        window.openBalanceModal = (panelId, panelName, currentBalance) => {
+            document.getElementById('balancePanelId').value = panelId;
+            document.getElementById('balancePanelName').value = panelName;
+            document.getElementById('currentPanelBalance').value = `৳${currentBalance.toLocaleString()}`;
+            document.getElementById('adjustAmount').value = '';
+            document.getElementById('balanceNote').value = '';
+            document.getElementById('balanceModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        window.closeBalanceModal = () => {
+            document.getElementById('balanceModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        
+        document.getElementById('balanceForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const panelId = document.getElementById('balancePanelId').value;
+            const amount = parseFloat(document.getElementById('adjustAmount').value);
+            const note = document.getElementById('balanceNote').value;
+            
+            if (isNaN(amount) || amount === 0) {
+                showToast('Please enter a valid amount', 'error');
+                return;
+            }
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span> Updating...';
+            
+            try {
+                const panelRef = db.collection('childPanels').doc(panelId);
+                const panelDoc = await panelRef.get();
+                const currentBalance = panelDoc.data()?.balance || 0;
+                
+                await panelRef.update({
+                    balance: currentBalance + amount,
+                    updatedAt: new Date()
+                });
+                
+                // Log the adjustment
+                await db.collection('adminActions').add({
+                    type: 'balance_adjustment',
+                    targetType: 'child_panel',
+                    targetId: panelId,
+                    amount: amount,
+                    note: note,
+                    adminId: auth.currentUser.uid,
+                    adminEmail: auth.currentUser.email,
+                    createdAt: new Date()
+                });
+                
+                showToast(`Balance ${amount >= 0 ? 'added' : 'deducted'} successfully!`, 'success');
+                closeBalanceModal();
+                await loadChildPanels();
+                
+            } catch (error) {
+                console.error('Error adjusting balance:', error);
+                showToast('Failed to adjust balance', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+        
+        // ============================================
+        // VIEW API KEY
+        // ============================================
+        window.viewApiKey = (apiKey, panelName) => {
+            currentApiKey = apiKey;
+            const content = document.getElementById('apiKeyContent');
+            content.innerHTML = `
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Panel Name</label>
+                    <input type="text" class="form-input bg-gray-100 dark:bg-gray-700" value="${escapeHtml(panelName)}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">API Key</label>
+                    <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg font-mono text-sm break-all">${escapeHtml(apiKey)}</div>
+                </div>
+                <div class="text-sm text-gray-500">
+                    <i class="fas fa-info-circle mr-1"></i> Keep this key secure. Share only with the panel owner.
+                </div>
+            `;
+            document.getElementById('apiKeyModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        
+        window.closeApiKeyModal = () => {
+            document.getElementById('apiKeyModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        
+        window.copyApiKey = () => {
+            navigator.clipboard.writeText(currentApiKey);
+            showToast('API key copied to clipboard!', 'success');
+        };
+        
+        // ============================================
+        // SUSPEND / ACTIVATE PANEL
+        // ============================================
+        window.suspendPanel = async (panelId) => {
+            const confirmed = confirm('Are you sure you want to suspend this child panel? The panel will not be able to place orders.');
+            if (!confirmed) return;
+            
+            try {
+                await db.collection('childPanels').doc(panelId).update({
+                    status: 'suspended',
+                    suspendedAt: new Date()
+                });
+                showToast('Panel suspended successfully', 'success');
+                await loadChildPanels();
+            } catch (error) {
+                console.error('Error suspending panel:', error);
+                showToast('Failed to suspend panel', 'error');
+            }
+        };
+        
+        window.activatePanel = async (panelId) => {
+            const confirmed = confirm('Are you sure you want to activate this child panel?');
+            if (!confirmed) return;
+            
+            try {
+                await db.collection('childPanels').doc(panelId).update({
+                    status: 'active',
+                    activatedAt: new Date()
+                });
+                showToast('Panel activated successfully', 'success');
+                await loadChildPanels();
+            } catch (error) {
+                console.error('Error activating panel:', error);
+                showToast('Failed to activate panel', 'error');
+            }
+        };
+        
+        // ============================================
+        // DELETE PANEL
+        // ============================================
+        window.deletePanel = async (panelId) => {
+            const confirmed = confirm('⚠️ WARNING: This will permanently delete this child panel and all its data. This action cannot be undone. Are you sure?');
+            if (!confirmed) return;
+            
+            try {
+                await db.collection('childPanels').doc(panelId).delete();
+                showToast('Panel deleted successfully', 'success');
+                await loadChildPanels();
+            } catch (error) {
+                console.error('Error deleting panel:', error);
+                showToast('Failed to delete panel', 'error');
+            }
+        };
+        
+        // ============================================
+        // DARK MODE AND MOBILE TOGGLE
+        // ============================================
+        const adminDarkToggle = document.getElementById('adminDarkModeToggle');
+        if (adminDarkToggle) {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) document.body.classList.add('dark-mode');
+            adminDarkToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+        }
+        
+        const adminMobileBtn = document.getElementById('adminMobileMenuBtn');
+        const adminSidebar = document.querySelector('.admin-sidebar');
+        if (adminMobileBtn && adminSidebar) {
+            adminMobileBtn.addEventListener('click', () => {
+                adminSidebar.classList.toggle('open');
+            });
+        }
+        
+        document.getElementById('adminLogoutBtn')?.addEventListener('click', async () => {
+            await auth.signOut();
+            window.location.href = '/login.html';
+        });
+        
+        // Close modals on outside click
+        const editModal = document.getElementById('editPanelModal');
+        const balanceModal = document.getElementById('balanceModal');
+        const apiKeyModal = document.getElementById('apiKeyModal');
+        
+        if (editModal) editModal.addEventListener('click', (e) => { if (e.target === editModal) closeEditModal(); });
+        if (balanceModal) balanceModal.addEventListener('click', (e) => { if (e.target === balanceModal) closeBalanceModal(); });
+        if (apiKeyModal) apiKeyModal.addEventListener('click', (e) => { if (e.target === apiKeyModal) closeApiKeyModal(); });
+    </script>
+    <!-- Universal Notifications Helper -->
+<script src="/js/core/notifications-helper.js"></script>
+</body>
+</html>

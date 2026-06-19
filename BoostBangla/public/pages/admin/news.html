@@ -1,0 +1,8 @@
+// Firestore structure for news
+db.collection('news').add({
+    message: "🎉 New service added! Get 20% off",
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    expiresAt: firebase.firestore.Timestamp.fromDate(new Date(Date.now() + 7*24*60*60*1000)),
+    isActive: true,
+    priority: 'normal' // 'high', 'normal', 'low'
+});
