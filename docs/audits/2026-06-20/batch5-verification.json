@@ -1,0 +1,26 @@
+{
+  "batch": "Batch 5 Public SEO and Link Cleanup",
+  "final_internal_references_scanned": 1325,
+  "final_remaining_unresolved_reference_count": 0,
+  "root_public_compatibility_pages_added": [
+    "services.html",
+    "pricing.html",
+    "about.html",
+    "faq.html",
+    "contact.html",
+    "blog.html",
+    "refund-policy.html",
+    "login.html",
+    "signup.html",
+    "forgot-password.html",
+    "privacy.html",
+    "terms.html",
+    "sitemap.html"
+  ],
+  "seo_files_refreshed": [
+    "sitemap.xml",
+    "robots.txt",
+    "llms.txt"
+  ],
+  "single_zip_structure_preserved": true
+}
