@@ -1,0 +1,17 @@
+{
+  "batch": "Batch 7 Performance and UI Stability",
+  "html_pages_patched": 93,
+  "duplicate_report_before_pages": 1,
+  "duplicate_report_after_pages": 0,
+  "internal_references_scanned": 1507,
+  "remaining_unresolved_reference_count": 0,
+  "created_or_updated_files": [
+    "public/assets/css/performance-fixes.css",
+    "public/assets/js/performance.js",
+    "docs/performance/BATCH_7_PERFORMANCE_NOTES.md",
+    "docs/audits/2026-06-20/BATCH_7_PERFORMANCE_UI_STABILITY.md",
+    "docs/audits/2026-06-20/batch7-verification.json",
+    "docs/audits/2026-06-20/batch7-duplicate-report.json"
+  ],
+  "single_zip_structure_preserved": true
+}
