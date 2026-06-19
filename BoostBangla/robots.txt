@@ -1,0 +1,98 @@
+# robots.txt for BoostBangla
+# https://boostbangla.com/robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /php/
+Disallow: /assets/data/
+Disallow: /components/
+Disallow: /pages/admin/
+Disallow: /pages/dashboard/
+Disallow: /api/
+Disallow: /logout
+Disallow: /login?*
+Disallow: /signup?*
+Disallow: /forgot-password?*
+Disallow: /*.php$
+Disallow: /assets/js/modules/
+
+# Sitemap location
+Sitemap: https://boostbangla.com/sitemap.xml
+
+# Crawl delay for heavy scrapers
+Crawl-delay: 5
+
+# Host directive
+Host: https://boostbangla.com
+
+# Clean-param parameters
+Clean-param: ref&utm_source&utm_medium&utm_campaign&utm_term&utm_content
+
+# Allow major search engines to crawl everything except sensitive areas
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /php/
+Disallow: /logout
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /php/
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+
+User-agent: Yandex
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /php/
+
+# Block known bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: rogerbot
+Disallow: /
+
+User-agent: Exabot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# Block email harvesters
+User-agent: EmailCollector
+Disallow: /
+
+User-agent: EmailSiphon
+Disallow: /
+
+User-agent: EmailWolf
+Disallow: /
+
+# Block offline downloaders
+User-agent: Offline Explorer
+Disallow: /
+
+User-agent: HTTrack
+Disallow: /

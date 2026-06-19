@@ -1,0 +1,35 @@
+{
+    "name": "boostbangla",
+    "version": "3.0.0",
+    "description": "BoostBangla SMM Panel - Complete redesign following design.md v3.0",
+    "author": "BoostBangla Team",
+    "license": "MIT",
+    "scripts": {
+        "build": "node compile.js",
+        "build:prod": "NODE_ENV=production node compile.js",
+        "dev": "node compile.js --watch",
+        "clean": "rm -rf ../dist",
+        "preview": "npx serve ../dist",
+        "tailwind:build": "npx tailwindcss -i ../css/tailwind.css -o ../dist/css/main.css --minify",
+        "tailwind:watch": "npx tailwindcss -i ../css/tailwind.css -o ../dist/css/main.css --watch"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.16",
+        "cssnano": "^6.0.1",
+        "postcss": "^8.4.32",
+        "tailwindcss": "^3.3.6",
+        "terser": "^5.26.0"
+    },
+    "engines": {
+        "node": ">=16.0.0",
+        "npm": ">=8.0.0"
+    },
+    "keywords": [
+        "smm",
+        "smm-panel",
+        "boostbangla",
+        "social-media-marketing",
+        "tailwindcss",
+        "design-system"
+    ]
+}
