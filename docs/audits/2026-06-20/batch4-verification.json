@@ -1,0 +1,15 @@
+{
+  "batch": "Batch 4 Hybrid Auth Bridge",
+  "created_files": [
+    "public/assets/js/auth-bridge.js",
+    "public/assets/js/auth-header-sync.js",
+    "public/assets/js/supabase-auth-pages.js",
+    "public/assets/js/auth-guard.js"
+  ],
+  "public_pages_patched": 21,
+  "admin_pages_patched": 18,
+  "dashboard_pages_patched": 25,
+  "firebase_preserved": true,
+  "supabase_first_with_firebase_fallback": true,
+  "single_zip_structure_preserved": true
+}
