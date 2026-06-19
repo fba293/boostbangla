@@ -1,0 +1,15 @@
+BoostBangla final manual-only status
+
+Project package: finished
+Supabase migration attempt: attempted again
+Supabase result: permission denied from connector
+GitHub status sync: done
+
+Remaining manual-only steps:
+1. Upload extracted ZIP contents to cPanel public_html.
+2. Run Supabase SQL migration manually from Supabase SQL Editor.
+3. Add real provider, payment and admin secrets in server environment.
+4. Test live login, signup, admin panel and dashboard.
+
+Final ZIP in ChatGPT:
+boostbangla_final_finished_manual_only_20_june_2026.zip
