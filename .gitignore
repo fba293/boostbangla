@@ -1,0 +1,24 @@
+# OS junk
+.DS_Store
+__MACOSX/
+._*
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Logs and runtime cache
+public/php/logs/*
+!public/php/logs/.gitkeep
+!public/php/logs/.htaccess
+public/cache/*
+!public/cache/.gitkeep
+!public/cache/.htaccess
+*.log
+
+# Node/build dependencies
+node_modules/
+dist/
+.tmp/
+.cache/
