@@ -1,0 +1,23 @@
+{
+  "batch": "Batch 2 Global Shell Fix",
+  "admin_missing_shell_css": [],
+  "admin_missing_shell_js": [],
+  "public_missing_header": [],
+  "public_missing_footer": [],
+  "public_missing_global_header_js": [],
+  "public_missing_global_footer_js": [],
+  "dashboard_missing_shell_js": [],
+  "created_files": [
+    "public/assets/js/global-header.js",
+    "public/assets/js/global-footer.js",
+    "public/assets/js/admin-shell.js",
+    "public/assets/css/admin-shell.css",
+    "public/assets/js/dashboard-shell.js",
+    "public/assets/css/dashboard-shell.css"
+  ],
+  "empty_public_files_fixed": [
+    "public/pages/public/index.html",
+    "public/pages/public/sitemap.html"
+  ],
+  "single_zip_structure_preserved": true
+}
