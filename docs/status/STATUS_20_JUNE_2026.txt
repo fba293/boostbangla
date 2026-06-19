@@ -1,0 +1,12 @@
+BoostBangla production cleanup status
+
+Batches completed: 8
+Final package: release candidate
+Unresolved internal references: 0
+Duplicate asset pages: 0
+Missing required files: 0
+
+Manual tasks remaining:
+- Upload final ZIP contents to cPanel public_html.
+- Run Supabase migration from the ZIP if switching fully to Supabase.
+- Set server environment values for provider keys and admin secret.
