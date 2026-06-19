@@ -1,0 +1,1218 @@
+/* ============================================
+   BoostBangla - Mobile-First Responsive Styles v3.0
+   Flutter-like mobile app experience
+   Optimized for all mobile devices
+   Follows design.md breakpoints
+   Version: 3.0 (Complete)
+   ============================================ */
+
+/* ============================================
+   1. DESIGN.MD BREAKPOINTS
+   xs: 475px, sm: 640px, md: 768px, lg: 1024px, xl: 1280px, 2xl: 1536px
+   ============================================ */
+
+/* ============================================
+   2. EXTRA SMALL DEVICES (xs: up to 475px)
+   ============================================ */
+@media (max-width: 475px) {
+    /* Container */
+    .container {
+        padding: 0 12px;
+    }
+    
+    /* Typography */
+    h1 {
+        font-size: 28px;
+        line-height: 1.3;
+    }
+    
+    h2 {
+        font-size: 24px;
+        line-height: 1.3;
+    }
+    
+    h3 {
+        font-size: 20px;
+        line-height: 1.3;
+    }
+    
+    h4 {
+        font-size: 18px;
+    }
+    
+    p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    
+    /* Buttons - Full width on extra small */
+    .btn-primary,
+    .btn-outline,
+    .btn-secondary,
+    .btn-danger {
+        padding: 12px 20px;
+        font-size: 14px;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+    
+    .btn-sm {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+    
+    .btn-lg {
+        padding: 14px 24px;
+        font-size: 16px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    /* Cards */
+    .card, .glass-card {
+        padding: 16px;
+        margin-bottom: 12px;
+        border-radius: 20px;
+    }
+    
+    /* Stats Grid - 1 column */
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .stat-card {
+        padding: 16px;
+    }
+    
+    .stat-number {
+        font-size: 28px;
+    }
+    
+    /* Forms */
+    .form-group input,
+    .form-group select,
+    .form-group textarea,
+    .form-input {
+        padding: 10px 14px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+    
+    .form-label {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+    
+    /* Modal */
+    .modal-content {
+        padding: 20px;
+        width: 95%;
+        margin: 10px;
+        border-radius: 20px;
+    }
+    
+    /* Tables - Horizontal scroll */
+    .orders-table,
+    .services-table,
+    .commission-table,
+    .data-table {
+        min-width: 500px;
+    }
+    
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Grid layouts */
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    /* Dashboard */
+    .dashboard-main {
+        padding: 12px;
+    }
+    
+    .quick-stats {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    /* Auth Pages */
+    .auth-card {
+        padding: 20px;
+        margin: 12px;
+        border-radius: 20px;
+    }
+    
+    /* Hero Section */
+    .hero {
+        padding: 40px 0;
+        text-align: center;
+    }
+    
+    .hero h1 {
+        font-size: 28px;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    /* Pagination */
+    .pagination-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+        min-width: 32px;
+    }
+    
+    /* Filter Buttons */
+    .filter-btn,
+    .category-tab,
+    .cat-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+    
+    /* Alerts */
+    .alert {
+        padding: 10px 12px;
+        font-size: 12px;
+        border-radius: 12px;
+    }
+    
+    /* Tabs */
+    .tabs-header {
+        gap: 4px;
+    }
+    
+    .tab-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}
+
+/* ============================================
+   3. SMALL DEVICES (sm: up to 640px)
+   ============================================ */
+@media (max-width: 640px) {
+    /* Container */
+    .container {
+        padding: 0 16px;
+    }
+    
+    /* Typography */
+    h1 {
+        font-size: 28px;
+    }
+    
+    h2 {
+        font-size: 22px;
+    }
+    
+    h3 {
+        font-size: 18px;
+    }
+    
+    /* Buttons */
+    .btn-primary,
+    .btn-outline,
+    .btn-secondary,
+    .btn-danger {
+        padding: 10px 20px;
+        font-size: 14px;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+    
+    .btn-sm {
+        padding: 6px 16px;
+        font-size: 12px;
+    }
+    
+    .btn-lg {
+        padding: 12px 24px;
+        font-size: 16px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    /* Cards */
+    .card {
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px);
+    }
+    
+    .glass-card {
+        padding: 16px;
+        border-radius: 20px;
+    }
+    
+    /* Forms */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px 14px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .form-label {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+    
+    /* Tables - Convert to cards on mobile (design.md) */
+    .orders-table,
+    .services-table,
+    .commission-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .orders-table th,
+    .orders-table td,
+    .services-table th,
+    .services-table td {
+        padding: 10px 8px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+    
+    /* Card-based Table View */
+    .table-card-view {
+        display: block;
+    }
+    
+    .table-card-view thead {
+        display: none;
+    }
+    
+    .table-card-view tbody tr {
+        display: block;
+        margin-bottom: 16px;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 16px;
+        background: white;
+    }
+    
+    body.dark-mode .table-card-view tbody tr {
+        background: #1e293b;
+        border-color: #334155;
+    }
+    
+    .table-card-view tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .table-card-view tbody td:last-child {
+        border-bottom: none;
+    }
+    
+    .table-card-view tbody td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #6b7280;
+        margin-right: 12px;
+    }
+    
+    body.dark-mode .table-card-view tbody td:before {
+        color: #94a3b8;
+    }
+    
+    body.dark-mode .table-card-view tbody td {
+        border-bottom-color: #334155;
+    }
+    
+    /* Stats Grid - 2 columns on small */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .stat-card {
+        padding: 16px;
+    }
+    
+    .stat-number {
+        font-size: 24px;
+    }
+    
+    /* Services Grid - 1 column */
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .service-card {
+        padding: 16px;
+    }
+    
+    .service-name {
+        font-size: 14px;
+    }
+    
+    .service-price {
+        font-size: 20px;
+    }
+    
+    /* Features Grid */
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    /* Steps (How It Works) */
+    .steps {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .step-number {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    /* Dashboard */
+    .dashboard-main {
+        padding: 12px;
+    }
+    
+    .quick-stats {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    /* Modal */
+    .modal-content {
+        padding: 20px;
+        width: 95%;
+        margin: 16px;
+        border-radius: 24px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: auto;
+        max-height: 85vh;
+        animation: modalSlideUp 0.3s ease-out;
+    }
+    
+    @keyframes modalSlideUp {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+    
+    /* Auth Pages */
+    .auth-card {
+        padding: 24px;
+        margin: 16px;
+    }
+    
+    /* API Docs */
+    .api-key-box {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .api-key-box code {
+        word-break: break-all;
+        font-size: 12px;
+    }
+    
+    .code-block {
+        font-size: 11px;
+        padding: 12px;
+    }
+    
+    .copy-btn {
+        position: static;
+        margin-top: 8px;
+        display: inline-block;
+    }
+    
+    /* Tickets */
+    .ticket-card {
+        padding: 16px;
+    }
+    
+    .reply-message {
+        padding: 12px;
+    }
+    
+    /* Giveaway */
+    .prize-badge {
+        font-size: 10px;
+        padding: 4px 10px;
+        top: 12px;
+        right: 12px;
+    }
+    
+    .countdown-number {
+        padding: 6px 8px;
+        font-size: 18px;
+        min-width: 50px;
+    }
+    
+    /* Child Panel */
+    .panel-card {
+        padding: 16px;
+    }
+    
+    .panel-card .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .footer {
+        padding: 40px 0 20px;
+    }
+    
+    /* Pagination */
+    .pagination-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    /* Filter Buttons */
+    .filter-btn,
+    .category-tab,
+    .cat-btn {
+        padding: 6px 14px;
+        font-size: 12px;
+    }
+    
+    /* Breadcrumbs */
+    .breadcrumb {
+        font-size: 12px;
+        flex-wrap: wrap;
+    }
+    
+    /* Alerts */
+    .alert {
+        padding: 12px;
+        font-size: 13px;
+    }
+    
+    /* Empty State */
+    .empty-state {
+        padding: 40px 20px;
+    }
+    
+    .empty-state-icon {
+        font-size: 48px;
+    }
+    
+    .empty-state-title {
+        font-size: 18px;
+    }
+    
+    .empty-state-message {
+        font-size: 13px;
+    }
+}
+
+/* ============================================
+   4. MEDIUM DEVICES (md: up to 768px)
+   ============================================ */
+@media (max-width: 768px) {
+    /* Header */
+    .header .container {
+        height: 60px;
+    }
+    
+    .logo {
+        font-size: 20px;
+    }
+    
+    /* Mobile menu */
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .desktop-nav {
+        display: none;
+    }
+    
+    .desktop-nav.show {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+    }
+    
+    .desktop-nav.show a {
+        padding: 12px 0;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .desktop-nav.show a:last-child {
+        border-bottom: none;
+    }
+    
+    body.dark-mode .desktop-nav.show {
+        background: #1e293b;
+    }
+    
+    body.dark-mode .desktop-nav.show a {
+        border-bottom-color: #334155;
+    }
+    
+    /* Header actions */
+    .header-actions {
+        gap: 12px;
+    }
+    
+    .header-actions .btn-outline,
+    .header-actions .btn-primary {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    /* Dashboard Sidebar */
+    .dashboard-sidebar {
+        width: 260px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+    }
+    
+    .dashboard-sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .dashboard-main {
+        margin-left: 0;
+        padding: 12px;
+    }
+    
+    /* Sidebar overlay */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 999;
+        display: none;
+        animation: overlayFadeIn 0.2s ease;
+    }
+    
+    @keyframes overlayFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    .sidebar-overlay.active {
+        display: block;
+    }
+    
+    /* Stats Grid - 2 columns on tablet */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    
+    /* Services Grid - 2 columns on tablet */
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    
+    /* Features Grid - 2 columns on tablet */
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    /* Steps - 2 columns on tablet */
+    .steps {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+    
+    /* Footer Grid - 2 columns on tablet */
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    /* Dashboard Stats - 2 columns */
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    
+    /* Form rows */
+    .form-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    /* Modal */
+    .modal-content {
+        width: 95%;
+        margin: 16px;
+        border-radius: 24px;
+    }
+}
+
+/* ============================================
+   5. MOBILE NAVIGATION & TOUCH OPTIMIZATIONS
+   ============================================ */
+@media (max-width: 768px) {
+    /* Increase touch targets (design.md: min 44x44) */
+    button,
+    a,
+    .clickable,
+    .nav-item,
+    .filter-chip,
+    .pagination-btn,
+    .close-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Prevent zoom on input focus on iOS */
+    input,
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+    
+    /* Better scrolling */
+    .overflow-auto,
+    .overflow-x-auto,
+    .overflow-y-auto {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Disable hover effects on touch devices */
+    .card:hover,
+    .service-card:hover,
+    .btn:hover,
+    .stat-card:hover {
+        transform: none;
+    }
+    
+    /* Improve tap highlight color */
+    a,
+    button,
+    .clickable {
+        -webkit-tap-highlight-color: rgba(255, 107, 0, 0.2);
+    }
+    
+    /* Better scrolling for lists */
+    .notification-list,
+    .ticket-list,
+    .order-list {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Remove 300ms tap delay */
+    a,
+    button,
+    .clickable {
+        touch-action: manipulation;
+    }
+}
+
+/* ============================================
+   6. LARGE TABLETS (769px - 1024px)
+   ============================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        padding: 0 24px;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+    
+    .steps {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    
+    .footer-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+/* ============================================
+   7. MOBILE LANDSCAPE MODE
+   ============================================ */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        padding: 30px 0;
+    }
+    
+    .hero h1 {
+        font-size: 24px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+    
+    .stat-card {
+        padding: 10px;
+    }
+    
+    .stat-number {
+        font-size: 18px;
+    }
+    
+    .modal-content {
+        max-height: 90vh;
+    }
+    
+    .dashboard-sidebar {
+        width: 240px;
+    }
+}
+
+/* ============================================
+   8. MOBILE BOTTOM NAVIGATION (Optional)
+   ============================================ */
+@media (max-width: 640px) {
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        display: flex;
+        justify-content: space-around;
+        padding: 8px 16px;
+        border-top: 1px solid #e5e7eb;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.95);
+    }
+    
+    body.dark-mode .bottom-nav {
+        background: rgba(30, 41, 59, 0.95);
+        border-top-color: #334155;
+    }
+    
+    .bottom-nav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        color: #6b7280;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+    
+    .bottom-nav a i {
+        font-size: 20px;
+    }
+    
+    .bottom-nav a.active {
+        color: #FF6B00;
+    }
+    
+    /* Add padding for bottom nav */
+    .main-content {
+        padding-bottom: 70px;
+    }
+    
+    /* Pull to refresh indicator */
+    .pull-to-refresh {
+        text-align: center;
+        padding: 10px;
+        color: #6b7280;
+        font-size: 12px;
+    }
+    
+    /* Infinite scroll loader */
+    .infinite-scroll-loader {
+        text-align: center;
+        padding: 20px;
+    }
+}
+
+/* ============================================
+   9. NOTCH & DYNAMIC ISLAND SUPPORT
+   ============================================ */
+@supports (padding-top: env(safe-area-inset-top)) {
+    .header {
+        padding-top: env(safe-area-inset-top);
+    }
+    
+    .bottom-nav {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    
+    .mobile-menu-btn {
+        bottom: calc(20px + env(safe-area-inset-bottom));
+        left: calc(20px + env(safe-area-inset-left));
+    }
+    
+    .toast-container {
+        bottom: calc(24px + env(safe-area-inset-bottom));
+        right: calc(24px + env(safe-area-inset-right));
+    }
+    
+    .modal-content {
+        margin-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* ============================================
+   10. MOBILE SPECIFIC COMPONENTS
+   ============================================ */
+@media (max-width: 640px) {
+    /* Accordion for mobile */
+    .accordion-header {
+        padding: 14px 0;
+    }
+    
+    /* Swipeable cards */
+    .swipeable-card {
+        transition: transform 0.2s ease;
+    }
+    
+    .swipeable-card:active {
+        transform: scale(0.98);
+    }
+    
+    /* Mobile search */
+    .mobile-search {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 12px;
+        z-index: 1001;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .mobile-search.show {
+        transform: translateY(0);
+    }
+    
+    body.dark-mode .mobile-search {
+        background: #1e293b;
+    }
+    
+    /* Mobile filter drawer */
+    .filter-drawer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-radius: 24px 24px 0 0;
+        padding: 20px;
+        z-index: 1002;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    .filter-drawer.show {
+        transform: translateY(0);
+    }
+    
+    body.dark-mode .filter-drawer {
+        background: #1e293b;
+    }
+    
+    /* Loading more indicator */
+    .loading-more {
+        text-align: center;
+        padding: 20px;
+        font-size: 12px;
+        color: #6b7280;
+    }
+}
+
+/* ============================================
+   11. MOBILE SCROLLBAR OPTIMIZATIONS
+   ============================================ */
+@media (max-width: 768px) {
+    /* Hide scrollbar on mobile for cleaner look */
+    .mobile-hide-scrollbar::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
+    
+    .mobile-hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    
+    /* Slightly larger touch-friendly scrollbar on mobile */
+    .mobile-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .mobile-scrollbar::-webkit-scrollbar-thumb {
+        border-radius: 6px;
+    }
+}
+
+/* ============================================
+   12. HOVER TRIGGER SCROLLBAR (Show only on hover)
+   ============================================ */
+@media (max-width: 768px) {
+    .hover-scrollbar::-webkit-scrollbar {
+        width: 0px;
+        transition: width 0.2s ease;
+    }
+    
+    .hover-scrollbar:hover::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .hover-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .hover-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+    }
+    
+    .hover-scrollbar:hover::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #FF6B00, #CC5500);
+    }
+}
+
+/* ============================================
+   13. REDUCED MOTION PREFERENCE
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .modal-content,
+    .bottom-nav,
+    .mobile-search,
+    .filter-drawer,
+    .dashboard-sidebar {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .animate-slide-up,
+    .animate-slide-down,
+    .animate-fade-in {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* ============================================
+   14. PRINT STYLES FOR MOBILE
+   ============================================ */
+@media (max-width: 640px) and print {
+    .mobile-menu-btn,
+    .bottom-nav,
+    .sidebar-overlay,
+    .mobile-search,
+    .filter-drawer {
+        display: none !important;
+    }
+    
+    body {
+        padding: 0;
+        margin: 0;
+    }
+    
+    .container {
+        padding: 0;
+        margin: 0;
+    }
+    
+    .dashboard-sidebar {
+        display: none !important;
+    }
+    
+    .dashboard-main {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+/* ============================================
+   15. DARK MODE MOBILE OVERRIDES
+   ============================================ */
+@media (max-width: 768px) {
+    body.dark-mode .bottom-nav {
+        background: rgba(30, 41, 59, 0.95);
+        border-top-color: #334155;
+    }
+    
+    body.dark-mode .mobile-search {
+        background: #1e293b;
+    }
+    
+    body.dark-mode .filter-drawer {
+        background: #1e293b;
+    }
+    
+    body.dark-mode .table-card-view tbody tr {
+        background: #1e293b;
+        border-color: #334155;
+    }
+}
+
+/* ============================================
+   16. FLUTTER-LIKE MOBILE ANIMATIONS
+   ============================================ */
+@media (max-width: 768px) {
+    /* Page transition */
+    .page-enter {
+        animation: pageEnter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes pageEnter {
+        from {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    /* Hero animation */
+    .hero-animate {
+        animation: heroFadeIn 0.5s ease-out;
+    }
+    
+    @keyframes heroFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Card entrance */
+    .card-entrance {
+        animation: cardEntrance 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes cardEntrance {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    /* List item entrance */
+    .list-item-entrance {
+        animation: listItemFadeIn 0.2s ease-out forwards;
+        opacity: 0;
+    }
+    
+    @keyframes listItemFadeIn {
+        from {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    /* Stagger children on mobile */
+    .stagger-children-mobile > * {
+        animation: fadeInUp 0.3s ease-out forwards;
+        opacity: 0;
+    }
+    
+    .stagger-children-mobile > *:nth-child(1) { animation-delay: 0.00s; }
+    .stagger-children-mobile > *:nth-child(2) { animation-delay: 0.05s; }
+    .stagger-children-mobile > *:nth-child(3) { animation-delay: 0.10s; }
+    .stagger-children-mobile > *:nth-child(4) { animation-delay: 0.15s; }
+    .stagger-children-mobile > *:nth-child(5) { animation-delay: 0.20s; }
+    .stagger-children-mobile > *:nth-child(6) { animation-delay: 0.25s; }
+}

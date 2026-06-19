@@ -1,0 +1,949 @@
+/* ============================================
+   Custom Scrollbar CSS - Buttery Smooth & Branded v3.0
+   Cross-browser compatible, dark mode support
+   Follows design.md color palette
+   Version: 3.0 (Complete)
+   ============================================ */
+
+/* ============================================
+   1. WEBKIT SCROLLBAR (Chrome, Edge, Safari)
+   ============================================ */
+
+/* Main Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+/* Scrollbar Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+    margin: 4px;
+}
+
+/* Scrollbar Thumb */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #FF6B00, #CC5500);
+    border-radius: 10px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scrollbar Thumb Hover */
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #CC5500, #A13C0B);
+    cursor: pointer;
+    transform: scaleX(1.1);
+}
+
+/* Scrollbar Thumb Active */
+::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(135deg, #A13C0B, #8B2E00);
+}
+
+/* Scrollbar Corner (for resizable elements) */
+::-webkit-scrollbar-corner {
+    background: #f1f1f1;
+}
+
+/* ============================================
+   2. DARK MODE SCROLLBAR
+   ============================================ */
+
+body.dark-mode ::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #FF6B00, #CC5500);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #CC5500, #A13C0B);
+}
+
+body.dark-mode ::-webkit-scrollbar-corner {
+    background: #1e293b;
+}
+
+/* ============================================
+   3. THIN SCROLLBAR VARIANT
+   ============================================ */
+
+.thin-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+    border-radius: 6px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+}
+
+/* Ultra Thin Scrollbar */
+.ultra-thin-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.ultra-thin-scrollbar::-webkit-scrollbar-track {
+    border-radius: 4px;
+}
+
+.ultra-thin-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+}
+
+/* ============================================
+   4. HIDDEN SCROLLBAR (Hide but keep functionality)
+   ============================================ */
+
+.hide-scrollbar::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background: transparent;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* ============================================
+   5. CUSTOM SCROLLBAR FOR SPECIFIC ELEMENTS
+   ============================================ */
+
+/* Sidebar Scrollbar */
+.sidebar::-webkit-scrollbar,
+.dashboard-sidebar::-webkit-scrollbar,
+.admin-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track,
+.dashboard-sidebar::-webkit-scrollbar-track,
+.admin-sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    margin: 8px;
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.dashboard-sidebar::-webkit-scrollbar-thumb,
+.admin-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover,
+.dashboard-sidebar::-webkit-scrollbar-thumb:hover,
+.admin-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+body.dark-mode .sidebar::-webkit-scrollbar-track,
+body.dark-mode .dashboard-sidebar::-webkit-scrollbar-track,
+body.dark-mode .admin-sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Notifications Dropdown Scrollbar */
+.notification-list::-webkit-scrollbar,
+.notification-dropdown .notification-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.notification-list::-webkit-scrollbar-track,
+.notification-dropdown .notification-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    margin: 4px;
+    border-radius: 4px;
+}
+
+.notification-list::-webkit-scrollbar-thumb,
+.notification-dropdown .notification-list::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 4px;
+}
+
+body.dark-mode .notification-list::-webkit-scrollbar-track,
+body.dark-mode .notification-dropdown .notification-list::-webkit-scrollbar-track {
+    background: #334155;
+}
+
+/* Services Table Scrollbar */
+.service-table-wrapper::-webkit-scrollbar,
+.table-responsive::-webkit-scrollbar {
+    height: 8px;
+}
+
+.service-table-wrapper::-webkit-scrollbar-track,
+.table-responsive::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+
+.service-table-wrapper::-webkit-scrollbar-thumb,
+.table-responsive::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #FF6B00, #CC5500);
+    border-radius: 8px;
+}
+
+body.dark-mode .service-table-wrapper::-webkit-scrollbar-track,
+body.dark-mode .table-responsive::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* Admin Panel Scrollbar */
+.admin-main::-webkit-scrollbar,
+.dashboard-main::-webkit-scrollbar {
+    width: 8px;
+}
+
+.admin-main::-webkit-scrollbar-track,
+.dashboard-main::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 8px;
+}
+
+.admin-main::-webkit-scrollbar-thumb,
+.dashboard-main::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #FF6B00, #CC5500);
+    border-radius: 8px;
+}
+
+body.dark-mode .admin-main::-webkit-scrollbar-track,
+body.dark-mode .dashboard-main::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+
+/* Modal Scrollbar */
+.modal-content::-webkit-scrollbar,
+.admin-modal::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track,
+.admin-modal::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
+
+.modal-content::-webkit-scrollbar-thumb,
+.admin-modal::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 6px;
+}
+
+body.dark-mode .modal-content::-webkit-scrollbar-track,
+body.dark-mode .admin-modal::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* Textarea Scrollbar */
+textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+textarea::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 6px;
+}
+
+body.dark-mode textarea::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* Orders Table Scrollbar */
+.orders-table-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.orders-table-wrapper::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+
+.orders-table-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #FF6B00, #CC5500);
+    border-radius: 8px;
+}
+
+body.dark-mode .orders-table-wrapper::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* User Dropdown Scrollbar */
+.user-dropdown::-webkit-scrollbar {
+    width: 4px;
+}
+
+.user-dropdown::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+.user-dropdown::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+}
+
+body.dark-mode .user-dropdown::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* Chat Messages Scrollbar */
+.chat-messages::-webkit-scrollbar,
+.conversation-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track,
+.conversation-container::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb,
+.conversation-container::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 6px;
+}
+
+body.dark-mode .chat-messages::-webkit-scrollbar-track,
+body.dark-mode .conversation-container::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* Tickets List Scrollbar */
+.ticket-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ticket-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
+
+.ticket-list::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 6px;
+}
+
+body.dark-mode .ticket-list::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* Favorites List Scrollbar */
+#favoritesList::-webkit-scrollbar {
+    width: 4px;
+}
+
+#favoritesList::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+#favoritesList::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 10px;
+}
+
+/* API Docs Code Blocks Scrollbar */
+.code-block::-webkit-scrollbar,
+pre::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.code-block::-webkit-scrollbar-track,
+pre::-webkit-scrollbar-track {
+    background: #1e1e1e;
+    border-radius: 6px;
+}
+
+.code-block::-webkit-scrollbar-thumb,
+pre::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 6px;
+}
+
+/* Stats Container Horizontal Scroll */
+.stats-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.stats-container::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
+
+.stats-container::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 6px;
+}
+
+body.dark-mode .stats-container::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* Admin Table Container */
+.admin-table-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.admin-table-container::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+
+.admin-table-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #FF6B00, #CC5500);
+    border-radius: 8px;
+}
+
+body.dark-mode .admin-table-container::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* ============================================
+   6. FIREFOX SCROLLBAR
+   ============================================ */
+
+/* Main Scrollbar for Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #FF6B00 #f1f1f1;
+}
+
+/* Dark Mode Firefox */
+body.dark-mode * {
+    scrollbar-color: #FF6B00 #1e293b;
+}
+
+/* Specific elements for Firefox */
+.sidebar,
+.dashboard-sidebar,
+.admin-sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.notification-list,
+.notification-dropdown .notification-list {
+    scrollbar-width: thin;
+    scrollbar-color: #FF6B00 #f0f0f0;
+}
+
+body.dark-mode .notification-list,
+body.dark-mode .notification-dropdown .notification-list {
+    scrollbar-color: #FF6B00 #334155;
+}
+
+.service-table-wrapper,
+.table-responsive {
+    scrollbar-width: thin;
+    scrollbar-color: #FF6B00 #f0f0f0;
+}
+
+body.dark-mode .service-table-wrapper,
+body.dark-mode .table-responsive {
+    scrollbar-color: #FF6B00 #1e293b;
+}
+
+.modal-content,
+.admin-modal {
+    scrollbar-width: thin;
+    scrollbar-color: #FF6B00 #f0f0f0;
+}
+
+body.dark-mode .modal-content,
+body.dark-mode .admin-modal {
+    scrollbar-color: #FF6B00 #1e293b;
+}
+
+.chat-messages,
+.conversation-container {
+    scrollbar-width: thin;
+    scrollbar-color: #FF6B00 #f0f0f0;
+}
+
+body.dark-mode .chat-messages,
+body.dark-mode .conversation-container {
+    scrollbar-color: #FF6B00 #1e293b;
+}
+
+/* ============================================
+   7. ANIMATED SCROLLBAR (Hover Effect)
+   ============================================ */
+
+.animated-scrollbar::-webkit-scrollbar-thumb {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animated-scrollbar::-webkit-scrollbar-thumb:hover {
+    transform: scaleX(1.1);
+}
+
+/* ============================================
+   8. GRADIENT SCROLLBAR
+   ============================================ */
+
+.gradient-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #FF6B00, #CC5500, #FF6B00);
+    background-size: 200% 200%;
+}
+
+.gradient-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-position: 100% 100%;
+}
+
+/* ============================================
+   9. ROUNDED CORNERS SCROLLBAR
+   ============================================ */
+
+.rounded-scrollbar::-webkit-scrollbar-track {
+    border-radius: 20px;
+}
+
+.rounded-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+}
+
+/* ============================================
+   10. TRANSPARENT SCROLLBAR (Overlay Effect)
+   ============================================ */
+
+.transparent-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.transparent-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+body.dark-mode .transparent-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.transparent-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .transparent-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   11. MOBILE SCROLLBAR OPTIMIZATIONS
+   ============================================ */
+
+@media (max-width: 768px) {
+    /* Hide scrollbar on mobile for cleaner look */
+    .mobile-hide-scrollbar::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
+    
+    .mobile-hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    
+    /* Slightly larger touch-friendly scrollbar on mobile */
+    .mobile-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    
+    /* Show scrollbar only when scrolling on mobile */
+    .mobile-auto-scrollbar::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+    
+    .mobile-auto-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+    }
+    
+    body.dark-mode .mobile-auto-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* ============================================
+   12. HOVER TRIGGER SCROLLBAR (Show only on hover)
+   ============================================ */
+
+.hover-scrollbar::-webkit-scrollbar {
+    width: 0px;
+    transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-scrollbar:hover::-webkit-scrollbar {
+    width: 8px;
+}
+
+.hover-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.hover-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.hover-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #FF6B00, #CC5500);
+}
+
+body.dark-mode .hover-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .hover-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #FF6B00, #CC5500);
+}
+
+/* ============================================
+   13. DASHBOARD SPECIFIC SCROLLBARS
+   ============================================ */
+
+/* Dashboard Main Content */
+.dashboard-main::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dashboard-main::-webkit-scrollbar-track {
+    background: #f8fafc;
+}
+
+.dashboard-main::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #FF6B00, #CC5500);
+    border-radius: 8px;
+}
+
+body.dark-mode .dashboard-main::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+
+/* Dashboard Stats Cards Container (horizontal scroll) */
+.stats-cards-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.stats-cards-container::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
+
+.stats-cards-container::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 6px;
+}
+
+body.dark-mode .stats-cards-container::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* ============================================
+   14. ADMIN DASHBOARD SCROLLBARS
+   ============================================ */
+
+.admin-stats::-webkit-scrollbar {
+    height: 6px;
+}
+
+.admin-stats::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
+
+.admin-stats::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 6px;
+}
+
+body.dark-mode .admin-stats::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* ============================================
+   15. SMOOTH SCROLL BEHAVIOR
+   ============================================ */
+
+.smooth-scroll {
+    scroll-behavior: smooth;
+}
+
+/* ============================================
+   16. SCROLLBAR UTILITY CLASSES
+   ============================================ */
+
+/* Always visible scrollbar */
+.always-visible::-webkit-scrollbar {
+    display: block;
+}
+
+/* Auto hide scrollbar */
+.auto-hide::-webkit-scrollbar {
+    display: auto;
+}
+
+/* Custom thickness */
+.scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.scrollbar-thick::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+/* Custom colors */
+.scrollbar-brand::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+}
+
+.scrollbar-brand-dark::-webkit-scrollbar-thumb {
+    background: #CC5500;
+}
+
+.scrollbar-light::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.scrollbar-dark::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* ============================================
+   17. PREVENT LAYOUT SHIFT
+   ============================================ */
+
+.scrollbar-gutter {
+    scrollbar-gutter: stable;
+}
+
+/* ============================================
+   18. PRINT STYLES (Hide scrollbars when printing)
+   ============================================ */
+
+@media print {
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    
+    * {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+}
+
+/* ============================================
+   19. REDUCED MOTION PREFERENCE
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    ::-webkit-scrollbar-thumb {
+        transition: none;
+    }
+    
+    .animated-scrollbar::-webkit-scrollbar-thumb {
+        transition: none;
+    }
+    
+    .hover-scrollbar::-webkit-scrollbar {
+        transition: none;
+    }
+    
+    .gradient-scrollbar::-webkit-scrollbar-thumb {
+        transition: none;
+    }
+}
+
+/* ============================================
+   20. CUSTOM SCROLLBAR FOR SPECIFIC PAGES
+   ============================================ */
+
+/* Giveaway Page Leaderboard */
+.leaderboard-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.leaderboard-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+
+.leaderboard-list::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 4px;
+}
+
+body.dark-mode .leaderboard-list::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* Refund History List */
+.refund-history-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.refund-history-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
+
+.refund-history-list::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 6px;
+}
+
+body.dark-mode .refund-history-list::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* Updates List */
+.updates-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.updates-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
+
+.updates-list::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 6px;
+}
+
+body.dark-mode .updates-list::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* Child Panels List */
+.child-panels-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.child-panels-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
+
+.child-panels-list::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 6px;
+}
+
+body.dark-mode .child-panels-list::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* Transactions List */
+.transactions-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.transactions-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
+
+.transactions-list::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 6px;
+}
+
+body.dark-mode .transactions-list::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* ============================================
+   21. CUSTOM SCROLLBAR FOR DROPDOWNS
+   ============================================ */
+
+.dropdown-menu::-webkit-scrollbar {
+    width: 4px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 4px;
+}
+
+body.dark-mode .dropdown-menu::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+/* ============================================
+   22. CUSTOM SCROLLBAR FOR SIDEBAR NAVIGATION
+   ============================================ */
+
+.sidebar-nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   23. CUSTOM SCROLLBAR FOR MOBILE MENU
+   ============================================ */
+
+.mobile-menu-scroll::-webkit-scrollbar {
+    width: 3px;
+}
+
+.mobile-menu-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.mobile-menu-scroll::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+body.dark-mode .mobile-menu-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   24. SMOOTH SCROLL FOR ANCHOR LINKS
+   ============================================ */
+
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}

@@ -1,0 +1,102 @@
+/* Dark Mode - Enhanced Visibility v3.0 */
+body.dark-mode {
+    background: #0a0a0a;
+    color: #e5e7eb;
+}
+
+/* Surface colors */
+body.dark-mode .bg-white, 
+body.dark-mode .glass-card,
+body.dark-mode .card,
+body.dark-mode .stat-card,
+body.dark-mode .info-card,
+body.dark-mode .modal-content,
+body.dark-mode .form-card,
+body.dark-mode .ticket-card,
+body.dark-mode .transaction-card,
+body.dark-mode .notification-card {
+    background: #1a1a2e !important;
+    border-color: #2d2d44 !important;
+}
+
+/* Text colors - Light for readability */
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, 
+body.dark-mode h4, body.dark-mode .text-gray-800, 
+body.dark-mode .text-gray-900, body.dark-mode .font-bold,
+body.dark-mode .text-2xl, body.dark-mode .text-xl {
+    color: #ffffff !important;
+}
+
+body.dark-mode .text-gray-500, body.dark-mode .text-gray-600,
+body.dark-mode .text-gray-700, body.dark-mode .text-gray-400,
+body.dark-mode p, body.dark-mode span:not(.text-primary):not(.text-white) {
+    color: #cbd5e1 !important;
+}
+
+body.dark-mode .text-primary { color: #FF8C42 !important; }
+body.dark-mode .text-secondary { color: #94a3b8 !important; }
+
+/* Input fields */
+body.dark-mode input, body.dark-mode textarea, 
+body.dark-mode select, body.dark-mode .form-input {
+    background: #0f0f23 !important;
+    border-color: #2d2d44 !important;
+    color: #e5e7eb !important;
+}
+body.dark-mode input:focus, body.dark-mode textarea:focus {
+    border-color: #FF6B00 !important;
+    box-shadow: 0 0 0 3px rgba(255,107,0,0.2) !important;
+}
+
+/* Tables */
+body.dark-mode .data-table th {
+    background: #0f0f23 !important;
+    color: #94a3b8 !important;
+    border-bottom-color: #2d2d44 !important;
+}
+body.dark-mode .data-table td {
+    border-bottom-color: #2d2d44 !important;
+    color: #cbd5e1 !important;
+}
+body.dark-mode .data-table tr:hover td {
+    background: #1a1a3e !important;
+}
+
+/* Sidebar */
+body.dark-mode .premium-sidebar .sidebar-content {
+    background: #0a0a1a !important;
+}
+body.dark-mode .user-card {
+    background: rgba(255,255,255,0.05) !important;
+}
+body.dark-mode .user-name { color: white !important; }
+body.dark-mode .nav-text { color: #94a3b8 !important; }
+body.dark-mode .nav-item:hover .nav-text { color: #FF8C42 !important; }
+
+/* Buttons */
+body.dark-mode .btn-outline {
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+body.dark-mode .btn-outline:hover {
+    border-color: #FF6B00 !important;
+    color: #FF6B00 !important;
+}
+
+/* Status badges - keep original colors but adjust text */
+body.dark-mode .status-pending { background: #451a03 !important; color: #fbbf24 !important; }
+body.dark-mode .status-processing { background: #1e3a5f !important; color: #60a5fa !important; }
+body.dark-mode .status-completed { background: #064e3b !important; color: #34d399 !important; }
+body.dark-mode .status-cancelled { background: #7f1d1d !important; color: #f87171 !important; }
+
+/* Balance card */
+body.dark-mode .balance-card { background: #1a1a2e !important; }
+body.dark-mode .balance-amount { color: white !important; }
+
+/* Welcome banner */
+body.dark-mode .welcome-banner { background: linear-gradient(135deg, #FF6B00, #CC5500) !important; }
+body.dark-mode .welcome-banner p { color: rgba(255,255,255,0.9) !important; }
+
+/* Modals */
+body.dark-mode .modal-content { background: #1a1a2e !important; border-color: #2d2d44 !important; }
+body.dark-mode .modal-content h3 { color: white !important; }
