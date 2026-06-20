@@ -1,0 +1,9 @@
+Options -Indexes
+
+<FilesMatch "^(bootstrap|config|database|provider-client|migrate)\.php$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "^(?:.*\.(?:log|sql|bak|env|ini|conf)|\.env.*)$">
+    Require all denied
+</FilesMatch>
