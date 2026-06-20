@@ -1,0 +1,22 @@
+{
+  "batch": "Dashboard Device Compatibility and AmarBoost Order Reliability",
+  "user_dashboard_pages": 27,
+  "admin_dashboard_pages": 18,
+  "user_dashboard_mobile_assets_present": true,
+  "admin_dashboard_mobile_assets_present": true,
+  "inline_javascript_scripts_checked": 133,
+  "inline_javascript_syntax_errors": 0,
+  "internal_dashboard_admin_references_checked": 1084,
+  "missing_internal_references": 0,
+  "php_lint_errors": 0,
+  "critical_javascript_lint_errors": 0,
+  "endpoint_tests": {
+    "order_handler_health": {"status": 200, "provider_configured_in_test_environment": false},
+    "unauthenticated_order": {"status": 401},
+    "legacy_proxy_add": {"status": 405},
+    "unauthenticated_orders_read": {"status": 401}
+  },
+  "live_amarboost_order_executed": false,
+  "live_amarboost_order_reason": "No production AmarBoost credential, MySQL database, or Firebase user session was available in the test environment.",
+  "single_zip_structure_preserved": true
+}
