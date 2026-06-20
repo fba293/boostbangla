@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function ownUser(id) { return signedIn() && request.auth.uid == id; }
+    function admin() {
+      return signedIn() && (
+        request.auth.token.admin == true ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'support']
+      );
+    }
+    match /users/{userId} {
+      allow read: if ownUser(userId) || admin();
+      allow create: if ownUser(userId);
+      allow update: if admin() || (ownUser(userId) && !('isAdmin' in request.resource.data.diff(resource.data).affectedKeys()) && !('role' in request.resource.data.diff(resource.data).affectedKeys()) && !('balance' in request.resource.data.diff(resource.data).affectedKeys()));
+      allow delete: if admin();
+    }
+    match /orders/{id} { allow read: if admin() || (signedIn() && resource.data.userId == request.auth.uid); allow create: if signedIn() && request.resource.data.userId == request.auth.uid; allow update, delete: if admin(); }
+    match /deposits/{id} { allow read: if admin() || (signedIn() && resource.data.userId == request.auth.uid); allow create: if signedIn() && request.resource.data.userId == request.auth.uid; allow update, delete: if admin(); }
+    match /withdrawals/{id} { allow read: if admin() || (signedIn() && resource.data.userId == request.auth.uid); allow create: if signedIn() && request.resource.data.userId == request.auth.uid; allow update, delete: if admin(); }
+    match /refunds/{id} { allow read: if admin() || (signedIn() && resource.data.userId == request.auth.uid); allow create: if signedIn() && request.resource.data.userId == request.auth.uid; allow update, delete: if admin(); }
+    match /tickets/{id} { allow read: if admin() || (signedIn() && resource.data.userId == request.auth.uid); allow create: if signedIn() && request.resource.data.userId == request.auth.uid; allow update, delete: if admin(); }
+    match /ticketMessages/{id} { allow read: if admin() || (signedIn() && resource.data.userId == request.auth.uid); allow create: if admin() || (signedIn() && request.resource.data.userId == request.auth.uid); allow update, delete: if admin(); }
+    match /notifications/{id} { allow read: if admin() || (signedIn() && resource.data.userId == request.auth.uid); allow create, update, delete: if admin(); }
+    match /adminTransactions/{id} { allow read, write: if admin(); }
+    match /adminActions/{id} { allow read, write: if admin(); }
+    match /adminNotifications/{id} { allow read, write: if admin(); }
+    match /affiliates/{id} { allow read, write: if admin() || (signedIn() && resource.data.userId == request.auth.uid); }
+    match /childPanels/{id} { allow read, write: if admin() || (signedIn() && resource.data.userId == request.auth.uid); }
+    match /exchangeRateHistory/{id} { allow read: if signedIn(); allow write: if admin(); }
+    match /news/{id} { allow read: if resource.data.isActive == true || admin(); allow write: if admin(); }
+    match /blogPosts/{id} { allow read: if resource.data.status == 'published' || admin(); allow write: if admin(); }
+    match /settings/{id} { allow read: if signedIn(); allow write: if admin(); }
+  }
+}
