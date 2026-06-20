@@ -1,0 +1,43 @@
+/* =====================================================
+   BoostBangla Dashboard Device Compatibility Layer
+   Covers mobile phones, tablets, laptops and large screens.
+   ===================================================== */
+:root { --bb-vh: 1vh; --bb-safe-top: env(safe-area-inset-top, 0px); --bb-safe-bottom: env(safe-area-inset-bottom, 0px); }
+html { min-height: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body.bb-dashboard-page { min-height: calc(var(--bb-vh) * 100); overflow-x: hidden; padding-bottom: var(--bb-safe-bottom); }
+.bb-dashboard-page *, .bb-dashboard-page *::before, .bb-dashboard-page *::after { box-sizing: border-box; }
+.bb-dashboard-page main, .bb-dashboard-page .main-content, .bb-dashboard-page .dashboard-content, .bb-dashboard-page .container, .bb-dashboard-page .content-wrapper { min-width: 0; }
+.bb-dashboard-page img, .bb-dashboard-page svg, .bb-dashboard-page video, .bb-dashboard-page canvas { max-width: 100%; height: auto; }
+.bb-dashboard-page input, .bb-dashboard-page select, .bb-dashboard-page textarea, .bb-dashboard-page button { max-width: 100%; }
+.bb-dashboard-page input, .bb-dashboard-page select, .bb-dashboard-page textarea { font-size: max(16px, 1rem); }
+.bb-dashboard-page button, .bb-dashboard-page a, .bb-dashboard-page [role="button"] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.bb-dashboard-page .table-responsive, .bb-dashboard-page .overflow-x-auto, .bb-dashboard-page .table-container, .bb-dashboard-page .orders-table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.bb-dashboard-page table { width: 100%; }
+.bb-dashboard-page .modal, .bb-dashboard-page .modal-content, .bb-dashboard-page .success-modal, .bb-dashboard-page .confirm-modal { max-width: calc(100vw - 24px); }
+.bb-dashboard-page .toast { z-index: 3000; max-width: min(420px, calc(100vw - 28px)); }
+.bb-dashboard-page .premium-sidebar .sidebar-backdrop { position: fixed; inset: 0; background: rgba(2,6,23,.58); opacity: 0; pointer-events: none; transition: opacity .22s ease; }
+.bb-dashboard-page .premium-sidebar.open .sidebar-backdrop { opacity: 1; pointer-events: auto; }
+@media (max-width: 1024px) {
+  .bb-dashboard-page .grid-cols-2, .bb-dashboard-page .grid-cols-3, .bb-dashboard-page .grid-cols-4, .bb-dashboard-page .grid-cols-5, .bb-dashboard-page .stats-grid, .bb-dashboard-page .dashboard-grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+  .bb-dashboard-page .main-content { margin-left: 0 !important; }
+}
+@media (max-width: 768px) {
+  .bb-dashboard-page .premium-sidebar { width: min(86vw, 320px) !important; transform: translateX(-105%); pointer-events: auto; transition: transform .25s ease; }
+  .bb-dashboard-page .premium-sidebar.open { transform: translateX(0); }
+  .bb-dashboard-page .premium-sidebar .sidebar-content { border-radius: 0 20px 20px 0; }
+  .bb-dashboard-page .premium-header .header-container { padding: max(10px, var(--bb-safe-top)) 14px 10px !important; gap: 10px; }
+  .bb-dashboard-page .premium-header .header-center, .bb-dashboard-page .premium-header .user-info-mini, .bb-dashboard-page .premium-header .header-date, .bb-dashboard-page .premium-header .balance-info { display: none !important; }
+  .bb-dashboard-page .premium-header .header-right { gap: 8px !important; }
+  .bb-dashboard-page .premium-header .balance-widget { min-width: auto !important; }
+  .bb-dashboard-page .main-content, .bb-dashboard-page main, .bb-dashboard-page .dashboard-container, .bb-dashboard-page .content-wrapper { padding-left: 14px !important; padding-right: 14px !important; }
+  .bb-dashboard-page .grid-cols-2, .bb-dashboard-page .grid-cols-3, .bb-dashboard-page .grid-cols-4, .bb-dashboard-page .grid-cols-5, .bb-dashboard-page .stats-grid, .bb-dashboard-page .dashboard-grid { grid-template-columns: 1fr !important; }
+  .bb-dashboard-page .flex.justify-between.items-center, .bb-dashboard-page .dashboard-header, .bb-dashboard-page .page-header { flex-wrap: wrap; gap: 12px; }
+  .bb-dashboard-page .btn, .bb-dashboard-page .btn-primary, .bb-dashboard-page .btn-secondary { min-height: 42px; }
+  .bb-dashboard-page .modal-content, .bb-dashboard-page .success-modal > div, .bb-dashboard-page .confirm-modal > div { width: calc(100vw - 24px) !important; max-height: calc((var(--bb-vh) * 100) - 24px); overflow-y: auto; }
+}
+@media (max-width: 420px) {
+  .bb-dashboard-page .main-content, .bb-dashboard-page main, .bb-dashboard-page .dashboard-container, .bb-dashboard-page .content-wrapper { padding-left: 12px !important; padding-right: 12px !important; }
+  .bb-dashboard-page .card, .bb-dashboard-page .glass-card, .bb-dashboard-page .stat-card { border-radius: 16px; }
+  .bb-dashboard-page .table-responsive table, .bb-dashboard-page .orders-table-wrapper table { min-width: 620px; font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .bb-dashboard-page *, .bb-dashboard-page *::before, .bb-dashboard-page *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } }
