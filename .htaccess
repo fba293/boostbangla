@@ -1,31 +1,23 @@
 Options -Indexes
+DirectoryIndex index.html
 RewriteEngine On
 
-# Security: block sensitive files from public access
-<FilesMatch "^(\.env|\.env\..*|composer\.(json|lock)|package-lock\.json|yarn\.lock|pnpm-lock\.yaml)$">
+# Final production folder protections
+RewriteRule ^(?:docs|supabase|config|vendor|node_modules)(?:/.*)?$ - [F,L]
+
+# Block common sensitive files
+<FilesMatch "^(\.env|\.env\..*|composer\.(json|lock)|package-lock\.json|yarn\.lock|pnpm-lock\.yaml|.*\.(log|bak|sql|sqlite|db|ini|conf|yml|yaml))$">
     Require all denied
 </FilesMatch>
 
-# Existing files and folders load normally
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
-
-# Admin Panel v2 route aliases
+# IMPORTANT: Route aliases must run before the generic existing-folder rule.
+# This prevents a legacy root /dashboard folder from causing a cPanel 404.
 RewriteRule ^admin/?$ /public/pages/admin/index.html [L]
 RewriteRule ^admin/(.+)$ /public/pages/admin/$1 [L]
-
-# User dashboard route aliases
 RewriteRule ^dashboard/?$ /public/pages/dashboard/index.html [L]
 RewriteRule ^dashboard/(.+)$ /public/pages/dashboard/$1 [L]
 
-# Legacy asset aliases used by old pages
-RewriteRule ^css/(.+)$ /public/assets/css/$1 [L]
-RewriteRule ^js/(.+)$ /public/assets/js/$1 [L]
-RewriteRule ^images/(.+)$ /public/assets/images/$1 [L]
-RewriteRule ^assets/(.+)$ /public/assets/$1 [L]
-
-# Public page compatibility aliases
+# Public page aliases
 RewriteRule ^services\.html$ /public/pages/public/services.html [L]
 RewriteRule ^pricing\.html$ /public/pages/public/pricing.html [L]
 RewriteRule ^about\.html$ /public/pages/public/about.html [L]
@@ -41,11 +33,21 @@ RewriteRule ^privacy\.html$ /public/pages/public/privacy.html [L]
 RewriteRule ^privacy-policy\.html$ /public/pages/public/privacy.html [L]
 RewriteRule ^refund-policy\.html$ /public/pages/public/refund-policy.html [L]
 RewriteRule ^sitemap\.html$ /public/pages/public/sitemap.html [L]
-RewriteRule ^blog-single\.html$ /public/pages/public/blog-single.html [L]
+RewriteRule ^blog-single\.html$ /public/pages/public/blog.html [L]
 
-# Fallback for extensionless clean URLs when a matching HTML file exists under public pages
+# Legacy asset aliases
+RewriteRule ^css/(.+)$ /public/assets/css/$1 [L]
+RewriteRule ^js/(.+)$ /public/assets/js/$1 [L]
+RewriteRule ^images/(.+)$ /public/assets/images/$1 [L]
+RewriteRule ^assets/(.+)$ /public/assets/$1 [L]
+
+# Existing files/folders load normally after explicit aliases.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Optional extensionless public URLs
 RewriteCond %{DOCUMENT_ROOT}/public/pages/public/$1.html -f
 RewriteRule ^([A-Za-z0-9_-]+)/?$ /public/pages/public/$1.html [L]
 
-# Custom 404 fallback if available
 ErrorDocument 404 /public/pages/public/404.html
