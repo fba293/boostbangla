@@ -2,22 +2,21 @@ Options -Indexes
 DirectoryIndex index.html
 RewriteEngine On
 
-# Final production folder protections
-RewriteRule ^(?:docs|supabase|config|vendor|node_modules)(?:/.*)?$ - [F,L]
+# Production-only folders: keep source docs and deployment files private.
+RewriteRule ^(?:docs|supabase|config|vendor|node_modules|firebase)(?:/.*)?$ - [F,L]
 
-# Block common sensitive files
 <FilesMatch "^(\.env|\.env\..*|composer\.(json|lock)|package-lock\.json|yarn\.lock|pnpm-lock\.yaml|.*\.(log|bak|sql|sqlite|db|ini|conf|yml|yaml))$">
     Require all denied
 </FilesMatch>
 
-# IMPORTANT: Route aliases must run before the generic existing-folder rule.
-# This prevents a legacy root /dashboard folder from causing a cPanel 404.
+# IMPORTANT: explicit aliases must run before the existing-folder check.
+# This keeps /admin/* and /dashboard/* working even when legacy root folders exist.
 RewriteRule ^admin/?$ /public/pages/admin/index.html [L]
 RewriteRule ^admin/(.+)$ /public/pages/admin/$1 [L]
 RewriteRule ^dashboard/?$ /public/pages/dashboard/index.html [L]
 RewriteRule ^dashboard/(.+)$ /public/pages/dashboard/$1 [L]
 
-# Public page aliases
+# Public compatibility aliases
 RewriteRule ^services\.html$ /public/pages/public/services.html [L]
 RewriteRule ^pricing\.html$ /public/pages/public/pricing.html [L]
 RewriteRule ^about\.html$ /public/pages/public/about.html [L]
@@ -41,12 +40,12 @@ RewriteRule ^js/(.+)$ /public/assets/js/$1 [L]
 RewriteRule ^images/(.+)$ /public/assets/images/$1 [L]
 RewriteRule ^assets/(.+)$ /public/assets/$1 [L]
 
-# Existing files/folders load normally after explicit aliases.
+# Existing paths load normally only after aliases have been processed.
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# Optional extensionless public URLs
+# Optional extensionless public page URLs.
 RewriteCond %{DOCUMENT_ROOT}/public/pages/public/$1.html -f
 RewriteRule ^([A-Za-z0-9_-]+)/?$ /public/pages/public/$1.html [L]
 
